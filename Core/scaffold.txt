@@ -1,0 +1,1 @@
+﻿Scaffold-DbContext "Server=185.55.224.120;DataBase=barberma_db;User=barberma_sa;Password=A1@qazwsxA1@" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Entities

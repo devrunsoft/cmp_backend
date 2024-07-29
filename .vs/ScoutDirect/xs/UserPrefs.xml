@@ -1,0 +1,84 @@
+﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{36794759-A62F-43C3-B7D2-DE0D42AA2780}|https">
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Player/RegisterPlayerController.cs" relfile="ScoutDirect/Controllers/Player/RegisterPlayerController.cs" line="50" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Player/RegisterPlayerController.cs" relfile="ScoutDirect/Controllers/Player/RegisterPlayerController.cs" line="58" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/CommandHandlers/RegisterCompanyHandler.cs" relfile="Application/Handlers/CommandHandlers/RegisterCompanyHandler.cs" line="50" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/CommandHandlers/RegisterCompanyHandler.cs" relfile="Application/Handlers/CommandHandlers/RegisterCompanyHandler.cs" line="28" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/CommandHandlers/RegisterCompanyHandler.cs" relfile="Application/Handlers/CommandHandlers/RegisterCompanyHandler.cs" line="30" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Core/Enums/LocationType.cs">
+    <Files>
+      <File FileName="ScoutDirect/Controllers/UserController.cs" />
+      <File FileName="ScoutDirect/Controllers/_Base/BaseScoutApiController.cs" />
+      <File FileName="ScoutDirect/Controllers/_Base/BasePlayerApiController.cs" />
+      <File FileName="Application/Responses/Appointment/AppointmentReponse.cs" />
+      <File FileName="ScoutDirect/Controllers/_Base/BaseApiController.cs" />
+      <File FileName="Application/Model/RegisterPlayerInput.cs" />
+      <File FileName="Application/Responses/Player/PlayerResponse.cs" />
+      <File FileName="Application/Responses/Scout/LocationScoutReponse.cs" />
+      <File FileName="infrastructure/Data/DbContext.cs" />
+      <File FileName="Core/Base/PagedQueryRequest.cs" />
+      <File FileName="Application/Commands/LoginCommand.cs" />
+      <File FileName="Application/Responses/Base/CommandResponse.cs" />
+      <File FileName="Core/Entities/Base/PersistentDefinition.cs" />
+      <File FileName="Application/Responses/Scout/ScoutResponse.cs" />
+      <File FileName="Core/Extentions/Salon.cs" />
+      <File FileName="Application/Handlers/QueryHandlers/GetStatusQuery.cs" />
+      <File FileName="ScoutDirect/appsettings.json" Line="13" Column="56" />
+      <File FileName="infrastructure/RegisterDependency.cs" />
+      <File FileName="Core/Entities/GreaseLocationEntity.cs" Line="6" Column="32" />
+      <File FileName="ScoutDirect/Startup.cs" Line="153" Column="82" />
+      <File FileName="ScoutDirect/Program.cs" />
+      <File FileName="Core/Entities/Device.cs" Line="6" Column="19" />
+      <File FileName="ScoutDirect/Controllers/RegisterCompanyController.cs" />
+      <File FileName="Core/Enums/LocationType.cs" Line="10" Column="1" />
+      <File FileName="Application/Commands/AddLocationCommand.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/Location/AddLocationHandler.cs" />
+      <File FileName="infrastructure/Repository/LocationRepository.cs" />
+      <File FileName="Core/Repositories/ILocationReporitory.cs" />
+      <File FileName="Core/Entities/LocationCompany.cs" Line="16" Column="49" />
+      <File FileName="Application/Model/LocationCompanyInput.cs" />
+      <File FileName="ScoutDirect/Controllers/DocumentController.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/Document/DcoumentHanlder.cs" />
+      <File FileName="infrastructure/Repository/DocumentReporitory.cs" />
+      <File FileName="Core/Repositories/IDocumentRepository.cs" />
+      <File FileName="Application/Commands/DocumentCommand.cs" />
+      <File FileName="infrastructure/Class1.cs" />
+      <File FileName="infrastructure/Repository/BillingInformationRepository.cs" />
+      <File FileName="Core/Repositories/IBillingInformationRepository.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/BilingInformation/BillingInformationHandler.cs" />
+      <File FileName="Application/Commands/BilingInformationCommand.cs" />
+      <File FileName="Application/Model/BilingInformationInput.cs" />
+      <File FileName="ScoutDirect/Controllers/BilingInformationController.cs" />
+      <File FileName="Core/Enums/CompanyType.cs" />
+      <File FileName="Core/Entities/Company.cs" Line="19" Column="40" />
+      <File FileName="Core/Entities/BillingInformation.cs" Line="4" Column="1" />
+      <File FileName="Core/Entities/DocumentSubmission.cs" Line="4" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="ScoutDirect" expanded="True">
+            <Node name="CMPNatural.Api">
+              <Node name="Controllers" expanded="True">
+                <Node name="DocumentController.cs" selected="True" />
+              </Node>
+            </Node>
+            <Node name="CMPNatural.Core" expanded="True">
+              <Node name="Enums" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.CMPNatural.Api PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+</Properties>

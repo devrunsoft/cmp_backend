@@ -1,0 +1,74 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Repositories\Async\**" />
+    <Compile Remove="Repositories\Sync\**" />
+    <Compile Remove="UOW\**" />
+    <EmbeddedResource Remove="Repositories\Async\**" />
+    <EmbeddedResource Remove="Repositories\Sync\**" />
+    <EmbeddedResource Remove="UOW\**" />
+    <None Remove="Repositories\Async\**" />
+    <None Remove="Repositories\Sync\**" />
+    <None Remove="UOW\**" />
+    <None Remove="Microsoft.AspNetCore.Http" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Enums\ChatType.cs" />
+    <Compile Remove="Enums\InboxStatus.cs" />
+    <Compile Remove="Enums\NotificationType.cs" />
+    <Compile Remove="Enums\ShopUserRole.cs" />
+    <Compile Remove="Models\InboxUserModel.cs" />
+    <Compile Remove="Models\InputAddressModel.cs" />
+    <Compile Remove="Models\InputDiscountModel.cs" />
+    <Compile Remove="Models\InputFeedBackModel.cs" />
+    <Compile Remove="Models\InputInboxModel.cs" />
+    <Compile Remove="Models\InputInvoiceModel.cs" />
+    <Compile Remove="Models\QueMessageModel.cs" />
+    <Compile Remove="Repositories\IAddressRepository.cs" />
+    <Compile Remove="Repositories\IAssistantRepository.cs" />
+    <Compile Remove="Repositories\IBannerAdRepository.cs" />
+    <Compile Remove="Repositories\IBenchMarkRepository.cs" />
+    <Compile Remove="Repositories\IBlockedRepository.cs" />
+    <Compile Remove="Repositories\IChatFileRepository.cs" />
+    <Compile Remove="Repositories\IChatRepository.cs" />
+    <Compile Remove="Repositories\ICompetitorRepository.cs" />
+    <Compile Remove="Repositories\ICustomerRepository.cs" />
+    <Compile Remove="Repositories\IDeliveryRepository.cs" />
+    <Compile Remove="Repositories\IDiscountPercentRepository.cs" />
+    <Compile Remove="Repositories\IDiscountPriceRepository.cs" />
+    <Compile Remove="Repositories\IDiscountRepository.cs" />
+    <Compile Remove="Repositories\IEmployeeRepository.cs" />
+    <Compile Remove="Repositories\IFeedbackBenchMarkRepository.cs" />
+    <Compile Remove="Repositories\IFeedBackRepository.cs" />
+    <Compile Remove="Repositories\IFixedTariffRepository.cs" />
+    <Compile Remove="Repositories\IInboxDeliveryRecordRepository.cs" />
+    <Compile Remove="Repositories\IInboxRepository.cs" />
+    <Compile Remove="Repositories\IInboxStatusRepository.cs" />
+    <Compile Remove="Repositories\IInvoiceRepository.cs" />
+    <Compile Remove="Repositories\INotificationRepository.cs" />
+    <Compile Remove="Repositories\IOrderMinCostRepository.cs" />
+    <Compile Remove="Repositories\IShopInfoRepository.cs" />
+    <Compile Remove="Repositories\IShopRepository.cs" />
+    <Compile Remove="Repositories\IShopTypeRepository.cs" />
+    <Compile Remove="Repositories\IShopUserRepository.cs" />
+    <Compile Remove="Repositories\ISupportCategoryRepository.cs" />
+    <Compile Remove="Repositories\ISupportRepository.cs" />
+    <Compile Remove="Repositories\ITariffRepository.cs" />
+    <Compile Remove="Repositories\ITarrifCommissionRepository.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GeoCoordinate.NetCore" Version="1.0.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+  </ItemGroup>
+
+</Project>

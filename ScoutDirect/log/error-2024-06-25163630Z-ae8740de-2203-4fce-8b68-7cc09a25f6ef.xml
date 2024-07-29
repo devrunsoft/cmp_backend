@@ -1,0 +1,162 @@
+﻿<error errorId="ae8740de-2203-4fce-8b68-7cc09a25f6ef" application="ScoutDirect.Api" host="mortezas-MacBook-Pro" type="AutoMapper.AutoMapperMappingException" message="Missing type map configuration or unsupported mapping.&#xA;&#xA;Mapping types:&#xA;Person -&gt; PersonResponse&#xA;ScoutDirect.Core.Entities.Person -&gt; ScoutDirect.Application.Responses.PersonResponse&#xA;&#xA;Destination Member:&#xA;Person&#xA;" source="Anonymously Hosted DynamicMethods Assembly" detail="# caller: @C:\Sources\ElmahCore\ElmahCore\ElmahCore\Internal$\CallerInfo.cs:9&#xA;AutoMapper.AutoMapperMappingException: Error mapping types.&#xA;&#xA;Mapping types:&#xA;ScoutEntity -&gt; ScoutResponse&#xA;ScoutDirect.Core.Entities.ScoutEntity -&gt; ScoutDirect.Application.Responses.ScoutResponse&#xA;&#xA;Type Map configuration:&#xA;ScoutEntity -&gt; ScoutResponse&#xA;ScoutDirect.Core.Entities.ScoutEntity -&gt; ScoutDirect.Application.Responses.ScoutResponse&#xA;&#xA;Destination Member:&#xA;Person&#xA;&#xA; ---&gt; AutoMapper.AutoMapperMappingException: Missing type map configuration or unsupported mapping.&#xA;&#xA;Mapping types:&#xA;Person -&gt; PersonResponse&#xA;ScoutDirect.Core.Entities.Person -&gt; ScoutDirect.Application.Responses.PersonResponse&#xA;&#xA;Destination Member:&#xA;Person&#xA;&#xA;   at lambda_method115(Closure, Person, PersonResponse, ResolutionContext)&#xA;   at lambda_method114(Closure, Object, ScoutResponse, ResolutionContext)&#xA;   --- End of inner exception stack trace ---&#xA;   at lambda_method114(Closure, Object, ScoutResponse, ResolutionContext)&#xA;   at ScoutDirect.Application.Handlers.QueryHandlers.GetStatusQuery.Handle(GetAdminStatusQuery request, CancellationToken cancellationToken) in /Users/morteza/Desktop/Project/scoutdirectbackend/ScoutDirect/Application/Handlers/QueryHandlers/GetStatusQuery.cs:line 29&#xA;   at ScoutDirect.Api.Controllers.UserController.Login(LoginPersonCommand command) in /Users/morteza/Desktop/Project/scoutdirectbackend/ScoutDirect/ScoutDirect/Controllers/UserController.cs:line 46&#xA;   at lambda_method9(Closure, Object)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.&lt;InvokeActionMethodAsync&gt;g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.&lt;InvokeNextActionFilterAsync&gt;g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State&amp; next, Scope&amp; scope, Object&amp; state, Boolean&amp; isCompleted)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.&lt;InvokeInnerFilterAsync&gt;g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeNextResourceFilter&gt;g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State&amp; next, Scope&amp; scope, Object&amp; state, Boolean&amp; isCompleted)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeFilterPipelineAsync&gt;g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeAsync&gt;g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeAsync&gt;g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)&#xA;   at Microsoft.AspNetCore.Routing.EndpointMiddleware.&lt;Invoke&gt;g__AwaitRequestTask|6_0(Endpoint endpoint, Task requestTask, ILogger logger)&#xA;   at ElmahCore.Mvc.ErrorLogMiddleware.InvokeAsync(HttpContext context)" time="2024-06-25T16:36:30.5928270Z" statusCode="500">
+  <serverVariables>
+    <item name="RequestTimedOut">
+      <value string="False" />
+    </item>
+    <item name="MinResponseDataRate">
+      <value string="Bytes per second: 240, Grace Period: 00:00:05" />
+    </item>
+    <item name="ConnectionIdFeature">
+      <value string="0HN4L6JPD0C5V" />
+    </item>
+    <item name="HasStartedConsumingRequestBody">
+      <value string="True" />
+    </item>
+    <item name="MaxRequestBodySize">
+      <value string="30000000" />
+    </item>
+    <item name="MinRequestBodyDataRate">
+      <value string="Bytes per second: 240, Grace Period: 00:00:05" />
+    </item>
+    <item name="AllowSynchronousIO">
+      <value string="False" />
+    </item>
+    <item name="TraceIdentifier">
+      <value string="0HN4L6JPD0C5V:00000001" />
+    </item>
+    <item name="IsUpgradableRequest">
+      <value string="False" />
+    </item>
+    <item name="IsUpgraded">
+      <value string="False" />
+    </item>
+    <item name="IsExtendedConnectRequest">
+      <value string="False" />
+    </item>
+    <item name="IsExtendedConnectAccepted">
+      <value string="False" />
+    </item>
+    <item name="RemoteIpAddress">
+      <value string="::1" />
+    </item>
+    <item name="RemotePort">
+      <value string="53896" />
+    </item>
+    <item name="LocalIpAddress">
+      <value string="::1" />
+    </item>
+    <item name="LocalPort">
+      <value string="7089" />
+    </item>
+    <item name="Scheme">
+      <value string="https" />
+    </item>
+    <item name="Method">
+      <value string="Post" />
+    </item>
+    <item name="MethodText">
+      <value string="POST" />
+    </item>
+    <item name="Path">
+      <value string="/api/User/Login" />
+    </item>
+    <item name="QueryString">
+      <value string="" />
+    </item>
+    <item name="RawTarget">
+      <value string="/api/User/Login" />
+    </item>
+    <item name="HttpVersion">
+      <value string="HTTP/1.1" />
+    </item>
+    <item name="Header_Accept">
+      <value string="*/*" />
+    </item>
+    <item name="Header_Connection">
+      <value string="keep-alive" />
+    </item>
+    <item name="Header_Host">
+      <value string="localhost:7089" />
+    </item>
+    <item name="Header_User-Agent">
+      <value string="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" />
+    </item>
+    <item name="Header_Accept-Encoding">
+      <value string="gzip, deflate, br, zstd" />
+    </item>
+    <item name="Header_Accept-Language">
+      <value string="en-GB,en;q=0.9,fa-IR;q=0.8,fa;q=0.7,en-US;q=0.6" />
+    </item>
+    <item name="Header_Content-Type">
+      <value string="application/json-patch+json" />
+    </item>
+    <item name="Header_Origin">
+      <value string="https://localhost:7089" />
+    </item>
+    <item name="Header_Referer">
+      <value string="https://localhost:7089/swagger/index.html" />
+    </item>
+    <item name="Header_Content-Length">
+      <value string="53" />
+    </item>
+    <item name="Header_sec-ch-ua">
+      <value string="&quot;Not/A)Brand&quot;;v=&quot;8&quot;, &quot;Chromium&quot;;v=&quot;126&quot;, &quot;Google Chrome&quot;;v=&quot;126&quot;" />
+    </item>
+    <item name="Header_sec-ch-ua-mobile">
+      <value string="?0" />
+    </item>
+    <item name="Header_sec-ch-ua-platform">
+      <value string="&quot;macOS&quot;" />
+    </item>
+    <item name="Header_Sec-Fetch-Site">
+      <value string="same-origin" />
+    </item>
+    <item name="Header_Sec-Fetch-Mode">
+      <value string="cors" />
+    </item>
+    <item name="Header_Sec-Fetch-Dest">
+      <value string="empty" />
+    </item>
+    <item name="RequestTrailersAvailable">
+      <value string="True" />
+    </item>
+    <item name="StatusCode">
+      <value string="200" />
+    </item>
+    <item name="HasResponseStarted">
+      <value string="False" />
+    </item>
+    <item name="HasFlushedHeaders">
+      <value string="False" />
+    </item>
+    <item name="HasResponseCompleted">
+      <value string="False" />
+    </item>
+    <item name="IsWebTransportRequest">
+      <value string="False" />
+    </item>
+    <item name="Connection_Id">
+      <value string="0HN4L6JPD0C5V" />
+    </item>
+    <item name="Connection_RemoteIpAddress">
+      <value string="::1" />
+    </item>
+    <item name="Connection_RemotePort">
+      <value string="53896" />
+    </item>
+    <item name="Connection_LocalIpAddress">
+      <value string="::1" />
+    </item>
+    <item name="Connection_LocalPort">
+      <value string="7089" />
+    </item>
+    <item name="HttpStatusCode">
+      <value string="500" />
+    </item>
+  </serverVariables>
+  <form>
+    <item name="$request-body">
+      <value string="{&#xA;  &quot;phoneNumber&quot;: &quot;string&quot;,&#xA;  &quot;password&quot;: &quot;string&quot;&#xA;}" />
+    </item>
+  </form>
+</error>

@@ -1,0 +1,5 @@
+/Users/morteza/Desktop/Project/scoutdirectbackend/ScoutDirect/infrastructure/obj/Debug/net7.0/infrastructure.csproj.AssemblyReference.cache
+/Users/morteza/Desktop/Project/scoutdirectbackend/ScoutDirect/infrastructure/obj/Debug/net7.0/infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+/Users/morteza/Desktop/Project/scoutdirectbackend/ScoutDirect/infrastructure/obj/Debug/net7.0/infrastructure.AssemblyInfoInputs.cache
+/Users/morteza/Desktop/Project/scoutdirectbackend/ScoutDirect/infrastructure/obj/Debug/net7.0/infrastructure.AssemblyInfo.cs
+/Users/morteza/Desktop/Project/scoutdirectbackend/ScoutDirect/infrastructure/obj/Debug/net7.0/infrastructure.csproj.CoreCompileInputs.cache

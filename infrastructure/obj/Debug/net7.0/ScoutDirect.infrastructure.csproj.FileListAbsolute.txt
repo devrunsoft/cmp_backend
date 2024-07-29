@@ -1,0 +1,15 @@
+/Users/morteza/Desktop/Project/scoutdirectbackend/ScoutDirect/infrastructure/obj/Debug/net7.0/ScoutDirect.infrastructure.csproj.AssemblyReference.cache
+/Users/morteza/Desktop/Project/scoutdirectbackend/ScoutDirect/infrastructure/obj/Debug/net7.0/ScoutDirect.infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+/Users/morteza/Desktop/Project/scoutdirectbackend/ScoutDirect/infrastructure/obj/Debug/net7.0/ScoutDirect.infrastructure.AssemblyInfoInputs.cache
+/Users/morteza/Desktop/Project/scoutdirectbackend/ScoutDirect/infrastructure/obj/Debug/net7.0/ScoutDirect.infrastructure.AssemblyInfo.cs
+/Users/morteza/Desktop/Project/scoutdirectbackend/ScoutDirect/infrastructure/obj/Debug/net7.0/ScoutDirect.infrastructure.csproj.CoreCompileInputs.cache
+/Users/morteza/Desktop/Project/scoutdirectbackend/ScoutDirect/infrastructure/bin/Debug/net7.0/ScoutDirect.infrastructure.deps.json
+/Users/morteza/Desktop/Project/scoutdirectbackend/ScoutDirect/infrastructure/bin/Debug/net7.0/ScoutDirect.infrastructure.dll
+/Users/morteza/Desktop/Project/scoutdirectbackend/ScoutDirect/infrastructure/bin/Debug/net7.0/ScoutDirect.infrastructure.pdb
+/Users/morteza/Desktop/Project/scoutdirectbackend/ScoutDirect/infrastructure/bin/Debug/net7.0/ScoutDirect.Core.dll
+/Users/morteza/Desktop/Project/scoutdirectbackend/ScoutDirect/infrastructure/bin/Debug/net7.0/ScoutDirect.Core.pdb
+/Users/morteza/Desktop/Project/scoutdirectbackend/ScoutDirect/infrastructure/obj/Debug/net7.0/ScoutDirect.infrastructure.csproj.CopyComplete
+/Users/morteza/Desktop/Project/scoutdirectbackend/ScoutDirect/infrastructure/obj/Debug/net7.0/ScoutDirect.infrastructure.dll
+/Users/morteza/Desktop/Project/scoutdirectbackend/ScoutDirect/infrastructure/obj/Debug/net7.0/refint/ScoutDirect.infrastructure.dll
+/Users/morteza/Desktop/Project/scoutdirectbackend/ScoutDirect/infrastructure/obj/Debug/net7.0/ScoutDirect.infrastructure.pdb
+/Users/morteza/Desktop/Project/scoutdirectbackend/ScoutDirect/infrastructure/obj/Debug/net7.0/ref/ScoutDirect.infrastructure.dll

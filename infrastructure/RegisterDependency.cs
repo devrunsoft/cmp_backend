@@ -1,0 +1,37 @@
+﻿using CMPNatural.Core.Repositories;
+using CMPNatural.infrastructure.Repository;
+using Microsoft.Extensions.DependencyInjection;
+using ScoutDirect.Core.Repositories;
+using ScoutDirect.infrastructure.Repository;
+
+namespace ScoutDirect.infrastructure
+{
+    public static class RegisterDependencies
+    {
+        public static void RegisterRepositories(this IServiceCollection services)
+        {
+
+            services.AddTransient<ICompanyRepository, CompanyRepository>();
+            services.AddTransient<ILocationCompanyRepository, LocationCompanyRepository>();
+            services.AddTransient<IDocumentRepository, DocumentRepository>();
+            services.AddTransient<IBillingInformationRepository, BillingInformationRepository>();
+            services.AddTransient<IOperationalAddressRepository, OperationalAddressRepository>();
+            services.AddTransient<IBusinessTypeRepository, BusinessTypeRepository>();
+            //services.AddTransient<IPlayerRepository, PlayerRepository>();
+            //services.AddTransient<IScoutRepository, ScoutRepository>();
+
+            //services.AddTransient<IAppointmentRepository, AppointmentRepository>();
+            //services.AddTransient<IReportRepository, ReportRepository>();
+            //services.AddTransient<ILocationScoutRepository, LocationScoutRepository>();
+
+        }
+
+        public static void RegisterServices(this IServiceCollection services)
+        {
+            //services.AddTransient<ICustomerService, CustomerService>();
+            //services.AddTransient<IShopService, ShopService>();
+            //services.AddTransient<IInboxService, InboxService>();
+            //services.AddTransient<IShopUserService, ShopUserService>();
+        }
+    }
+}

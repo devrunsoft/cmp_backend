@@ -1,0 +1,335 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Commands\Address\**" />
+    <Compile Remove="Commands\Authenticate\**" />
+    <Compile Remove="Commands\Chat\**" />
+    <Compile Remove="Commands\FCM\**" />
+    <Compile Remove="Commands\Notification\**" />
+    <Compile Remove="Commands\Person\**" />
+    <Compile Remove="Commands\Poll\**" />
+    <Compile Remove="Commands\Setting\**" />
+    <Compile Remove="Commands\Shop\**" />
+    <Compile Remove="Commands\Support\**" />
+    <Compile Remove="Handlers\CommandHandlers\Address\**" />
+    <Compile Remove="Handlers\CommandHandlers\Chat\**" />
+    <Compile Remove="Handlers\CommandHandlers\Discount\**" />
+    <Compile Remove="Handlers\CommandHandlers\Notification\**" />
+    <Compile Remove="Handlers\QueryHandlers\Chat\**" />
+    <Compile Remove="Handlers\QueryHandlers\Customer\**" />
+    <Compile Remove="Handlers\QueryHandlers\Payment\**" />
+    <Compile Remove="Handlers\QueryHandlers\SearchShop\**" />
+    <Compile Remove="Handlers\QueryHandlers\Shop\**" />
+    <Compile Remove="Mapper\Address\**" />
+    <Compile Remove="Mapper\Chat\**" />
+    <Compile Remove="Mapper\Customer\**" />
+    <Compile Remove="Mapper\InboxStatus\**" />
+    <Compile Remove="Mapper\InboxUser\**" />
+    <Compile Remove="Mapper\SearchShop\**" />
+    <Compile Remove="Queries\Chat\**" />
+    <Compile Remove="Queries\Notification\**" />
+    <Compile Remove="Queries\Poll\**" />
+    <Compile Remove="Queries\SearchShop\**" />
+    <Compile Remove="Queries\Setting\**" />
+    <Compile Remove="Queries\Shop\**" />
+    <Compile Remove="Queries\Support\**" />
+    <Compile Remove="Queries\Tarrif\**" />
+    <Compile Remove="Responses\Chat\**" />
+    <Compile Remove="Responses\Discount\**" />
+    <Compile Remove="Responses\Invoice\**" />
+    <Compile Remove="Responses\Notification\**" />
+    <Compile Remove="Responses\Old\**" />
+    <Compile Remove="Responses\Poll\**" />
+    <Compile Remove="Responses\SearchShop\**" />
+    <Compile Remove="Responses\Setting\**" />
+    <Compile Remove="Responses\Shop\**" />
+    <Compile Remove="Responses\Support\**" />
+    <Compile Remove="Responses\Tarrif\**" />
+    <Compile Remove="Responses\UnUsed\**" />
+    <Compile Remove="ViewModels\**" />
+    <EmbeddedResource Remove="Commands\Address\**" />
+    <EmbeddedResource Remove="Commands\Authenticate\**" />
+    <EmbeddedResource Remove="Commands\Chat\**" />
+    <EmbeddedResource Remove="Commands\FCM\**" />
+    <EmbeddedResource Remove="Commands\Notification\**" />
+    <EmbeddedResource Remove="Commands\Person\**" />
+    <EmbeddedResource Remove="Commands\Poll\**" />
+    <EmbeddedResource Remove="Commands\Setting\**" />
+    <EmbeddedResource Remove="Commands\Shop\**" />
+    <EmbeddedResource Remove="Commands\Support\**" />
+    <EmbeddedResource Remove="Handlers\CommandHandlers\Address\**" />
+    <EmbeddedResource Remove="Handlers\CommandHandlers\Chat\**" />
+    <EmbeddedResource Remove="Handlers\CommandHandlers\Discount\**" />
+    <EmbeddedResource Remove="Handlers\CommandHandlers\Notification\**" />
+    <EmbeddedResource Remove="Handlers\QueryHandlers\Chat\**" />
+    <EmbeddedResource Remove="Handlers\QueryHandlers\Customer\**" />
+    <EmbeddedResource Remove="Handlers\QueryHandlers\Payment\**" />
+    <EmbeddedResource Remove="Handlers\QueryHandlers\SearchShop\**" />
+    <EmbeddedResource Remove="Handlers\QueryHandlers\Shop\**" />
+    <EmbeddedResource Remove="Mapper\Address\**" />
+    <EmbeddedResource Remove="Mapper\Chat\**" />
+    <EmbeddedResource Remove="Mapper\Customer\**" />
+    <EmbeddedResource Remove="Mapper\InboxStatus\**" />
+    <EmbeddedResource Remove="Mapper\InboxUser\**" />
+    <EmbeddedResource Remove="Mapper\SearchShop\**" />
+    <EmbeddedResource Remove="Queries\Chat\**" />
+    <EmbeddedResource Remove="Queries\Notification\**" />
+    <EmbeddedResource Remove="Queries\Poll\**" />
+    <EmbeddedResource Remove="Queries\SearchShop\**" />
+    <EmbeddedResource Remove="Queries\Setting\**" />
+    <EmbeddedResource Remove="Queries\Shop\**" />
+    <EmbeddedResource Remove="Queries\Support\**" />
+    <EmbeddedResource Remove="Queries\Tarrif\**" />
+    <EmbeddedResource Remove="Responses\Chat\**" />
+    <EmbeddedResource Remove="Responses\Discount\**" />
+    <EmbeddedResource Remove="Responses\Invoice\**" />
+    <EmbeddedResource Remove="Responses\Notification\**" />
+    <EmbeddedResource Remove="Responses\Old\**" />
+    <EmbeddedResource Remove="Responses\Poll\**" />
+    <EmbeddedResource Remove="Responses\SearchShop\**" />
+    <EmbeddedResource Remove="Responses\Setting\**" />
+    <EmbeddedResource Remove="Responses\Shop\**" />
+    <EmbeddedResource Remove="Responses\Support\**" />
+    <EmbeddedResource Remove="Responses\Tarrif\**" />
+    <EmbeddedResource Remove="Responses\UnUsed\**" />
+    <EmbeddedResource Remove="ViewModels\**" />
+    <None Remove="Commands\Address\**" />
+    <None Remove="Commands\Authenticate\**" />
+    <None Remove="Commands\Chat\**" />
+    <None Remove="Commands\FCM\**" />
+    <None Remove="Commands\Notification\**" />
+    <None Remove="Commands\Person\**" />
+    <None Remove="Commands\Poll\**" />
+    <None Remove="Commands\Setting\**" />
+    <None Remove="Commands\Shop\**" />
+    <None Remove="Commands\Support\**" />
+    <None Remove="Handlers\CommandHandlers\Address\**" />
+    <None Remove="Handlers\CommandHandlers\Chat\**" />
+    <None Remove="Handlers\CommandHandlers\Discount\**" />
+    <None Remove="Handlers\CommandHandlers\Notification\**" />
+    <None Remove="Handlers\QueryHandlers\Chat\**" />
+    <None Remove="Handlers\QueryHandlers\Customer\**" />
+    <None Remove="Handlers\QueryHandlers\Payment\**" />
+    <None Remove="Handlers\QueryHandlers\SearchShop\**" />
+    <None Remove="Handlers\QueryHandlers\Shop\**" />
+    <None Remove="Mapper\Address\**" />
+    <None Remove="Mapper\Chat\**" />
+    <None Remove="Mapper\Customer\**" />
+    <None Remove="Mapper\InboxStatus\**" />
+    <None Remove="Mapper\InboxUser\**" />
+    <None Remove="Mapper\SearchShop\**" />
+    <None Remove="Queries\Chat\**" />
+    <None Remove="Queries\Notification\**" />
+    <None Remove="Queries\Poll\**" />
+    <None Remove="Queries\SearchShop\**" />
+    <None Remove="Queries\Setting\**" />
+    <None Remove="Queries\Shop\**" />
+    <None Remove="Queries\Support\**" />
+    <None Remove="Queries\Tarrif\**" />
+    <None Remove="Responses\Chat\**" />
+    <None Remove="Responses\Discount\**" />
+    <None Remove="Responses\Invoice\**" />
+    <None Remove="Responses\Notification\**" />
+    <None Remove="Responses\Old\**" />
+    <None Remove="Responses\Poll\**" />
+    <None Remove="Responses\SearchShop\**" />
+    <None Remove="Responses\Setting\**" />
+    <None Remove="Responses\Shop\**" />
+    <None Remove="Responses\Support\**" />
+    <None Remove="Responses\Tarrif\**" />
+    <None Remove="Responses\UnUsed\**" />
+    <None Remove="ViewModels\**" />
+    <None Remove="Commands\Config\" />
+    <None Remove="Commands\Config\AdminConfig\" />
+    <None Remove="Handlers\CommandHandlers\Config\" />
+    <None Remove="Handlers\CommandHandlers\Config\AdminConfig\" />
+    <None Remove="Responses\Scout\" />
+    <None Remove="Handlers\QueryHandlers\" />
+    <None Remove="Responses\Player\" />
+    <None Remove="Responses\Appointment\" />
+    <None Remove="Handlers\CommandHandlers\Location\" />
+    <None Remove="Handlers\CommandHandlers\Document\" />
+    <None Remove="Handlers\CommandHandlers\BilingInformation\" />
+    <None Remove="Commands\Billing\" />
+    <None Remove="Commands\Document\" />
+    <None Remove="Commands\Location\" />
+    <None Remove="Commands\OperationalAddress\" />
+    <None Remove="Handlers\CommandHandlers\OperationalAddress\" />
+    <None Remove="Commands\BusinessType\" />
+    <None Remove="Handlers\CommandHandlers\BusinessType\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Commands\CreateChatDiscountCommand.cs" />
+    <Compile Remove="Commands\CreateCustomerAddressCommand.cs" />
+    <Compile Remove="Commands\CreateEmployeeCommand.cs" />
+    <Compile Remove="Commands\CustomerProfileCommand.cs" />
+    <Compile Remove="Commands\DeleteRelatedInboxChacheCommand.cs" />
+    <Compile Remove="Handlers\CommandHandlers\CreateChatHandler.cs" />
+    <Compile Remove="Handlers\CommandHandlers\CreateFeedBackHandler.cs" />
+    <Compile Remove="Handlers\CommandHandlers\CreateInvoiceHandler.cs" />
+    <Compile Remove="Handlers\CommandHandlers\CreateSupportHandler.cs" />
+    <Compile Remove="Handlers\CommandHandlers\CustomerProfileHandler.cs" />
+    <Compile Remove="Handlers\CommandHandlers\DeleteRelatedInboxChacheHandler.cs" />
+    <Compile Remove="Handlers\CommandHandlers\RegisterCustomerHandler.cs" />
+    <Compile Remove="Handlers\CommandHandlers\RegisterShopHandler.cs" />
+    <Compile Remove="Handlers\CommandHandlers\RegisterShopUserHandler.cs" />
+    <Compile Remove="Handlers\CommandHandlers\ReloadShopInfoCacheHandler.cs" />
+    <Compile Remove="Handlers\CommandHandlers\SetAssistantStatusHandler.cs" />
+    <Compile Remove="Handlers\CommandHandlers\SetCustomerProfileStatusHandler.cs" />
+    <Compile Remove="Handlers\CommandHandlers\SetDeliveryHandler.cs" />
+    <Compile Remove="Handlers\CommandHandlers\SetOrderMinPriceHandler.cs" />
+    <Compile Remove="Handlers\CommandHandlers\SetPersonBirthDateHandler.cs" />
+    <Compile Remove="Handlers\CommandHandlers\SetPersonGenderHandler.cs" />
+    <Compile Remove="Handlers\CommandHandlers\SetSettingHandler.cs" />
+    <Compile Remove="Handlers\CommandHandlers\SetShopOwnerHandler.cs" />
+    <Compile Remove="Handlers\CommandHandlers\ShopDeleteInboxHandler.cs" />
+    <Compile Remove="Handlers\CommandHandlers\ShopSetInboxStatusHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetAllAddressHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetAllAssistantHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetAllBenchmarkHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetAllChatHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetAllCustomerChatHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetAllCustomerInboxHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetAllDeliveryHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetAllDiscountHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetAllDiscountPercentHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetAllDiscountPriceHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetAllEmployeeHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetAllFeedBackHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetAllFixedTarrifHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetAllInboxHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetAllOrderMinPriceHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetAllPaymentHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetAllPaymentListHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetAllSettingHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetAllShopNotificationHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetAllShopProfileHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetAllSupportCategoryHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetAllTarrifCommissionHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetAllTarrifHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetCustomerAddressHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetCustomerProfileHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetInboxInfoHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetShopStatusHandler.cs" />
+    <Compile Remove="Handlers\QueryHandlers\GetShopUserStatusHandler.cs" />
+    <Compile Remove="Mapper\AddressMapper.cs" />
+    <Compile Remove="Mapper\AddressMappingProfile.cs" />
+    <Compile Remove="Mapper\AssistantMapper.cs" />
+    <Compile Remove="Mapper\AssistantMappingProfile.cs" />
+    <Compile Remove="Mapper\BenchmarkMapper.cs" />
+    <Compile Remove="Mapper\BenchmarkMappingProfile.cs" />
+    <Compile Remove="Mapper\ChatMapper.cs" />
+    <Compile Remove="Mapper\ChatMappingProfile.cs" />
+    <Compile Remove="Mapper\CommissionTarrifMapper.cs" />
+    <Compile Remove="Mapper\CommissionTarrifMappingProfile.cs" />
+    <Compile Remove="Mapper\CustomerProfileMapper.cs" />
+    <Compile Remove="Mapper\CustomerProfileMappingProfile.cs" />
+    <Compile Remove="Mapper\DeliveryMapper.cs" />
+    <Compile Remove="Mapper\DeliveryMappingProfile.cs" />
+    <Compile Remove="Mapper\DiscountMapper.cs" />
+    <Compile Remove="Mapper\DiscountMappingProfile.cs" />
+    <Compile Remove="Mapper\DiscountPercentMapper.cs" />
+    <Compile Remove="Mapper\DiscountPercentMappingProfile.cs" />
+    <Compile Remove="Mapper\DiscountPriceMapper.cs" />
+    <Compile Remove="Mapper\DiscountPriceMappingProfile.cs" />
+    <Compile Remove="Mapper\EmployeeMapper.cs" />
+    <Compile Remove="Mapper\EmployeeMappingProfile.cs" />
+    <Compile Remove="Mapper\FeedBackMapper.cs" />
+    <Compile Remove="Mapper\FeedBackMappingProfile.cs" />
+    <Compile Remove="Mapper\FixedTarrifMapper.cs" />
+    <Compile Remove="Mapper\FixedTarrifMappingProfile.cs" />
+    <Compile Remove="Mapper\InboxCustomerMapper.cs" />
+    <Compile Remove="Mapper\InboxCustomerMappingProfile.cs" />
+    <Compile Remove="Mapper\InboxMapper.cs" />
+    <Compile Remove="Mapper\InboxMappingProfile.cs" />
+    <Compile Remove="Mapper\NotificationMapper.cs" />
+    <Compile Remove="Mapper\NotificationMappingProfile.cs" />
+    <Compile Remove="Mapper\OrderMinCostMapper.cs" />
+    <Compile Remove="Mapper\OrderMinCostMappingProfile.cs" />
+    <Compile Remove="Mapper\PaymentListMapper.cs" />
+    <Compile Remove="Mapper\PaymentListMappingProfile.cs" />
+    <Compile Remove="Mapper\PaymentMapper.cs" />
+    <Compile Remove="Mapper\PaymentMappingProfile.cs" />
+    <Compile Remove="Mapper\SupportCategoryMapper.cs" />
+    <Compile Remove="Mapper\SupportCategoryMappingProfile.cs" />
+    <Compile Remove="Mapper\SupportMapper.cs" />
+    <Compile Remove="Mapper\SupportMappingProfile.cs" />
+    <Compile Remove="Mapper\TariffMapper.cs" />
+    <Compile Remove="Mapper\TariffMappingProfile.cs" />
+    <Compile Remove="Queries\Customer\GetCustomerAddressQuery.cs" />
+    <Compile Remove="Queries\Customer\GetCustomerPhoneQuery.cs" />
+    <Compile Remove="Queries\Customer\GetCustomerProfileQuery.cs" />
+    <Compile Remove="Queries\Customer\GetCustomerSideProfileQuery.cs" />
+    <Compile Remove="Queries\GetAllAddressQuery.cs" />
+    <Compile Remove="Queries\GetAllChatDiscountQuery.cs" />
+    <Compile Remove="Queries\GetAllCustomerAddressQuery.cs" />
+    <Compile Remove="Queries\GetAllCustomerProfileQuery.cs" />
+    <Compile Remove="Queries\GetAllFeedBackQuery.cs" />
+    <Compile Remove="Queries\GetAllOderCostQuery.cs" />
+    <Compile Remove="Queries\GetDeliveryCostQuery.cs" />
+    <Compile Remove="Queries\GetInboxInfoQuery.cs" />
+    <Compile Remove="Queries\GetOrderMinPriceQuery.cs" />
+    <Compile Remove="Queries\GetShopUserStatusQuery.cs" />
+    <Compile Remove="Queries\Salon\GetAllAssistantQuery.cs" />
+    <Compile Remove="Queries\Salon\GetAllShopProfileQuery.cs" />
+    <Compile Remove="Queries\Salon\GetShopIdWithUrlQuery.cs" />
+    <Compile Remove="Queries\Salon\GetShopUsersPhoneQuery.cs" />
+    <Compile Remove="Responses\Customer\CustomerAddressResponse.cs" />
+    <Compile Remove="Responses\Customer\CustomerProfileResponse.cs" />
+    <Compile Remove="Responses\Customer\CustomerSideProfileResponse.cs" />
+    <Compile Remove="Responses\RegisterShopUserResponse.cs" />
+    <Compile Remove="Responses\Salon\AssistantResponse.cs" />
+    <Compile Remove="Responses\ShopUserStatusResponse.cs" />
+    <Compile Remove="Validator\CreateChatCommandValidator.cs" />
+    <Compile Remove="Validator\GetAllAddressQueryValidator.cs" />
+    <Compile Remove="Validator\GetAllAssistantQueryValidator.cs" />
+    <Compile Remove="Validator\GetAllChatQueryValidator.cs" />
+    <Compile Remove="Validator\GetCustomerAddressQueryValidator.cs" />
+    <Compile Remove="Validator\GetCustomerProfileQueryValidator.cs" />
+    <Compile Remove="Validator\SetSettingCommandValidator.cs" />
+    <Compile Remove="Validator\ShopDeleteInboxCommandValidator.cs" />
+    <Compile Remove="Validator\ShopSetInboxStatusCommandValidator.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="FluentValidation" Version="10.4.0" />
+    <PackageReference Include="LazyCache" Version="2.4.0" />
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.16" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="shortid" Version="3.0.1" />
+    <PackageReference Include="System.ServiceModel.Duplex" Version="4.8.*" />
+    <PackageReference Include="System.ServiceModel.Federation" Version="4.8.*" />
+    <PackageReference Include="System.ServiceModel.Http" Version="4.8.*" />
+    <PackageReference Include="System.ServiceModel.NetTcp" Version="4.8.*" />
+    <PackageReference Include="System.ServiceModel.Security" Version="4.8.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Validator\" />
+    <Folder Include="Responses\Scout\" />
+    <Folder Include="Handlers\QueryHandlers\" />
+    <Folder Include="Responses\Player\" />
+    <Folder Include="Responses\Appointment\" />
+    <Folder Include="Handlers\CommandHandlers\Location\" />
+    <Folder Include="Handlers\CommandHandlers\Document\" />
+    <Folder Include="Handlers\CommandHandlers\BilingInformation\" />
+    <Folder Include="Commands\Billing\" />
+    <Folder Include="Commands\Document\" />
+    <Folder Include="Commands\Location\" />
+    <Folder Include="Commands\OperationalAddress\" />
+    <Folder Include="Handlers\CommandHandlers\OperationalAddress\" />
+    <Folder Include="Commands\BusinessType\" />
+    <Folder Include="Handlers\CommandHandlers\BusinessType\" />
+  </ItemGroup> 
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core\CMPNatural.Core.csproj" />
+  </ItemGroup>
+</Project>
