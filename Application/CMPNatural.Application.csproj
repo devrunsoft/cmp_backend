@@ -161,6 +161,8 @@
     <None Remove="Handlers\CommandHandlers\OperationalAddress\" />
     <None Remove="Commands\BusinessType\" />
     <None Remove="Handlers\CommandHandlers\BusinessType\" />
+    <None Remove="Handlers\CommandHandlers\Company\" />
+    <None Remove="Commands\Company\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -327,6 +329,8 @@
     <Folder Include="Handlers\CommandHandlers\OperationalAddress\" />
     <Folder Include="Commands\BusinessType\" />
     <Folder Include="Handlers\CommandHandlers\BusinessType\" />
+    <Folder Include="Handlers\CommandHandlers\Company\" />
+    <Folder Include="Commands\Company\" />
   </ItemGroup> 
 
   <ItemGroup>

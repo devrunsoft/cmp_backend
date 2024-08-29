@@ -18,23 +18,27 @@ using Microsoft.IdentityModel.Tokens;
 using ScoutDirect.Core.Entities;
 using ScoutDirect.Core.Models;
 using CMPNatural.Core.Entities;
+using ScoutDirect.Api.Controllers._Base;
+using CMPNatural.Application.Commands.Company;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CMPNatural.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class RegisterCompanyController : ControllerBase
+    public class RegisterCompanyController : BaseApiController
     {
         protected readonly IMediator _mediator;
         private readonly IConfiguration _configuration;
 
-        public RegisterCompanyController(IMediator mediator, IConfiguration configuration)
+        public RegisterCompanyController(IMediator mediator, IConfiguration configuration) : base(mediator)
         {
             _mediator = mediator;
             _configuration = configuration;
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Post([FromBody] RegisterCompanyCommand command)
@@ -79,7 +83,47 @@ namespace CMPNatural.Api.Controllers
 
             return claims.ToArray();
         }
-    }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Get()
+        {
+            var result = await _mediator.Send(new GetCompanyCommand()
+            {
+                CompanyId = rCompanyId,
+            });
+            return Ok(result);
+        }
+
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Put([FromBody] RegisterCompanyCommand request)
+        {
+
+            var result = await _mediator.Send(new UpdateCompanyCommand()
+            {
+                CompanyId = rCompanyId,
+                AccountNumber = request.AccountNumber,
+                //BusinessEmail = request.BusinessEmail,
+                CompanyName = request.CompanyName,
+                Position = request.Position,
+                PrimaryFirstName = request.PrimaryFirstName,
+                PrimaryLastName = request.PrimaryLastName,
+                PrimaryPhonNumber = request.PrimaryPhonNumber,
+                ReferredBy = request.ReferredBy,
+                SecondaryFirstName = request.SecondaryFirstName,
+                SecondaryLastName = request.SecondaryLastName,
+                SecondaryPhoneNumber = request.SecondaryPhoneNumber,
+                Password = request.Password
+
+            });
+            return Ok(result);
+
+        }
+
+     }
 }
 
 

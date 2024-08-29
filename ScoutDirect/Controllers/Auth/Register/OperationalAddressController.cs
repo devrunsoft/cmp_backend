@@ -49,7 +49,9 @@ namespace CMPNatural.Api.Controllers.Auth.Register
                 CrossStreet = request.CrossStreet,
                 FirstName = request.FirstName,
                 LastName = request.LastName,
-                LocationPhone = request.LocationPhone
+                LocationPhone = request.LocationPhone,
+                Long=request.Long,
+                Lat=request.Lat,
 
             });
 
@@ -71,7 +73,9 @@ namespace CMPNatural.Api.Controllers.Auth.Register
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 LocationPhone = request.LocationPhone,
-                Id=Id
+                Long = request.Long,
+                Lat = request.Lat,
+                Id =Id
 
             });
 

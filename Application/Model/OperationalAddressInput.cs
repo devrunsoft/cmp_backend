@@ -12,6 +12,8 @@ namespace CMPNatural.Application.Model
         public long BusinessId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public double Lat { get; set; }
+        public double Long { get; set; }
     }
 }
 

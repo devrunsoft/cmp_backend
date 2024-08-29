@@ -38,7 +38,9 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
             CrossStreet=request.CrossStreet,
             FirstName=request.FirstName,
             LastName=request.LastName,
-            LocationPhone=request.LocationPhone
+            LocationPhone=request.LocationPhone,
+            Lat=request.Lat,
+            Long = request.Long,
 
             };
 
