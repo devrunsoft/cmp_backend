@@ -97,10 +97,8 @@ namespace ScoutDirect.Api
             //remove
             services.AddControllersWithViews();
 
-            //services.AddDbContext<ApiIdentityDbContext>(options => options.UseNpgsql/*UseSqlServer*/(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDbContext<ScoutDBContext>(options => options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")
             ));
-            //AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
             services.AddAutoMapper(typeof(Startup));
             //services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));

@@ -47,7 +47,7 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
             var result = await _operationalAddressRepository.AddAsync(entity);
 
 
-            return new CommandResponse<object>() { Success = true, Data = result, Message = "OperationalAddres Added Successfully!" };
+            return new Success<object>() { Data = result, Message = "OperationalAddres Added Successfully!" };
         }
 
     }
