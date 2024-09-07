@@ -17,6 +17,8 @@ namespace CMPNatural.Core.Enums
         BillingDetails = 4,
         [Description("Registered")]
         Registered = 5,
+        [Description("NotActivate")]
+        NotActivate = 6,
 
     }
 }

@@ -33,7 +33,7 @@ namespace CMPNatural.Api.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Post([FromForm] BilingInformationInput input)
+        public async Task<ActionResult> Post([FromBody] BilingInformationInput input)
         {
             
             var result = await _mediator.Send(new AddBilingInformationCommand()

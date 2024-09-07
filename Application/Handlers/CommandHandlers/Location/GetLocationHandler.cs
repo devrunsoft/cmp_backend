@@ -23,7 +23,10 @@ namespace CMPNatural.Application.Handlers.CommandHandlers.Location
         public async Task<CommandResponse<List<LocationCompany>>> Handle(GetLocationCompanyCommand request, CancellationToken cancellationToken)
         {
 
-            var result = (await _locationRepository.GetAsync(p=>p.CompanyId==request.CompanyId)).ToList();
+            var result = (await _locationRepository.GetAsync(p=>
+            p.CompanyId==request.CompanyId &&
+            (request.OperationalAddressId==null ? true: p.OperationalAddressId == request.OperationalAddressId)
+            )).ToList();
 
             return new Success<List<LocationCompany>>() { Data = result};
         }

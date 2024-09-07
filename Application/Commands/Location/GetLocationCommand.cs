@@ -6,13 +6,14 @@ using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Application.Commands
 {
-    public class GetLocationCompanyCommand : LocationCompanyInput, IRequest<CommandResponse<List<LocationCompany>>>
+    public class GetLocationCompanyCommand :  IRequest<CommandResponse<List<LocationCompany>>>
     {
         public GetLocationCompanyCommand()
         {
         }
 
         public long CompanyId { get; set; }
+        public long? OperationalAddressId { get; set; } = null;
 
     }
 }

@@ -36,7 +36,7 @@ namespace CMPNatural.Api.Controllers
             });
             return Ok(result);
         }
-
+        
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]

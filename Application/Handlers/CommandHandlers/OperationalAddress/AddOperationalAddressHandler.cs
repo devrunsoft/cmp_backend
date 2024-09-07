@@ -14,6 +14,7 @@ using CMPNatural.Application.Mapper;
 using CMPNatural.Application.Commands;
 using CMPNatural.Core.Repositories;
 using CMPNatural.Application.Commands.OperationalAddress;
+using System.Linq;
 
 namespace CMPNatural.Application.Handlers.CommandHandlers
 {
@@ -29,25 +30,30 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
         public async Task<CommandResponse<object>> Handle(AddOperationalAddressCommand request, CancellationToken cancellationToken)
         {
 
-            var entity = new Core.Entities.OperationalAddress()
+            OperationalAddress lastOprAdd = (await _operationalAddressRepository.GetAsync(p => p.CompanyId == request.CompanyId)).FirstOrDefault();
+            if (lastOprAdd == null)
             {
-            Address=request.Address,
-            BusinessId=request.BusinessId,
-            CompanyId=request.CompanyId,
-            County=request.County,
-            CrossStreet=request.CrossStreet,
-            FirstName=request.FirstName,
-            LastName=request.LastName,
-            LocationPhone=request.LocationPhone,
-            Lat=request.Lat,
-            Long = request.Long,
+                var entity = new Core.Entities.OperationalAddress()
+                {
+                    Address = request.Address,
+                    BusinessId = request.BusinessId,
+                    CompanyId = request.CompanyId,
+                    County = request.County,
+                    CrossStreet = request.CrossStreet,
+                    FirstName = request.FirstName,
+                    LastName = request.LastName,
+                    LocationPhone = request.LocationPhone,
+                    Lat = request.Lat,
+                    Long = request.Long,
 
-            };
-
-            var result = await _operationalAddressRepository.AddAsync(entity);
-
-
-            return new Success<object>() { Data = result, Message = "OperationalAddres Added Successfully!" };
+                };
+                var result = await _operationalAddressRepository.AddAsync(entity);
+                return new Success<object>() { Data = result, Message = "OperationalAddres Added Successfully!" };
+            }
+            else
+            {
+                return new NoAcess() { Message = "Operational Address Already Registred!" };
+            }
         }
 
     }

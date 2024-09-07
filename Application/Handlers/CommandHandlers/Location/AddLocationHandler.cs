@@ -40,13 +40,13 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                 PrimaryLastName= request.PrimaryLastName,
                 PrimaryPhonNumber= request.PrimaryPhonNumber,
                 Type= (int) request.Type,
+                OperationalAddressId = request.OperationalAddressId
 
             };
 
             var result= await _locationRepository.AddAsync(entity);
 
-
-            return new CommandResponse<object>() { Success=true,Data=entity,Message="Location added successfully!" };
+            return new CommandResponse<object>() { Success=true,Data= result, Message="Location added successfully!" };
         }
 
     }

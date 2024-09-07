@@ -27,7 +27,7 @@ namespace CMPNatural.Application.Handlers.CommandHandlers.Document
 
             return new Success<DocumentSubmission>() { Data = result };
         }
-
+        
     }
 }
 

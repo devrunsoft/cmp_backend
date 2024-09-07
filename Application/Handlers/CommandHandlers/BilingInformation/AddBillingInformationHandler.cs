@@ -28,25 +28,33 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
         public async Task<CommandResponse<object>> Handle(AddBilingInformationCommand request, CancellationToken cancellationToken)
         {
 
-            var entity = new BillingInformation()
+            var lastResult = await _billingInformationRepository.GetAsync(p => p.CompanyId == request.CompanyId);
+            if (lastResult == null|| lastResult.Count==0)
             {
-            Address=request.Address,
-            CardholderName=request.CardholderName,
-            ZIPCode=request.ZIPCode,
-            State=request.State,
-            IsPaypal=request.IsPaypal,
-            Expiry=request.Expiry,
-            CVC=request.CVC,
-            CardNumber=request.CardNumber,
-            City=request.City,
-            CompanyId=request.CompanyId
+                var entity = new BillingInformation()
+                {
+                    Address = request.Address,
+                    CardholderName = request.CardholderName,
+                    ZIPCode = request.ZIPCode,
+                    State = request.State,
+                    IsPaypal = request.IsPaypal,
+                    Expiry = request.Expiry,
+                    CVC = request.CVC,
+                    CardNumber = request.CardNumber,
+                    City = request.City,
+                    CompanyId = request.CompanyId
 
-            };
+                };
 
-            var result = await _billingInformationRepository.AddAsync(entity);
+                var result = await _billingInformationRepository.AddAsync(entity);
 
 
-            return new Success<object>() { Data = result,  Message = "Billing Information added successfully!" };
+                return new Success<object>() { Data = result, Message = "Billing Information added successfully!" };
+            }
+            else
+            {
+                return new NoAcess() { Message = "Biling Information Already Registred!" };
+            }
         }
 
     }

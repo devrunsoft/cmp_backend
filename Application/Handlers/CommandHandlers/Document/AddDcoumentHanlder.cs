@@ -30,22 +30,30 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
 
         public async Task<CommandResponse<object>> Handle(AddDocumentCommand request, CancellationToken cancellationToken)
         {
-
-
-            var BusinessLicense = FileHandler.fileHandler(request.BaseVirtualPath, request.BusinessLicense, "BusinessLicense");
-            var HealthDepartmentCertificate = FileHandler.fileHandler(request.BaseVirtualPath, request.HealthDepartmentCertificate, "HealthDepartmentCertificate");
-
-            var entity = new DocumentSubmission()
+            var lastResult = await _documentRepository.GetAsync(p=>p.CompanyId==request.CompanyId);
+            if (lastResult == null || lastResult.Count==0)
             {
-                BusinessLicense= BusinessLicense,
-                HealthDepartmentCertificate= HealthDepartmentCertificate,
-                CompanyId=request.CompanyId
-            };
 
-            var result = await _documentRepository.AddAsync(entity);
+                var BusinessLicense = FileHandler.fileHandler(request.BaseVirtualPath, request.BusinessLicense, "BusinessLicense");
+                var HealthDepartmentCertificate = FileHandler.fileHandler(request.BaseVirtualPath, request.HealthDepartmentCertificate, "HealthDepartmentCertificate");
+
+                var entity = new DocumentSubmission()
+                {
+                    BusinessLicense = BusinessLicense,
+                    HealthDepartmentCertificate = HealthDepartmentCertificate,
+                    CompanyId = request.CompanyId
+                };
+                
+                var result = await _documentRepository.AddAsync(entity);
 
 
-            return new CommandResponse<object>() { Success = true, Data= result, Message = "Files added successfully!" };
+                return new Success<object>() {  Data = result, Message = "Files added successfully!" };
+
+            }
+            else
+            {
+                return new NoAcess() { Message = "Documantion Already Registred!" };
+            }
         }
 
 

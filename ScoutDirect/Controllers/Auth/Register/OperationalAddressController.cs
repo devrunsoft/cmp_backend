@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CMPNatural.Application;
 using CMPNatural.Application.Commands;
 using CMPNatural.Application.Commands.OperationalAddress;
+using CMPNatural.Application.Handlers;
 using CMPNatural.Application.Model;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
@@ -28,6 +30,19 @@ namespace CMPNatural.Api.Controllers.Auth.Register
         public async Task<ActionResult> Get()
         {
             var result = await _mediator.Send(new GetOperationalAddressCommand()
+            {
+                CompanyId = rCompanyId,
+            });
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> GetAll()
+        {
+            var result = await _mediator.Send(new GetAllOperationalAddressCommand()
             {
                 CompanyId = rCompanyId,
             });

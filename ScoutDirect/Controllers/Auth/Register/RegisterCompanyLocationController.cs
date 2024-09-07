@@ -34,6 +34,20 @@ namespace CMPNatural.Api.Controllers
         }
 
 
+        [HttpGet("OperationalAddress/{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> OperationalAddress([FromRoute] long Id)
+        {
+            var result = await _mediator.Send(new GetLocationCompanyCommand()
+            {
+                CompanyId = rCompanyId,
+                OperationalAddressId = Id
+            });
+            return Ok(result);
+        }
+
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
@@ -49,7 +63,8 @@ namespace CMPNatural.Api.Controllers
                 PrimaryFirstName= input.PrimaryFirstName,
                 PrimaryLastName= input.PrimaryLastName,
                 PrimaryPhonNumber= input.PrimaryPhonNumber,
-                Type = input.Type
+                Type = input.Type,
+                OperationalAddressId = input.OperationalAddressId
 
             });
 

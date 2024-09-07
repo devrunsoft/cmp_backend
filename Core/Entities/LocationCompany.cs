@@ -8,6 +8,7 @@ namespace CMPNatural.Core.Entities
         }
         public long Id { get; set; }
         public long CompanyId { get; set; }
+        public long OperationalAddressId { get; set; }
         public string Name { get; set; }
         public double Lat { get; set; }
         public double Long { get; set; }

@@ -16,9 +16,9 @@ using CMPNatural.Core.Repositories;
 using CMPNatural.Application.Commands.OperationalAddress;
 using System.Linq;
 
-namespace CMPNatural.Application.Handlers.CommandHandlers
+namespace CMPNatural.Application.Handlers
 {
-    public class GetOperationalAddressHandler : IRequestHandler<GetOperationalAddressCommand, CommandResponse<object>>
+    public class GetOperationalAddressHandler : IRequestHandler<GetOperationalAddressCommand, CommandResponse<OperationalAddress>>
     {
         private readonly IOperationalAddressRepository _operationalAddressRepository;
 
@@ -27,13 +27,13 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
             _operationalAddressRepository = operationalAddressRepository;
         }
 
-        public async Task<CommandResponse<object>> Handle(GetOperationalAddressCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<OperationalAddress>> Handle(GetOperationalAddressCommand request, CancellationToken cancellationToken)
         {
-            
-            OperationalAddress result = (await _operationalAddressRepository.GetAsync(p=>p.CompanyId==request.CompanyId)).FirstOrDefault();
+
+            OperationalAddress result = (await _operationalAddressRepository.GetAsync(p => p.CompanyId == request.CompanyId)).FirstOrDefault();
 
 
-            return new Success<object>() {  Data = result };
+            return new Success<OperationalAddress>() { Data = result };
         }
 
     }

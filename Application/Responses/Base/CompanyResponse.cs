@@ -18,6 +18,8 @@ namespace CMPNatural.Application.Responses
         public string SecondaryPhoneNumber { get; set; }
         public string ReferredBy { get; set; }
         public string AccountNumber { get; set; }
+        public bool Registered { get; set; }
+        public bool Accepted { get; set; }
         public int Type { get; set; }
 
 

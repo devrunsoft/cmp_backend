@@ -4,7 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using CMPNatural.Application.Commands;
 using CMPNatural.Application.Commands.Billing;
+using CMPNatural.Application.Commands.Company;
 using CMPNatural.Application.Commands.Document;
+using CMPNatural.Application.Handlers.CommandHandlers;
+using CMPNatural.Application.Responses;
 using CMPNatural.Core.Entities;
 using CMPNatural.Core.Enums;
 using MediatR;
@@ -61,6 +64,15 @@ namespace CMPNatural.Api.Controllers
             {
                 return Ok(new Success<String>() { Data = RegisterType.BillingDetails.ToString() });
 
+            }
+            var resultCompany = await _mediator.Send(new GetCompanyCommand()
+            {
+                CompanyId = rCompanyId,
+            })!;
+
+            if(!((CompanyResponse)resultCompany.Data).Registered)
+            {
+                return Ok(new Success<String>() { Data = RegisterType.NotActivate.ToString() });
             }
 
             return Ok(new Success<String>() { Data = RegisterType.Registered.ToString() });
