@@ -16,6 +16,8 @@ using CMPNatural.Core.Repositories;
 using CMPNatural.Application.Commands.OperationalAddress;
 using System.Linq;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
+using System.Security.Cryptography;
 
 namespace CMPNatural.Application.Handlers
 {
@@ -30,10 +32,8 @@ namespace CMPNatural.Application.Handlers
 
         public async Task<CommandResponse<List<OperationalAddress>>> Handle(GetAllOperationalAddressCommand request, CancellationToken cancellationToken)
         {
-
-            List<OperationalAddress> result = (await _operationalAddressRepository.GetAsync(p => p.CompanyId == request.CompanyId)).ToList();
-
-
+            List<OperationalAddress> result = (await _operationalAddressRepository.GetWithChild(p => p.CompanyId == request.CompanyId
+            && (request.OperationalAddressId == null ? true : p.Id == request.OperationalAddressId))).ToList();
             return new Success<List<OperationalAddress>>() { Data = result };
         }
 

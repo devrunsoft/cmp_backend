@@ -18,6 +18,7 @@ namespace CMPNatural.Core.Entities
 		public long BusinessId { get; set; }
 		public string FirstName { get; set; }
         public string LastName { get; set; }
+        public virtual ICollection<LocationCompany> LocationCompany { get; set; }
     }
 }
 

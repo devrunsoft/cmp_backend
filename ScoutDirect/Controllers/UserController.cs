@@ -61,7 +61,7 @@ namespace ScoutDirect.Api.Controllers
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expiration = token.ValidTo,
-                    //  register_type = result.RegisterType,
+                    registered = company.Registered,
                     accepted = company.Accepted,
                 });
 

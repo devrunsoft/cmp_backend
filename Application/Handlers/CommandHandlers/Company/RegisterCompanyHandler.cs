@@ -14,7 +14,7 @@ using CMPNatural.Application.Commands;
 
 namespace CMPNatural.Application.Handlers.CommandHandlers
 {
-    public class RegisterCompanyHandler : IRequestHandler<RegisterCompanyCommand, CompanyResponse>
+    public class RegisterCompanyHandler : IRequestHandler<RegisterCompanyCommand, CommandResponse<object>>
     {
         private readonly ICompanyRepository _companyRepository;
 
@@ -23,11 +23,11 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
             _companyRepository = companyRepository;
         }
 
-        public async Task<CompanyResponse> Handle(RegisterCompanyCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<object>> Handle(RegisterCompanyCommand request, CancellationToken cancellationToken)
         {
             var company = await _companyRepository.GetByEmailAsync(request.BusinessEmail);
 
-            if (company == null)
+            if (company == null || !company.Registered)
             {
                 company = new Company()
                 {
@@ -49,10 +49,10 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                 };
 
                 await _companyRepository.AddAsync(company);
-             return CompanyMapper.Mapper.Map<CompanyResponse>(company);
+                return new Success<object>() { Data = CompanyMapper.Mapper.Map<CompanyResponse>(company) };
             }
 
-            return new CompanyResponse();
+            return new NoAcess();
         }
 
     }

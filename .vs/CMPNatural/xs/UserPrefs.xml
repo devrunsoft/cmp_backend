@@ -1,19 +1,18 @@
-﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{36794759-A62F-43C3-B7D2-DE0D42AA2780}|https">
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Core/Entities/BillingInformation.cs">
+﻿<Properties StartupConfiguration="{36794759-A62F-43C3-B7D2-DE0D42AA2780}|https" GitUserInfo="UsingMD">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ScoutDirect/Controllers/Auth/Register/OperationalAddressController.cs">
     <Files>
-      <File FileName="ScoutDirect/Controllers/UserController.cs" />
+      <File FileName="ScoutDirect/Controllers/UserController.cs" Line="49" Column="1" />
       <File FileName="ScoutDirect/Controllers/_Base/BaseScoutApiController.cs" />
       <File FileName="ScoutDirect/Controllers/_Base/BasePlayerApiController.cs" />
       <File FileName="Application/Responses/Appointment/AppointmentReponse.cs" />
-      <File FileName="ScoutDirect/Controllers/_Base/BaseApiController.cs" />
+      <File FileName="ScoutDirect/Controllers/_Base/BaseApiController.cs" Line="27" Column="24" />
       <File FileName="Application/Model/RegisterPlayerInput.cs" />
       <File FileName="Application/Responses/Player/PlayerResponse.cs" />
       <File FileName="Application/Responses/Scout/LocationScoutReponse.cs" />
       <File FileName="infrastructure/Data/DbContext.cs" />
       <File FileName="Core/Base/PagedQueryRequest.cs" />
-      <File FileName="Application/Commands/LoginCommand.cs" />
-      <File FileName="Application/Responses/Base/CommandResponse.cs" />
+      <File FileName="Application/Commands/LoginCommand.cs" Line="6" Column="42" />
+      <File FileName="Application/Responses/Base/CommandResponse.cs" Line="48" Column="16" />
       <File FileName="Core/Entities/Base/PersistentDefinition.cs" />
       <File FileName="Application/Responses/Scout/ScoutResponse.cs" />
       <File FileName="Core/Extentions/Salon.cs" />
@@ -22,59 +21,59 @@
       <File FileName="ScoutDirect/Startup.cs" />
       <File FileName="ScoutDirect/Program.cs" />
       <File FileName="Core/Entities/Device.cs" />
-      <File FileName="Core/Enums/LocationType.cs" />
-      <File FileName="Application/Handlers/CommandHandlers/Location/AddLocationHandler.cs" />
+      <File FileName="Core/Enums/LocationType.cs" Line="19" Column="1" />
+      <File FileName="Application/Handlers/CommandHandlers/Location/AddLocationHandler.cs" Line="46" Column="1" />
       <File FileName="infrastructure/Repository/LocationRepository.cs" />
       <File FileName="Core/Repositories/ILocationReporitory.cs" />
-      <File FileName="Core/Entities/LocationCompany.cs" />
-      <File FileName="Application/Model/LocationCompanyInput.cs" />
+      <File FileName="Core/Entities/LocationCompany.cs" Line="11" Column="55" />
+      <File FileName="Application/Model/LocationCompanyInput.cs" Line="11" Column="1" />
       <File FileName="infrastructure/Repository/DocumentReporitory.cs" />
       <File FileName="Core/Repositories/IDocumentRepository.cs" />
       <File FileName="infrastructure/Class1.cs" />
       <File FileName="infrastructure/Repository/BillingInformationRepository.cs" />
       <File FileName="Core/Repositories/IBillingInformationRepository.cs" />
-      <File FileName="Application/Model/BilingInformationInput.cs" />
-      <File FileName="Core/Entities/Company.cs" />
-      <File FileName="Core/Entities/BillingInformation.cs" Line="17" Column="44" />
-      <File FileName="Core/Entities/DocumentSubmission.cs" />
+      <File FileName="Application/Model/BilingInformationInput.cs" Line="4" Column="15" />
+      <File FileName="Core/Entities/Company.cs" Line="26" Column="1" />
+      <File FileName="Core/Entities/BillingInformation.cs" Line="8" Column="4" />
+      <File FileName="Core/Entities/DocumentSubmission.cs" Line="13" Column="1" />
       <File FileName="Application/CMPNatural.Application.csproj" />
       <File FileName="ScoutDirect/appsettings.Development.json" />
-      <File FileName="ScoutDirect/Controllers/StatusController.cs" />
+      <File FileName="ScoutDirect/Controllers/StatusController.cs" Line="36" Column="1" />
       <File FileName="Application/Handlers/QueryHandlers/GetLoginQuery.cs" />
       <File FileName="Application/Commands/RegistrationStatusCommand.cs" />
       <File FileName="Core/Repositories/ICompanyRepository.cs" />
-      <File FileName="Core/Enums/RegisterType.cs" />
-      <File FileName="Application/Responses/Base/CompanyResponse.cs" />
-      <File FileName="Application/Handlers/CommandHandlers/BilingInformation/GetBillingInformationHandler.cs" />
+      <File FileName="Core/Enums/RegisterType.cs" Line="21" Column="20" />
+      <File FileName="Application/Responses/Base/CompanyResponse.cs" Line="13" Column="54" />
+      <File FileName="Application/Handlers/CommandHandlers/BilingInformation/GetBillingInformationHandler.cs" Line="1" Column="1" />
       <File FileName="Core/Repositories/Base/IRepository.cs" />
       <File FileName="Application/Commands/Billing/GetBillingInformationCommand.cs" />
-      <File FileName="Application/Handlers/CommandHandlers/Document/GetDcoumentHanlder.cs" />
-      <File FileName="Application/Commands/Document/GetDocumentCommand.cs" />
-      <File FileName="ScoutDirect/Controllers/Auth/Register/RegisterCompanyLocationController.cs" />
-      <File FileName="Application/Commands/Location/GetLocationCommand.cs" />
-      <File FileName="Application/Handlers/CommandHandlers/Location/GetLocationHandler.cs" />
-      <File FileName="ScoutDirect/Controllers/Auth/Register/RegisterCompanyController.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/Document/GetDcoumentHanlder.cs" Line="22" Column="1" />
+      <File FileName="Application/Commands/Document/GetDocumentCommand.cs" Line="9" Column="13" />
+      <File FileName="ScoutDirect/Controllers/Auth/Register/RegisterCompanyLocationController.cs" Line="71" Column="31" />
+      <File FileName="Application/Commands/Location/GetLocationCommand.cs" Line="9" Column="83" />
+      <File FileName="Application/Handlers/CommandHandlers/Location/GetLocationHandler.cs" Line="14" Column="91" />
+      <File FileName="ScoutDirect/Controllers/Auth/Register/RegisterCompanyController.cs" Line="68" Column="1" />
       <File FileName="Core/Enums/CompanyType.cs" />
-      <File FileName="ScoutDirect/Controllers/Auth/Register/BilingInformationController.cs" />
+      <File FileName="ScoutDirect/Controllers/Auth/Register/BilingInformationController.cs" Line="48" Column="25" />
       <File FileName="ScoutDirect/Properties/launchSettings.json" />
-      <File FileName="Core/Entities/OperationalAddress.cs" />
+      <File FileName="Core/Entities/OperationalAddress.cs" Line="9" Column="1" />
       <File FileName="Core/Entities/BusinessType.cs" />
       <File FileName="infrastructure/Repository/OperationalAddressRepository.cs" />
       <File FileName="Core/Repositories/IOperationalAddressRepository.cs" />
       <File FileName="Application/Commands/Location/AddLocationCommand.cs" />
-      <File FileName="Application/Model/OperationalAddressInput.cs" />
-      <File FileName="Application/Handlers/CommandHandlers/OperationalAddress/AddOperationalAddressHandler.cs" />
-      <File FileName="Application/Handlers/CommandHandlers/OperationalAddress/EditOperationalAddressHandler.cs" />
+      <File FileName="Application/Model/OperationalAddressInput.cs" Line="14" Column="45" />
+      <File FileName="Application/Handlers/CommandHandlers/OperationalAddress/AddOperationalAddressHandler.cs" Line="55" Column="9" />
+      <File FileName="Application/Handlers/CommandHandlers/OperationalAddress/EditOperationalAddressHandler.cs" Line="62" Column="1" />
       <File FileName="Application/Commands/Location/EditLocationCommand.cs" />
       <File FileName="Application/Handlers/CommandHandlers/Location/EditLocationHandler.cs" />
       <File FileName="Application/Handlers/CommandHandlers/BilingInformation/EditBillingInformationHandler.cs" />
       <File FileName="Application/Commands/Billing/AddBilingInformationCommand.cs" />
       <File FileName="Application/Commands/Billing/EditBilingInformationCommand.cs" />
-      <File FileName="Application/Handlers/CommandHandlers/OperationalAddress/GetOperationalAddressHandler.cs" />
-      <File FileName="Application/Commands/OperationalAddress/GetOperationalAddressCommand.cs" />
-      <File FileName="ScoutDirect/Controllers/Auth/Register/OperationalAddressController.cs" />
-      <File FileName="ScoutDirect/Controllers/Auth/Register/DocumentController.cs" />
-      <File FileName="ScoutDirect/Controllers/Auth/Register/BusinessTypeController.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/OperationalAddress/GetOperationalAddressHandler.cs" Line="41" Column="1" />
+      <File FileName="Application/Commands/OperationalAddress/GetOperationalAddressCommand.cs" Line="15" Column="3" />
+      <File FileName="ScoutDirect/Controllers/Auth/Register/OperationalAddressController.cs" Line="59" Column="13" />
+      <File FileName="ScoutDirect/Controllers/Auth/Register/DocumentController.cs" Line="45" Column="1" />
+      <File FileName="ScoutDirect/Controllers/Auth/Register/BusinessTypeController.cs" Line="1" Column="1" />
       <File FileName="Application/Commands/Document/EditDocumentCommand.cs" />
       <File FileName="Application/Handlers/CommandHandlers/Document/EditDcoumentHanlder.cs" />
       <File FileName="Application/Services/FileHandler.cs" />
@@ -85,44 +84,41 @@
       <File FileName="Application/Handlers/CommandHandlers/BusinessType/BusinessTypeHandler.cs" />
       <File FileName="infrastructure/Repository/BusinessTypeRepository.cs" />
       <File FileName="Core/Repositories/IBusinessTypeRepository.cs" />
-      <File FileName="Application/Handlers/CommandHandlers/BilingInformation/DeleteBillingInformationHandler.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/BilingInformation/DeleteBillingInformationHandler.cs" Line="39" Column="1" />
       <File FileName="Application/Handlers/CommandHandlers/Document/DeleteDcoumentHanlder.cs" />
       <File FileName="Application/Handlers/CommandHandlers/Location/DeleteLocationHandler.cs" />
-      <File FileName="Application/Handlers/CommandHandlers/OperationalAddress/DeleteOperationalAddressHandler.cs" />
-      <File FileName="ScoutDirect/log/error-2024-06-28150157Z-77627808-3fac-4954-bc8e-f3e1e9a41d8f.xml" />
+      <File FileName="Application/Handlers/CommandHandlers/OperationalAddress/DeleteOperationalAddressHandler.cs" Line="48" Column="1" />
       <File FileName="ScoutDirect/log/error-2024-07-10204008Z-1e26475d-a6a1-4a00-8579-1d09ece55dbd.xml" />
-      <File FileName="Application/Handlers/CommandHandlers/Company/GetCompanyHandler.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/Company/GetCompanyHandler.cs" Line="18" Column="71" />
       <File FileName="Application/Commands/RegisterStatusCommand.cs" />
-      <File FileName="Application/Commands/Company/GetCompanyHandler.cs" />
+      <File FileName="Application/Commands/Company/GetCompanyHandler.cs" Line="8" Column="75" />
       <File FileName="Application/Commands/Company/UpdateCompanyCommand.cs" />
       <File FileName="Application/Handlers/CommandHandlers/Company/UpdateCompanyHandler.cs" />
-      <File FileName="Application/Commands/OperationalAddress/AddOperationalAddressCommand.cs" />
+      <File FileName="Application/Commands/OperationalAddress/AddOperationalAddressCommand.cs" Line="15" Column="1" />
+      <File FileName="Application/Commands/Company/RegisterCompanyCommand.cs" Line="9" Column="56" />
+      <File FileName="Application/Responses/Base/BaseResponse.cs" Line="5" Column="18" />
+      <File FileName="Application/Model/DocumentInput.cs" Line="12" Column="41" />
+      <File FileName="ScoutDirect/log/error-2024-08-13201722Z-20d211e5-b77c-4ed4-899a-102b73917057.xml" Line="1" Column="41" />
+      <File FileName="ScoutDirect/log/error-2024-08-13201655Z-e181dd68-34bf-40ae-b88a-dcd743e2f0cd.xml" Line="1" Column="41" />
+      <File FileName="Application/Commands/Document/AddDocumentCommand.cs" Line="8" Column="13" />
+      <File FileName="Application/Handlers/CommandHandlers/Document/AddDcoumentHanlder.cs" Line="38" Column="14" />
+      <File FileName="Application/Handlers/CommandHandlers/BilingInformation/AddBillingInformationHandler.cs" Line="39" Column="43" />
+      <File FileName="Application/Handlers/CommandHandlers/OperationalAddress/GetAllOperationalAddressHandler.cs" Line="22" Column="99" />
+      <File FileName="Application/Commands/OperationalAddress/GetAllOperationalAddressCommand.cs" Line="9" Column="49" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="CMPNatural" expanded="True">
-            <Node name="CMPNatural.Api" expanded="True" selected="True">
-              <Node name="Controllers" expanded="True" />
-            </Node>
-            <Node name="CMPNatural.Core" expanded="True">
-              <Node name="Entities" expanded="True" />
-            </Node>
-            <Node name="CMPNatural.infrastructure" expanded="True">
-              <Node name="Data" expanded="True" />
-            </Node>
-          </Node>
-        </State>
+        <State name="__root__" />
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.ItemProperties.CMPNatural.Api PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Player/RegisterPlayerController.cs" relfile="ScoutDirect/Controllers/Player/RegisterPlayerController.cs" line="50" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Player/RegisterPlayerController.cs" relfile="ScoutDirect/Controllers/Player/RegisterPlayerController.cs" line="58" column="1" />
-    </BreakpointStore>
+    <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Player/RegisterPlayerController.cs" relfile="ScoutDirect/Controllers/Player/RegisterPlayerController.cs" line="50" column="1" />
+    <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Player/RegisterPlayerController.cs" relfile="ScoutDirect/Controllers/Player/RegisterPlayerController.cs" line="58" column="1" />
+    <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/_Base/BaseApiController.cs" relfile="ScoutDirect/Controllers/_Base/BaseApiController.cs" line="29" column="1" />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>

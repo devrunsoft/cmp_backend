@@ -13,6 +13,7 @@ namespace CMPNatural.Application
         }
 
         public long CompanyId { get; set; }
+        public long? OperationalAddressId { get; set; }
     }
 }
 

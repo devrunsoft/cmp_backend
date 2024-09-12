@@ -16,10 +16,10 @@ namespace CMPNatural.Core.Entities
 		public string PrimaryPhonNumber { get; set; }
 		public string BusinessEmail { get; set; }
 		public string Position { get; set; }
-		public string SecondaryFirstName { get; set; }
-        public string SecondaryLastName { get; set; }
-		public string SecondaryPhoneNumber { get; set; }
-		public string ReferredBy { get; set; }
+		public string? SecondaryFirstName { get; set; } = null;
+        public string? SecondaryLastName { get; set; } = null;
+        public string? SecondaryPhoneNumber { get; set; } = null;
+        public string ReferredBy { get; set; }
 		public string AccountNumber { get; set; }
 		public string? Password { get; set; }
 		public int Type { get; set; }

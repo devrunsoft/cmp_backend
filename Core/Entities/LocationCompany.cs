@@ -18,6 +18,7 @@ namespace CMPNatural.Core.Entities
         public string? PrimaryLastName { get; set; }
         public string? PrimaryPhonNumber { get; set; }
         public int Type { get; set; }
+        public OperationalAddress OperationalAddress { get; set; }
 
     }
 }

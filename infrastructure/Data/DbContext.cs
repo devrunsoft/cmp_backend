@@ -65,6 +65,9 @@ namespace infrastructure.Data
             modelBuilder.Entity<OperationalAddress>(entity =>
             {
                 entity.ToTable("OperationalAddress");
+                entity.HasMany(d => d.LocationCompany)
+                .WithOne(p => p.OperationalAddress)
+                .HasForeignKey(d => d.OperationalAddressId);
             });
 
             modelBuilder.Entity<BusinessType>(entity =>

@@ -13,9 +13,9 @@ namespace CMPNatural.Application.Responses
         public string PrimaryPhonNumber { get; set; }
         public string BusinessEmail { get; set; }
         public string Position { get; set; }
-        public string SecondaryFirstName { get; set; }
-        public string SecondaryLastName { get; set; }
-        public string SecondaryPhoneNumber { get; set; }
+        public string SecondaryFirstName { get; set; } = null;
+        public string SecondaryLastName { get; set; } = null;
+        public string SecondaryPhoneNumber { get; set; } = null;
         public string ReferredBy { get; set; }
         public string AccountNumber { get; set; }
         public bool Registered { get; set; }

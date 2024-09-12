@@ -21,6 +21,8 @@ using CMPNatural.Core.Entities;
 using ScoutDirect.Api.Controllers._Base;
 using CMPNatural.Application.Commands.Company;
 using Microsoft.AspNetCore.Authorization;
+using CMPNatural.Application.Model;
+using CMPNatural.Application.Responses;
 
 namespace CMPNatural.Api.Controllers
 {
@@ -49,8 +51,8 @@ namespace CMPNatural.Api.Controllers
             }
 
             var result = await _mediator.Send(command);
-
-            if (result.Id == null)
+            var data =(CompanyResponse) result.Data;
+            if (data.Id == null)
             {
                 return Ok(new CommandResponse<object>() { Success = false, Message = "This Company is exist" });
             }
@@ -58,11 +60,12 @@ namespace CMPNatural.Api.Controllers
 
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
+
             var token = new JwtSecurityToken(
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
                 expires: DateTime.Now.AddDays(30),
-                claims: get_claims(result.Type.ToString(), result.BusinessEmail, result.Id.ToString()),
+                claims: get_claims(data.Type.ToString(), data.BusinessEmail, data.Id.ToString()),
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );
             return Ok(new
@@ -99,24 +102,21 @@ namespace CMPNatural.Api.Controllers
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Put([FromBody] RegisterCompanyCommand request)
+        public async Task<ActionResult> Put([FromBody] UpdateCompanyInput request)
         {
 
             var result = await _mediator.Send(new UpdateCompanyCommand()
             {
                 CompanyId = rCompanyId,
-                AccountNumber = request.AccountNumber,
-                //BusinessEmail = request.BusinessEmail,
                 CompanyName = request.CompanyName,
                 Position = request.Position,
                 PrimaryFirstName = request.PrimaryFirstName,
                 PrimaryLastName = request.PrimaryLastName,
                 PrimaryPhonNumber = request.PrimaryPhonNumber,
-                ReferredBy = request.ReferredBy,
                 SecondaryFirstName = request.SecondaryFirstName,
                 SecondaryLastName = request.SecondaryLastName,
                 SecondaryPhoneNumber = request.SecondaryPhoneNumber,
-                Password = request.Password
+                //Password = request.Password
 
             });
             return Ok(result);

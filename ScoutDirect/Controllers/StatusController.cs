@@ -33,38 +33,38 @@ namespace CMPNatural.Api.Controllers
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Get()
         {
-            var resultlocation = await _mediator.Send(new GetLocationCompanyCommand()
-            {
-                CompanyId = rCompanyId,
-            })!;
+            //var resultlocation = await _mediator.Send(new GetLocationCompanyCommand()
+            //{
+            //    CompanyId = rCompanyId,
+            //})!;
 
-            if (!resultlocation.Data.Any())
-            {
-                return Ok(new Success<String>() { Data = RegisterType.ProfessionalInformation.ToString() });
+            //if (!resultlocation.Data.Any())
+            //{
+            //    return Ok(new Success<String>() { Data = RegisterType.ProfessionalInformation.ToString() });
 
-            }
-            //
-            var resultdocument = await _mediator.Send(new GetDocumentCommand()
-            {
-                CompanyId = rCompanyId,
-            })!;
+            //}
+            ////
+            //var resultdocument = await _mediator.Send(new GetDocumentCommand()
+            //{
+            //    CompanyId = rCompanyId,
+            //})!;
 
-            if (resultdocument.Data == null)
-            {
-                return Ok(new Success<String>() { Data = RegisterType.DocumentSubmission.ToString() });
+            //if (resultdocument.Data == null)
+            //{
+            //    return Ok(new Success<String>() { Data = RegisterType.DocumentSubmission.ToString() });
 
-            }
+            //}
 
-            var resultbiling = await _mediator.Send(new GetBilingInformationCommand()
-            {
-                CompanyId = rCompanyId,
-            })!;
+            //var resultbiling = await _mediator.Send(new GetBilingInformationCommand()
+            //{
+            //    CompanyId = rCompanyId,
+            //})!;
 
-            if (resultbiling.Data == null)
-            {
-                return Ok(new Success<String>() { Data = RegisterType.BillingDetails.ToString() });
+            //if (resultbiling.Data == null)
+            //{
+            //    return Ok(new Success<String>() { Data = RegisterType.BillingDetails.ToString() });
 
-            }
+            //}
             var resultCompany = await _mediator.Send(new GetCompanyCommand()
             {
                 CompanyId = rCompanyId,
