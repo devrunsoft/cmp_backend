@@ -80,6 +80,9 @@ namespace ScoutDirect.Api.Controllers
 
             return claims.ToArray();
         }
+
+
+
     }
 }
 

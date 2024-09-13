@@ -31,6 +31,7 @@
     <None Remove="FileContent\1\" />
     <None Remove="Controllers\Auth\" />
     <None Remove="Controllers\Auth\Register\" />
+    <None Remove="Controllers\Auth\dashboard\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FileContent\" />
@@ -38,6 +39,7 @@
     <Folder Include="FileContent\1\" />
     <Folder Include="Controllers\Auth\" />
     <Folder Include="Controllers\Auth\Register\" />
+    <Folder Include="Controllers\Auth\dashboard\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\infrastructure\CMPNatural.infrastructure.csproj">
@@ -47,6 +49,9 @@
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
     <ProjectReference Include="..\Core\CMPNatural.Core.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\CmpNatural.CrmManagment\CmpNatural.CrmManagment.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>

@@ -30,7 +30,7 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
 
             return new Success<CompanyResponse>() { Data = CompanyMapper.Mapper.Map<CompanyResponse>(company) };
         }
-        }
+     }
 
     }
 

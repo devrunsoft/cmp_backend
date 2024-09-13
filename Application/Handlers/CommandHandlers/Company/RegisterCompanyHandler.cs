@@ -12,7 +12,7 @@ using CMPNatural.Core.Entities;
 using CMPNatural.Application.Mapper;
 using CMPNatural.Application.Commands;
 
-namespace CMPNatural.Application.Handlers.CommandHandlers
+namespace CMPNatural.Application.Handlers
 {
     public class RegisterCompanyHandler : IRequestHandler<RegisterCompanyCommand, CommandResponse<object>>
     {
@@ -44,7 +44,8 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                     SecondaryPhoneNumber= request.SecondaryPhoneNumber,
                     Registered=false,
                     Type=(int)request.Type,
-                    Password=request.Password
+                    Password=request.Password,
+                    ActivationLink = Guid.NewGuid(),
 
                 };
 

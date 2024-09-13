@@ -21,6 +21,7 @@ namespace CMPNatural.Application.Responses
         public bool Registered { get; set; }
         public bool Accepted { get; set; }
         public int Type { get; set; }
+        public Guid? ActivationLink { get; set; } = null;
 
 
     }

@@ -123,3 +123,5 @@
 /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/obj/Debug/net8.0/CMPNatural.Api.pdb
 /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/obj/Debug/net8.0/CMPNatural.Api.genruntimeconfig.cache
 /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/obj/Debug/net8.0/ref/CMPNatural.Api.dll
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/bin/Debug/net8.0/CmpNatural.CrmManagment.dll
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/bin/Debug/net8.0/CmpNatural.CrmManagment.pdb

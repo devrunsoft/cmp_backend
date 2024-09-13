@@ -98,7 +98,9 @@
 /Users/morteza/Desktop/publish/CMP/runtimes/win/lib/net8.0/System.Windows.Extensions.dll
 /Users/morteza/Desktop/publish/CMP/CMPNatural.Application.dll
 /Users/morteza/Desktop/publish/CMP/CMPNatural.Core.dll
+/Users/morteza/Desktop/publish/CMP/CmpNatural.CrmManagment.dll
 /Users/morteza/Desktop/publish/CMP/CMPNatural.infrastructure.dll
 /Users/morteza/Desktop/publish/CMP/CMPNatural.infrastructure.pdb
 /Users/morteza/Desktop/publish/CMP/CMPNatural.Application.pdb
 /Users/morteza/Desktop/publish/CMP/CMPNatural.Core.pdb
+/Users/morteza/Desktop/publish/CMP/CmpNatural.CrmManagment.pdb

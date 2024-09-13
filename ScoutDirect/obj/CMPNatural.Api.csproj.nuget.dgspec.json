@@ -36,6 +36,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -111,6 +116,70 @@
         }
       }
     },
+    "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/CmpNatural.CrmManagment.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/CmpNatural.CrmManagment.csproj",
+        "projectName": "CmpNatural.CrmManagment",
+        "projectPath": "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/CmpNatural.CrmManagment.csproj",
+        "packagesPath": "/Users/morteza/.nuget/packages/",
+        "outputPath": "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/morteza/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Core/CMPNatural.Core.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -139,6 +208,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -214,6 +288,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -278,6 +357,9 @@
               "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/CMPNatural.Application.csproj": {
                 "projectPath": "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/CMPNatural.Application.csproj"
               },
+              "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/CmpNatural.CrmManagment.csproj": {
+                "projectPath": "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/CmpNatural.CrmManagment.csproj"
+              },
               "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Core/CMPNatural.Core.csproj": {
                 "projectPath": "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Core/CMPNatural.Core.csproj"
               },
@@ -291,6 +373,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {

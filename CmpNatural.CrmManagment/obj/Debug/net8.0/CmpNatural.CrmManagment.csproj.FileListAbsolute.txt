@@ -1,0 +1,13 @@
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/bin/Debug/net8.0/CmpNatural.CrmManagment.deps.json
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/bin/Debug/net8.0/CmpNatural.CrmManagment.dll
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/bin/Debug/net8.0/CmpNatural.CrmManagment.pdb
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/obj/Debug/net8.0/CmpNatural.CrmManagment.csproj.AssemblyReference.cache
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/obj/Debug/net8.0/CmpNatural.CrmManagment.GeneratedMSBuildEditorConfig.editorconfig
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/obj/Debug/net8.0/CmpNatural.CrmManagment.AssemblyInfoInputs.cache
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/obj/Debug/net8.0/CmpNatural.CrmManagment.AssemblyInfo.cs
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/obj/Debug/net8.0/CmpNatural.CrmManagment.csproj.CoreCompileInputs.cache
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/obj/Debug/net8.0/CmpNatural.CrmManagment.sourcelink.json
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/obj/Debug/net8.0/CmpNatural.CrmManagment.dll
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/obj/Debug/net8.0/refint/CmpNatural.CrmManagment.dll
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/obj/Debug/net8.0/CmpNatural.CrmManagment.pdb
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/obj/Debug/net8.0/ref/CmpNatural.CrmManagment.dll

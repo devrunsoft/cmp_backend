@@ -32,6 +32,7 @@ using infrastructure.Data;
 using ScoutDirect.infrastructure.Repository;
 using ScoutDirect.Core.Repositories.Base;
 using CMPNatural.Application.Handlers.CommandHandlers;
+using CMPNatural.Application.Handlers;
 
 namespace ScoutDirect.Api
 {

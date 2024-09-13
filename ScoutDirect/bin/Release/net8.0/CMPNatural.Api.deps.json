@@ -13,6 +13,7 @@
           "CMPNatural.Application": "1.0.0",
           "CMPNatural.Core": "1.0.0",
           "CMPNatural.infrastructure": "1.0.0",
+          "CmpNatural.CrmManagment": "1.0.0",
           "ElmahCore": "2.1.2",
           "Hangfire": "1.8.14",
           "Hangfire.MemoryStorage": "1.8.1.1",
@@ -1391,6 +1392,14 @@
           "CMPNatural.Core.dll": {}
         }
       },
+      "CmpNatural.CrmManagment/1.0.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "runtime": {
+          "CmpNatural.CrmManagment.dll": {}
+        }
+      },
       "CMPNatural.infrastructure/1.0.0": {
         "dependencies": {
           "CMPNatural.Core": "1.0.0",
@@ -2459,6 +2468,11 @@
       "sha512": ""
     },
     "CMPNatural.Core/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CmpNatural.CrmManagment/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
