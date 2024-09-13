@@ -33,9 +33,14 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
             var lastResult = await _documentRepository.GetAsync(p=>p.CompanyId==request.CompanyId);
             if (lastResult == null || lastResult.Count==0)
             {
+               string BusinessLicense = "";
+                string HealthDepartmentCertificate = "";
 
-                var BusinessLicense = FileHandler.fileHandler(request.BaseVirtualPath, request.BusinessLicense, "BusinessLicense");
-                var HealthDepartmentCertificate = FileHandler.fileHandler(request.BaseVirtualPath, request.HealthDepartmentCertificate, "HealthDepartmentCertificate");
+                if (request.BusinessLicense!=null)
+                 BusinessLicense = FileHandler.fileHandler(request.BaseVirtualPath, request.BusinessLicense, "BusinessLicense");
+
+                if (request.HealthDepartmentCertificate != null)
+                    HealthDepartmentCertificate = FileHandler.fileHandler(request.BaseVirtualPath, request.HealthDepartmentCertificate, "HealthDepartmentCertificate");
 
                 var entity = new DocumentSubmission()
                 {
