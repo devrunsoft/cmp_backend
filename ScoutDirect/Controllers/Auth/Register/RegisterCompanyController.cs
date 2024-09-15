@@ -63,7 +63,7 @@ namespace CMPNatural.Api.Controllers
                 ContentType = "text/html",
                 StatusCode = (int)HttpStatusCode.OK,
                 Content = viewCheck(resultCompany.IsSucces())
-        };
+              };
 
         }
 
@@ -222,7 +222,34 @@ namespace CMPNatural.Api.Controllers
 
         }
 
-     }
+
+
+
+        [HttpPut]
+        [Route("[action]")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> ResetPassword([FromBody] ResetPasswordInput input)
+        {
+
+            if(input.Password!= input.RePassword)
+            {
+                return Ok(new NoAcess() { });
+            }
+
+
+            var result = await _mediator.Send(new ResetPasswordCompanyCommand()
+            {
+                CompanyId = rCompanyId,
+                Password = input.Password,
+                RePassword = input.RePassword,
+            })!;
+
+            return Ok(result);
+
+        }
+    }
 }
 
 

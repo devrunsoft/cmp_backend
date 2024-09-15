@@ -96,27 +96,27 @@ namespace CMPNatural.Api.Controllers
 
             }
             //
-            var resultdocument = await _mediator.Send(new GetDocumentCommand()
-            {
-                CompanyId = rCompanyId,
-            })!;
+            //var resultdocument = await _mediator.Send(new GetDocumentCommand()
+            //{
+            //    CompanyId = rCompanyId,
+            //})!;
 
-            if (resultdocument.Data == null)
-            {
-                return Ok(new Success<String>() { Data = RegisterType.DocumentSubmission.ToString() });
+            //if (resultdocument.Data == null)
+            //{
+            //    return Ok(new Success<String>() { Data = RegisterType.DocumentSubmission.ToString() });
 
-            }
+            //}
 
-            var resultbiling = await _mediator.Send(new GetBilingInformationCommand()
-            {
-                CompanyId = rCompanyId,
-            })!;
+            //var resultbiling = await _mediator.Send(new GetBilingInformationCommand()
+            //{
+            //    CompanyId = rCompanyId,
+            //})!;
 
-            if (resultbiling.Data == null)
-            {
-                return Ok(new Success<String>() { Data = RegisterType.BillingDetails.ToString() });
+            //if (resultbiling.Data == null)
+            //{
+            //    return Ok(new Success<String>() { Data = RegisterType.BillingDetails.ToString() });
 
-            }
+            //}
             var resultCompany = await _mediator.Send(new GetCompanyCommand()
             {
                 CompanyId = rCompanyId,

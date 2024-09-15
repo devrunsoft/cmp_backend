@@ -15,6 +15,13 @@ using ScoutDirect.Application.Queries;
 using CMPNatural.Application.Commands;
 using CMPNatural.Application.Responses;
 using CMPNatural.Core.Entities;
+using CMPNatural.Application.Commands.Company;
+using ScoutDirect.Application.Responses;
+using CmpNatural.CrmManagment.Webhook;
+using Microsoft.AspNetCore.Authorization;
+using System.Net;
+using CMPNatural.Application.Model;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -26,11 +33,13 @@ namespace ScoutDirect.Api.Controllers
     {
         protected readonly IMediator _mediator;
         private readonly IConfiguration _configuration;
+        private readonly IWebHostEnvironment _env;
 
-        public UserController(IMediator mediator, IConfiguration configuration)
+        public UserController(IMediator mediator, IConfiguration configuration, IWebHostEnvironment env)
         {
             _mediator = mediator;
             _configuration = configuration;
+            _env = env;
         }
 
         [HttpPost]
@@ -71,6 +80,112 @@ namespace ScoutDirect.Api.Controllers
 
         }
 
+        [HttpPost]
+        [Route("[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> ForgotPassword([FromBody] GetCompanyByEmailCommand command)
+        {
+
+            var result = await _mediator.Send(command);
+
+            if (result.IsSucces())
+            {
+                if(!(result!.Data is CompanyResponse))
+                {
+                    return Ok(new NoAcess() { });
+                }
+
+                var resultResend = await _mediator.Send(new CheckLinkCompanyCommand()
+                {
+                    CompanyId = ((CompanyResponse)result!.Data)!.Id.Value,
+                    forgotPasswordLink = Guid.NewGuid()
+                });
+
+                if (resultResend.IsSucces())
+                {
+                    emailSender((CompanyResponse)resultResend.Data);
+                }
+
+            }
+
+            return Ok(result);
+        }
+
+
+        [HttpGet]
+        [Route("[action]")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> CheckResetPassword([FromQuery] CheckResetPasswordInput input)
+        {
+            var result = await _mediator.Send(new GetCompanyByEmailCommand()
+            {
+                Email = input.email,
+            })!;
+
+            if (!result.IsSucces())
+            {
+                return Ok(new NoAcess() { });
+            }
+            var company = ((CompanyResponse)result.Data);
+            if (!company.Registered)
+            {
+                return Ok(new NoAcess() { });
+            }
+
+            if (company.ActivationLink!= input.forgotPasswordLink)
+            {
+                return Ok(new NoAcess() { });
+            }
+
+
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["JWT:ValidIssuer"],
+                audience: _configuration["JWT:ValidAudience"],
+                expires: DateTime.Now.AddDays(30),
+                claims: get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered),
+                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+                );
+
+
+
+            var html = System.IO.File.ReadAllText(@"./View/ForgotPassword.html");
+            var tokenBearer = new JwtSecurityTokenHandler().WriteToken(token);
+            html = html.Replace("{{Token}}", tokenBearer);
+            return new ContentResult
+            {
+                ContentType = "text/html",
+                StatusCode = (int)HttpStatusCode.OK,
+                Content = html
+            };
+        }
+
+
+
+
+        void emailSender(CompanyResponse data)
+        {
+            string host;
+
+            if (_env.IsDevelopment())
+            {
+                host = "https://localhost:7089";
+            }
+            else
+            {
+                host = "https://api.app-cmp.com";
+            }
+
+            var link = host + "/api/User/CheckResetPassword?forgotPasswordLink=" + data.ActivationLink!.Value.ToString()+ "&&email=" + data.BusinessEmail.ToString();
+
+            new ForgotPassword().send(data.BusinessEmail, link);
+        }
+
+
         private Claim[] get_claims(string adminStatus, string businessEmail, string companyId,bool registered)
         {
             List<Claim> claims = new List<Claim>() { new Claim("businessEmail", businessEmail), new Claim("CompanyId", companyId) };
@@ -83,6 +198,38 @@ namespace ScoutDirect.Api.Controllers
 
 
 
+        [HttpGet]
+        [Route("[action]")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> SuccessForgotPassword()
+        {
+            var html = System.IO.File.ReadAllText(@"./View/SuccessForgotPassword.html");
+            return new ContentResult
+            {
+                ContentType = "text/html",
+                StatusCode = (int)HttpStatusCode.OK,
+                Content = html
+            };
+        }
+
+
+        [HttpGet]
+        [Route("[action]")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> FailureForgotPassword()
+        {
+            var html = System.IO.File.ReadAllText(@"./View/FailureForgotPassword.html");
+            return new ContentResult
+            {
+                ContentType = "text/html",
+                StatusCode = (int)HttpStatusCode.OK,
+                Content = html
+            };
+        }
     }
 }
 
