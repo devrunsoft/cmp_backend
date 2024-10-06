@@ -42,6 +42,23 @@ namespace ScoutDirect.Application.Responses
         } 
     }
 
+    public class NoAcess<T>: CommandResponse<T>
+    {
+
+        public NoAcess()
+        {
+            Success = false;
+            StatusCode = "400";
+        }
+        public NoAcess(ValidationResult validationResult)
+        {
+            Success = validationResult.IsValid;
+            Errors = validationResult.Errors.Where(validationFailure => validationFailure != null).ToList();
+            Message = validationResult.IsValid ? null : "Error";
+            StatusCode = "400";
+        }
+    }
+
     public class NoAcess : CommandResponse<object>
     {
 

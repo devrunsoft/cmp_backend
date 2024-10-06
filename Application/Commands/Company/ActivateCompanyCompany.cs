@@ -5,7 +5,7 @@ using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Application.Commands.Company
 {
-    public class ActivateCompanyCompany : IRequest<CommandResponse<object>>
+    public class ActivateCompanyCompany : IRequest<CommandResponse<CompanyResponse>>
     {
         public Guid activationLink { get; set; }
     }

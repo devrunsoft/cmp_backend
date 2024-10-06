@@ -14,7 +14,7 @@ namespace CMPNatural.Api.Controllers.Auth.dashboard
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class OtherCompanyLocationController : BaseRegisteredController
+    public class OtherCompanyLocationController : CmpBaseController
     {
         public OtherCompanyLocationController(IMediator mediator) : base(mediator)
         {

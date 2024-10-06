@@ -31,8 +31,8 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
         {
 
             OperationalAddress lastOprAdd = (await _operationalAddressRepository.GetAsync(p => p.CompanyId == request.CompanyId)).FirstOrDefault();
-            if (lastOprAdd == null)
-            {
+            //if (lastOprAdd == null)
+            //{
                 var entity = new Core.Entities.OperationalAddress()
                 {
                     Address = request.Address,
@@ -45,15 +45,16 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                     LocationPhone = request.LocationPhone,
                     Lat = request.Lat,
                     Long = request.Long,
+                    Name = request.Name,
 
                 };
                 var result = await _operationalAddressRepository.AddAsync(entity);
                 return new Success<object>() { Data = result, Message = "OperationalAddres Added Successfully!" };
-            }
-            else
-            {
-                return new NoAcess() { Message = "Operational Address Already Registred!" };
-            }
+            //}
+            //else
+            //{
+            //    return new NoAcess() { Message = "Operational Address Already Registred!" };
+            //}
         }
 
     }

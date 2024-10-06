@@ -12,7 +12,7 @@ using CMPNatural.Core.Entities;
 
 namespace CMPNatural.Application.Handlers
 {
-    public class ActiveCompanyHandler : IRequestHandler<ActivateCompanyCompany, CommandResponse<object>>
+    public class ActiveCompanyHandler : IRequestHandler<ActivateCompanyCompany, CommandResponse<CompanyResponse>>
     {
         private readonly ICompanyRepository _companyRepository;
 
@@ -21,17 +21,17 @@ namespace CMPNatural.Application.Handlers
             _companyRepository = companyRepository;
         }
 
-        public async Task<CommandResponse<object>> Handle(ActivateCompanyCompany request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<CompanyResponse>> Handle(ActivateCompanyCompany request, CancellationToken cancellationToken)
         {
             Company company = (await _companyRepository.GetAsync(p=>p.ActivationLink== request.activationLink)).FirstOrDefault();
 
             if (company == null)
             {
-                return new NoAcess() { };
+                return new NoAcess<CompanyResponse>();
             }
             else if (company.Registered)
             {
-                return new NoAcess() { };
+                return new NoAcess<CompanyResponse>();
             }
             else 
             {
@@ -39,7 +39,7 @@ namespace CMPNatural.Application.Handlers
                 await _companyRepository.UpdateAsync(company);
             }
 
-            return new Success<object>() { Data = CompanyMapper.Mapper.Map<CompanyResponse>(company) };
+            return new Success<CompanyResponse>() { Data = CompanyMapper.Mapper.Map<CompanyResponse>(company) };
         }
     }
 }

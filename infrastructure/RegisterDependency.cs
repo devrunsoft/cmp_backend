@@ -17,12 +17,9 @@ namespace ScoutDirect.infrastructure
             services.AddTransient<IBillingInformationRepository, BillingInformationRepository>();
             services.AddTransient<IOperationalAddressRepository, OperationalAddressRepository>();
             services.AddTransient<IBusinessTypeRepository, BusinessTypeRepository>();
-            //services.AddTransient<IPlayerRepository, PlayerRepository>();
-            //services.AddTransient<IScoutRepository, ScoutRepository>();
 
-            //services.AddTransient<IAppointmentRepository, AppointmentRepository>();
-            //services.AddTransient<IReportRepository, ReportRepository>();
-            //services.AddTransient<ILocationScoutRepository, LocationScoutRepository>();
+            services.AddTransient<IServiceAppointmentRepository, ServiceAppointmentRepository>();
+            services.AddTransient<IServiceAppointmentEmergencyRepository, ServiceAppointmentEmergencyRepository>();
 
         }
 

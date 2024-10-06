@@ -31,8 +31,9 @@
     <None Remove="FileContent\1\" />
     <None Remove="Controllers\Auth\" />
     <None Remove="Controllers\Auth\Register\" />
-    <None Remove="Controllers\Auth\dashboard\" />
     <None Remove="View\" />
+    <None Remove="Controllers\ServiceAppointment\" />
+    <None Remove="Controllers\dashboard\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FileContent\" />
@@ -40,8 +41,9 @@
     <Folder Include="FileContent\1\" />
     <Folder Include="Controllers\Auth\" />
     <Folder Include="Controllers\Auth\Register\" />
-    <Folder Include="Controllers\Auth\dashboard\" />
     <Folder Include="View\" />
+    <Folder Include="Controllers\ServiceAppointment\" />
+    <Folder Include="Controllers\dashboard\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\infrastructure\CMPNatural.infrastructure.csproj">

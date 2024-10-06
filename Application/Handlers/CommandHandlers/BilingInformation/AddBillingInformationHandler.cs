@@ -16,7 +16,7 @@ using CMPNatural.Core.Repositories;
 
 namespace CMPNatural.Application.Handlers.CommandHandlers
 {
-    public class AddBillingInformationHandler : IRequestHandler<AddBilingInformationCommand, CommandResponse<object>>
+    public class AddBillingInformationHandler : IRequestHandler<AddBilingInformationCommand, CommandResponse<BillingInformation>>
     {
         private readonly IBillingInformationRepository _billingInformationRepository;
 
@@ -25,7 +25,7 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
             _billingInformationRepository = billingInformationRepository;
         }
 
-        public async Task<CommandResponse<object>> Handle(AddBilingInformationCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<BillingInformation>> Handle(AddBilingInformationCommand request, CancellationToken cancellationToken)
         {
 
             var lastResult = await _billingInformationRepository.GetAsync(p => p.CompanyId == request.CompanyId);
@@ -49,11 +49,11 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                 var result = await _billingInformationRepository.AddAsync(entity);
 
 
-                return new Success<object>() { Data = result, Message = "Billing Information added successfully!" };
+                return new Success<BillingInformation>() { Data = result, Message = "Billing Information added successfully!" };
             }
             else
             {
-                return new NoAcess() { Message = "Biling Information Already Registred!" };
+                return new NoAcess<BillingInformation>() { Message = "Biling Information Already Registred!" };
             }
         }
 

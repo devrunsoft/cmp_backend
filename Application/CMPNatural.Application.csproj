@@ -163,6 +163,11 @@
     <None Remove="Handlers\CommandHandlers\BusinessType\" />
     <None Remove="Handlers\CommandHandlers\Company\" />
     <None Remove="Commands\Company\" />
+    <None Remove="Commands\ServiceAppointment\" />
+    <None Remove="Handlers\CommandHandlers\ServiceAppointment\" />
+    <None Remove="Commands\ServiceAppointmentEmergency\" />
+    <None Remove="Model\ServiceAppointment\" />
+    <None Remove="Handlers\CommandHandlers\ServiceAppointmentEmergency\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -331,6 +336,11 @@
     <Folder Include="Handlers\CommandHandlers\BusinessType\" />
     <Folder Include="Handlers\CommandHandlers\Company\" />
     <Folder Include="Commands\Company\" />
+    <Folder Include="Commands\ServiceAppointment\" />
+    <Folder Include="Handlers\CommandHandlers\ServiceAppointment\" />
+    <Folder Include="Commands\ServiceAppointmentEmergency\" />
+    <Folder Include="Model\ServiceAppointment\" />
+    <Folder Include="Handlers\CommandHandlers\ServiceAppointmentEmergency\" />
   </ItemGroup> 
 
   <ItemGroup>

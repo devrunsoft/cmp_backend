@@ -7,9 +7,9 @@ using ScoutDirect.Api.Controllers._Base;
 
 namespace CMPNatural.Api.Controllers._Base
 {
-    public class BaseRegisteredController : BaseApiController
+    public class CmpBaseController : BaseApiController
     {
-        public BaseRegisteredController(IMediator mediator) : base(mediator)
+        public CmpBaseController(IMediator mediator) : base(mediator)
         {
         }
 

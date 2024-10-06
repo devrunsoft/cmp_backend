@@ -12,11 +12,11 @@ using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace CMPNatural.Api.Controllers.Auth.dashboard
+namespace CMPNatural.Api.Controllers.Auth
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class OperationalAddressDashboardController : BaseRegisteredController
+    public class OperationalAddressDashboardController : CmpBaseController
     {
         public OperationalAddressDashboardController(IMediator mediator) : base(mediator)
         {
@@ -66,6 +66,7 @@ namespace CMPNatural.Api.Controllers.Auth.dashboard
                 LocationPhone = request.LocationPhone,
                 Long = request.Long,
                 Lat = request.Lat,
+                Name = request.Name,
 
             });
 
@@ -89,6 +90,7 @@ namespace CMPNatural.Api.Controllers.Auth.dashboard
                 LocationPhone = request.LocationPhone,
                 Long = request.Long,
                 Lat = request.Lat,
+                Name = request.Name,
                 Id = Id
 
             });

@@ -23,11 +23,9 @@ namespace infrastructure.Data
         public virtual DbSet<BillingInformation> BillingInformation { get; set; } = null!;
         public virtual DbSet<BusinessType> BusinessType { get; set; } = null!;
         public virtual DbSet<OperationalAddress> OperationalAddress { get; set; } = null!;
-        //public virtual DbSet<Person> Person { get; set; } = null!;
-        //public virtual DbSet<ScoutEntity> Scout { get; set; } = null!;
-        //public virtual DbSet<Appointment> Appointment { get; set; } = null!;
-        //public virtual DbSet<Report> Report { get; set; } = null!;
-        //public virtual DbSet<LocationScout> LocationScout { get; set; } = null!;
+        public virtual DbSet<BaseServiceAppointment> BaseServiceAppointment { get; set; } = null!;
+        public virtual DbSet<ServiceAppointment> ServiceAppointment { get; set; } = null!;
+        public virtual DbSet<ServiceAppointmentEmergency> ServiceAppointmentEmergency { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -75,7 +73,19 @@ namespace infrastructure.Data
                 entity.ToTable("BusinessType");
             });
 
+            modelBuilder.Entity<BaseServiceAppointment>(entity =>
+            {
+                entity.ToTable("BaseServiceAppointment");
+            });
 
+            modelBuilder.Entity<ServiceAppointment>(entity =>
+            {
+                entity.ToTable("ServiceAppointment").HasBaseType<BaseServiceAppointment>();
+            });
+            modelBuilder.Entity<ServiceAppointmentEmergency>(entity =>
+            {
+                entity.ToTable("ServiceAppointmentEmergency").HasBaseType<BaseServiceAppointment>();
+            });
 
 
         }

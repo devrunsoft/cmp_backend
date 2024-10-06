@@ -67,6 +67,7 @@ namespace CMPNatural.Api.Controllers.Auth.Register
                 LocationPhone = request.LocationPhone,
                 Long=request.Long,
                 Lat=request.Lat,
+                Name = request.Name,
 
             });
 
@@ -90,6 +91,7 @@ namespace CMPNatural.Api.Controllers.Auth.Register
                 LocationPhone = request.LocationPhone,
                 Long = request.Long,
                 Lat = request.Lat,
+                Name= request.Name,
                 Id =Id
 
             });

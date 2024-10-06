@@ -19,7 +19,7 @@ using CMPNatural.Application.Services;
 
 namespace CMPNatural.Application.Handlers.CommandHandlers
 {
-    public class AddDcoumentHanlder : IRequestHandler<AddDocumentCommand, CommandResponse<object>>
+    public class AddDcoumentHanlder : IRequestHandler<AddDocumentCommand, CommandResponse<DocumentSubmission>>
     {
         private readonly IDocumentRepository _documentRepository;
 
@@ -28,7 +28,7 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
             _documentRepository = documentRepository;
         }
 
-        public async Task<CommandResponse<object>> Handle(AddDocumentCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<DocumentSubmission>> Handle(AddDocumentCommand request, CancellationToken cancellationToken)
         {
             var lastResult = await _documentRepository.GetAsync(p=>p.CompanyId==request.CompanyId);
             if (lastResult == null || lastResult.Count==0)
@@ -52,12 +52,12 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                 var result = await _documentRepository.AddAsync(entity);
 
 
-                return new Success<object>() {  Data = result, Message = "Files added successfully!" };
+                return new Success<DocumentSubmission>() {  Data = result, Message = "Files added successfully!" };
 
             }
             else
             {
-                return new NoAcess() { Message = "Documantion Already Registred!" };
+                return new NoAcess<DocumentSubmission>() { Message = "Documantion Already Registred!" };
             }
         }
 

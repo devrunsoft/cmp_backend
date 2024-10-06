@@ -13,7 +13,7 @@ using System.Linq;
 namespace CMPNatural.Application.Handlers
 {
 
-    public class CheckLinkCompanyHandler : IRequestHandler<CheckLinkCompanyCommand, CommandResponse<object>>
+    public class CheckLinkCompanyHandler : IRequestHandler<CheckLinkCompanyCommand, CommandResponse<CompanyResponse>>
     {
         private readonly ICompanyRepository _companyRepository;
 
@@ -22,19 +22,19 @@ namespace CMPNatural.Application.Handlers
             _companyRepository = companyRepository;
         }
 
-        public async Task<CommandResponse<object>> Handle(CheckLinkCompanyCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<CompanyResponse>> Handle(CheckLinkCompanyCommand request, CancellationToken cancellationToken)
         {
             var company = await _companyRepository.GetByIdAsync(request.CompanyId);
 
             if (company == null)
             {
-                return new NoAcess() { };
+                return new NoAcess<CompanyResponse>() { };
             }
 
             company.ActivationLink = request.forgotPasswordLink;
             await _companyRepository.UpdateAsync(company);
 
-            return new Success<object>() { Data = CompanyMapper.Mapper.Map<CompanyResponse>(company) };
+            return new Success<CompanyResponse>() { Data = CompanyMapper.Mapper.Map<CompanyResponse>(company) };
         }
     }
 }

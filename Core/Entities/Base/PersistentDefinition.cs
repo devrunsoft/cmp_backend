@@ -8,5 +8,8 @@ namespace CMPNatural.Core.Entities
     public partial class BillingInformation : IIdentityObject<long> { }
     public partial class OperationalAddress : IIdentityObject<long> { }
     public partial class BusinessType : IIdentityObject<long> { }
+    public partial class BaseServiceAppointment : IIdentityObject<long> { }
+    public partial class ServiceAppointment : IIdentityObject<long> { }
+    public partial class ServiceAppointmentEmergency : IIdentityObject<long> { }
 
 }

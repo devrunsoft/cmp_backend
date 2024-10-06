@@ -18,6 +18,7 @@ using System.ComponentModel.Design;
 using System.Diagnostics.Metrics;
 using System.Net;
 using System.Runtime.InteropServices;
+using System.Xml.Linq;
 
 namespace CMPNatural.Application.Handlers.CommandHandlers
 {
@@ -50,6 +51,7 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
             entity.LocationPhone = request.LocationPhone;
             entity.Lat = request.Lat;
             entity.Long = request.Long;
+            entity.Name = request.Name;
 
             await _operationalAddressRepository.UpdateAsync(entity);
 
