@@ -14,3 +14,7 @@
 /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/obj/Debug/net8.0/refint/CMPNatural.infrastructure.dll
 /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/obj/Debug/net8.0/CMPNatural.infrastructure.pdb
 /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/obj/Debug/net8.0/ref/CMPNatural.infrastructure.dll
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/bin/Debug/net8.0/CMPNatural.Application.dll
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/bin/Debug/net8.0/CmpNatural.CrmManagment.dll
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/bin/Debug/net8.0/CmpNatural.CrmManagment.pdb
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/bin/Debug/net8.0/CMPNatural.Application.pdb

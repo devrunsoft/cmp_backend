@@ -1,4 +1,6 @@
-﻿using CMPNatural.Core.Repositories;
+﻿using CmpNatural.CrmManagment.Contact;
+using CmpNatural.CrmManagment.Product;
+using CMPNatural.Core.Repositories;
 using CMPNatural.infrastructure.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using ScoutDirect.Core.Repositories;
@@ -20,6 +22,10 @@ namespace ScoutDirect.infrastructure
 
             services.AddTransient<IServiceAppointmentRepository, ServiceAppointmentRepository>();
             services.AddTransient<IServiceAppointmentEmergencyRepository, ServiceAppointmentEmergencyRepository>();
+
+            services.AddTransient<ProductListApi>();
+            services.AddTransient<ProductPriceApi>();
+            services.AddTransient<ContactApi>();
 
         }
 

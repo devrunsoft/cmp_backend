@@ -168,6 +168,7 @@
     <None Remove="Commands\ServiceAppointmentEmergency\" />
     <None Remove="Model\ServiceAppointment\" />
     <None Remove="Handlers\CommandHandlers\ServiceAppointmentEmergency\" />
+    <None Remove="Responses\Service\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -341,6 +342,7 @@
     <Folder Include="Commands\ServiceAppointmentEmergency\" />
     <Folder Include="Model\ServiceAppointment\" />
     <Folder Include="Handlers\CommandHandlers\ServiceAppointmentEmergency\" />
+    <Folder Include="Responses\Service\" />
   </ItemGroup> 
 
   <ItemGroup>

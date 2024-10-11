@@ -26,7 +26,8 @@ namespace CMPNatural.Application.Handlers
                 CompanyId = request.CompanyId,
                 FrequencyType=request.FrequencyType,
                 //LocationCompanyId=request.LocationCompanyId,
-                ServiceTypeId=(int)request.ServiceTypeId,
+                ServiceTypeId=(int) request.ServiceTypeId,
+                ServicePriceId=request.ServicePriceId,
                 StartDate=request.StartDate,
                 OperationalAddressId=request.OperationalAddressId
             };

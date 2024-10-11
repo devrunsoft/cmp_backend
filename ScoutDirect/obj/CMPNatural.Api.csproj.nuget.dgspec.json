@@ -132,7 +132,11 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/CMPNatural.Application.csproj": {
+                "projectPath": "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/CMPNatural.Application.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -145,6 +149,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
@@ -263,6 +271,9 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
+              "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/CmpNatural.CrmManagment.csproj": {
+                "projectPath": "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/CmpNatural.CrmManagment.csproj"
+              },
               "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Core/CMPNatural.Core.csproj": {
                 "projectPath": "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Core/CMPNatural.Core.csproj"
               }

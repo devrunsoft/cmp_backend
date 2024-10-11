@@ -27,7 +27,8 @@ namespace CMPNatural.Application.Handlers
                 FrequencyType=request.FrequencyType,
                 //LocationCompanyId=request.LocationCompanyId,
                 ServiceTypeId=(int)request.ServiceTypeId,
-                OperationalAddressId=request.OperationalAddressId
+                ServicePriceId = request.ServicePriceId,
+                OperationalAddressId =request.OperationalAddressId
             };
 
             var result = await _serviceAppointmentEmergencyRepository.AddAsync(entity);

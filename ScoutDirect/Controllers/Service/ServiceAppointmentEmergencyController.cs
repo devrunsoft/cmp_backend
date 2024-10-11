@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace CMPNatural.Api.Controllers.ServiceAppointment
 {
 
+    [ApiController]
+    [Route("api/[controller]")]
     public class ServiceAppointmentEmergencyController : CmpBaseController
     {
         public ServiceAppointmentEmergencyController(IMediator mediator) : base(mediator)

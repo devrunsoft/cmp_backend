@@ -16,6 +16,9 @@ using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Api.Controllers.ServiceAppointment
 {
+
+    [ApiController]
+    [Route("api/[controller]")]
     public class ServiceAppointmentController : CmpBaseController
     {
         public ServiceAppointmentController(IMediator mediator) : base(mediator)
@@ -34,7 +37,7 @@ namespace CMPNatural.Api.Controllers.ServiceAppointment
                 OperationalAddressId = request.OperationalAddressId
 
             });
-            if ((checkData.Data.Any(p=>p.ServiceTypeId== (int)request.ServiceTypeId)) || (!checkData.IsSucces()))
+            if ((checkData.Data.Any(p=>p.ServiceTypeId==(int)request.ServiceTypeId)) || (!checkData.IsSucces()))
             {
                 return Ok(new NoAcess() { Message="No Access"});
             }

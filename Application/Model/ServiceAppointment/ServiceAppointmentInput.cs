@@ -8,11 +8,13 @@ namespace CMPNatural.Application.Model.ServiceAppointment
 
         public ServiceType ServiceTypeId { get; set; }
 
+        public string ServicePriceId { get; set; }
+
         public long OperationalAddressId { get; set; }
 
         //public long LocationCompanyId { get; set; }
 
-        public int FrequencyType { get; set; }
+        public string FrequencyType { get; set; }
 
         public DateTime StartDate { get; set; }
     }

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "kgvXUDQKE+bHk/iZW41Ys6DIf78VvLVhZA47efsPy9/YW2HFz0N6Rp6sy8hs1PIriweh+gALmyD/a2pj/1M7AA==",
+  "dgSpecHash": "Eh8cXabVS+biNU4yOtwJ9U+3vGx0O0yfa8YPe+shZU/JX3qkeU1hp6pPCC7XqSG/JtuvJ95sztVaf0pvitSUrw==",
   "success": true,
   "projectFilePath": "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/CMPNatural.Api.csproj",
   "expectedPackageFiles": [
@@ -55,6 +55,7 @@
     "/Users/morteza/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "/Users/morteza/.nuget/packages/microsoft.extensions.caching.abstractions/8.0.0/microsoft.extensions.caching.abstractions.8.0.0.nupkg.sha512",
     "/Users/morteza/.nuget/packages/microsoft.extensions.caching.memory/8.0.0/microsoft.extensions.caching.memory.8.0.0.nupkg.sha512",
+    "/Users/morteza/.nuget/packages/microsoft.extensions.configuration/8.0.0/microsoft.extensions.configuration.8.0.0.nupkg.sha512",
     "/Users/morteza/.nuget/packages/microsoft.extensions.configuration.abstractions/8.0.0/microsoft.extensions.configuration.abstractions.8.0.0.nupkg.sha512",
     "/Users/morteza/.nuget/packages/microsoft.extensions.dependencyinjection/8.0.0/microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",
     "/Users/morteza/.nuget/packages/microsoft.extensions.dependencyinjection.abstractions/8.0.0/microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",

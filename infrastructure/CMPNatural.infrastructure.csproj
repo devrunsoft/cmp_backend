@@ -23,5 +23,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\CMPNatural.Core.csproj" />
+    <ProjectReference Include="..\CmpNatural.CrmManagment\CmpNatural.CrmManagment.csproj" />
   </ItemGroup>
 </Project>

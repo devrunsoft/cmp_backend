@@ -1,38 +1,24 @@
-﻿////using ScoutDirect.Api.Hubs;
-//using ScoutDirect.Api.Utilities;
-//using ScoutDirect.Application.Handlers.QueryHandlers;
-using ScoutDirect.Core.Caching;
-using ScoutDirect.Core.Entities;
+﻿using ScoutDirect.Core.Caching;
 using ScoutDirect.Core.Models;
-//using ScoutDirect.FcmPusher;
 using ScoutDirect.infrastructure;
-//using ScoutDirect.Infrastructure.Repositories.Base; 
 using ElmahCore;
 using ElmahCore.Mvc;
 using Hangfire;
 using Hangfire.MemoryStorage;
-using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http.Connections;
+
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
-using System.IO;
-using System.Reflection;
+
 using System.Text;
 using infrastructure.Data;
 //using ScoutDirect.Core.Repositories.Base;
 using ScoutDirect.infrastructure.Repository;
 using ScoutDirect.Core.Repositories.Base;
-using CMPNatural.Application.Handlers.CommandHandlers;
 using CMPNatural.Application.Handlers;
+using CmpNatural.CrmManagment.Model;
 
 namespace ScoutDirect.Api
 {
@@ -111,6 +97,8 @@ namespace ScoutDirect.Api
 
 
             services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
+            services.Configure<HighLevelSettings>(Configuration.GetSection("HighLevel"));
+
             //services.AddScoped<ICallDeferredOrders, CallDeferredOrders>();
 
             services.RegisterRepositories();
@@ -185,7 +173,7 @@ namespace ScoutDirect.Api
             services.Configure<CacheConfiguration>(Configuration.GetSection("CacheConfiguration"));
             services.Configure<AppVersionModel>(Configuration.GetSection("AppVersion"));
             //services.Configure<AppConfigModel>(Configuration.GetSection("AppConfig"));
- 
+
             //For In-Memory Caching
             services.AddMemoryCache();
             services.AddTransient<MemoryCacheService>();

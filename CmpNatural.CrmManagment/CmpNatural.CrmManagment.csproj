@@ -8,11 +8,23 @@
 
   <ItemGroup>
     <None Remove="Webhook\" />
+    <None Remove="Product\" />
+    <None Remove="Model\" />
+    <None Remove="Invoice\" />
+    <None Remove="Contact\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Webhook\" />
+    <Folder Include="Product\" />
+    <Folder Include="Model\" />
+    <Folder Include="Invoice\" />
+    <Folder Include="Contact\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Application\CMPNatural.Application.csproj" />
   </ItemGroup>
 </Project>

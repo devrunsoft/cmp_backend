@@ -5,7 +5,10 @@ namespace CMPNatural.Core.Entities
 	{
         public long Id { get; set; }
 
-        public int ServiceTypeId { get; set; }
+        public long ServiceTypeId { get; set; }
+
+        public string? ServicePriceId { get; set; }
+
 
         public long CompanyId { get; set; }
 
