@@ -34,12 +34,14 @@ namespace ScoutDirect.Api.Controllers
         protected readonly IMediator _mediator;
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _env;
+        private readonly UpdateContactTokenApi _updateContact;
 
-        public UserController(IMediator mediator, IConfiguration configuration, IWebHostEnvironment env)
+        public UserController(IMediator mediator, IConfiguration configuration, IWebHostEnvironment env, UpdateContactTokenApi updateContact)
         {
             _mediator = mediator;
             _configuration = configuration;
             _env = env;
+            _updateContact = updateContact;
         }
 
         [HttpPost]
@@ -64,9 +66,13 @@ namespace ScoutDirect.Api.Controllers
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
 
+               var tokenvalue = new JwtSecurityTokenHandler().WriteToken(token);
+
+                _updateContact.send(command.BusinessEmail, tokenvalue);
+
                 return Ok(new
                 {
-                    token = new JwtSecurityTokenHandler().WriteToken(token),
+                    token = tokenvalue,
                     expiration = token.ValidTo,
                     registered = company.Registered,
                     accepted = company.Accepted,

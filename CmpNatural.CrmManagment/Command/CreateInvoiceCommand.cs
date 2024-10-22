@@ -16,6 +16,8 @@ namespace CmpNatural.CrmManagment.Command
         public SendTo sentTo { get; set; }
         public bool liveMode { get; set; } = true;
 
+        //public string action { get; set; } = "sent";
+
     }
 
     public class BusinessDetailsCommand

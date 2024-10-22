@@ -9,6 +9,7 @@ using CmpNatural.CrmManagment.Product;
 using CMPNatural.Api.Controllers._Base;
 using CMPNatural.Application;
 using CMPNatural.Application.Commands.Invoice;
+using CMPNatural.Application.Commands.ShoppingCard;
 using CMPNatural.Application.Handlers;
 using CMPNatural.Application.Model.ServiceAppointment;
 using CMPNatural.Core.Entities;
@@ -75,6 +76,30 @@ namespace CMPNatural.Api.Controllers.Invoice
             return Ok(result);
         }
 
+        [HttpPost("Pay")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Pay([FromQuery] string invoiceNumber)
+        {
+
+            var resultdata = await _mediator.Send(new GetInvoiceByInvoiceNumberCommand()
+            {
+                CompanyId = rCompanyId,
+                invoiceNumber = invoiceNumber
+            });
+
+            var invoice = _invoiceApi.GetInvoice(resultdata.Data.InvoiceId);
+
+            var result = await _mediator.Send(new SentInvoiceCommand()
+            {
+                CompanyId = rCompanyId,
+                InvoiceId = resultdata.Data.Id,
+                Status = invoice.Data.status
+            });
+
+            return Ok(result);
+        }
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
@@ -115,8 +140,6 @@ namespace CMPNatural.Api.Controllers.Invoice
 
             var resultInvoceApi = _invoiceApi.CreateInvoice(command).Data;
 
-
-
             var result = await _mediator.Send(new CreateInvoiceCommand()
             {
                 CompanyId = rCompanyId,
@@ -125,7 +148,13 @@ namespace CMPNatural.Api.Controllers.Invoice
                 InvoiceId = resultInvoceApi._id,
                 Services = request,
                 Amount = lst.Sum(x => x.amount)
-            }); ;
+            });
+
+
+            await _mediator.Send(new DeleteAllShoppingCardCommand()
+            {
+                CompanyId = rCompanyId,
+            });
 
             return Ok(result);
         }

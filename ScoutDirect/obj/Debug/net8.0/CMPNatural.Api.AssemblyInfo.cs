@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CMPNatural.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a00e81b3218776c4c02f8ef92b1c640183e99a96")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7946cb29cb5bebfdc19d6a6d023ceaa51c43b99b")]
 [assembly: System.Reflection.AssemblyProductAttribute("CMPNatural.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CMPNatural.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
