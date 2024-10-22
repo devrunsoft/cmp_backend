@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using CmpNatural.CrmManagment.Product;
 using CMPNatural.Api.Controllers._Base;
 using CMPNatural.Application;
+using CMPNatural.Application.Responses.Service;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using ScoutDirect.Application.Responses;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -33,9 +35,9 @@ namespace CMPNatural.Api.Controllers.ServiceAppointment
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Get()
         {
-            var result = _api.call();
+            var result = _api.call().Data.Where(p=> !p.collectionIds.Any(p=>p== "671826ac39575cbf746abf37")).ToList();
 
-            return Ok(result);
+            return Ok(new Success<List<ServiceResponse>>() { Data = result });
         }
 
         [HttpGet("{Id}")]

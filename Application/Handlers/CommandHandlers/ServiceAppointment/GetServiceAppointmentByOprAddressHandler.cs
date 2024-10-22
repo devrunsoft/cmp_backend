@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Application.Handlers
 {
@@ -23,11 +24,11 @@ namespace CMPNatural.Application.Handlers
 
         public async Task<CommandResponse<List<ServiceAppointment>>> Handle(GetServiceAppointmentByOprAddressCommand request, CancellationToken cancellationToken)
         {
-
-
-            var result = (await _serviceAppointmentRepository.GetAsync(
+            var result = (await _serviceAppointmentRepository.GetList(
                 (p)=> p.OperationalAddressId==request.OperationalAddressId &&
-                p.CompanyId==request.CompanyId
+                p.CompanyId==request.CompanyId &&
+                p.Invoice.Status == "paid"&&
+                p.Status != (int)ServiceStatus.canceled
                 )
                 ).ToList();
 

@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CMPNatural.Application.Commands.ServiceAppointment;
 using System.Linq;
+using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Application.Handlers
 {
@@ -30,7 +31,9 @@ namespace CMPNatural.Application.Handlers
             {
                 return new NoAcess<object>() { Message = "No Access To Delete This Service" };
             }
-            await _serviceAppointmentRepository.DeleteAsync(result);
+            result.Status = (int)ServiceStatus.canceled;
+
+            await _serviceAppointmentRepository.UpdateAsync(result);
 
             return new Success<object>() { Data = result, Message = "Service Deleted Successfully!" };
 

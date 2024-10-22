@@ -22,5 +22,8 @@ namespace CMPNatural.Core.Enums
         [Description("partially_paid")]
         partially_paid = 5,
 
+        [Description("canceled")]
+        canceled = 6,
+
     }
 }
