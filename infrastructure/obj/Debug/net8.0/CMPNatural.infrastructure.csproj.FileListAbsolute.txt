@@ -1,8 +1,12 @@
 /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/bin/Debug/net8.0/CMPNatural.infrastructure.deps.json
 /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/bin/Debug/net8.0/CMPNatural.infrastructure.dll
 /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/bin/Debug/net8.0/CMPNatural.infrastructure.pdb
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/bin/Debug/net8.0/CMPNatural.Application.dll
 /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/bin/Debug/net8.0/CMPNatural.Core.dll
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/bin/Debug/net8.0/CmpNatural.CrmManagment.dll
 /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/bin/Debug/net8.0/CMPNatural.Core.pdb
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/bin/Debug/net8.0/CmpNatural.CrmManagment.pdb
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/bin/Debug/net8.0/CMPNatural.Application.pdb
 /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/obj/Debug/net8.0/CMPNatural.infrastructure.csproj.AssemblyReference.cache
 /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/obj/Debug/net8.0/CMPNatural.infrastructure.GeneratedMSBuildEditorConfig.editorconfig
 /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/obj/Debug/net8.0/CMPNatural.infrastructure.AssemblyInfoInputs.cache
@@ -14,7 +18,3 @@
 /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/obj/Debug/net8.0/refint/CMPNatural.infrastructure.dll
 /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/obj/Debug/net8.0/CMPNatural.infrastructure.pdb
 /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/obj/Debug/net8.0/ref/CMPNatural.infrastructure.dll
-/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/bin/Debug/net8.0/CMPNatural.Application.dll
-/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/bin/Debug/net8.0/CmpNatural.CrmManagment.dll
-/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/bin/Debug/net8.0/CmpNatural.CrmManagment.pdb
-/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/bin/Debug/net8.0/CMPNatural.Application.pdb

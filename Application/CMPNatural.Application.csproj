@@ -169,6 +169,10 @@
     <None Remove="Model\ServiceAppointment\" />
     <None Remove="Handlers\CommandHandlers\ServiceAppointmentEmergency\" />
     <None Remove="Responses\Service\" />
+    <None Remove="Handlers\CommandHandlers\Invoice\" />
+    <None Remove="Commands\Invoice\" />
+    <None Remove="Commands\ShoppingCard\" />
+    <None Remove="Handlers\CommandHandlers\ShoppingCard\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -343,6 +347,10 @@
     <Folder Include="Model\ServiceAppointment\" />
     <Folder Include="Handlers\CommandHandlers\ServiceAppointmentEmergency\" />
     <Folder Include="Responses\Service\" />
+    <Folder Include="Handlers\CommandHandlers\Invoice\" />
+    <Folder Include="Commands\Invoice\" />
+    <Folder Include="Commands\ShoppingCard\" />
+    <Folder Include="Handlers\CommandHandlers\ShoppingCard\" />
   </ItemGroup> 
 
   <ItemGroup>

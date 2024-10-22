@@ -6,17 +6,20 @@ namespace CMPNatural.Application.Model.ServiceAppointment
 	public class ServiceAppointmentInput
 	{
 
-        public ServiceType ServiceTypeId { get; set; }
+        public ServiceType ServiceTypeId { get; set; } = ServiceType.Cooking_Oil_Collection;
 
         public string ServicePriceId { get; set; }
 
-        public long OperationalAddressId { get; set; }
+        public string ServiceId { get; set; } = null!;
 
-        //public long LocationCompanyId { get; set; }
+        public long OperationalAddressId { get; set; }
 
         public string FrequencyType { get; set; }
 
         public DateTime StartDate { get; set; }
+
+        public ServiceKind ServiceKind { get; set; } = ServiceKind.Custom;
+
     }
 }
 

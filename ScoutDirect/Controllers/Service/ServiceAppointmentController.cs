@@ -35,13 +35,12 @@ namespace CMPNatural.Api.Controllers.ServiceAppointment
             {
                 CompanyId = rCompanyId,
                 OperationalAddressId = request.OperationalAddressId
-
             });
-            if ((checkData.Data.Any(p=>p.ServiceTypeId==(int)request.ServiceTypeId)) || (!checkData.IsSucces()))
-            {
-                return Ok(new NoAcess() { Message="No Access"});
-            }
 
+            if ((checkData.Data.Any(p=>p.ServicePriceCrmId==request.ServicePriceId)) || (!checkData.IsSucces()))
+            {
+                return Ok(new NoAcess() { Message="You have an active service at the current operational address"});
+            }
             var result = await _mediator.Send(new AddServiceAppointmentCommand()
             {
                 CompanyId = rCompanyId,
@@ -51,7 +50,6 @@ namespace CMPNatural.Api.Controllers.ServiceAppointment
                 OperationalAddressId = request.OperationalAddressId
 
             });
-
             return Ok(result);
         }
 

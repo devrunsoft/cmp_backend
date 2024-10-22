@@ -9,6 +9,7 @@ namespace CMPNatural.Application
 	public class AddServiceAppointmentCommand : ServiceAppointmentInput, IRequest<CommandResponse<ServiceAppointment>>
     {
         public long CompanyId { get; set; }
+        public long InvoiceId { get; set; }
     }
 }
 

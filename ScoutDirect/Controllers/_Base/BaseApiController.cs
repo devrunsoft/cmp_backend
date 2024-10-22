@@ -24,6 +24,7 @@ namespace ScoutDirect.Api.Controllers._Base
         }
 
         protected long rCompanyId => long.Parse(Request.HttpContext.User.FindFirstValue("CompanyId"));
+        protected string rBusinessEmail => (Request.HttpContext.User.FindFirstValue("businessEmail"));
 
         protected string userName => Request.HttpContext.User.Identity.Name;
 

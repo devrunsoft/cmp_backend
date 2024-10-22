@@ -8,17 +8,21 @@
 
   <ItemGroup>
     <None Remove="Webhook\" />
-    <None Remove="Product\" />
     <None Remove="Model\" />
-    <None Remove="Invoice\" />
-    <None Remove="Contact\" />
+    <None Remove="Api\" />
+    <None Remove="Api\Contact\" />
+    <None Remove="Api\Invoice\" />
+    <None Remove="Api\Product\" />
+    <None Remove="Command\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Webhook\" />
-    <Folder Include="Product\" />
     <Folder Include="Model\" />
-    <Folder Include="Invoice\" />
-    <Folder Include="Contact\" />
+    <Folder Include="Api\" />
+    <Folder Include="Api\Contact\" />
+    <Folder Include="Api\Invoice\" />
+    <Folder Include="Api\Product\" />
+    <Folder Include="Command\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

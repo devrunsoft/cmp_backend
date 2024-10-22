@@ -26,6 +26,8 @@ namespace infrastructure.Data
         public virtual DbSet<BaseServiceAppointment> BaseServiceAppointment { get; set; } = null!;
         public virtual DbSet<ServiceAppointment> ServiceAppointment { get; set; } = null!;
         public virtual DbSet<ServiceAppointmentEmergency> ServiceAppointmentEmergency { get; set; } = null!;
+        public virtual DbSet<Invoice> Invoice { get; set; } = null!;
+        public virtual DbSet<ShoppingCard> ShoppingCard { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -81,12 +83,27 @@ namespace infrastructure.Data
             modelBuilder.Entity<ServiceAppointment>(entity =>
             {
                 entity.ToTable("ServiceAppointment").HasBaseType<BaseServiceAppointment>();
+                entity.Property(e => e.ServiceCrmId)
+                  .HasColumnType("varchar(255)") 
+                  .IsRequired(false);            
             });
             modelBuilder.Entity<ServiceAppointmentEmergency>(entity =>
             {
                 entity.ToTable("ServiceAppointmentEmergency").HasBaseType<BaseServiceAppointment>();
             });
 
+            modelBuilder.Entity<Invoice>(entity =>
+            {
+                entity.ToTable("Invoice");
+                entity.HasMany(d => d.BaseServiceAppointment)
+                      .WithOne(p => p.Invoice)
+                 .HasForeignKey(d => d.InvoiceId);
+            });
+
+            modelBuilder.Entity<ShoppingCard>(entity =>
+            {
+                entity.ToTable("ShoppingCard");
+            });
 
         }
 

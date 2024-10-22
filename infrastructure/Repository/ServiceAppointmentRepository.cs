@@ -7,11 +7,9 @@ using ScoutDirect.infrastructure.Repository;
 
 namespace CMPNatural.infrastructure.Repository
 {
-
     public class ServiceAppointmentRepository : Repository<ServiceAppointment, long>, IServiceAppointmentRepository
     {
         public ServiceAppointmentRepository(ScoutDBContext context, Func<CacheTech, ICacheService> cacheService) : base(context, cacheService) { }
-
     }
 }
 

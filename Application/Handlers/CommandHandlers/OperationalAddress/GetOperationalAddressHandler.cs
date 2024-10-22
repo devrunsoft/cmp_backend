@@ -32,9 +32,7 @@ namespace CMPNatural.Application.Handlers
 
             OperationalAddress result = (await _operationalAddressRepository.GetAsync(p => p.CompanyId == request.CompanyId)).FirstOrDefault();
 
-
             return new Success<OperationalAddress>() { Data = result };
         }
-
     }
 }

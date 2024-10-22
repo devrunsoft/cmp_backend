@@ -61,6 +61,41 @@ namespace CmpNatural.CrmManagment.Product
                 return new HasError<List<ServicePriceResponse>>() { };
             }
         }
+
+        public CommandResponse<ServicePriceResponse> GetById(string productId,string priceId)
+        {
+            try
+            {
+                var result = "-1";
+                var webAddr = $"{_highLevelSetting.RestApi}/products/{productId}/price/{priceId}?locationId={_highLevelSetting.LocationId}";
+
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Headers.Add($"Authorization: {_highLevelSetting.Authorization}");
+                httpWebRequest.Headers.Add($"Version: {_highLevelSetting.Version}");
+                httpWebRequest.Method = "GET";
+
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    result = streamReader.ReadToEnd();
+                }
+                JObject jsonObject = JObject.Parse(result);
+
+                ServicePriceResponse response = jsonObject.ToObject<ServicePriceResponse>();
+
+
+
+                return new Success<ServicePriceResponse>() { Data = response };
+
+            }
+            catch (Exception ex)
+            {
+                return new HasError<ServicePriceResponse>() { };
+            }
+        }
+
     }
 }
 

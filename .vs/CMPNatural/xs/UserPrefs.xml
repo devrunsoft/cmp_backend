@@ -1,96 +1,128 @@
-﻿<Properties StartupConfiguration="{36794759-A62F-43C3-B7D2-DE0D42AA2780}|https" GitUserInfo="UsingMD">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Player/RegisterPlayerController.cs" relfile="ScoutDirect/Controllers/Player/RegisterPlayerController.cs" line="50" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Player/RegisterPlayerController.cs" relfile="ScoutDirect/Controllers/Player/RegisterPlayerController.cs" line="58" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/Webhook/ActivationLink.cs" relfile="CmpNatural.CrmManagment/Webhook/ActivationLink.cs" line="44" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/ServiceAppointment/ServiceAppointmentController.cs" relfile="ScoutDirect/Controllers/ServiceAppointment/ServiceAppointmentController.cs" line="39" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/dashboard/OperationalAddressDashboardController.cs" relfile="ScoutDirect/Controllers/dashboard/OperationalAddressDashboardController.cs" line="81" column="1" />
-    </BreakpointStore>
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="ScoutDirect/Controllers/Auth/Register/OperationalAddressController.cs">
+﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{36794759-A62F-43C3-B7D2-DE0D42AA2780}|https">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ScoutDirect/Controllers/Invoice/InvoiceController.cs">
     <Files>
-      <File FileName="Application/Commands/ServiceAppointment/GetAllServiceAppointmentCommand.cs" />
-      <File FileName="ScoutDirect/Controllers/dashboard/OperationalAddressDashboardController.cs" Line="50" Column="1" />
-      <File FileName="ScoutDirect/Controllers/_Base/BaseRegisteredController.cs" />
-      <File FileName="ScoutDirect/Controllers/dashboard/OtherCompanyLocationControllerController.cs" />
-      <File FileName="ScoutDirect/Controllers/ServiceAppointment/ServiceAppointmentController.cs" Line="29" Column="58" />
-      <File FileName="Application/Commands/ServiceAppointment/AddServiceAppointmentCommand.cs" />
-      <File FileName="Application/Handlers/CommandHandlers/ServiceAppointment/AddServiceAppointmentHandler.cs" />
-      <File FileName="Application/Handlers/CommandHandlers/ServiceAppointment/DeleteServiceAppointmentHandler.cs" />
-      <File FileName="Application/Handlers/CommandHandlers/ServiceAppointment/GetAllServiceAppointmentHandler.cs" />
-      <File FileName="Application/Handlers/CommandHandlers/ServiceAppointment/GetServiceAppointmentByOprAddressHandler.cs" />
-      <File FileName="Core/Entities/ServiceAppointment.cs" />
-      <File FileName="Core/Entities/BaseServiceAppointment.cs" />
-      <File FileName="Core/Entities/OperationalAddress.cs" Line="12" Column="28" />
-      <File FileName="Application/Model/ServiceAppointment/ServiceAppointmentInput.cs" />
-      <File FileName="Application/Handlers/CommandHandlers/ServiceAppointmentEmergency/AddServiceAppointmentEmergencyHandler.cs" />
-      <File FileName="Application/Commands/ServiceAppointmentEmergency/AddServiceAppointmentEmergencyCommand.cs" />
-      <File FileName="Application/Model/ServiceAppointment/ServiceAppointmentEmergencyInput.cs" />
-      <File FileName="Application/Commands/ServiceAppointment/GetServiceAppointmentByOprAddressCommand.cs" />
-      <File FileName="Core/Repositories/IServiceAppointmentRepository.cs" />
-      <File FileName="Application/Commands/ServiceAppointment/DeleteServiceAppointmentCommand.cs" />
+      <File FileName="infrastructure/RegisterDependency.cs" Line="34" Column="49" IsPinned="True" />
+      <File FileName="ScoutDirect/Controllers/Service/ServiceAppointmentController.cs" Line="76" Column="14" IsPinned="True" />
+      <File FileName="Core/Repositories/IDocumentRepository.cs" />
+      <File FileName="infrastructure/Repository/InvoiceRepository.cs" />
+      <File FileName="ScoutDirect/Controllers/Invoice/InvoiceController.cs" Line="20" Column="1" />
+      <File FileName="CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/Invoice/CreateInvoiceHandler.cs" />
+      <File FileName="Application/Commands/Invoice/CreateInvoiceCommand.cs" />
+      <File FileName="Core/Entities/Invoice.cs" />
+      <File FileName="ScoutDirect/Program.cs" />
       <File FileName="ScoutDirect/Controllers/UserController.cs" />
-      <File FileName="ScoutDirect/Controllers/Auth/Register/BusinessTypeController.cs" />
-      <File FileName="ScoutDirect/Controllers/Auth/Register/OperationalAddressController.cs" Line="89" Column="26" />
-      <File FileName="ScoutDirect/Controllers/Auth/Register/BilingInformationController.cs" />
-      <File FileName="ScoutDirect/Controllers/Auth/Register/DocumentController.cs" />
-      <File FileName="ScoutDirect/Controllers/Auth/Register/RegisterCompanyController.cs" Line="109" Column="29" />
+      <File FileName="Core/Entities/BaseServiceAppointment.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/ServiceAppointment/AddServiceAppointmentHandler.cs" />
+      <File FileName="ScoutDirect/Controllers/Service/ServiceController.cs" />
+      <File FileName="Application/Commands/ServiceAppointment/GetServiceAppointmentByOprAddressCommand.cs" />
+      <File FileName="Core/Entities/ServiceAppointment.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/ServiceAppointmentEmergency/AddServiceAppointmentEmergencyHandler.cs" />
+      <File FileName="CmpNatural.CrmManagment/Command/CreateInvoiceCommand.cs" />
+      <File FileName="CmpNatural.CrmManagment/Api/Product/ProductList.cs" />
+      <File FileName="CmpNatural.CrmManagment/Api/Product/ProductPrice.cs" />
+      <File FileName="Application/Responses/Service/ServicePriceResponse.cs" />
+      <File FileName="CmpNatural.CrmManagment/Api/Contact/ContactApi.cs" />
+      <File FileName="ScoutDirect/Controllers/_Base/BaseRegisteredController.cs" />
+      <File FileName="ScoutDirect/Controllers/_Base/BaseApiController.cs" />
+      <File FileName="Application/Responses/Service/ServiceResponse.cs" />
+      <File FileName="CmpNatural.CrmManagment/Model/ContactResponse.cs" />
+      <File FileName="CmpNatural.CrmManagment/Model/InvoiceApiResponse.cs" />
+      <File FileName="Application/Responses/Base/CommandResponse.cs" />
+      <File FileName="Application/Commands/Invoice/SentInvoiceCommand.cs" />
+      <File FileName="Application/Model/ServiceAppointment/ServiceAppointmentInput.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/Invoice/SentInvoiceHandler.cs" />
+      <File FileName="Application/Commands/Invoice/GetInvoiceByProductIdCommand.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/Invoice/GetInvoiceByProductIdHandler.cs" />
+      <File FileName="Application/Commands/ServiceAppointment/AddServiceAppointmentCommand.cs" />
+      <File FileName="Core/Enums/ServiceStatus.cs" />
+      <File FileName="Core/Enums/ServiceType.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/ServiceAppointment/EditServiceAppointmentHandler.cs" />
+      <File FileName="Application/Commands/ServiceAppointment/EditServiceAppointmentCommand.cs" />
+      <File FileName="ScoutDirect/Controllers/Auth/Register/OperationalAddressController.cs" />
+      <File FileName="ScoutDirect/Controllers/dashboard/OperationalAddressDashboardController.cs" />
+      <File FileName="ScoutDirect/Controllers/Auth/Register/RegisterCompanyController.cs" />
       <File FileName="ScoutDirect/Controllers/StatusController.cs" />
-      <File FileName="Core/Entities/ServiceAppointmentEmergency.cs" />
-      <File FileName="ScoutDirect/Controllers/ServiceAppointment/ServiceAppointmentEmergencyController.cs" />
-      <File FileName="Application/Commands/ServiceAppointmentEmergency/GetAllServiceAppointmentEmergencyCommand.cs" />
-      <File FileName="Application/Commands/OperationalAddress/GetServiceOperationalAddressCommand.cs" />
-      <File FileName="Application/Commands/ServiceAppointmentEmergency/GetEmergencyServiceAppointmentByOprAddressCommand.cs" />
+      <File FileName="ScoutDirect/appsettings.json" />
+      <File FileName="CmpNatural.CrmManagment/Command/SendInvoiceCommand.cs" />
+      <File FileName="infrastructure/Repository/Base/Base.cs" />
+      <File FileName="Core/Enums/ServicePriceType.cs" />
+      <File FileName="Core/Enums/RegisterType.cs" />
+      <File FileName="Core/Enums/LocationType.cs" />
       <File FileName="Core/Enums/FrequencyType.cs" />
-      <File FileName="Application/Model/BilingInformationInput.cs" />
-      <File FileName="Application/Model/CheckResetPasswordInput.cs" />
-      <File FileName="Application/Model/DocumentInput.cs" />
-      <File FileName="Application/Model/LocationCompanyInput.cs" />
-      <File FileName="Application/Model/OperationalAddressInput.cs" Line="8" Column="27" />
+      <File FileName="Core/Enums/CompanyType.cs" />
+      <File FileName="Core/Enums/ServiceKind.cs" />
+      <File FileName="Core/Entities/ServiceAppointmentEmergency.cs" />
+      <File FileName="Core/Entities/ShoppingCard.cs" />
+      <File FileName="infrastructure/Repository/ShoppingCardRepository.cs" />
+      <File FileName="infrastructure/Repository/ServiceAppointmentRepository.cs" />
+      <File FileName="Core/Repositories/IShoppingCardRepository.cs" />
+      <File FileName="Core/Repositories/IServiceAppointmentRepository.cs" />
+      <File FileName="ScoutDirect/Controllers/shoppingcard/ShoppingCardController.cs" />
+      <File FileName="Application/Model/ServiceAppointment/ServiceAppointmentEmergencyInput.cs" />
+      <File FileName="Application/Commands/ShoppingCard/AddServiceShoppingCardCommand.cs" />
+      <File FileName="Application/Commands/ShoppingCard/GetAllShoppingCardCommand.cs" />
+      <File FileName="Application/Commands/ServiceAppointment/GetAllServiceAppointmentCommand.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/ShoppingCard/GetAllShoppingCardHandler.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/OperationalAddress/EditOperationalAddressHandler.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/OperationalAddress/GetAllOperationalAddressHandler.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/OperationalAddress/GetOperationalAddressHandler.cs" />
+      <File FileName="Application/Commands/OperationalAddress/GetServiceOperationalAddressCommand.cs" />
+      <File FileName="Core/Repositories/Base/IRepository.cs" />
+      <File FileName="Application/Commands/ShoppingCard/DeleteShoppingCardCommand.cs" />
+      <File FileName="Core/Entities/Base/PersistentDefinition.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/ShoppingCard/AddServiceShoppingCardHandler.cs" />
       <File FileName="infrastructure/Data/DbContext.cs" />
-      <File FileName="Application/Responses/Base/CommandResponse.cs" Line="63" Column="6" />
-      <File FileName="Application/Handlers/CommandHandlers/ServiceAppointment/GetServiceAppointmentHandler.cs" />
-      <File FileName="Application/Commands/ServiceAppointment/GetServiceAppointmentCommand.cs" />
-      <File FileName="Core/Enums/ServiceType.cs" Line="25" Column="37" />
-      <File FileName="Application/Handlers/CommandHandlers/OperationalAddress/AddOperationalAddressHandler.cs" Line="48" Column="41" />
-      <File FileName="Application/Handlers/CommandHandlers/OperationalAddress/EditOperationalAddressHandler.cs" Line="64" Column="1" />
+      <File FileName="Application/Handlers/CommandHandlers/OperationalAddress/GetByIdOperationalAddressHandler.cs" />
+      <File FileName="Application/Commands/OperationalAddress/GetByIdServiceOperationalAddressCommand.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/ShoppingCard/DeleteShoppingCardHandler.cs" />
+      <File FileName="ScoutDirect/Controllers/Service/ServiceAppointmentEmergencyController.cs" />
+      <File FileName="Application/Commands/Invoice/GetInvoiceByIdCommand.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/Invoice/GetInvoiceByIdHandler.cs" />
+      <File FileName="Application/Commands/Invoice/GetAllInvoiceCommand.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/Invoice/GetAllInvoiceHandler.cs" Line="7" Column="30" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="CMPNatural" expanded="True">
-            <Node name="CMPNatural.Api">
-              <Node name="Controllers" expanded="True">
-                <Node name="Auth" expanded="True">
-                  <Node name="Register">
-                    <Node name="OperationalAddressController.cs" selected="True" />
-                  </Node>
-                </Node>
-                <Node name="dashboard" expanded="True" />
-              </Node>
-            </Node>
-            <Node name="CMPNatural.Application">
+            <Node name="CMPNatural.Application" expanded="True">
               <Node name="Handlers" expanded="True">
                 <Node name="CommandHandlers" expanded="True">
-                  <Node name="OperationalAddress" expanded="True" />
+                  <Node name="Invoice" expanded="True" />
                 </Node>
               </Node>
-              <Node name="Responses" expanded="True">
+            </Node>
+            <Node name="CMPNatural.Core" expanded="True">
+              <Node name="Entities" expanded="True">
                 <Node name="Base" expanded="True" />
               </Node>
-            </Node>
-            <Node name="CMPNatural.Core">
-              <Node name="Entities" expanded="True" />
               <Node name="Enums" expanded="True" />
             </Node>
+            <Node name="CmpNatural.CrmManagment" expanded="True" />
+            <Node name="CMPNatural.infrastructure" expanded="True" />
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Player/RegisterPlayerController.cs" relfile="ScoutDirect/Controllers/Player/RegisterPlayerController.cs" line="50" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Player/RegisterPlayerController.cs" relfile="ScoutDirect/Controllers/Player/RegisterPlayerController.cs" line="58" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/Webhook/ActivationLink.cs" relfile="CmpNatural.CrmManagment/Webhook/ActivationLink.cs" line="44" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/dashboard/OperationalAddressDashboardController.cs" relfile="ScoutDirect/Controllers/dashboard/OperationalAddressDashboardController.cs" line="81" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/Api/Product/ProductPrice.cs" relfile="CmpNatural.CrmManagment/Api/Product/ProductPrice.cs" line="95" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" relfile="CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" line="59" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" relfile="CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" line="108" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/CommandHandlers/ServiceAppointment/EditServiceAppointmentHandler.cs" relfile="Application/Handlers/CommandHandlers/ServiceAppointment/EditServiceAppointmentHandler.cs" line="26" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/CommandHandlers/ServiceAppointment/EditServiceAppointmentHandler.cs" relfile="Application/Handlers/CommandHandlers/ServiceAppointment/EditServiceAppointmentHandler.cs" line="24" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/CommandHandlers/ServiceAppointment/EditServiceAppointmentHandler.cs" relfile="Application/Handlers/CommandHandlers/ServiceAppointment/EditServiceAppointmentHandler.cs" line="25" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Service/ServiceAppointmentController.cs" relfile="ScoutDirect/Controllers/Service/ServiceAppointmentController.cs" line="67" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.CMPNatural.Api PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

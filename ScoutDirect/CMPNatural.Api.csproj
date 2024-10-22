@@ -35,6 +35,7 @@
     <None Remove="Controllers\dashboard\" />
     <None Remove="Controllers\Service\" />
     <None Remove="Controllers\Invoice\" />
+    <None Remove="Controllers\shoppingcard\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FileContent\" />
@@ -46,6 +47,7 @@
     <Folder Include="Controllers\dashboard\" />
     <Folder Include="Controllers\Service\" />
     <Folder Include="Controllers\Invoice\" />
+    <Folder Include="Controllers\shoppingcard\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\infrastructure\CMPNatural.infrastructure.csproj">

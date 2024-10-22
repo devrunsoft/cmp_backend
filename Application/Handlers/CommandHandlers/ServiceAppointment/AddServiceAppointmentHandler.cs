@@ -6,6 +6,7 @@ using MediatR;
 using ScoutDirect.Application.Responses;
 using System.Threading;
 using System.Threading.Tasks;
+using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Application.Handlers
 {
@@ -27,9 +28,12 @@ namespace CMPNatural.Application.Handlers
                 FrequencyType=request.FrequencyType,
                 //LocationCompanyId=request.LocationCompanyId,
                 ServiceTypeId=(int) request.ServiceTypeId,
-                ServicePriceId=request.ServicePriceId,
+                ServicePriceCrmId=request.ServicePriceId,
+                ServiceCrmId=request.ServiceId,
                 StartDate=request.StartDate,
-                OperationalAddressId=request.OperationalAddressId
+                OperationalAddressId=request.OperationalAddressId,
+                Status = (int)ServiceStatus.draft,
+                InvoiceId = request.InvoiceId
             };
 
             var result = await _serviceAppointmentRepository.AddAsync(entity);
