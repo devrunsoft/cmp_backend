@@ -544,6 +544,12 @@
           "Microsoft.Extensions.Primitives": "8.0.0"
         }
       },
+      "Microsoft.Extensions.Configuration/8.0.0": {
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Primitives": "8.0.0"
+        }
+      },
       "Microsoft.Extensions.Configuration.Abstractions/8.0.0": {
         "dependencies": {
           "Microsoft.Extensions.Primitives": "8.0.0"
@@ -1394,6 +1400,8 @@
       },
       "CmpNatural.CrmManagment/1.0.0": {
         "dependencies": {
+          "CMPNatural.Application": "1.0.0",
+          "Microsoft.Extensions.Configuration": "8.0.0",
           "Newtonsoft.Json": "13.0.3"
         },
         "runtime": {
@@ -1403,6 +1411,7 @@
       "CMPNatural.infrastructure/1.0.0": {
         "dependencies": {
           "CMPNatural.Core": "1.0.0",
+          "CmpNatural.CrmManagment": "1.0.0",
           "Microsoft.EntityFrameworkCore": "8.0.7",
           "MySql.Data": "9.0.0",
           "MySql.EntityFrameworkCore": "8.0.5"
@@ -1775,6 +1784,13 @@
       "sha512": "sha512-7pqivmrZDzo1ADPkRwjy+8jtRKWRCPag9qPI+p7sgu7Q4QreWhcvbiWXsbhP+yY8XSiDvZpu2/LWdBv7PnmOpQ==",
       "path": "microsoft.extensions.caching.memory/8.0.0",
       "hashPath": "microsoft.extensions.caching.memory.8.0.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Configuration/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0J/9YNXTMWSZP2p2+nvl8p71zpSwokZXZuJW+VjdErkegAnFdO1XlqtA62SJtgVYHdKu3uPxJHcMR/r35HwFBA==",
+      "path": "microsoft.extensions.configuration/8.0.0",
+      "hashPath": "microsoft.extensions.configuration.8.0.0.nupkg.sha512"
     },
     "Microsoft.Extensions.Configuration.Abstractions/8.0.0": {
       "type": "package",

@@ -23,14 +23,16 @@ namespace CMPNatural.Api.Controllers.Auth
         }
 
 
-        [HttpGet]
+        [HttpGet("{Id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Get()
+        public async Task<ActionResult> Get([FromRoute] long Id)
         {
             var result = await _mediator.Send(new GetOperationalAddressCommand()
             {
                 CompanyId = rCompanyId,
+                Id = Id
+
             });
             return Ok(result);
         }

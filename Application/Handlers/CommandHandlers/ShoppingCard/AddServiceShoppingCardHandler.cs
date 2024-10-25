@@ -73,7 +73,8 @@ namespace CMPNatural.Application.Handlers
                 FrequencyType = request.FrequencyType,
                 Name = request.Name,
                 AddressName = request.AddressName,
-                PriceName = request.PriceName
+                PriceName = request.PriceName,
+                ServiceKind = (int) request.ServiceKind
 
             };
             var result = await _shoppingCardRepository.AddAsync(entity);

@@ -1,4 +1,6 @@
 ﻿using System;
+using CMPNatural.Core.Enums;
+
 namespace CMPNatural.Core.Entities
 {
 	public partial class ShoppingCard
@@ -22,6 +24,9 @@ namespace CMPNatural.Core.Entities
         public string? PriceName { get; set; }
 
         public DateTime StartDate { get; set; }
+
+        public int ServiceKind { get; set; }
+
     }
 }
 

@@ -7,11 +7,9 @@ namespace CMPNatural.Application
 {
 	public class GetOperationalAddressCommand : IRequest<CommandResponse<OperationalAddress>>
     {
-		public GetOperationalAddressCommand()
-		{
-		}
 
 		public long CompanyId { get; set; }
+		public long Id { get; set; }
 	}
 }
 

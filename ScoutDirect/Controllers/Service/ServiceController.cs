@@ -35,9 +35,9 @@ namespace CMPNatural.Api.Controllers.ServiceAppointment
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Get()
         {
-            var result = _api.call().Data.Where(p=> !p.collectionIds.Any(p=>p== "671826ac39575cbf746abf37")).ToList();
+            var result = _api.call();
 
-            return Ok(new Success<List<ServiceResponse>>() { Data = result });
+            return Ok(result);
         }
 
         [HttpGet("{Id}")]

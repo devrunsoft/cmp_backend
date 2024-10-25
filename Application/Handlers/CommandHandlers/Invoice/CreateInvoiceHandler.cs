@@ -41,10 +41,25 @@ namespace CMPNatural.Application.Handlers
                         StartDate = request.StartDate,
                         OperationalAddressId = request.OperationalAddressId,
                         Status = (int)ServiceStatus.draft,
-
-
+                        IsEmegency=false,
                     };
-
+                    lstCustom.Add(command);
+                }
+                else
+                {
+                    var command = new ServiceAppointmentEmergency()
+                    {
+                        CompanyId = requests.CompanyId,
+                        FrequencyType = request.FrequencyType,
+                        //LocationCompanyId=request.LocationCompanyId,
+                        ServiceTypeId = (int)request.ServiceTypeId,
+                        ServicePriceCrmId = request.ServicePriceId,
+                        ServiceCrmId = request.ServiceId,
+                        //StartDate = request.StartDate,
+                        OperationalAddressId = request.OperationalAddressId,
+                        Status = (int)ServiceStatus.draft,
+                        IsEmegency = true,
+                    };
                     lstCustom.Add(command);
                 }
 

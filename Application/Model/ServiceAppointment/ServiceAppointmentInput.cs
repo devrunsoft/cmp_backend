@@ -14,7 +14,7 @@ namespace CMPNatural.Application.Model.ServiceAppointment
 
         public long OperationalAddressId { get; set; }
 
-        public string FrequencyType { get; set; }
+        public string FrequencyType { get; set; } = null;
 
         public DateTime StartDate { get; set; }
 

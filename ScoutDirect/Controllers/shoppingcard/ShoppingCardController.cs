@@ -61,7 +61,8 @@ namespace CMPNatural.Api.Controllers.shoppingcard
                 ServicePriceId = request.ServicePriceId,
                 Name= product.Data.name,
                 AddressName = address.Data.Name,
-                PriceName = price.Data.name
+                PriceName = price.Data.name,
+                ServiceKind =request.ServiceKind
             });
             return Ok(result);
         }

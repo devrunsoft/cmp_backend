@@ -19,6 +19,8 @@ namespace CMPNatural.Core.Entities
         
         public long InvoiceId { get; set; }
 
+        public bool IsEmegency { get; set; }
+
         public Invoice Invoice { get; set; }
 
     }
