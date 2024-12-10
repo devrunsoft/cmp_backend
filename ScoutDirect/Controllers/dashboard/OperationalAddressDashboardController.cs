@@ -28,7 +28,7 @@ namespace CMPNatural.Api.Controllers.Auth
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Get([FromRoute] long Id)
         {
-            var result = await _mediator.Send(new GetOperationalAddressCommand()
+            var result = await _mediator.Send(new GetByIdServiceOperationalAddressCommand()
             {
                 CompanyId = rCompanyId,
                 Id = Id

@@ -40,6 +40,17 @@ namespace CMPNatural.Api.Controllers.ServiceAppointment
             return Ok(result);
         }
 
+        [HttpGet("Product/{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Product([FromRoute] string Id)
+        {
+            var result = _api.GetById(Id);
+
+            return Ok(result);
+        }
+
+
         [HttpGet("{Id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]

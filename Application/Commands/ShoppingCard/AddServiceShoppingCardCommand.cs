@@ -10,6 +10,7 @@ namespace CMPNatural.Application
     public class AddServiceShoppingCardCommand : ServiceAppointmentInput, IRequest<CommandResponse<ShoppingCard>>
     {
         public long CompanyId { get; set; }
+
         public long InvoiceId { get; set; }
 
         public string Name { get; set; }
@@ -17,6 +18,8 @@ namespace CMPNatural.Application
         public string PriceName { get; set; }
 
         public string AddressName { get; set; }
+
+        public string? Address { get; set; }
     }
 }
 

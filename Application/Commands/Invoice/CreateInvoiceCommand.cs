@@ -16,6 +16,8 @@ namespace CMPNatural.Application
         public string InvoiceId { get; set; }
         public List<ServiceAppointmentInput> Services { get; set; }
         public double Amount { get; set; }
+        public List<long> LocationCompanyIds { get; set; }
+
     }
 }
 

@@ -21,7 +21,11 @@ namespace CMPNatural.Core.Entities
 
         public bool IsEmegency { get; set; }
 
+        public int Qty { get; set; } = 1;
+
         public Invoice Invoice { get; set; }
+
+        public virtual ICollection<ServiceAppointmentLocation> ServiceAppointmentLocations { get; set; } = new List<ServiceAppointmentLocation>();
 
     }
 }

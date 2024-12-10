@@ -9,7 +9,7 @@ namespace CMPNatural.Application
     {
 
 		public long CompanyId { get; set; }
-		public long Id { get; set; }
+		//public long Id { get; set; }
 	}
 }
 

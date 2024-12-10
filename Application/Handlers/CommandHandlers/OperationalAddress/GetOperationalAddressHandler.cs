@@ -30,7 +30,7 @@ namespace CMPNatural.Application.Handlers
         public async Task<CommandResponse<OperationalAddress>> Handle(GetOperationalAddressCommand request, CancellationToken cancellationToken)
         {
 
-            OperationalAddress result = (await _operationalAddressRepository.GetWithChild(p => p.CompanyId == request.CompanyId && p.Id == request.Id)).FirstOrDefault();
+            OperationalAddress result = (await _operationalAddressRepository.GetWithChild(p => p.CompanyId == request.CompanyId)).FirstOrDefault();
 
             return new Success<OperationalAddress>() { Data = result };
         }

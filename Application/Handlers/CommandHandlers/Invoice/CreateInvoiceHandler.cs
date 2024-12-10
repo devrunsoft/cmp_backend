@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using CMPNatural.Core.Enums;
+using System.Linq;
 
 namespace CMPNatural.Application.Handlers
 {
@@ -37,12 +38,16 @@ namespace CMPNatural.Application.Handlers
                         //LocationCompanyId=request.LocationCompanyId,
                         ServiceTypeId = (int)request.ServiceTypeId,
                         ServicePriceCrmId = request.ServicePriceId,
-                        ServiceCrmId = request.ServiceId,
-                        StartDate = request.StartDate,
+                        ServiceCrmId = request.ServiceCrmId,
+                        StartDate = request.StartDate??DateTime.Now,
                         OperationalAddressId = request.OperationalAddressId,
                         Status = (int)ServiceStatus.draft,
                         IsEmegency=false,
-                    };
+                        Qty = request.qty,
+                        ServiceAppointmentLocations = request.LocationCompanyIds
+                        .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
+                        .ToList()
+                 };
                     lstCustom.Add(command);
                 }
                 else
@@ -54,11 +59,15 @@ namespace CMPNatural.Application.Handlers
                         //LocationCompanyId=request.LocationCompanyId,
                         ServiceTypeId = (int)request.ServiceTypeId,
                         ServicePriceCrmId = request.ServicePriceId,
-                        ServiceCrmId = request.ServiceId,
+                        ServiceCrmId = request.ServiceCrmId,
                         //StartDate = request.StartDate,
                         OperationalAddressId = request.OperationalAddressId,
                         Status = (int)ServiceStatus.draft,
                         IsEmegency = true,
+                        Qty = request.qty,
+                        ServiceAppointmentLocations = request.LocationCompanyIds
+                        .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
+                        .ToList()
                     };
                     lstCustom.Add(command);
                 }

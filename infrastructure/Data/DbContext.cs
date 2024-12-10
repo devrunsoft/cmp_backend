@@ -78,6 +78,10 @@ namespace infrastructure.Data
             modelBuilder.Entity<BaseServiceAppointment>(entity =>
             {
                 entity.ToTable("BaseServiceAppointment");
+
+                entity.HasMany(sa => sa.ServiceAppointmentLocations)
+                .WithOne(sal => sal.ServiceAppointment)
+                .HasForeignKey(sal => sal.ServiceAppointmentId);
             });
 
             modelBuilder.Entity<ServiceAppointment>(entity =>
@@ -85,11 +89,15 @@ namespace infrastructure.Data
                 entity.ToTable("ServiceAppointment").HasBaseType<BaseServiceAppointment>();
                 entity.Property(e => e.ServiceCrmId)
                   .HasColumnType("varchar(255)") 
-                  .IsRequired(false);            
+                  .IsRequired(false);
+
+
+
             });
             modelBuilder.Entity<ServiceAppointmentEmergency>(entity =>
             {
                 entity.ToTable("ServiceAppointmentEmergency").HasBaseType<BaseServiceAppointment>();
+
             });
 
             modelBuilder.Entity<Invoice>(entity =>
@@ -103,6 +111,11 @@ namespace infrastructure.Data
             modelBuilder.Entity<ShoppingCard>(entity =>
             {
                 entity.ToTable("ShoppingCard");
+            });
+
+            modelBuilder.Entity<ServiceAppointmentLocation>(entity =>
+            {
+                entity.ToTable("ServiceAppointmentLocation");
             });
 
         }

@@ -6,6 +6,7 @@ using CmpNatural.CrmManagment.Product;
 using CMPNatural.Api.Controllers._Base;
 using CMPNatural.Application;
 using CMPNatural.Application.Model.ServiceAppointment;
+using CMPNatural.Core.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -44,9 +45,9 @@ namespace CMPNatural.Api.Controllers.shoppingcard
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Post([FromBody] ServiceAppointmentInput request)
         {
-            var product = _api.GetById(request.ServiceId);
+            var product = _api.GetById(request.ServiceCrmId);
 
-            var price = _priceapi.GetById(request.ServiceId, request.ServicePriceId);
+            var price = _priceapi.GetById(request.ServiceCrmId, request.ServicePriceId);
 
             var address = await _mediator.Send(new GetByIdServiceOperationalAddressCommand()
             { Id=request.OperationalAddressId,CompanyId=rCompanyId});
@@ -57,12 +58,16 @@ namespace CMPNatural.Api.Controllers.shoppingcard
                 FrequencyType = request.FrequencyType,
                 StartDate = request.StartDate,
                 OperationalAddressId = request.OperationalAddressId,
-                ServiceId = request.ServiceId,
+                ServiceCrmId = request.ServiceCrmId,
+                ServiceTypeId = request.ServiceTypeId,
                 ServicePriceId = request.ServicePriceId,
                 Name= product.Data.name,
                 AddressName = address.Data.Name,
+                Address = address.Data.Address,
                 PriceName = price.Data.name,
-                ServiceKind =request.ServiceKind
+                ServiceKind =request.ServiceKind,
+                LocationCompanyIds = request.LocationCompanyIds,
+                qty=request.qty
             });
             return Ok(result);
         }

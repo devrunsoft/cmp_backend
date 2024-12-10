@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Application.Model.ServiceAppointment
@@ -10,15 +11,19 @@ namespace CMPNatural.Application.Model.ServiceAppointment
 
         public string ServicePriceId { get; set; }
 
-        public string ServiceId { get; set; } = null!;
+        public string ServiceCrmId { get; set; } = null!;
 
         public long OperationalAddressId { get; set; }
 
+        public List<long> LocationCompanyIds { get; set; }
+
         public string FrequencyType { get; set; } = null;
 
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; } = null;
 
         public ServiceKind ServiceKind { get; set; } = ServiceKind.Custom;
+
+        public int qty { get; set; } = 1;
 
     }
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using CMPNatural.Api.Controllers._Base;
 using CMPNatural.Application;
+using CMPNatural.Application.Commands.ServiceAppointment;
+using CMPNatural.Application.Commands.ServiceAppointmentEmergency;
 using CMPNatural.Application.Model.ServiceAppointment;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
@@ -42,6 +44,21 @@ namespace CMPNatural.Api.Controllers.ServiceAppointment
         }
 
 
+        [HttpGet("{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Get([FromRoute] long Id)
+        {
+            var result = await _mediator.Send(new GetServiceAppointmentEmergencyCommand()
+            {
+                CompanyId = rCompanyId,
+                Id = Id
+
+            });
+
+            return Ok(result);
+        }
+
         [HttpGet("OperationalAddress/{Id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
@@ -54,6 +71,36 @@ namespace CMPNatural.Api.Controllers.ServiceAppointment
 
             });
 
+            return Ok(result);
+        }
+
+
+        [HttpGet("OperationalAddress/{Id}/{ServiceTypeId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> GetByOprAddressAndServiceType([FromRoute] long Id, [FromRoute] string ServiceTypeId)
+        {
+            var result = await _mediator.Send(new GetEmergencyServiceAppointmentByOprAddressAndServiceTypeIdCommand()
+            {
+                CompanyId = rCompanyId,
+                OperationalAddressId = Id,
+                ServiceTypeId = ServiceTypeId
+
+            });
+
+            return Ok(result);
+        }
+
+        [HttpDelete("{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Delete([FromRoute] long Id)
+        {
+            var result = await _mediator.Send(new DeleteServiceAppointmentEmergencyCommand()
+            {
+                Id = Id,
+                CompanyId = rCompanyId
+            });
             return Ok(result);
         }
     }

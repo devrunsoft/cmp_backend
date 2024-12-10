@@ -13,17 +13,17 @@ namespace CMPNatural.Core.Enums
         [Description("Grease_Trap_Management")]
         Grease_Trap_Management = 2,
 
-        [Description("Hydro_Line_Jetting")]
-        Hydro_Line_Jetting = 3,
+        [Description("Other")]
+        Other = 3,
 
-        [Description("Kitchen_Hood_Cleaning")]
-        Kitchen_Hood_Cleaning = 4,
+        //[Description("Kitchen_Hood_Cleaning")]
+        //Kitchen_Hood_Cleaning = 4,
 
-        [Description("Power_Washing")]
-        Power_Washing = 5,
+        //[Description("Power_Washing")]
+        //Power_Washing = 5,
 
-        [Description("Extra_Services")]
-        Extra_Services = 6,
+        //[Description("Extra_Services")]
+        //Extra_Services = 6,
 
     }
 }

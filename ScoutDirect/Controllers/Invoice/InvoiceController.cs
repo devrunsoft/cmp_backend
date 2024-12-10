@@ -8,6 +8,7 @@ using CmpNatural.CrmManagment.Invoice;
 using CmpNatural.CrmManagment.Product;
 using CMPNatural.Api.Controllers._Base;
 using CMPNatural.Application;
+using CMPNatural.Application.Commands.Company;
 using CMPNatural.Application.Commands.Invoice;
 using CMPNatural.Application.Commands.ShoppingCard;
 using CMPNatural.Application.Handlers;
@@ -18,6 +19,7 @@ using Google.Protobuf.WellKnownTypes;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using ScoutDirect.Application.Responses;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -52,6 +54,20 @@ namespace CMPNatural.Api.Controllers.Invoice
             });
             return Ok(result);
         }
+
+        [HttpGet("GetPayableCount")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> GetPayableCount()
+        {
+            var result = await _mediator.Send(new GetAllInvoicePayableCommand()
+            {
+                CompanyId = rCompanyId
+            });
+            return Ok(result);
+        }
+
+
         [HttpGet("CheckPayment/{Id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
@@ -103,10 +119,39 @@ namespace CMPNatural.Api.Controllers.Invoice
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Post([FromBody] List<ServiceAppointmentInput> request)
+        public async Task<ActionResult> Post([FromBody] List<ServiceAppointmentInput> r)
         {
+            var resultShopping= (await _mediator.Send(new GetAllShoppingCardCommand()
+            {
+                CompanyId = rCompanyId,
+            })).Data;
+
+
+            var company = (await _mediator.Send(new GetCompanyCommand()
+            {
+                CompanyId = rCompanyId,
+            })).Data;
+
+            var oprAddress = (await _mediator.Send(new GetAllOperationalAddressCommand()
+            {
+                CompanyId = rCompanyId,
+            })).Data.Where((e)=>r.Any(p=>p.OperationalAddressId==e.Id));
+
+
+            var request =  resultShopping.Select((e) => new ServiceAppointmentInput() {
+                FrequencyType = e.FrequencyType,
+                OperationalAddressId =e.OperationalAddressId,
+                ServiceKind= (ServiceKind) e.ServiceKind,
+                ServicePriceId=e.ServicePriceCrmId,
+                ServiceTypeId= (ServiceType) e.ServiceId,
+                StartDate = e.StartDate,
+                ServiceCrmId = e.ServiceCrmId,
+                LocationCompanyIds=e.LocationCompanyIds.IsNullOrEmpty()? new List<long>() : e.LocationCompanyIds.Split(",").Select((e)=> long.Parse(e)).ToList(),
+                qty = e.Qty
+            }).ToList();
+
             var resultPrice = request.Select(e =>
-                   _productPriceApi.GetById(e.ServiceId, e.ServicePriceId).Data
+                  new { price =  _productPriceApi.GetById(e.ServiceCrmId, e.ServicePriceId).Data , product = e }
                   ).ToList();
 
             //var resultPrice = _productPriceApi.GetById(request.ServiceId, request.ServicePriceId).Data;
@@ -117,25 +162,45 @@ namespace CMPNatural.Api.Controllers.Invoice
             var lst = resultPrice.Select(e =>
               new ProductItemCommand()
               {
-                  amount = double.Parse(e.amount),
-                  currency = e.currency,
-                  name = _productApi.GetById(e.product).Data.name + " - " + e.name,
-                  priceId = e._id,
-                  productId = e.product,
-                  qty = 1,
+                  amount = double.Parse(e.price.amount),
+                  currency = e.price.currency,
+                  name = _productApi.GetById(e.price.product).Data.name + " - " + e.price.name,
+                  priceId = e.price._id,
+                  productId = e.price.product,
+                  qty = e.product.qty,
               }).ToList();
 
             var command = new CreateInvoiceApiCommand
             {
-                dueDate = DateOnly.FromDateTime(DateTime.Now),
+                dueDate = DateOnly.FromDateTime(DateTime.Now.AddDays(10)),
                 issueDate = DateOnly.FromDateTime(DateTime.Now),
                 currency = "USD",
                 invoiceNumber = invoiceNumber.ToString(),
-                contactDetails = new ContactDetailsCommand { name = rBusinessEmail, email = rBusinessEmail, id = resultContact.id },
-                sentTo = new SendTo() { email = new List<string>() { rBusinessEmail } },
-                name = rBusinessEmail,
-                businessDetails = new BusinessDetailsCommand { name = rBusinessEmail },
-                items = lst
+                //
+                contactDetails = new ContactDetailsCommand {
+                    name = company.PrimaryFirstName + " " +company.PrimaryLastName,
+                    //email = rBusinessEmail,
+                    phoneNo = company.PrimaryPhonNumber,
+                    id = resultContact.id,
+                    companyName = company.CompanyName,
+                    address = new Address() {
+                        addressLine1 = string.Join(" - ", oprAddress.Select((p => "address: " + p.Address)))
+                    }
+
+                },
+                //
+                sentTo = new SendTo() {
+                    email = new List<string>() { rBusinessEmail }
+                },
+                name = company.PrimaryFirstName + " " + company.PrimaryLastName,
+                //
+                businessDetails = new BusinessDetailsCommand {
+                    name  = company.SecondaryFirstName + " " + company.SecondaryFirstName,
+                    phoneNo= company.SecondaryPhoneNumber,
+                    //customValues= new List<string>() { "string" }
+                },
+                //
+                items = lst,
             };
 
             var resultInvoceApi = _invoiceApi.CreateInvoice(command).Data;
@@ -147,7 +212,8 @@ namespace CMPNatural.Api.Controllers.Invoice
                 InvoiceNumber = invoiceNumber,
                 InvoiceId = resultInvoceApi._id,
                 Services = request,
-                Amount = lst.Sum(x => x.amount)
+                Amount = lst.Sum(x => x.amount * x.qty),
+
             });
 
 
@@ -192,6 +258,43 @@ namespace CMPNatural.Api.Controllers.Invoice
                 CompanyId = rCompanyId,
                 InvoiceId = InvoiceId,
                 Status = ServiceStatus.sent.ToString()
+            });
+
+            return Ok(resultInvoice);
+
+
+        }
+
+        [HttpDelete("{InvoiceId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Delete([FromRoute] long InvoiceId)
+        {
+
+            var resultInvoie = await _mediator.Send(new GetInvoiceByIdCommand()
+            {
+                CompanyId = rCompanyId,
+                Id = InvoiceId
+            });
+
+            if (!resultInvoie.IsSucces())
+            {
+                return Ok(resultInvoie);
+            }
+
+            var resultInvoice = _invoiceApi.DeleteInvoice(resultInvoie.Data.InvoiceId,
+                new DeleteInvoiceGoCommand()
+                );
+
+            //if (!resultInvoice.IsSucces())
+            //{
+            //    return Ok(resultInvoice);
+            //}
+
+            await _mediator.Send(new DeleteInvoiceCommand()
+            {
+                CompanyId = rCompanyId,
+                InvoiceId = InvoiceId,
             });
 
             return Ok(resultInvoice);

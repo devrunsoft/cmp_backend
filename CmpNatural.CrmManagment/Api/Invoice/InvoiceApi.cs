@@ -113,15 +113,6 @@ namespace CmpNatural.CrmManagment.Invoice
                 httpWebRequest.Headers.Add($"Version: {_highLevelSetting.Version}");
                 httpWebRequest.Method = "POST";
 
-                //var command = new Dictionary<string, string>
-                //{
-                //{ "altId", _highLevelSetting.LocationId },
-                //{ "altType", "location" },
-                //{ "userId",  userId },
-                //{ "action", "sms_and_email" },
-                //{ "liveMode", "true"}
-                //};
-
                 var postbody = JsonConvert.SerializeObject(command);
 
                 using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
@@ -147,6 +138,41 @@ namespace CmpNatural.CrmManagment.Invoice
                 return new HasError<InvoiceApiResponse>() { };
             }
         }
+
+        public CommandResponse<InvoiceApiResponse> DeleteInvoice(string invoiceId, DeleteInvoiceGoCommand command)
+        {
+            try
+            {
+                var result = "-1";
+
+                // Serialize the command to query string parameters
+                var queryString = $"?altId={command.altId}&altType={command.altType}";
+                var webAddr = $"{_highLevelSetting.RestApi}/invoices/{invoiceId}{queryString}";
+
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Headers.Add($"Authorization: {_highLevelSetting.Authorization}");
+                httpWebRequest.Headers.Add($"Version: {_highLevelSetting.Version}");
+                httpWebRequest.Method = "DELETE";
+
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    result = streamReader.ReadToEnd();
+                }
+                JObject jsonObject = JObject.Parse(result);
+
+                InvoiceApiResponse response = jsonObject.ToObject<InvoiceApiResponse>();
+
+                return new Success<InvoiceApiResponse>() { Data = response };
+            }
+            catch (Exception ex)
+            {
+                return new HasError<InvoiceApiResponse>() { };
+            }
+        }
+
     }
 }
 

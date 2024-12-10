@@ -23,6 +23,9 @@ namespace CmpNatural.CrmManagment.Command
     public class BusinessDetailsCommand
     {
         public string name { get; set; }
+        public string phoneNo { get; set; }
+        public string address { get; set; }
+        public List<string> customValues { get; set; }
     }
 
     public class ProductItemCommand
@@ -42,9 +45,21 @@ namespace CmpNatural.CrmManagment.Command
 
         public string id { get; set; }
         public string name { get; set; }
-        //public string phoneNo { get; set; }
+        public string phoneNo { get; set; }
         public string email { get; set; }
+        public string companyName { get; set; }
+        public Address address { get; set; }
 
+    }
+
+    public class Address
+    {
+        public string addressLine1 { get; set; }
+        public string addressLine2 { get; set; }
+        public string city { get; set; }
+        public string state { get; set; }
+        public string countryCode { get; set; }
+        public string postalCode { get; set; }
     }
 
     public class SendTo

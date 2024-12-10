@@ -21,11 +21,19 @@ namespace CMPNatural.Core.Entities
 
         public string? AddressName { get; set; }
 
+        public string? Address { get; set; }
+
         public string? PriceName { get; set; }
 
         public DateTime StartDate { get; set; }
 
         public int ServiceKind { get; set; }
+
+        public int ServiceId { get; set; }
+
+        public int Qty { get; set; }
+
+        public string LocationCompanyIds { get; set; }
 
     }
 }

@@ -29,9 +29,9 @@ namespace CMPNatural.Application.Handlers
                 //LocationCompanyId=request.LocationCompanyId,
                 ServiceTypeId=(int) request.ServiceTypeId,
                 ServicePriceCrmId=request.ServicePriceId,
-                ServiceCrmId=request.ServiceId,
-                StartDate=request.StartDate,
-                OperationalAddressId=request.OperationalAddressId,
+                ServiceCrmId=request.ServiceCrmId,
+                StartDate=request.StartDate ?? DateTime.Now,
+                OperationalAddressId =request.OperationalAddressId,
                 Status = (int)ServiceStatus.draft,
                 InvoiceId = request.InvoiceId
             };

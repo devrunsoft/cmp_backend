@@ -82,6 +82,22 @@ namespace CMPNatural.Api.Controllers.ServiceAppointment
             return Ok(result);
         }
 
+        [HttpGet("OperationalAddress/{Id}/{ServiceTypeId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> GetByOprAddressAndServiceType([FromRoute] long Id, [FromRoute] string ServiceTypeId)
+        {
+            var result = await _mediator.Send(new GetServiceAppointmentByOprAddressAndServiceTypeCommand()
+            {
+                CompanyId = rCompanyId,
+                OperationalAddressId = Id,
+                ServiceTypeId=ServiceTypeId
+
+            });
+
+            return Ok(result);
+        }
+
         [HttpDelete("{Id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
