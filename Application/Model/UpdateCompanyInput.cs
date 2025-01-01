@@ -14,7 +14,8 @@ namespace CMPNatural.Application.Model
         public string SecondaryFirstName { get; set; }
         public string SecondaryLastName { get; set; }
         public string SecondaryPhoneNumber { get; set; }
+        public string BillingAddress { get; set; } = "";
 
-	}
+    }
 }
 

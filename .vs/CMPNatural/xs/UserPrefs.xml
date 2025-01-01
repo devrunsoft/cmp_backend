@@ -1,39 +1,13 @@
 ﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{36794759-A62F-43C3-B7D2-DE0D42AA2780}|https">
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Player/RegisterPlayerController.cs" relfile="ScoutDirect/Controllers/Player/RegisterPlayerController.cs" line="50" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Player/RegisterPlayerController.cs" relfile="ScoutDirect/Controllers/Player/RegisterPlayerController.cs" line="58" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/Webhook/ActivationLink.cs" relfile="CmpNatural.CrmManagment/Webhook/ActivationLink.cs" line="44" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/dashboard/OperationalAddressDashboardController.cs" relfile="ScoutDirect/Controllers/dashboard/OperationalAddressDashboardController.cs" line="83" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/Api/Product/ProductPrice.cs" relfile="CmpNatural.CrmManagment/Api/Product/ProductPrice.cs" line="95" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/CommandHandlers/ServiceAppointment/EditServiceAppointmentHandler.cs" relfile="Application/Handlers/CommandHandlers/ServiceAppointment/EditServiceAppointmentHandler.cs" line="26" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/CommandHandlers/ServiceAppointment/EditServiceAppointmentHandler.cs" relfile="Application/Handlers/CommandHandlers/ServiceAppointment/EditServiceAppointmentHandler.cs" line="24" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/CommandHandlers/ServiceAppointment/EditServiceAppointmentHandler.cs" relfile="Application/Handlers/CommandHandlers/ServiceAppointment/EditServiceAppointmentHandler.cs" line="25" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" relfile="CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" line="59" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Auth/Register/OperationalAddressController.cs" relfile="ScoutDirect/Controllers/Auth/Register/OperationalAddressController.cs" line="49" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/dashboard/OtherCompanyLocationControllerController.cs" relfile="ScoutDirect/Controllers/dashboard/OtherCompanyLocationControllerController.cs" line="79" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Auth/Register/RegisterCompanyLocationController.cs" relfile="ScoutDirect/Controllers/Auth/Register/RegisterCompanyLocationController.cs" line="79" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/CommandHandlers/Location/EditLocationHandler.cs" relfile="Application/Handlers/CommandHandlers/Location/EditLocationHandler.cs" line="42" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Service/ServiceAppointmentEmergencyController.cs" relfile="ScoutDirect/Controllers/Service/ServiceAppointmentEmergencyController.cs" line="33" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Auth/Register/RegisterCompanyController.cs" relfile="ScoutDirect/Controllers/Auth/Register/RegisterCompanyController.cs" line="142" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Auth/Register/RegisterCompanyController.cs" relfile="ScoutDirect/Controllers/Auth/Register/RegisterCompanyController.cs" line="149" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" relfile="CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" line="172" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" relfile="CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" line="166" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" relfile="CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" line="168" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Invoice/InvoiceController.cs" relfile="ScoutDirect/Controllers/Invoice/InvoiceController.cs" line="300" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/Webhook/ForgotPassword.cs" relfile="CmpNatural.CrmManagment/Webhook/ForgotPassword.cs" line="13" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/Webhook/ForgotPassword.cs" relfile="CmpNatural.CrmManagment/Webhook/ForgotPassword.cs" line="44" column="1" />
-    </BreakpointStore>
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CmpNatural.CrmManagment/Api/Product/ProductList.cs">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workbench ActiveDocument="ScoutDirect/Controllers/Invoice/InvoiceController.cs">
     <Files>
-      <File FileName="infrastructure/RegisterDependency.cs" Line="13" Column="2" IsPinned="True" />
-      <File FileName="ScoutDirect/Controllers/Service/ServiceAppointmentController.cs" Line="101" Column="1" IsPinned="True" />
+      <File FileName="infrastructure/RegisterDependency.cs" Line="39" Column="49" IsPinned="True" />
+      <File FileName="ScoutDirect/Controllers/Service/ServiceAppointmentController.cs" Line="102" Column="55" IsPinned="True" />
       <File FileName="Core/Repositories/IDocumentRepository.cs" />
       <File FileName="infrastructure/Repository/InvoiceRepository.cs" />
-      <File FileName="ScoutDirect/Controllers/Invoice/InvoiceController.cs" />
-      <File FileName="CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" Line="122" Column="18" />
+      <File FileName="ScoutDirect/Controllers/Invoice/InvoiceController.cs" Line="232" Column="14" />
+      <File FileName="CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" />
       <File FileName="Application/Handlers/CommandHandlers/Invoice/CreateInvoiceHandler.cs" />
       <File FileName="Application/Commands/Invoice/CreateInvoiceCommand.cs" />
       <File FileName="Core/Entities/Invoice.cs" />
@@ -46,10 +20,10 @@
       <File FileName="Core/Entities/ServiceAppointment.cs" />
       <File FileName="Application/Handlers/CommandHandlers/ServiceAppointmentEmergency/AddServiceAppointmentEmergencyHandler.cs" />
       <File FileName="CmpNatural.CrmManagment/Command/CreateInvoiceCommand.cs" />
-      <File FileName="CmpNatural.CrmManagment/Api/Product/ProductList.cs" Line="89" Column="1" />
+      <File FileName="CmpNatural.CrmManagment/Api/Product/ProductList.cs" />
       <File FileName="CmpNatural.CrmManagment/Api/Product/ProductPrice.cs" />
       <File FileName="Application/Responses/Service/ServicePriceResponse.cs" />
-      <File FileName="CmpNatural.CrmManagment/Api/Contact/ContactApi.cs" Line="62" Column="1" />
+      <File FileName="CmpNatural.CrmManagment/Api/Contact/ContactApi.cs" />
       <File FileName="ScoutDirect/Controllers/_Base/BaseRegisteredController.cs" />
       <File FileName="ScoutDirect/Controllers/_Base/BaseApiController.cs" />
       <File FileName="Application/Responses/Service/ServiceResponse.cs" />
@@ -70,7 +44,6 @@
       <File FileName="ScoutDirect/Controllers/dashboard/OperationalAddressDashboardController.cs" />
       <File FileName="ScoutDirect/Controllers/Auth/Register/RegisterCompanyController.cs" />
       <File FileName="ScoutDirect/Controllers/StatusController.cs" />
-      <File FileName="ScoutDirect/appsettings.json" Line="41" Column="70" />
       <File FileName="CmpNatural.CrmManagment/Command/SendInvoiceCommand.cs" />
       <File FileName="infrastructure/Repository/Base/Base.cs" />
       <File FileName="Core/Enums/ServicePriceType.cs" />
@@ -115,7 +88,7 @@
       <File FileName="Application/Commands/Invoice/GetInvoiceByInvoiceNumberCommand.cs" />
       <File FileName="Application/Handlers/CommandHandlers/Invoice/GetInvoiceByInvoiceNumberHandler.cs" />
       <File FileName="CmpNatural.CrmManagment/Webhook/UpdateContactTokenApi.cs" />
-      <File FileName="CmpNatural.CrmManagment/Webhook/ForgotPassword.cs" Line="34" Column="13" />
+      <File FileName="CmpNatural.CrmManagment/Webhook/ForgotPassword.cs" />
       <File FileName="Application/Handlers/CommandHandlers/ServiceAppointment/GetAllServiceAppointmentHandler.cs" />
       <File FileName="Application/Handlers/CommandHandlers/ServiceAppointment/GetServiceAppointmentByOprAddressHandler.cs" />
       <File FileName="Application/Handlers/CommandHandlers/ServiceAppointment/GetServiceAppointmentHandler.cs" />
@@ -137,7 +110,7 @@
       <File FileName="Application/Handlers/CommandHandlers/Invoice/DeleteInvoiceCommand.cs" />
       <File FileName="Application/Commands/ServiceAppointment/GetServiceAppointmentByOprAddressAndServiceTypeCommand.cs" />
       <File FileName="Application/Commands/ServiceAppointmentEmergency/GetEmergencyServiceAppointmentByOprAddressAndServiceTypeIdCommand.cs" />
-      <File FileName="Application/Handlers/CommandHandlers/ServiceAppointment/GetServiceAppointmentByOprAddressAndServiceTypeIdHandler.cs" Line="10" Column="19" />
+      <File FileName="Application/Handlers/CommandHandlers/ServiceAppointment/GetServiceAppointmentByOprAddressAndServiceTypeIdHandler.cs" />
       <File FileName="Application/Handlers/CommandHandlers/ServiceAppointmentEmergency/GetAllServiceAppointmentEmergencyByOprAddressAndServiceTypeIdHandler.cs" />
       <File FileName="Application/Commands/ServiceAppointment/GetServiceAppointmentCommand.cs" />
       <File FileName="Application/Handlers/CommandHandlers/ServiceAppointmentEmergency/GetServiceAppointmentEmergencyHandler.cs" />
@@ -146,26 +119,50 @@
       <File FileName="Application/Commands/ServiceAppointmentEmergency/DeleteServiceAppointmentEmergencyCommand.cs" />
       <File FileName="Application/Handlers/CommandHandlers/ServiceAppointmentEmergency/DeleteServiceAppointmentEmergencyHandler.cs" />
       <File FileName="Application/Handlers/CommandHandlers/ServiceAppointmentEmergency/EditServiceAppointmentEmergencyHandler.cs" />
+      <File FileName="CmpNatural.CrmManagment/Model/HighLevelSetting.cs" />
+      <File FileName="ScoutDirect/Controllers/Auth/Register/BilingInformationController.cs" />
+      <File FileName="Application/Commands/Billing/AddBilingInformationCommand.cs" />
+      <File FileName="Core/Entities/BillingInformation.cs" />
+      <File FileName="Application/Commands/Billing/AddOrUpdateBillingAddressCommand.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/BilingInformation/AddBillingInformationHandler.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/BilingInformation/AddOrUpdateBillingAddressHandler.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/BilingInformation/GetBillingInformationHandler.cs" />
+      <File FileName="Application/Model/UpdateCompanyInput.cs" />
+      <File FileName="Core/Repositories/IBillingInformationRepository.cs" />
+      <File FileName="Application/Commands/Company/UploadProfilePictureCommand.cs" />
+      <File FileName="Application/Commands/Document/AddDocumentCommand.cs" />
+      <File FileName="Application/Commands/Document/DeleteDocumentCommand.cs" />
+      <File FileName="Application/Commands/Document/EditDocumentCommand.cs" />
+      <File FileName="Application/Model/DocumentInput.cs" />
+      <File FileName="ScoutDirect/Controllers/Auth/Register/DocumentController.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/Company/UploadProfilePictureHandler.cs" />
+      <File FileName="Application/Handlers/CommandHandlers/Company/UpdateCompanyHandler.cs" />
+      <File FileName="Core/Entities/DocumentSubmission.cs" />
+      <File FileName="Core/Entities/Company.cs" />
+      <File FileName="Application/Services/FileHandler.cs" />
+      <File FileName="Application/Responses/Base/CompanyResponse.cs" />
+      <File FileName="CmpNatural.CrmManagment/Api/CustomValue/CustomValueApi.cs" />
+      <File FileName="CmpNatural.CrmManagment/Model/CustomValueResponse.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="CMPNatural" expanded="True">
-            <Node name="CMPNatural.Application" expanded="True">
-              <Node name="Handlers" expanded="True">
-                <Node name="CommandHandlers" expanded="True" />
+            <Node name="CMPNatural.Api" expanded="True">
+              <Node name="Controllers" expanded="True">
+                <Node name="Invoice" expanded="True">
+                  <Node name="InvoiceController.cs" selected="True" />
+                </Node>
+                <Node name="Service" expanded="True" />
               </Node>
             </Node>
-            <Node name="CMPNatural.Core" expanded="True" />
-            <Node name="CmpNatural.CrmManagment">
+            <Node name="CMPNatural.Core" expanded="True">
+              <Node name="Entities" expanded="True" />
+            </Node>
+            <Node name="CmpNatural.CrmManagment" expanded="True">
               <Node name="Api" expanded="True">
-                <Node name="Contact" expanded="True" />
                 <Node name="Invoice" expanded="True" />
-                <Node name="Product" expanded="True">
-                  <Node name="ProductList.cs" selected="True" />
-                </Node>
               </Node>
-              <Node name="Webhook" expanded="True" />
             </Node>
             <Node name="CMPNatural.infrastructure" expanded="True" />
           </Node>
@@ -173,7 +170,36 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.CMPNatural.Api PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Player/RegisterPlayerController.cs" relfile="ScoutDirect/Controllers/Player/RegisterPlayerController.cs" line="50" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Player/RegisterPlayerController.cs" relfile="ScoutDirect/Controllers/Player/RegisterPlayerController.cs" line="58" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/Webhook/ActivationLink.cs" relfile="CmpNatural.CrmManagment/Webhook/ActivationLink.cs" line="44" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/dashboard/OperationalAddressDashboardController.cs" relfile="ScoutDirect/Controllers/dashboard/OperationalAddressDashboardController.cs" line="83" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/Api/Product/ProductPrice.cs" relfile="CmpNatural.CrmManagment/Api/Product/ProductPrice.cs" line="95" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/CommandHandlers/ServiceAppointment/EditServiceAppointmentHandler.cs" relfile="Application/Handlers/CommandHandlers/ServiceAppointment/EditServiceAppointmentHandler.cs" line="26" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/CommandHandlers/ServiceAppointment/EditServiceAppointmentHandler.cs" relfile="Application/Handlers/CommandHandlers/ServiceAppointment/EditServiceAppointmentHandler.cs" line="24" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/CommandHandlers/ServiceAppointment/EditServiceAppointmentHandler.cs" relfile="Application/Handlers/CommandHandlers/ServiceAppointment/EditServiceAppointmentHandler.cs" line="25" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Auth/Register/OperationalAddressController.cs" relfile="ScoutDirect/Controllers/Auth/Register/OperationalAddressController.cs" line="49" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/dashboard/OtherCompanyLocationControllerController.cs" relfile="ScoutDirect/Controllers/dashboard/OtherCompanyLocationControllerController.cs" line="79" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Service/ServiceAppointmentEmergencyController.cs" relfile="ScoutDirect/Controllers/Service/ServiceAppointmentEmergencyController.cs" line="33" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Auth/Register/RegisterCompanyController.cs" relfile="ScoutDirect/Controllers/Auth/Register/RegisterCompanyController.cs" line="131" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Auth/Register/RegisterCompanyController.cs" relfile="ScoutDirect/Controllers/Auth/Register/RegisterCompanyController.cs" line="138" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/Webhook/ForgotPassword.cs" relfile="CmpNatural.CrmManagment/Webhook/ForgotPassword.cs" line="13" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/Webhook/ForgotPassword.cs" relfile="CmpNatural.CrmManagment/Webhook/ForgotPassword.cs" line="44" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" relfile="CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" line="99" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" relfile="CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" line="107" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" relfile="CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" line="139" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" relfile="CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" line="126" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" relfile="CmpNatural.CrmManagment/Api/Invoice/InvoiceApi.cs" line="59" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/CommandHandlers/BilingInformation/AddOrUpdateBillingAddressHandler.cs" relfile="Application/Handlers/CommandHandlers/BilingInformation/AddOrUpdateBillingAddressHandler.cs" line="45" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/UserController.cs" relfile="ScoutDirect/Controllers/UserController.cs" line="150" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Auth/Register/RegisterCompanyController.cs" relfile="ScoutDirect/Controllers/Auth/Register/RegisterCompanyController.cs" line="145" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/Webhook/UpdateContactTokenApi.cs" relfile="CmpNatural.CrmManagment/Webhook/UpdateContactTokenApi.cs" line="44" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/Api/CustomValue/CustomValueApi.cs" relfile="CmpNatural.CrmManagment/Api/CustomValue/CustomValueApi.cs" line="47" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
 </Properties>

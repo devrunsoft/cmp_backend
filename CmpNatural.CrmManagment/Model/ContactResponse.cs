@@ -6,7 +6,6 @@ namespace CmpNatural.CrmManagment.Model
     {
         public string id { get; set; }
         public string email { get; set; }
-
     }
 }
 

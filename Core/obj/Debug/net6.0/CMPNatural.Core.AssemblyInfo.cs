@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CMPNatural.Core")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ebe788808d50fd010c759d5147cb111809d5fb88")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+46eb6bc09e804b0f3887e46dcca63809b0ce86f1")]
 [assembly: System.Reflection.AssemblyProductAttribute("CMPNatural.Core")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CMPNatural.Core")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

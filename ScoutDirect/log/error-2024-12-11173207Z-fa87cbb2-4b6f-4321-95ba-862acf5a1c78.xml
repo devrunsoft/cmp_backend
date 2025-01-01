@@ -1,0 +1,180 @@
+﻿<error errorId="fa87cbb2-4b6f-4321-95ba-862acf5a1c78" application="CMPNatural.Api" host="mortezas-MacBook-Pro" type="System.NullReferenceException" message="Object reference not set to an instance of an object." source="CMPNatural.Api" detail="# caller: @C:\Sources\ElmahCore\ElmahCore\ElmahCore\Internal$\CallerInfo.cs:9&#xA;System.NullReferenceException: Object reference not set to an instance of an object.&#xA;   at CMPNatural.Api.Controllers.Invoice.InvoiceController.&lt;&gt;c__DisplayClass9_0.&lt;Post&gt;b__2(&lt;&gt;f__AnonymousType1`2 e) in /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Invoice/InvoiceController.cs:line 163&#xA;   at System.Linq.Enumerable.SelectListIterator`2.Fill(ReadOnlySpan`1 source, Span`1 destination, Func`2 func)&#xA;   at System.Linq.Enumerable.SelectListIterator`2.ToList()&#xA;   at CMPNatural.Api.Controllers.Invoice.InvoiceController.Post(List`1 r) in /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Invoice/InvoiceController.cs:line 162&#xA;   at lambda_method9(Closure, Object)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.&lt;InvokeActionMethodAsync&gt;g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.&lt;InvokeNextActionFilterAsync&gt;g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State&amp; next, Scope&amp; scope, Object&amp; state, Boolean&amp; isCompleted)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.&lt;InvokeInnerFilterAsync&gt;g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeNextResourceFilter&gt;g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State&amp; next, Scope&amp; scope, Object&amp; state, Boolean&amp; isCompleted)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeFilterPipelineAsync&gt;g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeAsync&gt;g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeAsync&gt;g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)&#xA;   at ElmahCore.Mvc.ErrorLogMiddleware.InvokeAsync(HttpContext context)" time="2024-12-11T17:32:07.7300440Z" statusCode="500">
+  <serverVariables>
+    <item name="TotalParsedHeaderSize">
+      <value string="894" />
+    </item>
+    <item name="StreamId">
+      <value string="9" />
+    </item>
+    <item name="InputRemaining">
+      <value string="0" />
+    </item>
+    <item name="RequestBodyStarted">
+      <value string="True" />
+    </item>
+    <item name="EndStreamReceived">
+      <value string="True" />
+    </item>
+    <item name="ReceivedEmptyRequestBody">
+      <value string="False" />
+    </item>
+    <item name="CanReuse">
+      <value string="False" />
+    </item>
+    <item name="ConnectionIdFeature">
+      <value string="0HN8PB0QPT6AV" />
+    </item>
+    <item name="HasStartedConsumingRequestBody">
+      <value string="True" />
+    </item>
+    <item name="MaxRequestBodySize">
+      <value string="30000000" />
+    </item>
+    <item name="MinRequestBodyDataRate">
+      <value string="Bytes per second: 240, Grace Period: 00:00:05" />
+    </item>
+    <item name="AllowSynchronousIO">
+      <value string="False" />
+    </item>
+    <item name="TraceIdentifier">
+      <value string="0HN8PB0QPT6AV:00000009" />
+    </item>
+    <item name="IsUpgradableRequest">
+      <value string="False" />
+    </item>
+    <item name="IsUpgraded">
+      <value string="False" />
+    </item>
+    <item name="IsExtendedConnectRequest">
+      <value string="False" />
+    </item>
+    <item name="IsExtendedConnectAccepted">
+      <value string="False" />
+    </item>
+    <item name="RemoteIpAddress">
+      <value string="::1" />
+    </item>
+    <item name="RemotePort">
+      <value string="63137" />
+    </item>
+    <item name="LocalIpAddress">
+      <value string="::1" />
+    </item>
+    <item name="LocalPort">
+      <value string="7089" />
+    </item>
+    <item name="Scheme">
+      <value string="https" />
+    </item>
+    <item name="Method">
+      <value string="Post" />
+    </item>
+    <item name="MethodText">
+      <value string="POST" />
+    </item>
+    <item name="Path">
+      <value string="/api/Invoice" />
+    </item>
+    <item name="QueryString">
+      <value string="" />
+    </item>
+    <item name="RawTarget">
+      <value string="/api/Invoice" />
+    </item>
+    <item name="HttpVersion">
+      <value string="HTTP/2" />
+    </item>
+    <item name="Header_Accept">
+      <value string="*/*" />
+    </item>
+    <item name="Header_Host">
+      <value string="localhost:7089" />
+    </item>
+    <item name="Header_User-Agent">
+      <value string="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" />
+    </item>
+    <item name="Header_Accept-Encoding">
+      <value string="gzip, deflate, br, zstd" />
+    </item>
+    <item name="Header_Accept-Language">
+      <value string="en-US,en;q=0.9" />
+    </item>
+    <item name="Header_Authorization">
+      <value string="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJidXNpbmVzc0VtYWlsIjoiYWxlYy5iYWdpbkBnbWFpbC5jb20iLCJDb21wYW55SWQiOiI1MCIsIlJlZ2lzdGVyZWQiOiJUcnVlIiwiVHlwZSI6IjIiLCJleHAiOjE3MzY1MzAyMzUsImlzcyI6Imh0dHA6Ly9sb2NhbGhvc3Q6NTk5MjEiLCJhdWQiOiJodHRwOi8vbG9jYWxob3N0OjQyMDAifQ.om6cZlBOLwaKnSf5KxQ2vU155lZyRBDHDCNIq1oCxq0" />
+    </item>
+    <item name="Header_Content-Type">
+      <value string="application/json-patch+json" />
+    </item>
+    <item name="Header_Origin">
+      <value string="http://localhost:3000" />
+    </item>
+    <item name="Header_Referer">
+      <value string="http://localhost:3000/" />
+    </item>
+    <item name="Header_Content-Length">
+      <value string="401" />
+    </item>
+    <item name="Header_sec-ch-ua-platform">
+      <value string="&quot;macOS&quot;" />
+    </item>
+    <item name="Header_sec-ch-ua">
+      <value string="&quot;Google Chrome&quot;;v=&quot;131&quot;, &quot;Chromium&quot;;v=&quot;131&quot;, &quot;Not_A Brand&quot;;v=&quot;24&quot;" />
+    </item>
+    <item name="Header_sec-ch-ua-mobile">
+      <value string="?0" />
+    </item>
+    <item name="Header_sec-fetch-site">
+      <value string="cross-site" />
+    </item>
+    <item name="Header_sec-fetch-mode">
+      <value string="cors" />
+    </item>
+    <item name="Header_sec-fetch-dest">
+      <value string="empty" />
+    </item>
+    <item name="Header_priority">
+      <value string="u=1, i" />
+    </item>
+    <item name="RequestTrailersAvailable">
+      <value string="True" />
+    </item>
+    <item name="StatusCode">
+      <value string="200" />
+    </item>
+    <item name="HasResponseStarted">
+      <value string="False" />
+    </item>
+    <item name="HasFlushedHeaders">
+      <value string="False" />
+    </item>
+    <item name="HasResponseCompleted">
+      <value string="False" />
+    </item>
+    <item name="IsWebTransportRequest">
+      <value string="False" />
+    </item>
+    <item name="Connection_Id">
+      <value string="0HN8PB0QPT6AV" />
+    </item>
+    <item name="Connection_RemoteIpAddress">
+      <value string="::1" />
+    </item>
+    <item name="Connection_RemotePort">
+      <value string="63137" />
+    </item>
+    <item name="Connection_LocalIpAddress">
+      <value string="::1" />
+    </item>
+    <item name="Connection_LocalPort">
+      <value string="7089" />
+    </item>
+    <item name="HttpStatusCode">
+      <value string="500" />
+    </item>
+  </serverVariables>
+  <form>
+    <item name="$request-body">
+      <value string="[{&quot;OperationalAddressId&quot;:71,&quot;ServicePriceId&quot;:&quot;6718282d64d805606ad1cb85&quot;,&quot;StartDate&quot;:&quot;2024-12-10T00:00:00&quot;,&quot;FrequencyType&quot;:&quot;Cooking Oil Pick Up Emergency&quot;,&quot;ServiceCrmId&quot;:&quot;6718282d64d8052c60d1cb83&quot;,&quot;ServiceKind&quot;:2},{&quot;OperationalAddressId&quot;:71,&quot;ServicePriceId&quot;:&quot;670d746de9d7aa67fc6250cc&quot;,&quot;StartDate&quot;:&quot;2024-12-12T00:00:00&quot;,&quot;FrequencyType&quot;:&quot;6x yr&quot;,&quot;ServiceCrmId&quot;:&quot;67067863c2eb249cb0390e7e&quot;,&quot;ServiceKind&quot;:1}]" />
+    </item>
+  </form>
+</error>

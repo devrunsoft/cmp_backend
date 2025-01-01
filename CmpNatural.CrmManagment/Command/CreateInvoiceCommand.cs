@@ -5,6 +5,7 @@ namespace CmpNatural.CrmManagment.Command
     {
         public string altId { get; set; } = "porKMjTM2U71w2EOlVrb";
         public string altType { get; set; } = "location";
+        //public string status { get; set; } = "draft";
         public string name { get; set; }
 		public string currency { get; set; }
         public BusinessDetailsCommand businessDetails { get; set; }

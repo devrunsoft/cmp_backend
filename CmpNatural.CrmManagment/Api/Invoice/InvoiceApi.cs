@@ -99,6 +99,47 @@ namespace CmpNatural.CrmManagment.Invoice
                 return new HasError<InvoiceApiResponse>() { };
             }
         }
+
+        public CommandResponse<InvoiceApiResponse> Update(string invoiceId , CreateInvoiceApiCommand command)
+        {
+            try
+            {
+                var result = "-1";
+                var webAddr = $"{_highLevelSetting.RestApi}/invoices/{invoiceId}";
+
+                var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                httpWebRequest.ContentType = "application/json";
+                httpWebRequest.Headers.Add($"Authorization: {_highLevelSetting.Authorization}");
+                httpWebRequest.Headers.Add($"Version: {_highLevelSetting.Version}");
+                httpWebRequest.Method = "PUT";
+
+                var postbody = JsonConvert.SerializeObject(command);
+
+                using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+                {
+                    streamWriter.Write(postbody);
+                    streamWriter.Flush();
+                }
+
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    result = streamReader.ReadToEnd();
+                }
+                JObject jsonObject = JObject.Parse(result);
+
+                InvoiceApiResponse response = jsonObject.ToObject<InvoiceApiResponse>();
+
+                return new Success<InvoiceApiResponse>() { Data = response };
+
+            }
+            catch (Exception ex)
+            {
+                return new HasError<InvoiceApiResponse>() { };
+            }
+        }
+
         public CommandResponse<InvoiceApiResponse> SendInvoice(string invoiceId, SendInvoiceCommand command)
         {
             try

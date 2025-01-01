@@ -15,5 +15,6 @@ namespace CMPNatural.Application.Responses.Service
         public string description { get; set; }
         public string image { get; set; }
         public List<string> collectionIds { get; set; }
+        public double minimum { get; set; } = 0;
     }
 }

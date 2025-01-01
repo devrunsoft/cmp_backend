@@ -4,20 +4,10 @@ using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using ScoutDirect.Application.Responses;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
-using Barbara.Application.Responses;
-
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using ScoutDirect.Core.Entities;
-using ScoutDirect.Core.Models;
-using CMPNatural.Core.Entities;
 using ScoutDirect.Api.Controllers._Base;
 using CMPNatural.Application.Commands.Company;
 using Microsoft.AspNetCore.Authorization;
@@ -25,8 +15,7 @@ using CMPNatural.Application.Model;
 using CMPNatural.Application.Responses;
 using System.Net;
 using CmpNatural.CrmManagment.Webhook;
-using static System.Net.WebRequestMethods;
-using Hangfire.MemoryStorage.Database;
+using CMPNatural.Application.Commands.Billing;
 
 namespace CMPNatural.Api.Controllers
 {
@@ -157,13 +146,9 @@ namespace CMPNatural.Api.Controllers
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
                 expires: DateTime.Now.AddDays(30),
-                claims: get_claims(data.Type.ToString(), data.BusinessEmail, data.Id.ToString()),
+                claims: get_claims(data.Type.ToString(), data.BusinessEmail, data.Id.ToString(), data.ProfilePicture),
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );
-
-            string host;
-
-
 
             emailSender(data);
 
@@ -176,12 +161,13 @@ namespace CMPNatural.Api.Controllers
             });
         }
 
-        private Claim[] get_claims(string adminStatus, string businessEmail, string companyId)
+        private Claim[] get_claims(string adminStatus, string businessEmail, string companyId, string? ProfilePicture)
         {
             List<Claim> claims = new List<Claim>() { new Claim("businessEmail", businessEmail), new Claim("CompanyId", companyId) };
 
             claims.Add(new Claim("Registered", "false"));
             claims.Add(new Claim("Type", adminStatus));
+            claims.Add(new Claim("ProfilePicture", ProfilePicture ?? ""));
 
             return claims.ToArray();
         }
@@ -198,11 +184,35 @@ namespace CMPNatural.Api.Controllers
             return Ok(result);
         }
 
+        [HttpPut("UploadProfilePicture")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> UploadProfilePicture([FromForm] ProfilePictureInput input)
+        {
+            string wwwPath = _env.ContentRootPath;
+            var result = await _mediator.Send(new UploadProfilePictureCommand()
+            {
+                CompanyId = rCompanyId,
+                ProfilePicture = input.ProfilePicture,
+                BaseVirtualPath = Path.Combine(wwwPath, $"FileContent/{rCompanyId}")
+            });
+
+            return Ok(result);
+        }
+
+
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Put([FromBody] UpdateCompanyInput request)
         {
+
+
+            var resultBillingAddress = await _mediator.Send(new AddOrUpdateBillingAddressCommand()
+            {
+                CompanyId = rCompanyId,
+                Address = request.BillingAddress
+            });
 
             var result = await _mediator.Send(new UpdateCompanyCommand()
             {
@@ -215,8 +225,6 @@ namespace CMPNatural.Api.Controllers
                 SecondaryFirstName = request.SecondaryFirstName,
                 SecondaryLastName = request.SecondaryLastName,
                 SecondaryPhoneNumber = request.SecondaryPhoneNumber,
-                //Password = request.Password
-
             });
             return Ok(result);
 

@@ -26,7 +26,8 @@ namespace CMPNatural.Core.Entities
 		public bool Registered { get; set; }
 		public bool Accepted { get; set; }
 		public Guid? ActivationLink { get; set; } = null;
+        public string? ProfilePicture { get; set; }
 
-	}
+    }
 }
 

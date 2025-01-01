@@ -62,7 +62,7 @@ namespace ScoutDirect.Api.Controllers
                     issuer: _configuration["JWT:ValidIssuer"],
                     audience: _configuration["JWT:ValidAudience"],
                     expires: DateTime.Now.AddDays(30),
-                    claims: get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered),
+                    claims: get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered,company.ProfilePicture),
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
 
@@ -151,7 +151,7 @@ namespace ScoutDirect.Api.Controllers
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
                 expires: DateTime.Now.AddDays(30),
-                claims: get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered),
+                claims: get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered, company.ProfilePicture),
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );
 
@@ -190,12 +190,13 @@ namespace ScoutDirect.Api.Controllers
         }
 
 
-        private Claim[] get_claims(string adminStatus, string businessEmail, string companyId,bool registered)
+        private Claim[] get_claims(string adminStatus, string businessEmail, string companyId,bool registered, string? ProfilePicture)
         {
             List<Claim> claims = new List<Claim>() { new Claim("businessEmail", businessEmail), new Claim("CompanyId", companyId) };
 
             claims.Add(new Claim("Registered", registered.ToString()));
             claims.Add(new Claim("Type", adminStatus));
+            claims.Add(new Claim("ProfilePicture", ProfilePicture??""));
 
             return claims.ToArray();
         }
