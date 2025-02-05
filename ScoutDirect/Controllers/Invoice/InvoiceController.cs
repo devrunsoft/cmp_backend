@@ -191,9 +191,6 @@ namespace CMPNatural.Api.Controllers.Invoice
             var invoiceNumber = Guid.NewGuid();
             var customeValue = _customValueApi.getAll().Data;
 
-
-
-
             var lst = resultPrice.Select(e =>{
                 double amount = 0;
                 if (e.product.ServiceCrmId== "6709518969c01bbcc9341227" || e.product.ServiceCrmId == "67067863c2eb249cb0390e7e")

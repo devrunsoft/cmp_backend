@@ -117,8 +117,8 @@ namespace CMPNatural.Api.Controllers
             }
 
             var link = host + "/api/RegisterCompany/Activate?activationLink=" + data.ActivationLink!.Value.ToString();
-
-            new ActivationLink().send(data.BusinessEmail, link);
+            data.ActivationLinkGo = link;
+            new ActivationLink().send(data);
         }
 
 
@@ -211,7 +211,10 @@ namespace CMPNatural.Api.Controllers
             var resultBillingAddress = await _mediator.Send(new AddOrUpdateBillingAddressCommand()
             {
                 CompanyId = rCompanyId,
-                Address = request.BillingAddress
+                Address = request.BillingAddress,
+                City = request.City,
+                ZIPCode = request.ZIPCode,
+                State = request.State
             });
 
             var result = await _mediator.Send(new UpdateCompanyCommand()

@@ -173,6 +173,7 @@
     <None Remove="Commands\Invoice\" />
     <None Remove="Commands\ShoppingCard\" />
     <None Remove="Handlers\CommandHandlers\ShoppingCard\" />
+    <None Remove="Handlers\Admin\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -351,6 +352,7 @@
     <Folder Include="Commands\Invoice\" />
     <Folder Include="Commands\ShoppingCard\" />
     <Folder Include="Handlers\CommandHandlers\ShoppingCard\" />
+    <Folder Include="Handlers\Admin\" />
   </ItemGroup> 
 
   <ItemGroup>

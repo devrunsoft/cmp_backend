@@ -30,23 +30,27 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
 
         public async Task<CommandResponse<BillingInformation>> Handle(AddOrUpdateBillingAddressCommand request, CancellationToken cancellationToken)
         {
-
             var lastResult = (await _billingInformationRepository.GetAsync(p => p.CompanyId == request.CompanyId)).FirstOrDefault();
-
             if (lastResult == null)
             {
                 var entity = new BillingInformation()
                 {
                     Address = request.Address,
-                    CompanyId = request.CompanyId
+                    CompanyId = request.CompanyId,
+                    City = request.City,
+                    ZIPCode = request.ZIPCode,
+                    State = request.State,
+
                 };
                 var result = await _billingInformationRepository.AddAsync(entity);
-
                 return new Success<BillingInformation>() { Data = result, Message = "Billing Information Address added successfully!" };
             }
             else
             {
                 lastResult.Address = request.Address;
+                lastResult.City = request.City;
+                lastResult.ZIPCode = request.ZIPCode;
+                lastResult.State = request.State;
                 await _billingInformationRepository.UpdateAsync(lastResult);
                 return new Success<BillingInformation>() { Data = lastResult, Message = "Billing Information Address updated successfully!" };
             }
