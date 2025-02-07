@@ -1,5 +1,6 @@
 ﻿using ScoutDirect.Core.Base;
 using System.Linq.Expressions;
+using CMPNatural.Core.Base;
 
 namespace ScoutDirect.Core.Repositories.Base
 {
@@ -22,6 +23,8 @@ namespace ScoutDirect.Core.Repositories.Base
         Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> expression);
         Task<IReadOnlyList<T>> GetPagedAsync(PagedQueryRequest pagingParam, Expression<Func<T, bool>> expression);
         Task<IReadOnlyList<T>> GetPagedAsync(PagedQueryRequest pagingParam);
+        Task<PagesQueryResponse<T>> GetBasePagedAsync(PagedQueryRequest pagingParam, Expression<Func<T, bool>> expression, Func<IQueryable<T>, IQueryable<T>> includeFunc = null);
+        Task<PagesQueryResponse<T>> GetBasePagedAsync(PagedQueryRequest pagingParam, Func<IQueryable<T>, IQueryable<T>> includeFunc = null);
 
         Task<T> GetByIdAsync(E id);
         Task<T> AddAsync(T entity);

@@ -28,6 +28,8 @@ namespace infrastructure.Data
         public virtual DbSet<ServiceAppointmentEmergency> ServiceAppointmentEmergency { get; set; } = null!;
         public virtual DbSet<Invoice> Invoice { get; set; } = null!;
         public virtual DbSet<ShoppingCard> ShoppingCard { get; set; } = null!;
+        public virtual DbSet<AdminEntity> Admin { get; set; } = null!;
+        public virtual DbSet<Person> Person { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -91,8 +93,6 @@ namespace infrastructure.Data
                   .HasColumnType("varchar(255)") 
                   .IsRequired(false);
 
-
-
             });
             modelBuilder.Entity<ServiceAppointmentEmergency>(entity =>
             {
@@ -106,6 +106,10 @@ namespace infrastructure.Data
                 entity.HasMany(d => d.BaseServiceAppointment)
                       .WithOne(p => p.Invoice)
                  .HasForeignKey(d => d.InvoiceId);
+
+                entity.HasOne(d => d.Company)
+                      .WithMany(p => p.Invoices)
+                 .HasForeignKey(d => d.CompanyId);
             });
 
             modelBuilder.Entity<ShoppingCard>(entity =>
@@ -117,6 +121,18 @@ namespace infrastructure.Data
             {
                 entity.ToTable("ServiceAppointmentLocation");
             });
+
+
+            modelBuilder.Entity<Person>(entity =>
+            {
+                entity.ToTable("Person");
+            });
+
+            modelBuilder.Entity<AdminEntity>(entity =>
+            {
+                entity.ToTable("Admin");
+            });
+
 
         }
 

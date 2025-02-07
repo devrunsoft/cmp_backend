@@ -1,13 +1,18 @@
 ﻿using System;
 namespace CMPNatural.Core.Entities
 {
-	public class Admin
+	 public partial class AdminEntity
 	{
-		public Admin()
+		public AdminEntity()
 		{
 		}
+		public long Id { get; set; }
 
-		public long PersonId { get; set; }
+		public string Email { get; set; }
+
+		public bool? IsActive { get; set; } = true;
+
+        public Guid PersonId { get; set; }
 
 		public Person Person { get; set; }
 

@@ -16,5 +16,7 @@ namespace CMPNatural.Core.Entities
     public partial class Invoice : IIdentityObject<long> { }
     public partial class ShoppingCard : IIdentityObject<long> { }
     public partial class ServiceAppointmentLocation : IIdentityObject<long> { }
+    public partial class AdminEntity : IIdentityObject<long> { }
+    public partial class Person : IIdentityObject<Guid> { }
 
 }

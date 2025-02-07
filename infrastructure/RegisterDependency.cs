@@ -30,6 +30,7 @@ namespace ScoutDirect.infrastructure
             services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IinvoiceRepository, InvoiceRepository>();
             services.AddTransient<IShoppingCardRepository, ShoppingCardRepository>();
+            services.AddTransient<IAdminRepository, AdminRepository>();
 
             services.AddTransient<ProductListApi>();
             services.AddTransient<ProductPriceApi>();

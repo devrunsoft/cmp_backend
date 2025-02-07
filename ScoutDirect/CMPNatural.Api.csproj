@@ -36,6 +36,12 @@
     <None Remove="Controllers\Service\" />
     <None Remove="Controllers\Invoice\" />
     <None Remove="Controllers\shoppingcard\" />
+    <None Remove="Controllers\Admin\" />
+    <None Remove="Controllers\Admin\Auth\" />
+    <None Remove="Controllers\Admin\Provider\" />
+    <None Remove="Controllers\Admin\Invoice\" />
+    <None Remove="Controllers\Admin\Service\" />
+    <None Remove="Controllers\Admin\User\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FileContent\" />
@@ -48,6 +54,12 @@
     <Folder Include="Controllers\Service\" />
     <Folder Include="Controllers\Invoice\" />
     <Folder Include="Controllers\shoppingcard\" />
+    <Folder Include="Controllers\Admin\" />
+    <Folder Include="Controllers\Admin\Auth\" />
+    <Folder Include="Controllers\Admin\Provider\" />
+    <Folder Include="Controllers\Admin\Invoice\" />
+    <Folder Include="Controllers\Admin\Service\" />
+    <Folder Include="Controllers\Admin\User\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\infrastructure\CMPNatural.infrastructure.csproj">

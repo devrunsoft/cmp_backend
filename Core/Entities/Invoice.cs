@@ -16,6 +16,8 @@ namespace CMPNatural.Core.Entities
 
         public DateTime RegisterDate { get; set; }
 
+        public Company Company { get; set; }
+
         public virtual ICollection<BaseServiceAppointment> BaseServiceAppointment { get; set; }
     }
 }

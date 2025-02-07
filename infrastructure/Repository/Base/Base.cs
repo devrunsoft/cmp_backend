@@ -6,6 +6,7 @@ using ScoutDirect.Core.Base;
 using ScoutDirect.Core.Caching;
 using ScoutDirect.Core.Entities.Base;
 using System.Linq.Expressions;
+using CMPNatural.Core.Base;
 
 namespace ScoutDirect.infrastructure.Repository
 {
@@ -63,9 +64,120 @@ namespace ScoutDirect.infrastructure.Repository
 
         public async Task<IReadOnlyList<T>> GetPagedAsync(PagedQueryRequest pagingParam, Expression<Func<T, bool>> expression)
         {
+            var query = _dbContext.Set<T>().AsQueryable();
+
+
+            // Apply search filter if `allField` is provided
+            if (!string.IsNullOrWhiteSpace(pagingParam.allField))
+            {
+                query = ApplySearchFilter(query, pagingParam.allField);
+            }
+
+
             var skip = (pagingParam.Page - 1) * pagingParam.Size;
             return await _dbContext.Set<T>().Where(expression)
                 .OrderByDescending(p => p.Id).Skip(skip).Take(pagingParam.Size).ToListAsync();
+        }
+
+
+        private IQueryable<T> ApplySearchFilter<T>(IQueryable<T> query, string searchValue)
+        {
+            var parameter = Expression.Parameter(typeof(T), "x");
+            var properties = typeof(T).GetProperties()
+                .Where(p => p.PropertyType == typeof(string) || p.PropertyType.IsValueType); // Include both string & numeric types
+
+            Expression? finalExpression = null;
+            foreach (var property in properties)
+            {
+                var propertyExpression = Expression.Property(parameter, property);
+
+                // Convert numeric types to string before applying Contains()
+                Expression? convertedExpression;
+                if (property.PropertyType == typeof(string))
+                {
+                    convertedExpression = propertyExpression;
+                }
+                else
+                {
+                    var toStringMethod = property.PropertyType.GetMethod("ToString", Type.EmptyTypes);
+                    if (toStringMethod == null) continue; // Skip unsupported types
+
+                    convertedExpression = Expression.Call(propertyExpression, toStringMethod);
+                }
+
+                var containsMethod = typeof(string).GetMethod("Contains", new[] { typeof(string) });
+                var searchExpression = Expression.Call(convertedExpression!, containsMethod!, Expression.Constant(searchValue));
+
+                finalExpression = finalExpression == null
+                    ? searchExpression
+                    : Expression.OrElse(finalExpression, searchExpression);
+            }
+
+            if (finalExpression == null) return query; // No searchable fields
+
+            var lambda = Expression.Lambda<Func<T, bool>>(finalExpression, parameter);
+            return query.Where(lambda);
+        }
+
+
+        public async Task<PagesQueryResponse<T>> GetBasePagedAsync(PagedQueryRequest pagingParam, Expression<Func<T, bool>> expression, Func<IQueryable<T>, IQueryable<T>> includeFunc = null)
+        {
+            var query = _dbContext.Set<T>().AsQueryable();
+
+            if (includeFunc != null)
+            {
+                query = includeFunc(query);
+            }
+
+
+            // Apply search filter if `allField` is provided
+            if (!string.IsNullOrWhiteSpace(pagingParam.allField))
+            {
+                query = ApplySearchFilter(query, pagingParam.allField);
+            }
+
+            var totalElements = await query.CountAsync();
+            var totalPages = (int)Math.Ceiling(totalElements / (double)pagingParam.Size);
+
+            var skip = (pagingParam.Page) * pagingParam.Size;
+            var elements = await query
+                .Where(expression)
+                .OrderByDescending(p => p.Id)
+                .Skip(skip)
+                .Take(pagingParam.Size)
+                .ToListAsync();
+
+            return new PagesQueryResponse<T>(elements, pagingParam.Page, totalPages, totalElements);
+        }
+
+        public async Task<PagesQueryResponse<T>> GetBasePagedAsync(PagedQueryRequest pagingParam, Func<IQueryable<T>, IQueryable<T>> includeFunc = null)
+        {
+            var query = _dbContext.Set<T>().AsQueryable();
+
+            if (includeFunc != null)
+            {
+                query = includeFunc(query);
+            }
+
+
+            // Apply search filter if `allField` is provided
+            if (!string.IsNullOrWhiteSpace(pagingParam.allField))
+            {
+                query = ApplySearchFilter(query, pagingParam.allField);
+            }
+
+
+            var totalElements = await query.CountAsync();
+            var totalPages = (int)Math.Ceiling(totalElements / (double)pagingParam.Size);
+
+            var skip = (pagingParam.Page) * pagingParam.Size;
+            var elements = await query
+                .OrderByDescending(p => p.Id)
+                .Skip(skip)
+                .Take(pagingParam.Size)
+                .ToListAsync();
+
+            return new PagesQueryResponse<T>(elements, pagingParam.Page, totalPages, totalElements);
         }
 
         public async Task<IReadOnlyList<T>> GetPagedAsync(PagedQueryRequest pagingParam)
