@@ -5,7 +5,6 @@ using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Application
 {
-
     public class GetInvoiceByInvoiceNumberCommand : IRequest<CommandResponse<Invoice>>
     {
         public string invoiceNumber { get; set; }

@@ -25,6 +25,10 @@ namespace CMPNatural.Core.Entities
 
         public Invoice Invoice { get; set; }
 
+        public Product Product { get; set; }
+
+        public ProductPrice ProductPrice { get; set; }
+
         public virtual ICollection<ServiceAppointmentLocation> ServiceAppointmentLocations { get; set; } = new List<ServiceAppointmentLocation>();
 
     }

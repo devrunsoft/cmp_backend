@@ -8,7 +8,7 @@ using CMPNatural.Core.Base;
 
 namespace CMPNatural.Application
 {
-    public class AdminGetAllInvoiceCommand : PagedQueryRequest, IRequest<CommandResponse<PagesQueryResponse<Invoice>>>
+    public class AdminGetAllInvoiceCommand : PagedQueryRequest, IRequest<CommandResponse<PagesQueryResponse<InvoiceResponse>>>
     {
     }
 }

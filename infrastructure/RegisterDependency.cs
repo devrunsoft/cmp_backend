@@ -3,6 +3,7 @@ using CmpNatural.CrmManagment.Contact;
 using CmpNatural.CrmManagment.Invoice;
 using CmpNatural.CrmManagment.Product;
 using CmpNatural.CrmManagment.Webhook;
+using CMPNatural.Application.Services;
 using CMPNatural.Core.Repositories;
 using CMPNatural.infrastructure;
 using CMPNatural.infrastructure.Repository;
@@ -31,6 +32,9 @@ namespace ScoutDirect.infrastructure
             services.AddTransient<IinvoiceRepository, InvoiceRepository>();
             services.AddTransient<IShoppingCardRepository, ShoppingCardRepository>();
             services.AddTransient<IAdminRepository, AdminRepository>();
+            services.AddTransient<IProviderReposiotry, ProviderReposiotry>();
+            services.AddTransient<IProviderServiceAssignmentRepository, ProviderServiceAssignmentRepository>();
+            services.AddTransient<IBaseServiceAppointmentRepository, BaseServiceAppointmentRepository>();
 
             services.AddTransient<ProductListApi>();
             services.AddTransient<ProductPriceApi>();
@@ -38,6 +42,7 @@ namespace ScoutDirect.infrastructure
             services.AddTransient<InvoiceApi>();
             services.AddTransient<UpdateContactTokenApi>();
             services.AddTransient<CustomValueApi>();
+            services.AddTransient<SyncByCrm>();
 
         }
 

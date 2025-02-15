@@ -19,6 +19,8 @@ using ScoutDirect.infrastructure.Repository;
 using ScoutDirect.Core.Repositories.Base;
 using CMPNatural.Application.Handlers;
 using CmpNatural.CrmManagment.Model;
+using CMPNatural.Application.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ScoutDirect.Api
 {
@@ -212,7 +214,7 @@ namespace ScoutDirect.Api
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             //if (env.IsDevelopment())
             //{
@@ -260,6 +262,12 @@ namespace ScoutDirect.Api
             });
 
             GlobalConfiguration.Configuration.UseMemoryStorage();
+
+            using (var scope = serviceProvider.CreateScope())
+            {
+                var syncService = scope.ServiceProvider.GetRequiredService<SyncByCrm>();
+                syncService.sync();
+            }
 
             //Admin_PusherService.ServerKey = Configuration.GetValue<string>("Admin_PusherService_ServerKey");
             //Customer_PusherService.ServerKey = Configuration.GetValue<string>("Customer_PusherService_ServerKey");

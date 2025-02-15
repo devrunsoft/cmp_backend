@@ -1,0 +1,178 @@
+﻿<error errorId="3c334100-ddd0-489e-85ce-db9e8abfa549" application="CMPNatural.Api" host="mortezas-MacBook-Pro" type="System.Net.Sockets.SocketException" message="Operation timed out" detail="# caller: @C:\Sources\ElmahCore\ElmahCore\ElmahCore\Internal$\CallerInfo.cs:9&#xA;MySql.Data.MySqlClient.MySqlException (0x80004005): Reading from the stream has failed.&#xA; ---&gt; System.IO.IOException: Unable to read data from the transport connection: Operation timed out.&#xA; ---&gt; System.Net.Sockets.SocketException (60): Operation timed out&#xA;   at System.Net.Sockets.NetworkStream.ReadAsync(Memory`1 buffer, CancellationToken cancellationToken)&#xA;   at System.Net.Security.SslStream.EnsureFullTlsFrameAsync[TIOAdapter](CancellationToken cancellationToken, Int32 estimatedSize)&#xA;   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)&#xA;   at System.Net.Sockets.SocketAsyncEventArgs.TransferCompletionCallbackCore(Int32 bytesTransferred, Memory`1 socketAddress, SocketFlags receivedFlags, SocketError socketError)&#xA;   at System.Net.Sockets.SocketAsyncEngine.System.Threading.IThreadPoolWorkItem.Execute()&#xA;   at System.Threading.ThreadPoolWorkQueue.Dispatch()&#xA;   at System.Threading.PortableThreadPool.WorkerThread.WorkerThreadStart()&#xA;   at System.Threading.Thread.StartCallback()&#xA;--- End of stack trace from previous location ---&#xA;&#xA;   --- End of inner exception stack trace ---&#xA;   at System.Net.Security.SslStream.EnsureFullTlsFrameAsync[TIOAdapter](CancellationToken cancellationToken, Int32 estimatedSize)&#xA;   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource&lt;TResult&gt;.GetResult(Int16 token)&#xA;   at System.Net.Security.SslStream.ReadAsyncInternal[TIOAdapter](Memory`1 buffer, CancellationToken cancellationToken)&#xA;   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource&lt;TResult&gt;.GetResult(Int16 token)&#xA;   at System.Threading.Tasks.ValueTask`1.ValueTaskSourceAsTask.&lt;&gt;c.&lt;.cctor&gt;b__4_0(Object state)&#xA;--- End of stack trace from previous location ---&#xA;   at MySql.Data.MySqlClient.TimedStream.ReadAsync(Byte[] buffer, Int32 offset, Int32 count, Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.MySqlStream.ReadFullyAsync(Stream stream, Byte[] buffer, Int32 offset, Int32 count, Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.MySqlStream.LoadPacketAsync(Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.MySqlStream.LoadPacketAsync(Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.NativeDriver.ReadOkAsync(Boolean read, Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.NativeDriver.ReadOkAsync(Boolean read, Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.NativeDriver.SetDatabaseAsync(String dbName, Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.Driver.SetDatabaseAsync(String dbName, Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.MySqlConnection.ChangeDatabaseAsync(String databaseName, Boolean execAsync, CancellationToken cancellationToken)&#xA;   at MySql.Data.MySqlClient.MySqlConnection.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)&#xA;   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)&#xA;   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)&#xA;   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)&#xA;   at MySql.EntityFrameworkCore.Storage.Internal.MySQLRelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)&#xA;   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)&#xA;   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)&#xA;   at MySql.EntityFrameworkCore.Storage.Internal.MySQLExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)&#xA;   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()&#xA;   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)&#xA;   at Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions.ToListAsync[TSource](IQueryable`1 source, CancellationToken cancellationToken)&#xA;   at ScoutDirect.infrastructure.Repository.Repository`2.GetBasePagedAsync(PagedQueryRequest pagingParam, Func`2 includeFunc) in /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/Repository/Base/Base.cs:line 174&#xA;   at CMPNatural.Application.Handlers.Admin.Auth.AdminGetAllProviderHandler.Handle(AdminGetAllProviderCommand request, CancellationToken cancellationToken) in /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Admin/provider/AdminGetAllProviderHandler.cs:line 23&#xA;   at CMPNatural.Api.Controllers.Admin.Provider.ProviderController.GetAll(AdminGetAllProviderCommand command) in /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Admin/Provider/ProviderController.cs:line 30&#xA;   at lambda_method246(Closure, Object)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.&lt;InvokeActionMethodAsync&gt;g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.&lt;InvokeNextActionFilterAsync&gt;g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State&amp; next, Scope&amp; scope, Object&amp; state, Boolean&amp; isCompleted)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.&lt;InvokeInnerFilterAsync&gt;g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeNextResourceFilter&gt;g__Awaited|25_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Rethrow(ResourceExecutedContextSealed context)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.Next(State&amp; next, Scope&amp; scope, Object&amp; state, Boolean&amp; isCompleted)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeFilterPipelineAsync&gt;g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeAsync&gt;g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)&#xA;   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.&lt;InvokeAsync&gt;g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)&#xA;   at ElmahCore.Mvc.ErrorLogMiddleware.InvokeAsync(HttpContext context)" time="2025-02-08T17:57:39.8656840Z" statusCode="500">
+  <serverVariables>
+    <item name="TotalParsedHeaderSize">
+      <value string="938" />
+    </item>
+    <item name="StreamId">
+      <value string="13" />
+    </item>
+    <item name="RequestBodyStarted">
+      <value string="False" />
+    </item>
+    <item name="EndStreamReceived">
+      <value string="True" />
+    </item>
+    <item name="ReceivedEmptyRequestBody">
+      <value string="True" />
+    </item>
+    <item name="CanReuse">
+      <value string="False" />
+    </item>
+    <item name="ConnectionIdFeature">
+      <value string="0HNA8C2D4NQ88" />
+    </item>
+    <item name="HasStartedConsumingRequestBody">
+      <value string="False" />
+    </item>
+    <item name="MaxRequestBodySize">
+      <value string="30000000" />
+    </item>
+    <item name="MinRequestBodyDataRate">
+      <value string="Bytes per second: 240, Grace Period: 00:00:05" />
+    </item>
+    <item name="AllowSynchronousIO">
+      <value string="False" />
+    </item>
+    <item name="TraceIdentifier">
+      <value string="0HNA8C2D4NQ88:0000000D" />
+    </item>
+    <item name="IsUpgradableRequest">
+      <value string="False" />
+    </item>
+    <item name="IsUpgraded">
+      <value string="False" />
+    </item>
+    <item name="IsExtendedConnectRequest">
+      <value string="False" />
+    </item>
+    <item name="IsExtendedConnectAccepted">
+      <value string="False" />
+    </item>
+    <item name="RemoteIpAddress">
+      <value string="::1" />
+    </item>
+    <item name="RemotePort">
+      <value string="64556" />
+    </item>
+    <item name="LocalIpAddress">
+      <value string="::1" />
+    </item>
+    <item name="LocalPort">
+      <value string="7089" />
+    </item>
+    <item name="Scheme">
+      <value string="https" />
+    </item>
+    <item name="Method">
+      <value string="Get" />
+    </item>
+    <item name="MethodText">
+      <value string="GET" />
+    </item>
+    <item name="Path">
+      <value string="/api/admin/Provider" />
+    </item>
+    <item name="QueryString">
+      <value string="?allField=erfa" />
+    </item>
+    <item name="RawTarget">
+      <value string="/api/admin/Provider?allField=erfa" />
+    </item>
+    <item name="HttpVersion">
+      <value string="HTTP/2" />
+    </item>
+    <item name="Header_Accept">
+      <value string="application/json, text/plain, */*" />
+    </item>
+    <item name="Header_Host">
+      <value string="localhost:7089" />
+    </item>
+    <item name="Header_User-Agent">
+      <value string="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36" />
+    </item>
+    <item name="Header_Accept-Encoding">
+      <value string="gzip, deflate, br, zstd" />
+    </item>
+    <item name="Header_Accept-Language">
+      <value string="en-US,en;q=0.9" />
+    </item>
+    <item name="Header_Authorization">
+      <value string="Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbWluIjoidHJ1ZSIsIlBlcnNvbklkIjoiZTM3NDg0NWMtOGFkMC00MGEyLWIyNGItZThlM2ZjNjk3ZjEyIiwiRW1haWwiOiIxIiwiZXhwIjoxNzQxNTM2MTQxLCJpc3MiOiJodHRwOi8vbG9jYWxob3N0OjU5OTIxIiwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDo0MjAwIn0.IauaR79zcz7wfClttRsZPAWsf8E5nauYIKRylAVB0jE" />
+    </item>
+    <item name="Header_Referer">
+      <value string="http://localhost:3000/" />
+    </item>
+    <item name="Header_sec-ch-ua-platform">
+      <value string="&quot;macOS&quot;" />
+    </item>
+    <item name="Header_sec-ch-ua">
+      <value string="&quot;Not A(Brand&quot;;v=&quot;8&quot;, &quot;Chromium&quot;;v=&quot;132&quot;, &quot;Google Chrome&quot;;v=&quot;132&quot;" />
+    </item>
+    <item name="Header_sec-ch-ua-mobile">
+      <value string="?0" />
+    </item>
+    <item name="Header_Access-Control-Allow-Methods">
+      <value string="GET,PUT,POST,DELETE,PATCH,OPTIONS" />
+    </item>
+    <item name="Header_Access-Control-Allow-Origin">
+      <value string="*" />
+    </item>
+    <item name="Header_sec-fetch-site">
+      <value string="cross-site" />
+    </item>
+    <item name="Header_sec-fetch-mode">
+      <value string="cors" />
+    </item>
+    <item name="Header_sec-fetch-dest">
+      <value string="empty" />
+    </item>
+    <item name="Header_priority">
+      <value string="u=1, i" />
+    </item>
+    <item name="RequestTrailersAvailable">
+      <value string="True" />
+    </item>
+    <item name="StatusCode">
+      <value string="200" />
+    </item>
+    <item name="HasResponseStarted">
+      <value string="False" />
+    </item>
+    <item name="HasFlushedHeaders">
+      <value string="False" />
+    </item>
+    <item name="HasResponseCompleted">
+      <value string="False" />
+    </item>
+    <item name="IsWebTransportRequest">
+      <value string="False" />
+    </item>
+    <item name="Connection_Id">
+      <value string="0HNA8C2D4NQ88" />
+    </item>
+    <item name="Connection_RemoteIpAddress">
+      <value string="::1" />
+    </item>
+    <item name="Connection_RemotePort">
+      <value string="64556" />
+    </item>
+    <item name="Connection_LocalIpAddress">
+      <value string="::1" />
+    </item>
+    <item name="Connection_LocalPort">
+      <value string="7089" />
+    </item>
+    <item name="HttpStatusCode">
+      <value string="500" />
+    </item>
+  </serverVariables>
+  <queryString>
+    <item name="allField">
+      <value string="erfa" />
+    </item>
+  </queryString>
+  <messageLog>
+    <message level="Error" time-stamp="2025-02-08T17:57:39.7687340Z" message="An error occurred using the connection to database 'CmpApp' on server '104.243.47.169'." />
+    <message level="Error" exception="MySql.Data.MySqlClient.MySqlException (0x80004005): Reading from the stream has failed.&#xA; ---&gt; System.IO.IOException: Unable to read data from the transport connection: Operation timed out.&#xA; ---&gt; System.Net.Sockets.SocketException (60): Operation timed out&#xA;   at System.Net.Sockets.NetworkStream.ReadAsync(Memory`1 buffer, CancellationToken cancellationToken)&#xA;   at System.Net.Security.SslStream.EnsureFullTlsFrameAsync[TIOAdapter](CancellationToken cancellationToken, Int32 estimatedSize)&#xA;   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)&#xA;   at System.Net.Sockets.SocketAsyncEventArgs.TransferCompletionCallbackCore(Int32 bytesTransferred, Memory`1 socketAddress, SocketFlags receivedFlags, SocketError socketError)&#xA;   at System.Net.Sockets.SocketAsyncEngine.System.Threading.IThreadPoolWorkItem.Execute()&#xA;   at System.Threading.ThreadPoolWorkQueue.Dispatch()&#xA;   at System.Threading.PortableThreadPool.WorkerThread.WorkerThreadStart()&#xA;   at System.Threading.Thread.StartCallback()&#xA;--- End of stack trace from previous location ---&#xA;&#xA;   --- End of inner exception stack trace ---&#xA;   at System.Net.Security.SslStream.EnsureFullTlsFrameAsync[TIOAdapter](CancellationToken cancellationToken, Int32 estimatedSize)&#xA;   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource&lt;TResult&gt;.GetResult(Int16 token)&#xA;   at System.Net.Security.SslStream.ReadAsyncInternal[TIOAdapter](Memory`1 buffer, CancellationToken cancellationToken)&#xA;   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource&lt;TResult&gt;.GetResult(Int16 token)&#xA;   at System.Threading.Tasks.ValueTask`1.ValueTaskSourceAsTask.&lt;&gt;c.&lt;.cctor&gt;b__4_0(Object state)&#xA;--- End of stack trace from previous location ---&#xA;   at MySql.Data.MySqlClient.TimedStream.ReadAsync(Byte[] buffer, Int32 offset, Int32 count, Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.MySqlStream.ReadFullyAsync(Stream stream, Byte[] buffer, Int32 offset, Int32 count, Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.MySqlStream.LoadPacketAsync(Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.MySqlStream.LoadPacketAsync(Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.NativeDriver.ReadOkAsync(Boolean read, Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.NativeDriver.ReadOkAsync(Boolean read, Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.NativeDriver.SetDatabaseAsync(String dbName, Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.Driver.SetDatabaseAsync(String dbName, Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.MySqlConnection.ChangeDatabaseAsync(String databaseName, Boolean execAsync, CancellationToken cancellationToken)&#xA;   at MySql.Data.MySqlClient.MySqlConnection.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)&#xA;   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)&#xA;   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)&#xA;   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)&#xA;   at MySql.EntityFrameworkCore.Storage.Internal.MySQLRelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)&#xA;   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)&#xA;   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)&#xA;   at MySql.EntityFrameworkCore.Storage.Internal.MySQLExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)&#xA;   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()" time-stamp="2025-02-08T17:57:39.7807950Z" message="An exception occurred while iterating over the results of a query for context type 'infrastructure.Data.ScoutDBContext'.&#xA;MySql.Data.MySqlClient.MySqlException (0x80004005): Reading from the stream has failed.&#xA; ---&gt; System.IO.IOException: Unable to read data from the transport connection: Operation timed out.&#xA; ---&gt; System.Net.Sockets.SocketException (60): Operation timed out&#xA;   at System.Net.Sockets.NetworkStream.ReadAsync(Memory`1 buffer, CancellationToken cancellationToken)&#xA;   at System.Net.Security.SslStream.EnsureFullTlsFrameAsync[TIOAdapter](CancellationToken cancellationToken, Int32 estimatedSize)&#xA;   at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)&#xA;   at System.Net.Sockets.SocketAsyncEventArgs.TransferCompletionCallbackCore(Int32 bytesTransferred, Memory`1 socketAddress, SocketFlags receivedFlags, SocketError socketError)&#xA;   at System.Net.Sockets.SocketAsyncEngine.System.Threading.IThreadPoolWorkItem.Execute()&#xA;   at System.Threading.ThreadPoolWorkQueue.Dispatch()&#xA;   at System.Threading.PortableThreadPool.WorkerThread.WorkerThreadStart()&#xA;   at System.Threading.Thread.StartCallback()&#xA;--- End of stack trace from previous location ---&#xA;&#xA;   --- End of inner exception stack trace ---&#xA;   at System.Net.Security.SslStream.EnsureFullTlsFrameAsync[TIOAdapter](CancellationToken cancellationToken, Int32 estimatedSize)&#xA;   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource&lt;TResult&gt;.GetResult(Int16 token)&#xA;   at System.Net.Security.SslStream.ReadAsyncInternal[TIOAdapter](Memory`1 buffer, CancellationToken cancellationToken)&#xA;   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource&lt;TResult&gt;.GetResult(Int16 token)&#xA;   at System.Threading.Tasks.ValueTask`1.ValueTaskSourceAsTask.&lt;&gt;c.&lt;.cctor&gt;b__4_0(Object state)&#xA;--- End of stack trace from previous location ---&#xA;   at MySql.Data.MySqlClient.TimedStream.ReadAsync(Byte[] buffer, Int32 offset, Int32 count, Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.MySqlStream.ReadFullyAsync(Stream stream, Byte[] buffer, Int32 offset, Int32 count, Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.MySqlStream.LoadPacketAsync(Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.MySqlStream.LoadPacketAsync(Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.MySqlStream.ReadPacketAsync(Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.NativeDriver.ReadOkAsync(Boolean read, Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.NativeDriver.ReadOkAsync(Boolean read, Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.NativeDriver.SetDatabaseAsync(String dbName, Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.Driver.SetDatabaseAsync(String dbName, Boolean execAsync)&#xA;   at MySql.Data.MySqlClient.MySqlConnection.ChangeDatabaseAsync(String databaseName, Boolean execAsync, CancellationToken cancellationToken)&#xA;   at MySql.Data.MySqlClient.MySqlConnection.OpenAsync(Boolean execAsync, CancellationToken cancellationToken)&#xA;   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)&#xA;   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenInternalAsync(Boolean errorsExpected, CancellationToken cancellationToken)&#xA;   at Microsoft.EntityFrameworkCore.Storage.RelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)&#xA;   at MySql.EntityFrameworkCore.Storage.Internal.MySQLRelationalConnection.OpenAsync(CancellationToken cancellationToken, Boolean errorsExpected)&#xA;   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)&#xA;   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)&#xA;   at MySql.EntityFrameworkCore.Storage.Internal.MySQLExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)&#xA;   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()" />
+  </messageLog>
+</error>

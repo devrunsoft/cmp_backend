@@ -40,7 +40,8 @@ namespace CMPNatural.Api.Controllers.Invoice
         private ProductListApi _productApi;
         private ContactApi _contactApi;
         private CustomValueApi _customValueApi;
-        public InvoiceController(IMediator mediator, InvoiceApi invoiceApi, ProductPriceApi productPriceApi, ProductListApi productApi, ContactApi contactApi, CustomValueApi customValueApi) : base(mediator)
+        public InvoiceController(IMediator mediator, InvoiceApi invoiceApi, ProductPriceApi productPriceApi,
+            ProductListApi productApi, ContactApi contactApi, CustomValueApi customValueApi) : base(mediator)
         {
             _invoiceApi = invoiceApi;
             _productPriceApi = productPriceApi;

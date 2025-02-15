@@ -18,5 +18,7 @@ namespace CMPNatural.Core.Entities
     public partial class ServiceAppointmentLocation : IIdentityObject<long> { }
     public partial class AdminEntity : IIdentityObject<long> { }
     public partial class Person : IIdentityObject<Guid> { }
+    public partial class Provider : IIdentityObject<long> { }
+    public partial class ProviderServiceAssignment : IIdentityObject<long> { }
 
 }

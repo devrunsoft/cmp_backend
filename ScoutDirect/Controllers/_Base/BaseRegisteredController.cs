@@ -15,19 +15,19 @@ namespace CMPNatural.Api.Controllers._Base
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            try
-            {
-                var registered = bool.Parse(context.HttpContext.User.FindFirstValue("Registered"));
+            //try
+            //{
+            //    var registered = bool.Parse(context.HttpContext.User.FindFirstValue("Registered"));
 
-                if (!registered)
-                {
-                    context.Result = new UnauthorizedResult();
-                }
-            }
-            catch
-            {
-                context.Result = new UnauthorizedResult();
-            }
+            //    if (!registered)
+            //    {
+            //        context.Result = new UnauthorizedResult();
+            //    }
+            //}
+            //catch
+            //{
+            //    context.Result = new UnauthorizedResult();
+            //}
 
             base.OnActionExecuting(context);
         }

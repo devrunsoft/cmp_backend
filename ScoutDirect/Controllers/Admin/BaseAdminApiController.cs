@@ -11,8 +11,8 @@ using Microsoft.AspNetCore.Mvc.Filters;
 namespace CMPNatural.Api.Controllers.Admin
 {
     [Authorize]
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/admin/[controller]")]
     public class BaseAdminApiController : Controller
     {
         protected readonly IMediator _mediator;

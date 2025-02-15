@@ -6,5 +6,6 @@ namespace CMPNatural.Core.Repositories
 {
     public interface IProductPriceRepository : IRepository<ProductPrice, long>
     {
+
     }
 }

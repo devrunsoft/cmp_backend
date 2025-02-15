@@ -25,6 +25,9 @@ namespace CMPNatural.Core.Enums
         [Description("canceled")]
         canceled = 6,
 
+        //[Description("assigned")]
+        //assigned = 7,
+
     }
 }
 

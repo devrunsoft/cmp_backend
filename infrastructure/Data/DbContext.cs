@@ -30,6 +30,10 @@ namespace infrastructure.Data
         public virtual DbSet<ShoppingCard> ShoppingCard { get; set; } = null!;
         public virtual DbSet<AdminEntity> Admin { get; set; } = null!;
         public virtual DbSet<Person> Person { get; set; } = null!;
+        public virtual DbSet<Provider> Provider { get; set; } = null!;
+        public virtual DbSet<ProviderServiceAssignment> ProviderServiceAssignment { get; set; } = null!;
+        public virtual DbSet<Product> Product { get; set; } = null!;
+        public virtual DbSet<ProductPrice> ProductPrice { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -43,6 +47,15 @@ namespace infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Product>(entity =>
+            {
+                entity.ToTable("Product");
+            });
+
+            modelBuilder.Entity<ProductPrice>(entity =>
+            {
+                entity.ToTable("ProductPrice");
+            });
 
             modelBuilder.Entity<Company>(entity =>
             {
@@ -73,13 +86,23 @@ namespace infrastructure.Data
             });
 
             modelBuilder.Entity<BusinessType>(entity =>
-            {
+            {       
                 entity.ToTable("BusinessType");
             });
 
             modelBuilder.Entity<BaseServiceAppointment>(entity =>
             {
                 entity.ToTable("BaseServiceAppointment");
+
+                entity.HasOne(sa => sa.Product)
+                .WithMany(sal => sal.ServiceAppointment)
+                .HasForeignKey(sal => sal.ServiceCrmId)
+                .HasPrincipalKey(sal=>sal.ServiceCrmId);
+
+                entity.HasOne(sa => sa.ProductPrice)
+              .WithMany(sal => sal.ServiceAppointment)
+             .HasForeignKey(sal => sal.ServicePriceCrmId)
+                    .HasPrincipalKey(sal => sal.ServicePriceCrmId);
 
                 entity.HasMany(sa => sa.ServiceAppointmentLocations)
                 .WithOne(sal => sal.ServiceAppointment)
@@ -133,7 +156,10 @@ namespace infrastructure.Data
                 entity.ToTable("Admin");
             });
 
-
+            modelBuilder.Entity<Provider>(entity =>
+            {
+                entity.ToTable("Provider");
+            });
         }
 
     }

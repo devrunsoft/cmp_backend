@@ -1,25 +1,22 @@
-﻿using System;
-using CMPNatural.Application.Commands;
-using CMPNatural.Application.Mapper;
-using CMPNatural.Application.Responses;
-using CMPNatural.Core.Entities;
+﻿using CMPNatural.Core.Entities;
 using MediatR;
 using ScoutDirect.Application.Responses;
-using ScoutDirect.Core.Repositories;
 using System.Threading;
 using System.Threading.Tasks;
-using CMPNatural.Application.Commands.Admin;
 using CMPNatural.Core.Repositories;
+using CMPNatural.Core.Base;
+using Microsoft.EntityFrameworkCore;
+using CMPNatural.Application.Mapper;
+using CMPNatural.Application.Responses;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using ScoutDirect.Core.Authentication;
 using System.Linq;
 using System.Collections.Generic;
-using CMPNatural.Core.Base;
-using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore;
 
 namespace CMPNatural.Application.Handlers.Admin.Auth
 {
 
-    public class AdminGetAllInvoiceHandler : IRequestHandler<AdminGetAllInvoiceCommand, CommandResponse<PagesQueryResponse<Invoice>>>
+    public class AdminGetAllInvoiceHandler : IRequestHandler<AdminGetAllInvoiceCommand, CommandResponse<PagesQueryResponse<InvoiceResponse>>>
     {
         private readonly IinvoiceRepository _invoiceRepository;
 
@@ -28,11 +25,17 @@ namespace CMPNatural.Application.Handlers.Admin.Auth
             _invoiceRepository = invoiceRepository;
         }
 
-        public async Task<CommandResponse<PagesQueryResponse<Invoice>>> Handle(AdminGetAllInvoiceCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<PagesQueryResponse<InvoiceResponse>>> Handle(AdminGetAllInvoiceCommand request, CancellationToken cancellationToken)
         {
-            var invoices = (await _invoiceRepository.GetBasePagedAsync(request, query => query.Include(i => i.Company)));
+            var invoices = (await _invoiceRepository.GetBasePagedAsync(request, query => query.Include(i => i.Company).Include(i=>i.Provider)));
 
-            return new Success<PagesQueryResponse<Invoice>>() { Data = invoices };
+            var model = new PagesQueryResponse<InvoiceResponse>(
+                invoices.elements.Select(p => InvoiceMapper.Mapper.Map<InvoiceResponse>(p)).ToList(),
+                invoices.pageNumber,
+                invoices.totalPages,
+                invoices.totalElements);
+
+            return new Success<PagesQueryResponse<InvoiceResponse>>() { Data = model };
 
         }
 

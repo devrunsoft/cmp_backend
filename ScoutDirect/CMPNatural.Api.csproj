@@ -42,6 +42,10 @@
     <None Remove="Controllers\Admin\Invoice\" />
     <None Remove="Controllers\Admin\Service\" />
     <None Remove="Controllers\Admin\User\" />
+    <None Remove="Controllers\Admin\ProviderServiceAssignment\" />
+    <None Remove="Controllers\Admin\Product\" />
+    <None Remove="Controllers\Admin\Company\" />
+    <None Remove="Controllers\Admin\Client\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FileContent\" />
@@ -60,6 +64,10 @@
     <Folder Include="Controllers\Admin\Invoice\" />
     <Folder Include="Controllers\Admin\Service\" />
     <Folder Include="Controllers\Admin\User\" />
+    <Folder Include="Controllers\Admin\ProviderServiceAssignment\" />
+    <Folder Include="Controllers\Admin\Product\" />
+    <Folder Include="Controllers\Admin\Company\" />
+    <Folder Include="Controllers\Admin\Client\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\infrastructure\CMPNatural.infrastructure.csproj">

@@ -178,7 +178,18 @@
     <None Remove="Handlers\Admin\Auth\" />
     <None Remove="Commands\Admin\Invoice\" />
     <None Remove="Handlers\Admin\Invoice\" />
-    <None Remove="Commands\Admin\user\" />
+    <None Remove="Commands\Admin\provider\" />
+    <None Remove="Handlers\Admin\provider\" />
+    <None Remove="Commands\Admin\ProviderServiceAssignment\" />
+    <None Remove="Handlers\Admin\ProviderServiceAssignment\" />
+    <None Remove="Mapper\Invoice\" />
+    <None Remove="Mapper\ProviderServiceAssignment\" />
+    <None Remove="Responses\ProviderServiceAssignment\" />
+    <None Remove="Commands\Admin\Company\" />
+    <None Remove="Handlers\Admin\Comapny\" />
+    <None Remove="Commands\Admin\Product\" />
+    <None Remove="Commands\Service\" />
+    <None Remove="Handlers\CommandHandlers\Service\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -362,10 +373,25 @@
     <Folder Include="Handlers\Admin\Auth\" />
     <Folder Include="Commands\Admin\Invoice\" />
     <Folder Include="Handlers\Admin\Invoice\" />
-    <Folder Include="Commands\Admin\user\" />
+    <Folder Include="Commands\Admin\provider\" />
+    <Folder Include="Handlers\Admin\provider\" />
+    <Folder Include="Commands\Admin\ProviderServiceAssignment\" />
+    <Folder Include="Handlers\Admin\ProviderServiceAssignment\" />
+    <Folder Include="Mapper\Invoice\" />
+    <Folder Include="Responses\Invoice\" />
+    <Folder Include="Mapper\ProviderServiceAssignment\" />
+    <Folder Include="Responses\ProviderServiceAssignment\" />
+    <Folder Include="Commands\Admin\Company\" />
+    <Folder Include="Handlers\Admin\Comapny\" />
+    <Folder Include="Commands\Admin\Product\" />
+    <Folder Include="Commands\Service\" />
+    <Folder Include="Handlers\CommandHandlers\Service\" />
   </ItemGroup> 
 
   <ItemGroup>
     <ProjectReference Include="..\Core\CMPNatural.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Responses\Invoice\InvoiceResponse.cs" />
   </ItemGroup>
 </Project>
