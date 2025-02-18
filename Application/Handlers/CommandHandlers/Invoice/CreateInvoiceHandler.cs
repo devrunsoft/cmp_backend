@@ -27,9 +27,16 @@ namespace CMPNatural.Application.Handlers
             List<BaseServiceAppointment> lstCustom = new List<BaseServiceAppointment>();
             List<ServiceAppointmentEmergency> lstCustomEmrgency = new List<ServiceAppointmentEmergency>();
 
+            List<InvoiceProduct> invoiceProducts = new List<InvoiceProduct>();
+
             foreach (var request in requests.Services)
             {
-                if(request.ServiceKind == Core.Enums.ServiceKind.Custom)
+                invoiceProducts.Add(new InvoiceProduct()
+                {
+                    ProductPriceId = request.ProductPriceId,
+                });
+
+                if (request.ServiceKind == Core.Enums.ServiceKind.Custom)
                 {
                  var command = new ServiceAppointment()
                     {
@@ -83,7 +90,8 @@ namespace CMPNatural.Application.Handlers
                 InvoiceId = requests.InvoiceId,
                 BaseServiceAppointment = lstCustom,
                 Amount = requests.Amount,
-                RegisterDate= DateTime.Now
+                RegisterDate= DateTime.Now,
+                InvoiceProduct = invoiceProducts
                 //InvoiceNumber = request.InvoiceNumber
             };
 

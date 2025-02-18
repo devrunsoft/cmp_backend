@@ -218,13 +218,13 @@ namespace ScoutDirect.Api
         {
             //if (env.IsDevelopment())
             //{
-                app.UseDeveloperExceptionPage();
+            app.UseDeveloperExceptionPage();
             //}
 
             //if (env.IsDevelopment())
             //{
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CMPNatural Web API v1"));
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CMPNatural Web API v1"));
             //}
 
             app.UseHttpsRedirection();
@@ -262,12 +262,14 @@ namespace ScoutDirect.Api
             });
 
             GlobalConfiguration.Configuration.UseMemoryStorage();
-
-            using (var scope = serviceProvider.CreateScope())
+            if (!env.IsDevelopment())
+            {
+                using (var scope = serviceProvider.CreateScope())
             {
                 var syncService = scope.ServiceProvider.GetRequiredService<SyncByCrm>();
                 syncService.sync();
             }
+               }
 
             //Admin_PusherService.ServerKey = Configuration.GetValue<string>("Admin_PusherService_ServerKey");
             //Customer_PusherService.ServerKey = Configuration.GetValue<string>("Customer_PusherService_ServerKey");

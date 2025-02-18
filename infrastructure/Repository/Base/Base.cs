@@ -78,7 +78,6 @@ namespace ScoutDirect.infrastructure.Repository
             var query = _dbContext.Set<T>().AsQueryable();
 
 
-            // Apply search filter if `allField` is provided
             if (!string.IsNullOrWhiteSpace(pagingParam.allField))
             {
                 query = ApplySearchFilter(query, pagingParam.allField);
@@ -95,14 +94,13 @@ namespace ScoutDirect.infrastructure.Repository
         {
             var parameter = Expression.Parameter(typeof(T), "x");
             var properties = typeof(T).GetProperties()
-                .Where(p => p.PropertyType == typeof(string) || p.PropertyType.IsValueType); // Include both string & numeric types
+                .Where(p => p.PropertyType == typeof(string) || p.PropertyType.IsValueType); 
 
             Expression? finalExpression = null;
             foreach (var property in properties)
             {
                 var propertyExpression = Expression.Property(parameter, property);
 
-                // Convert numeric types to string before applying Contains()
                 Expression? convertedExpression;
                 if (property.PropertyType == typeof(string))
                 {
@@ -111,7 +109,7 @@ namespace ScoutDirect.infrastructure.Repository
                 else
                 {
                     var toStringMethod = property.PropertyType.GetMethod("ToString", Type.EmptyTypes);
-                    if (toStringMethod == null) continue; // Skip unsupported types
+                    if (toStringMethod == null) continue; 
 
                     convertedExpression = Expression.Call(propertyExpression, toStringMethod);
                 }
@@ -124,7 +122,7 @@ namespace ScoutDirect.infrastructure.Repository
                     : Expression.OrElse(finalExpression, searchExpression);
             }
 
-            if (finalExpression == null) return query; // No searchable fields
+            if (finalExpression == null) return query;
 
             var lambda = Expression.Lambda<Func<T, bool>>(finalExpression, parameter);
             return query.Where(lambda);
@@ -140,8 +138,6 @@ namespace ScoutDirect.infrastructure.Repository
                 query = includeFunc(query);
             }
 
-
-            // Apply search filter if `allField` is provided
             if (!string.IsNullOrWhiteSpace(pagingParam.allField))
             {
                 query = ApplySearchFilter(query, pagingParam.allField);

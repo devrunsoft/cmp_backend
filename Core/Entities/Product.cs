@@ -44,6 +44,8 @@ namespace CMPNatural.Core.Entities
         public string ServiceCrmId { get; set; }
         public bool Enable { get; set; }
 
+
+        public virtual ICollection<ProductPrice> ProductPrice { get; set; } = new List<ProductPrice>();
         public virtual ICollection<BaseServiceAppointment> ServiceAppointment { get; set; } = new List<BaseServiceAppointment>();
     }
 }

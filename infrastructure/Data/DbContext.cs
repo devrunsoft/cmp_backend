@@ -34,6 +34,7 @@ namespace infrastructure.Data
         public virtual DbSet<ProviderServiceAssignment> ProviderServiceAssignment { get; set; } = null!;
         public virtual DbSet<Product> Product { get; set; } = null!;
         public virtual DbSet<ProductPrice> ProductPrice { get; set; } = null!;
+        public virtual DbSet<InvoiceProduct> InvoiceProduct { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -47,6 +48,20 @@ namespace infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<InvoiceProduct>(entity =>
+            {
+                entity.ToTable("InvoiceProduct");
+
+                entity.HasOne(d => d.ProductPrice)
+                .WithMany(p => p.InvoiceProduct)
+                .HasForeignKey(d => d.ProductPriceId);
+
+                entity.HasOne(d => d.Invoice)
+                .WithMany(p => p.InvoiceProduct)
+                .HasForeignKey(d => d.InvoiceId);
+            });
+
+
             modelBuilder.Entity<Product>(entity =>
             {
                 entity.ToTable("Product");
@@ -55,6 +70,10 @@ namespace infrastructure.Data
             modelBuilder.Entity<ProductPrice>(entity =>
             {
                 entity.ToTable("ProductPrice");
+
+                entity.HasOne(d => d.Product)
+                .WithMany(p => p.ProductPrice)
+                .HasForeignKey(d => d.ProductId);
             });
 
             modelBuilder.Entity<Company>(entity =>
@@ -133,6 +152,10 @@ namespace infrastructure.Data
                 entity.HasOne(d => d.Company)
                       .WithMany(p => p.Invoices)
                  .HasForeignKey(d => d.CompanyId);
+
+                entity.HasMany(d => d.InvoiceProduct)
+                .WithOne(p => p.Invoice)
+                .HasForeignKey(d => d.InvoiceId);
             });
 
             modelBuilder.Entity<ShoppingCard>(entity =>

@@ -13,6 +13,8 @@ namespace CMPNatural.Application.Model.ServiceAppointment
 
         public string ServiceCrmId { get; set; } = null!;
 
+        public long ProductPriceId { get; set; }
+
         public long OperationalAddressId { get; set; }
 
         public List<long> LocationCompanyIds { get; set; }

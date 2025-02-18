@@ -74,7 +74,8 @@ namespace CMPNatural.Application.Handlers
                 ServiceId =(int)request.ServiceTypeId,
                 LocationCompanyIds = string.Join(",", request.LocationCompanyIds),
                 Address = request.Address,
-                Qty = request.qty
+                Qty = request.qty,
+                ProductPriceId = request.ProductPriceId
 
             };
             var result = await _shoppingCardRepository.AddAsync(entity);

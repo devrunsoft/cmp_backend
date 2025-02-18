@@ -12,7 +12,6 @@ namespace CMPNatural.infrastructure.Repository
     public class DocumentRepository : Repository<DocumentSubmission, long>, IDocumentRepository
     {
         public DocumentRepository(ScoutDBContext context, Func<CacheTech, ICacheService> cacheService) : base(context, cacheService) { }
-
     }
 }
 

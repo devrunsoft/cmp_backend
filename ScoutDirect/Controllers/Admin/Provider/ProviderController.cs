@@ -30,7 +30,16 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
             var result = await _mediator.Send(command);
             return Ok(result);
         }
-        
+
+        [HttpGet("{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> get([FromRoute] int Id)
+        {
+            var result = await _mediator.Send(new AdminGetProviderCommand() { Id = Id});
+            return Ok(result);
+        }
+
         [HttpPut("{Id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]

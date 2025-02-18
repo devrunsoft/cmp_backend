@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using CMPNatural.Core.Entities;
 using System.Linq;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace CMPNatural.Application.Handlers
 {
@@ -23,7 +24,9 @@ namespace CMPNatural.Application.Handlers
 
         public async Task<CommandResponse<List<Invoice>>> Handle(GetAllInvoiceCommand request, CancellationToken cancellationToken)
         {
-            var entity = (await _invoiceRepository.GetAsync(p =>p.CompanyId == request.CompanyId)).ToList();
+            var entity = (await _invoiceRepository.GetAsync(p =>p.CompanyId == request.CompanyId, query => query.Include(i => i.InvoiceProduct)
+            .ThenInclude(p=>p.ProductPrice)
+            .ThenInclude(p=>p.Product))).ToList();
 
             return new Success<List<Invoice>>() { Data = entity, Message = "Successfull!" };
 

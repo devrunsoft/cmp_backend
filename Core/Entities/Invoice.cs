@@ -20,7 +20,7 @@ namespace CMPNatural.Core.Entities
 
         public Provider? Provider { get; set; }
 
-        public virtual ICollection<ProductPrice> ProductPrice { get; set; } = new List<ProductPrice>();
+        public virtual ICollection<InvoiceProduct> InvoiceProduct { get; set; } = new List<InvoiceProduct>();
 
         public virtual ICollection<BaseServiceAppointment> BaseServiceAppointment { get; set; } = new List<BaseServiceAppointment>();
     }
