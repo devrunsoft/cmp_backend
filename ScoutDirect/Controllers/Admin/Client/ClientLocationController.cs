@@ -66,7 +66,6 @@ namespace CMPNatural.Api.Controllers.Admin.Client
                 Name = request.Name,
 
             });
-
             return Ok(result);
         }
 

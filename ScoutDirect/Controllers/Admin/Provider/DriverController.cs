@@ -1,0 +1,91 @@
+﻿using CMPNatural.Application;
+using CMPNatural.Application.Model;
+using MediatR;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
+
+// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace CMPNatural.Api.Controllers.Admin.Provider
+{
+    public class DriverController : BaseAdminProviderApiController
+    {
+        private readonly IWebHostEnvironment Environment;
+        public DriverController(IMediator mediator, IHttpContextAccessor httpContextAccessor,
+            IWebHostEnvironment _environment) : base(mediator, httpContextAccessor)
+        {
+            Environment = _environment;
+        }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Get()
+        {
+            var result = await _mediator.Send(new GetAllDriverCommand()
+            {
+                ProviderId = rProviderId,
+            });
+            return Ok(result);
+        }
+
+        [HttpGet("{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> GetById([FromRoute] long Id)
+        {
+            var result = await _mediator.Send(new GetDriverCommand()
+            {
+                Id= Id,
+                ProviderId = rProviderId,
+            });
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Post([FromForm] DriverInput request)
+        {
+            string wwwPath = Environment.ContentRootPath;
+
+            var result = await _mediator.Send(new AddDriverCommand()
+            {
+                License = request.License,
+                LicenseExp = request.LicenseExp,
+                BackgroundCheck = request.BackgroundCheck,
+                BackgroundCheckExp = request.BackgroundCheckExp,
+                ProfilePhoto = request.ProfilePhoto,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                ProviderId = rProviderId,
+                BaseVirtualPath = wwwPath
+            });
+            return Ok(result);
+        }
+
+        [HttpPut("{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Put([FromRoute] long Id, [FromForm] DriverInput request)
+        {
+            string wwwPath = Environment.ContentRootPath;
+            var result = await _mediator.Send(new EditDriverCommand()
+            {
+                Id = Id,
+                License = request.License,
+                LicenseExp = request.LicenseExp,
+                BackgroundCheck = request.BackgroundCheck,
+                BackgroundCheckExp = request.BackgroundCheckExp,
+                ProfilePhoto = request.ProfilePhoto,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                ProviderId = rProviderId,
+                BaseVirtualPath = wwwPath
+            });
+            return Ok(result);
+        }
+
+    }
+}
+

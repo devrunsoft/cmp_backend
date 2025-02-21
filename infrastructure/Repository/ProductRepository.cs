@@ -2,6 +2,7 @@
 using CmpNatural.CrmManagment.Product;
 using CMPNatural.Application.Responses.Service;
 using CMPNatural.Core.Entities;
+using CMPNatural.Core.Enums;
 using CMPNatural.Core.Repositories;
 using infrastructure.Data;
 using ScoutDirect.Core.Caching;
@@ -38,8 +39,11 @@ namespace CMPNatural.infrastructure.Repository
                 }
                 else if (!matchingCrm.Equals(local)) 
                 {
-                    local.Enable = true;
+                    //local.Enable = true;
                     local.Name = matchingCrm.name;
+                    local.Type = checkType(matchingCrm.collectionIds);
+                    local.ServiceType = checkServiceType(matchingCrm.collectionIds);
+                    local.IsEmergency = isEmergency(matchingCrm.collectionIds);
                     shouldUpdate.Add(local);
                 }
             }
@@ -57,6 +61,9 @@ namespace CMPNatural.infrastructure.Repository
                             Description = crm.description,
                             Name = crm.name,
                             ProductType = crm.productType,
+                            Type= checkType(crm.collectionIds),
+                            ServiceType = checkServiceType(crm.collectionIds),
+                            IsEmergency = isEmergency(crm.collectionIds),
                         }
                         );
                     }
@@ -69,7 +76,43 @@ namespace CMPNatural.infrastructure.Repository
 
         }
 
-        private void syncPrice(string producCrmtId, long productId)
+        private int? checkType(List<string> collectionIds)
+        {
+            if (collectionIds.Contains("671826be39575cddc96abf50"))
+            {
+                return (int)ProductCollection.Service;
+            }
+            if (collectionIds.Contains("671826d564d8053aafd1ca63"))
+            {
+                return (int)ProductCollection.Product;
+            }
+            return (int)ProductCollection.Service;
+        }
+
+        private int? checkServiceType(List<string> collectionIds)
+        {
+            if (collectionIds.Contains("6720da386747d963d6dc64bd"))
+            {
+                return (int)ServiceType.Cooking_Oil_Collection;
+            }
+            if (collectionIds.Contains("6720da4c6747d93389dc64de"))
+            {
+                return (int)ServiceType.Grease_Trap_Management;
+            }
+            return (int)ServiceType.Other;
+        }
+
+        private bool isEmergency(List<string> collectionIds)
+        {
+            if (collectionIds.Contains("671826ac39575cbf746abf37"))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+            private void syncPrice(string producCrmtId, long productId)
         {
 
                 var crmProducts = _priceApi.call(producCrmtId).Data;
@@ -90,6 +133,7 @@ namespace CMPNatural.infrastructure.Repository
                     {
                         local.Enable = true;
                         local.Name = matchingCrm.name;
+                        local.Amount = double.Parse(matchingCrm.amount);
                         shouldUpdate.Add(local);
                     }
                 }

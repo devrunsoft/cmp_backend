@@ -21,5 +21,9 @@ namespace CMPNatural.Core.Entities
     public partial class Person : IIdentityObject<Guid> { }
     public partial class Provider : IIdentityObject<long> { }
     public partial class ProviderServiceAssignment : IIdentityObject<long> { }
+    public partial class Driver : IIdentityObject<long> { }
+    public partial class Vehicle : IIdentityObject<long> { }
+    public partial class VehicleCompartment : IIdentityObject<long> { }
+    public partial class VehicleService : IIdentityObject<long> { }
 
 }

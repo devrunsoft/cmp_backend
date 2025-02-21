@@ -35,6 +35,10 @@ namespace infrastructure.Data
         public virtual DbSet<Product> Product { get; set; } = null!;
         public virtual DbSet<ProductPrice> ProductPrice { get; set; } = null!;
         public virtual DbSet<InvoiceProduct> InvoiceProduct { get; set; } = null!;
+        public virtual DbSet<Driver> Driver { get; set; } = null!;
+        public virtual DbSet<Vehicle> Vehicle { get; set; } = null!;
+        public virtual DbSet<VehicleCompartment> VehicleCompartment { get; set; } = null!;
+        public virtual DbSet<VehicleService> VehicleService { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -48,6 +52,26 @@ namespace infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Driver>(entity =>
+            {
+                entity.ToTable("Driver");
+            });
+
+            modelBuilder.Entity<Vehicle>(entity =>
+            {
+                entity.ToTable("Vehicle");
+            });
+
+            modelBuilder.Entity<VehicleCompartment>(entity =>
+            {
+                entity.ToTable("VehicleCompartment");
+            });
+
+            modelBuilder.Entity<VehicleService>(entity =>
+            {
+                entity.ToTable("VehicleService");
+            });
+
             modelBuilder.Entity<InvoiceProduct>(entity =>
             {
                 entity.ToTable("InvoiceProduct");

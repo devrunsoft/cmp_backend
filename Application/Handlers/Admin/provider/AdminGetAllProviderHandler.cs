@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using CMPNatural.Core.Repositories;
 using CMPNatural.Core.Base;
 
-namespace CMPNatural.Application.Handlers.Admin.Auth
+namespace CMPNatural.Application
 {
 
     public class AdminGetAllProviderHandler : IRequestHandler<AdminGetAllProviderCommand, CommandResponse<PagesQueryResponse<Provider>>>

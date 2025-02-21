@@ -36,9 +36,7 @@ namespace CMPNatural.Application.Handlers.Admin.Auth
                 invoices.totalElements);
 
             return new Success<PagesQueryResponse<InvoiceResponse>>() { Data = model };
-
         }
-
     }
 }
 

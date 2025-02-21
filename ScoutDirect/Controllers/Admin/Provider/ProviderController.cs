@@ -18,10 +18,13 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
     [Route("api/admin/[controller]")]
     public class ProviderController : BaseAdminApiController
     {
-        public ProviderController(IMediator mediator) : base(mediator)
+        private readonly IWebHostEnvironment Environment;
+        public ProviderController(IMediator mediator, IHttpContextAccessor httpContextAccessor,
+            IWebHostEnvironment _environment) : base(mediator)
         {
+            Environment = _environment;
         }
-        
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
@@ -43,9 +46,9 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
         [HttpPut("{Id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Put([FromRoute] long Id , [FromBody] ProviderInput input)
+        public async Task<ActionResult> Put([FromRoute] long Id , [FromForm] ProviderInput input)
         {
-
+            string wwwPath = Environment.ContentRootPath;
             var result = await _mediator.Send(new AdminPutProviderCommand()
             {
                 Id = Id,
@@ -56,7 +59,17 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
                 Lat = input.Lat,
                 Long = input.Long,
                 Name = input.Name,
-                Rating = input.Rating
+                Rating = input.Rating,
+                BusinessLicense = input.BusinessLicense,
+                BusinessLicenseExp = input.BusinessLicenseExp,
+                EPACompliance =  input.EPACompliance,
+                EPAComplianceExp = input.EPAComplianceExp,
+                HealthDepartmentPermit = input.HealthDepartmentPermit,
+                HealthDepartmentPermitExp = input.HealthDepartmentPermitExp,
+                Insurance = input.Insurance,
+                InsuranceExp = input.InsuranceExp,
+                WasteHaulerPermit = input.WasteHaulerPermit,
+                BaseVirtualPath = wwwPath
             });
 
             return Ok(result);
@@ -65,8 +78,9 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Post([FromBody] ProviderInput input)
+        public async Task<ActionResult> Post([FromForm] ProviderInput input)
         {
+            string wwwPath = Environment.ContentRootPath;
             var result = await _mediator.Send(new AdminPostProviderCommand()
             {
                 Status = input.Status,
@@ -76,7 +90,17 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
                 Lat = input.Lat,
                 Long = input.Long,
                 Name = input.Name,
-                Rating = input.Rating
+                Rating = input.Rating,
+                BusinessLicense = input.BusinessLicense,
+                BusinessLicenseExp = input.BusinessLicenseExp,
+                EPACompliance = input.EPACompliance,
+                EPAComplianceExp = input.EPAComplianceExp,
+                HealthDepartmentPermit = input.HealthDepartmentPermit,
+                HealthDepartmentPermitExp = input.HealthDepartmentPermitExp,
+                Insurance = input.Insurance,
+                InsuranceExp = input.InsuranceExp,
+                WasteHaulerPermit = input.WasteHaulerPermit,
+                BaseVirtualPath = wwwPath
             });
 
             return Ok(result);

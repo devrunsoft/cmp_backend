@@ -9,6 +9,7 @@ namespace CMPNatural.Application.Commands.Admin.provider
 	public class AdminPutProviderCommand : ProviderInput , IRequest<CommandResponse<Provider>>
     {
 		public long Id { get; set; }
-	}
+        public string BaseVirtualPath { get; set; }
+    }
 }
 

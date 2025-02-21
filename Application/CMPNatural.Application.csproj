@@ -190,6 +190,12 @@
     <None Remove="Commands\Admin\Product\" />
     <None Remove="Commands\Service\" />
     <None Remove="Handlers\CommandHandlers\Service\" />
+    <None Remove="Commands\Provider\" />
+    <None Remove="Commands\Provider\Driver\" />
+    <None Remove="Commands\Provider\Vehicle\" />
+    <None Remove="Handlers\Provider\" />
+    <None Remove="Handlers\Provider\Driver\" />
+    <None Remove="Handlers\Provider\Vehicle\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -386,6 +392,12 @@
     <Folder Include="Commands\Admin\Product\" />
     <Folder Include="Commands\Service\" />
     <Folder Include="Handlers\CommandHandlers\Service\" />
+    <Folder Include="Commands\Provider\" />
+    <Folder Include="Commands\Provider\Driver\" />
+    <Folder Include="Commands\Provider\Vehicle\" />
+    <Folder Include="Handlers\Provider\" />
+    <Folder Include="Handlers\Provider\Driver\" />
+    <Folder Include="Handlers\Provider\Vehicle\" />
   </ItemGroup> 
 
   <ItemGroup>

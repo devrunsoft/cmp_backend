@@ -131,7 +131,7 @@ namespace ScoutDirect.infrastructure.Repository
 
         public async Task<PagesQueryResponse<T>> GetBasePagedAsync(PagedQueryRequest pagingParam, Expression<Func<T, bool>> expression, Func<IQueryable<T>, IQueryable<T>> includeFunc = null)
         {
-            var query = _dbContext.Set<T>().AsQueryable();
+            var query = _dbContext.Set<T>().Where(expression).AsQueryable();
 
             if (includeFunc != null)
             {
@@ -148,7 +148,7 @@ namespace ScoutDirect.infrastructure.Repository
 
             var skip = (pagingParam.Page) * pagingParam.Size;
             var elements = await query
-                .Where(expression)
+                //.Where(expression)
                 .OrderByDescending(p => p.Id)
                 .Skip(skip)
                 .Take(pagingParam.Size)

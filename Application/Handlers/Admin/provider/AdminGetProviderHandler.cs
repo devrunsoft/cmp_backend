@@ -7,7 +7,7 @@ using CMPNatural.Core.Repositories;
 using CMPNatural.Core.Base;
 using CMPNatural.Application.Commands.Admin.provider;
 
-namespace CMPNatural.Application.Handlers.Admin.Auth
+namespace CMPNatural.Application
 {
 
     public class AdminGetProviderHandler : IRequestHandler<AdminGetProviderCommand, CommandResponse<Provider>>

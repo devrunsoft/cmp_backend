@@ -7,8 +7,36 @@ namespace CMPNatural.Application.Services
 {
 	public class FileHandler
 	{
+        public static string ProviderDriverfileHandler(string BaseVirtualPath, IFormFile file, string key, dynamic uniqueId, string path)
+        {
+            return ProviderfileHandler(BaseVirtualPath, file, key, $"Provider/{uniqueId}/Driver/{path}");
+        }
 
-    public  static string? fileHandler(string BaseVirtualPath, IFormFile file, string key)
+        public static string ProviderVehiclefileHandler(string BaseVirtualPath, IFormFile file, string key, dynamic uniqueId, string path)
+        {
+            return ProviderfileHandler(BaseVirtualPath, file, key,  $"Provider/{uniqueId}/Vehicle/{path}");
+        }
+
+        public static string ProviderfileHandler(string BaseVirtualPath, IFormFile file, string key, dynamic uniqueId, string path)
+        {
+            return ProviderfileHandler(BaseVirtualPath, file, key, $"Provider/{uniqueId}/{path}");
+        }
+
+        private static string ProviderfileHandler(string BaseVirtualPath, IFormFile file, string key,string folderName)
+        {
+            if (file == null)
+                return null;
+
+            var extension = Path.GetExtension(file.FileName);
+            var fileName = $"{key}{extension}";
+
+            string path= $"{BaseVirtualPath}/FileContent/{folderName}";
+
+            SaveFile(path, file, fileName);
+            return $"/FileContent/{folderName}/{fileName}";
+        }
+
+        public  static string? fileHandler(string BaseVirtualPath, IFormFile file, string key)
         {
             if (file == null)
                 return null;

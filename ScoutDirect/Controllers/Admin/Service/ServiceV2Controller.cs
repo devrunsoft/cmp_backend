@@ -29,6 +29,16 @@ namespace CMPNatural.Api.Controllers.Admin.Service
             return Ok(result);
         }
 
+        [HttpGet("GetPaging")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> GetPaging([FromQuery] GetAllProductPaginateCommand command)
+        {
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
         [HttpGet("Product/{Id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
@@ -46,6 +56,17 @@ namespace CMPNatural.Api.Controllers.Admin.Service
         public async Task<ActionResult> GetPrice([FromRoute] int Id)
         {
             var result = await _mediator.Send(new GetProductPriceCommand() { ProductId = Id });
+
+            return Ok(result);
+        }
+
+        [HttpGet("GetPaging/{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> GetPricePaging([FromRoute] int Id, [FromQuery] GetProductPricePaginateCommand command)
+        {
+            command.ProductId = Id;
+            var result = await _mediator.Send(command);
 
             return Ok(result);
         }

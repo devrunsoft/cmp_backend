@@ -12,6 +12,22 @@ namespace CMPNatural.Core.Entities
         public string City { get; set; } = "";
         public string Address { get; set; } = "";
         public string County { get; set; } = "";
+
+        public string? BusinessLicense { get; set; }
+        public DateTime? BusinessLicenseExp { get; set; }
+
+        public string? HealthDepartmentPermit { get; set; }
+        public DateTime? HealthDepartmentPermitExp { get; set; }
+
+        public string? WasteHaulerPermit { get; set; }
+
+        public string? EPACompliance { get; set; }
+        public DateTime? EPAComplianceExp { get; set; }
+
+        public string? Insurance { get; set; }
+        public DateTime? InsuranceExp { get; set; }
+
+        
     }
 }
 

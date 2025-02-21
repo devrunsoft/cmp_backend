@@ -68,8 +68,6 @@ namespace CMPNatural.Api.Controllers
                 HealthDepartmentCertificate = input.HealthDepartmentCertificate,
                 BaseVirtualPath = Path.Combine(wwwPath, $"FileContent/{rCompanyId}")
             });
-
-
             return Ok(result);
         }
 

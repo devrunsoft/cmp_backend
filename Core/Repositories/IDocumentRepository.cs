@@ -6,7 +6,6 @@ namespace CMPNatural.Core.Repositories
 {
     public interface IDocumentRepository : IRepository<DocumentSubmission, long>
     {
-
     }
 }
 
