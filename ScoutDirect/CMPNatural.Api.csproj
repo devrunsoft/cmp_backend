@@ -46,6 +46,9 @@
     <None Remove="Controllers\Admin\Product\" />
     <None Remove="Controllers\Admin\Company\" />
     <None Remove="Controllers\Admin\Client\" />
+    <None Remove="Controllers\Admin\Capacity\" />
+    <None Remove="Controllers\Client\" />
+    <None Remove="Controllers\Capacity\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FileContent\" />
@@ -68,6 +71,9 @@
     <Folder Include="Controllers\Admin\Product\" />
     <Folder Include="Controllers\Admin\Company\" />
     <Folder Include="Controllers\Admin\Client\" />
+    <Folder Include="Controllers\Admin\Capacity\" />
+    <Folder Include="Controllers\Client\" />
+    <Folder Include="Controllers\Capacity\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\infrastructure\CMPNatural.infrastructure.csproj">

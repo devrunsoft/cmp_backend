@@ -8,7 +8,6 @@ using CMPNatural.Core.Base;
 
 namespace CMPNatural.Application
 {
-
     public class AdminGetAllProviderHandler : IRequestHandler<AdminGetAllProviderCommand, CommandResponse<PagesQueryResponse<Provider>>>
     {
         private readonly IProviderReposiotry _providerReposiotry;

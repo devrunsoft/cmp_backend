@@ -41,6 +41,8 @@ namespace ScoutDirect.infrastructure
             services.AddTransient<IVehicleCompartmentRepository, VehicleCompartmentRepository>();
             services.AddTransient<IVehicleRepository, VehicleRepository>();
             services.AddTransient<IVehicleServiceRepository, VehicleServiceRepository>();
+            services.AddTransient<IPersonRepository, PersonRepository>();
+            services.AddTransient<ICapacityRepository, CapacityRepository>();
 
 
             services.AddTransient<ProductListApi>();

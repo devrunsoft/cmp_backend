@@ -16,6 +16,9 @@ namespace CMPNatural.Core.Entities
         public string InvoiceId { get; set; } = null!;
         public DateTime RegisterDate { get; set; }
 
+        public long OperationalAddressId { get; set; }
+        public string Address { get; set; } = "";
+
         public Company Company { get; set; } = null!;
 
         public Provider? Provider { get; set; }

@@ -25,8 +25,11 @@ namespace CMPNatural.Application.Handlers
         public async Task<CommandResponse<List<Invoice>>> Handle(GetAllInvoiceCommand request, CancellationToken cancellationToken)
         {
             var entity = (await _invoiceRepository.GetAsync(p =>p.CompanyId == request.CompanyId, query => query.Include(i => i.InvoiceProduct)
+          
+            .Include(p=>p.BaseServiceAppointment)
             .ThenInclude(p=>p.ProductPrice)
-            .ThenInclude(p=>p.Product))).ToList();
+            .ThenInclude(p=>p.Product)
+            )).ToList();
 
             return new Success<List<Invoice>>() { Data = entity, Message = "Successfull!" };
 

@@ -11,16 +11,19 @@ using CMPNatural.Application.Responses;
 using CMPNatural.Core.Entities;
 using CMPNatural.Application.Mapper;
 using CMPNatural.Application.Commands;
+using CMPNatural.Core.Repositories;
 
 namespace CMPNatural.Application.Handlers
 {
     public class RegisterCompanyHandler : IRequestHandler<RegisterCompanyCommand, CommandResponse<object>>
     {
         private readonly ICompanyRepository _companyRepository;
+        private readonly IPersonRepository _personRepository;
 
-        public RegisterCompanyHandler(ICompanyRepository companyRepository)
+        public RegisterCompanyHandler(ICompanyRepository companyRepository, IPersonRepository personRepository)
         {
             _companyRepository = companyRepository;
+            _personRepository = personRepository;
         }
 
         public async Task<CommandResponse<object>> Handle(RegisterCompanyCommand request, CancellationToken cancellationToken)
@@ -29,6 +32,10 @@ namespace CMPNatural.Application.Handlers
 
             if (company == null || !company.Registered)
             {
+                var personId = Guid.NewGuid();
+                var person = new Person() { FirstName = request.PrimaryFirstName, LastName = request.PrimaryLastName, Id = personId };
+                await _personRepository.AddAsync(person);
+
                 company = new Company()
                 {
                     AccountNumber=request.AccountNumber,
@@ -46,6 +53,7 @@ namespace CMPNatural.Application.Handlers
                     Type=(int)request.Type,
                     Password=request.Password,
                     ActivationLink = Guid.NewGuid(),
+                    PersonId = personId
 
                 };
 

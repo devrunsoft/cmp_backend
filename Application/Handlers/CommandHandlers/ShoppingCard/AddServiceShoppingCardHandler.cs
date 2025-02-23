@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using CMPNatural.Core.Enums;
 using System.Linq;
 using System.ServiceModel.Channels;
+using Microsoft.EntityFrameworkCore;
 
 namespace CMPNatural.Application.Handlers
 {
@@ -17,65 +18,41 @@ namespace CMPNatural.Application.Handlers
     {
         private readonly IShoppingCardRepository _shoppingCardRepository;
         private readonly IServiceAppointmentRepository _serviceAppointmentRepository;
+        private readonly IProductPriceRepository _productPriceRepository;
+        private readonly IOperationalAddressRepository _operationalAddressRepository;
 
-        public AddServiceShoppingCardHandler(IShoppingCardRepository shoppingCardRepository , IServiceAppointmentRepository billingInformationRepository)
+        public AddServiceShoppingCardHandler(IShoppingCardRepository shoppingCardRepository , IServiceAppointmentRepository billingInformationRepository,
+            IProductPriceRepository productPriceRepository, IOperationalAddressRepository operationalAddressRepository)
         {
             _shoppingCardRepository = shoppingCardRepository;
-
             _serviceAppointmentRepository = billingInformationRepository;
+            _productPriceRepository = productPriceRepository;
+            _operationalAddressRepository = operationalAddressRepository;
         }
 
         public async Task<CommandResponse<ShoppingCard>> Handle(AddServiceShoppingCardCommand request, CancellationToken cancellationToken)
         {
-
-            //var resultService = (await _serviceAppointmentRepository.GetList(
-            //       (p) => p.OperationalAddressId == request.OperationalAddressId &&
-            //      p.CompanyId == request.CompanyId &&
-            //      p.Status != (int)ServiceStatus.canceled&&
-            //       p.ServiceCrmId == request.ServiceCrmId
-            //       )
-            //        ).ToList();
-
-            //if (resultService.Count() > 0)
-            //{
-            //    return new NoAcess<ShoppingCard>()
-            //    {
-            //        Message = resultService.FirstOrDefault().Status == (int)ServiceStatus.draft ?
-            //        "you are already enrolled this item, check your invoices"
-            //        : "you are already enrolled in repeating services, if you want to change, please cancel your existing service."
-            //    };
-            //}
-
-            //var resultShoppingCard = (await _shoppingCardRepository.GetAsync(
-            //(p) => p.OperationalAddressId == request.OperationalAddressId &&
-            // p.CompanyId == request.CompanyId &&
-            // p.ServiceCrmId == request.ServiceCrmId
-            //                   )).ToList();
-
-            //if (resultShoppingCard.Count() > 0)
-            //{
-            //    return new NoAcess<ShoppingCard>() {
-            //     Message=   "you are already add this item in your cart"
-            //    };
-            //}
+            var price =(await _productPriceRepository.GetAsync(p=>p.Id == request.ProductPriceId && p.Enable!=false, query => query.Include(i => i.Product))).FirstOrDefault();
+            var address = (await _operationalAddressRepository.GetAsync(p => p.Id == request.OperationalAddressId)).FirstOrDefault();
 
             var entity = new ShoppingCard()
             {
                 CompanyId = request.CompanyId,
-                ServicePriceCrmId = request.ServicePriceId,
-                ServiceCrmId = request.ServiceCrmId,
+                ServicePriceCrmId = "",
+                ServiceCrmId = "",
                 StartDate = request.StartDate ?? DateTime.Now,
                 OperationalAddressId = request.OperationalAddressId,
                 FrequencyType = request.FrequencyType,
-                Name = request.Name,
-                AddressName = request.AddressName,
-                PriceName = request.PriceName,
+                Name = price.Product.Name,
+                AddressName = address.Name,
+                Address = address.Address,
+                PriceName = price.Name,
                 ServiceKind = (int) request.ServiceKind,
-                ServiceId =(int)request.ServiceTypeId,
+                ServiceId = price.Product.ServiceType?? (int)ServiceType.Other,
                 LocationCompanyIds = string.Join(",", request.LocationCompanyIds),
-                Address = request.Address,
                 Qty = request.qty,
-                ProductPriceId = request.ProductPriceId
+                ProductPriceId = request.ProductPriceId,
+                ProductId = request.ProductId
 
             };
             var result = await _shoppingCardRepository.AddAsync(entity);

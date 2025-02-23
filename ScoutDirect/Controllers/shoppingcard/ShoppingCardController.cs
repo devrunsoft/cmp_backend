@@ -45,12 +45,6 @@ namespace CMPNatural.Api.Controllers.shoppingcard
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Post([FromBody] ServiceAppointmentInput request)
         {
-            var product = _api.GetById(request.ServiceCrmId);
-
-            var price = _priceapi.GetById(request.ServiceCrmId, request.ServicePriceId);
-
-            var address = await _mediator.Send(new GetByIdServiceOperationalAddressCommand()
-            { Id=request.OperationalAddressId,CompanyId=rCompanyId});
 
             var result = await _mediator.Send(new AddServiceShoppingCardCommand()
             {
@@ -58,13 +52,12 @@ namespace CMPNatural.Api.Controllers.shoppingcard
                 FrequencyType = request.FrequencyType,
                 StartDate = request.StartDate,
                 OperationalAddressId = request.OperationalAddressId,
-                ServiceCrmId = request.ServiceCrmId,
                 ServiceTypeId = request.ServiceTypeId,
-                ServicePriceId = request.ServicePriceId,
-                Name= product.Data.name,
-                AddressName = address.Data.Name,
-                Address = address.Data.Address,
-                PriceName = price.Data.name,
+                //Name = "",
+                //AddressName = "",
+                //Address = "",
+                //PriceName = "",
+                ProductId = request.ProductId,
                 ServiceKind =request.ServiceKind,
                 LocationCompanyIds = request.LocationCompanyIds,
                 qty=request.qty,

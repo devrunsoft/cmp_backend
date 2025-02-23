@@ -11,6 +11,10 @@ namespace CMPNatural.Core.Entities
 
         public string? ServiceCrmId { get; set; }
 
+        public long ProductPriceId { get; set; }
+
+        public long ProductId { get; set; }
+
         public long CompanyId { get; set; }
 
         public int Status { get; set; }
@@ -22,6 +26,8 @@ namespace CMPNatural.Core.Entities
         public bool IsEmegency { get; set; }
 
         public int Qty { get; set; } = 1;
+
+        public double Amount { get; set; }
 
         public Invoice Invoice { get; set; }
 

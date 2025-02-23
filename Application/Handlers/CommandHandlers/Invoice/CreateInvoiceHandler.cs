@@ -16,10 +16,12 @@ namespace CMPNatural.Application.Handlers
     public class CreateInvoiceHandler : IRequestHandler<CreateInvoiceCommand, CommandResponse<Invoice>>
     {
         private readonly IinvoiceRepository _invoiceRepository;
+        private readonly IProductPriceRepository _productPriceRepository;
 
-        public CreateInvoiceHandler(IinvoiceRepository invoiceRepository)
+        public CreateInvoiceHandler(IinvoiceRepository invoiceRepository, IProductPriceRepository productPriceRepository)
         {
             _invoiceRepository = invoiceRepository;
+            _productPriceRepository = productPriceRepository;
         }
 
         public async Task<CommandResponse<Invoice>> Handle(CreateInvoiceCommand requests, CancellationToken cancellationToken)
@@ -36,6 +38,8 @@ namespace CMPNatural.Application.Handlers
                     ProductPriceId = request.ProductPriceId,
                 });
 
+               var resultPrice =await _productPriceRepository.GetByIdAsync(request.ProductPriceId);
+
                 if (request.ServiceKind == Core.Enums.ServiceKind.Custom)
                 {
                  var command = new ServiceAppointment()
@@ -44,13 +48,16 @@ namespace CMPNatural.Application.Handlers
                         FrequencyType = request.FrequencyType,
                         //LocationCompanyId=request.LocationCompanyId,
                         ServiceTypeId = (int)request.ServiceTypeId,
-                        ServicePriceCrmId = request.ServicePriceId,
-                        ServiceCrmId = request.ServiceCrmId,
+                        ServicePriceCrmId = "",
+                        ServiceCrmId = "",
                         StartDate = request.StartDate??DateTime.Now,
                         OperationalAddressId = request.OperationalAddressId,
                         Status = (int)ServiceStatus.draft,
                         IsEmegency=false,
                         Qty = request.qty,
+                        Amount = resultPrice.Amount * request.qty,
+                        ProductId = request.ProductId,
+                        ProductPriceId = request.ProductPriceId,
                         ServiceAppointmentLocations = request.LocationCompanyIds
                         .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
                         .ToList()
@@ -65,8 +72,11 @@ namespace CMPNatural.Application.Handlers
                         FrequencyType = request.FrequencyType,
                         //LocationCompanyId=request.LocationCompanyId,
                         ServiceTypeId = (int)request.ServiceTypeId,
-                        ServicePriceCrmId = request.ServicePriceId,
-                        ServiceCrmId = request.ServiceCrmId,
+                        ServicePriceCrmId = "",
+                        ServiceCrmId ="",
+                        Amount = resultPrice.Amount * request.qty,
+                        ProductId = request.ProductId,
+                        ProductPriceId = request.ProductPriceId,
                         //StartDate = request.StartDate,
                         OperationalAddressId = request.OperationalAddressId,
                         Status = (int)ServiceStatus.draft,
@@ -91,7 +101,9 @@ namespace CMPNatural.Application.Handlers
                 BaseServiceAppointment = lstCustom,
                 Amount = requests.Amount,
                 RegisterDate= DateTime.Now,
-                InvoiceProduct = invoiceProducts
+                InvoiceProduct = invoiceProducts,
+                Address = requests.Address,
+                OperationalAddressId = requests.OperationalAddressId
                 //InvoiceNumber = request.InvoiceNumber
             };
 

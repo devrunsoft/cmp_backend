@@ -9,11 +9,13 @@ namespace CMPNatural.Application.Model.ServiceAppointment
 
         public ServiceType ServiceTypeId { get; set; } = ServiceType.Cooking_Oil_Collection;
 
-        public string ServicePriceId { get; set; }
+        //public string ServicePriceId { get; set; }
 
-        public string ServiceCrmId { get; set; } = null!;
+        //public string ServiceCrmId { get; set; } = null!;
 
         public long ProductPriceId { get; set; }
+
+        public long ProductId { get; set; }
 
         public long OperationalAddressId { get; set; }
 

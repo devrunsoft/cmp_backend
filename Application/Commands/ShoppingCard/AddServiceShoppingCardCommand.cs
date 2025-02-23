@@ -13,13 +13,13 @@ namespace CMPNatural.Application
 
         public long InvoiceId { get; set; }
 
-        public string Name { get; set; }
+        //public string Name { get; set; }
 
-        public string PriceName { get; set; }
+        //public string PriceName { get; set; }
 
-        public string AddressName { get; set; }
+        //public string AddressName { get; set; }
 
-        public string? Address { get; set; }
+        //public string? Address { get; set; }
     }
 }
 

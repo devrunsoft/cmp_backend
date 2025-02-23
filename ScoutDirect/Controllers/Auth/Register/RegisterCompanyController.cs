@@ -134,6 +134,10 @@ namespace CMPNatural.Api.Controllers
             }
 
             var result = await _mediator.Send(command);
+              if (!result.IsSucces())
+            {
+                return Ok(new CommandResponse<object>() { Success = false, Message = "This Company is exist" });
+            }
             var data =(CompanyResponse) result.Data;
             if (data.Id == null)
             {
@@ -152,12 +156,16 @@ namespace CMPNatural.Api.Controllers
 
             emailSender(data);
 
-            return Ok(new
+
+            return Ok(new Success<object>()
             {
-                token = new JwtSecurityTokenHandler().WriteToken(token),
-                expiration = token.ValidTo,
-                registered = false,
-                accepted = false,
+                Data = new
+                {
+                    token = new JwtSecurityTokenHandler().WriteToken(token),
+                    expiration = token.ValidTo,
+                    registered = false,
+                    accepted = false,
+                }
             });
         }
 

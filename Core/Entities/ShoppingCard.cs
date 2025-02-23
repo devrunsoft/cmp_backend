@@ -15,6 +15,8 @@ namespace CMPNatural.Core.Entities
 
         public long? ProductPriceId { get; set; }
 
+        public long? ProductId { get; set; }
+
         public long OperationalAddressId { get; set; }
 
         public string? FrequencyType { get; set; }

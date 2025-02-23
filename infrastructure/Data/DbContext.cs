@@ -139,13 +139,11 @@ namespace infrastructure.Data
 
                 entity.HasOne(sa => sa.Product)
                 .WithMany(sal => sal.ServiceAppointment)
-                .HasForeignKey(sal => sal.ServiceCrmId)
-                .HasPrincipalKey(sal=>sal.ServiceCrmId);
+                .HasForeignKey(sal => sal.ProductId);
 
                 entity.HasOne(sa => sa.ProductPrice)
-              .WithMany(sal => sal.ServiceAppointment)
-             .HasForeignKey(sal => sal.ServicePriceCrmId)
-                    .HasPrincipalKey(sal => sal.ServicePriceCrmId);
+               .WithMany(sal => sal.ServiceAppointment)
+               .HasForeignKey(sal => sal.ProductPriceId);
 
                 entity.HasMany(sa => sa.ServiceAppointmentLocations)
                 .WithOne(sal => sal.ServiceAppointment)
@@ -206,6 +204,11 @@ namespace infrastructure.Data
             modelBuilder.Entity<Provider>(entity =>
             {
                 entity.ToTable("Provider");
+            });
+
+            modelBuilder.Entity<Capacity>(entity =>
+            {
+                entity.ToTable("Capacity");
             });
         }
 

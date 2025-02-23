@@ -37,7 +37,7 @@ namespace CMPNatural.Api.Controllers.ServiceAppointment
                 OperationalAddressId = request.OperationalAddressId
             });
 
-            if ((checkData.Data.Any(p=>p.ServicePriceCrmId==request.ServicePriceId)) || (!checkData.IsSucces()))
+            if ((checkData.Data.Any(p=>p.ProductPriceId==request.ProductPriceId)) || (!checkData.IsSucces()))
             {
                 return Ok(new NoAcess() { Message="You have an active service at the current operational address"});
             }

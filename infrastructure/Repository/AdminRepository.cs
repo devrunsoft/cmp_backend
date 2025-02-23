@@ -7,7 +7,6 @@ using ScoutDirect.infrastructure.Repository;
 
 namespace CMPNatural.infrastructure.Repository
 {
-
     public class AdminRepository : Repository<AdminEntity, long>, IAdminRepository
     {
         public AdminRepository(ScoutDBContext context, Func<CacheTech, ICacheService> cacheService) : base(context, cacheService) { }

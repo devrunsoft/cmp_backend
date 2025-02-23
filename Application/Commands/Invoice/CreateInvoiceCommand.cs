@@ -17,6 +17,8 @@ namespace CMPNatural.Application
         public List<ServiceAppointmentInput> Services { get; set; }
         public double Amount { get; set; }
         public List<long> LocationCompanyIds { get; set; }
+        public long OperationalAddressId { get; set; }
+        public string Address { get; set; } = "";
 
     }
 }

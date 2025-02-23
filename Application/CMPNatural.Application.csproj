@@ -179,7 +179,6 @@
     <None Remove="Commands\Admin\Invoice\" />
     <None Remove="Handlers\Admin\Invoice\" />
     <None Remove="Commands\Admin\provider\" />
-    <None Remove="Handlers\Admin\provider\" />
     <None Remove="Commands\Admin\ProviderServiceAssignment\" />
     <None Remove="Handlers\Admin\ProviderServiceAssignment\" />
     <None Remove="Mapper\Invoice\" />
@@ -196,6 +195,11 @@
     <None Remove="Handlers\Provider\" />
     <None Remove="Handlers\Provider\Driver\" />
     <None Remove="Handlers\Provider\Vehicle\" />
+    <None Remove="Commands\Admin\Capacity\" />
+    <None Remove="Handlers\Admin\Provider\" />
+    <None Remove="Handlers\Admin\Capacity\" />
+    <None Remove="Commands\Capacity\" />
+    <None Remove="Handlers\CommandHandlers\Capacity\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -380,7 +384,6 @@
     <Folder Include="Commands\Admin\Invoice\" />
     <Folder Include="Handlers\Admin\Invoice\" />
     <Folder Include="Commands\Admin\provider\" />
-    <Folder Include="Handlers\Admin\provider\" />
     <Folder Include="Commands\Admin\ProviderServiceAssignment\" />
     <Folder Include="Handlers\Admin\ProviderServiceAssignment\" />
     <Folder Include="Mapper\Invoice\" />
@@ -398,6 +401,11 @@
     <Folder Include="Handlers\Provider\" />
     <Folder Include="Handlers\Provider\Driver\" />
     <Folder Include="Handlers\Provider\Vehicle\" />
+    <Folder Include="Commands\Admin\Capacity\" />
+    <Folder Include="Handlers\Admin\Provider\" />
+    <Folder Include="Handlers\Admin\Capacity\" />
+    <Folder Include="Commands\Capacity\" />
+    <Folder Include="Handlers\CommandHandlers\Capacity\" />
   </ItemGroup> 
 
   <ItemGroup>

@@ -25,5 +25,6 @@ namespace CMPNatural.Core.Entities
     public partial class Vehicle : IIdentityObject<long> { }
     public partial class VehicleCompartment : IIdentityObject<long> { }
     public partial class VehicleService : IIdentityObject<long> { }
+    public partial class Capacity : IIdentityObject<long> { }
 
 }

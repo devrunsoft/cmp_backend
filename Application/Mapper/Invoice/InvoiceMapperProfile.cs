@@ -11,6 +11,8 @@ namespace CMPNatural.Application.Mapper
         {
             CreateMap<Invoice, InvoiceResponse>()
                 .ForMember(x => x.Provider, opt => opt.MapFrom(src => src.Provider))
+                .ForMember(x => x.InvoiceProduct, opt => opt.MapFrom(src => src.InvoiceProduct))
+                .ForMember(x => x.Company, opt => opt.MapFrom(src => src.Company))
                 .ReverseMap();
         }
     }

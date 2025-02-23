@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CMPNatural.infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+abe6b5309b770dd01f57d7747eed1ffc4eea6fd7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4d5cb14b4139c1df6ba16382238f8c5dc695c920")]
 [assembly: System.Reflection.AssemblyProductAttribute("CMPNatural.infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CMPNatural.infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

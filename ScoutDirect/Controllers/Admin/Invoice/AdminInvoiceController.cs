@@ -19,6 +19,7 @@ using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using MySqlX.XDevAPI;
 
 namespace CMPNatural.Api.Controllers.Admin.Invoice
 {
@@ -49,6 +50,17 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
             var result = await _mediator.Send(command);
             return Ok(result);
         }
+
+        [HttpGet("{InvoiceId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Get([FromRoute] string InvoiceId)
+        {
+            var result = await _mediator.Send(new AdminGetInvoiceCommand() { InvoiceId = InvoiceId });
+
+            return Ok(result);
+        }
+
 
 
         [HttpPost("Sent")]
@@ -101,54 +113,27 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
                 FrequencyType = e.FrequencyType,
                 OperationalAddressId = e.OperationalAddressId,
                 ServiceKind = (ServiceKind)e.ServiceKind,
-                ServicePriceId = e.ServicePriceCrmId,
+                //ServicePriceId=e.ServicePriceCrmId,
                 ServiceTypeId = (ServiceType)e.ServiceId,
                 StartDate = e.StartDate,
-                ServiceCrmId = e.ServiceCrmId,
+                //ServiceCrmId = e.ServiceCrmId,
+                ProductPriceId = e.ProductPriceId.Value,
+                ProductId = e.ProductId.Value,
                 LocationCompanyIds = e.LocationCompanyIds.IsNullOrEmpty() ? new List<long>() : e.LocationCompanyIds.Split(",").Select((e) => long.Parse(e)).ToList(),
                 qty = e.Qty
-                   }).ToList();
-            var resultPrice = request.Select(e =>
-                  new { price = _productPriceApi.GetById(e.ServiceCrmId, e.ServicePriceId).Data, product = e }
-                  ).ToList();
-
-            //var resultPrice = _productPriceApi.GetById(request.ServiceId, request.ServicePriceId).Data;
-
-            var resultContact = _contactApi.getAlllContact(company.BusinessEmail).Data.FirstOrDefault();
-            var invoiceNumber = Guid.NewGuid();
-            var customeValue = _customValueApi.getAll().Data;
-
-            var lst = resultPrice.Select(e => {
-                double amount = 0;
-                if (e.product.ServiceCrmId == "6709518969c01bbcc9341227" || e.product.ServiceCrmId == "67067863c2eb249cb0390e7e")
-                {
-                    amount = getMinimumPrice(e.product.ServiceCrmId == "6709518969c01bbcc9341227", customeValue);
-                }
-                var isproductAmount = amount > (double.Parse(e.price.amount) * e.product.qty);
-
-                return new ProductItemCommand()
-                {
-                    amount = (isproductAmount ? amount : double.Parse(e.price.amount)),
-                    currency = e.price.currency,
-                    name = _productApi.GetById(e.price.product).Data.name + " - " + e.price.name,
-                    priceId = e.price._id,
-                    productId = e.price.product,
-                    qty = (isproductAmount ? 1 : e.product.qty),
-                };
             }).ToList();
 
 
-            var resultInvoceApi = _invoiceApi.CreateInvoice(createInvoceCommand(invoiceNumber.ToString(), company, resultContact, oprAddress, lst)).Data;
+            var invoiceId = Guid.NewGuid();
 
             var result = await _mediator.Send(new CreateInvoiceCommand()
             {
                 CompanyId = rCompanyId,
-                InvoiceCrmId = invoiceNumber.ToString(),
-                InvoiceNumber = invoiceNumber,
-                InvoiceId = resultInvoceApi._id,
+                InvoiceCrmId = invoiceId.ToString(),
+                InvoiceNumber = invoiceId,
+                InvoiceId = invoiceId.ToString(),
                 Services = request,
-                Amount = lst.Sum(x => x.amount),
-
+                Amount = 0,
             });
 
 

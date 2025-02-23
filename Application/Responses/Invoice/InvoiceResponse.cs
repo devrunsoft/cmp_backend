@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CMPNatural.Core.Entities;
 
 namespace CMPNatural.Application
@@ -20,7 +21,13 @@ namespace CMPNatural.Application
         //public Guid InvoiceNumber { get; set; }
         public string InvoiceId { get; set; } = null!;
 
-        public Provider? Provider { get; set; }
+        public Provider Provider { get; set; } = null;
+        public Company Company { get; set; } = null;
+
+        public virtual ICollection<InvoiceProduct> InvoiceProduct { get; set; } = new List<InvoiceProduct>();
+
+        public virtual ICollection<BaseServiceAppointment> BaseServiceAppointment { get; set; } = new List<BaseServiceAppointment>();
+
 
         public DateTime RegisterDate { get; set; }
 

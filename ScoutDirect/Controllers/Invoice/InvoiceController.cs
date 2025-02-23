@@ -22,6 +22,7 @@ using Google.Protobuf.WellKnownTypes;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ScoutDirect.Application.Responses;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
@@ -151,82 +152,65 @@ namespace CMPNatural.Api.Controllers.Invoice
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Post([FromBody] List<ServiceAppointmentInput> r)
+        public async Task<ActionResult> Post([FromBody] List<ServiceAppointmentInput> data)
         {
             var resultShopping= (await _mediator.Send(new GetAllShoppingCardCommand()
             {
                 CompanyId = rCompanyId,
             })).Data;
 
-
             var company = (await _mediator.Send(new GetCompanyCommand()
             {
                 CompanyId = rCompanyId,
             })).Data;
 
-            var oprAddress = (await _mediator.Send(new GetAllOperationalAddressCommand()
+            var groupedData = resultShopping
+             .GroupBy(s => s.OperationalAddressId)
+                 .Select(g => new
+              {
+                  oprId = g.Key,
+                  item = g
+              })
+              .ToList();
+
+
+            foreach (var item in groupedData)
             {
-                CompanyId = rCompanyId,
-            })).Data.Where((e)=>r.Any(p=>p.OperationalAddressId==e.Id));
 
-
-            var request =  resultShopping.Select((e) => new ServiceAppointmentInput() {
-                FrequencyType = e.FrequencyType,
-                OperationalAddressId =e.OperationalAddressId,
-                ServiceKind= (ServiceKind) e.ServiceKind,
-                ServicePriceId=e.ServicePriceCrmId,
-                ServiceTypeId= (ServiceType) e.ServiceId,
-                StartDate = e.StartDate,
-                ServiceCrmId = e.ServiceCrmId,
-                LocationCompanyIds=e.LocationCompanyIds.IsNullOrEmpty()? new List<long>() : e.LocationCompanyIds.Split(",").Select((e)=> long.Parse(e)).ToList(),
-                qty = e.Qty
-            }).ToList();
-
-            var resultPrice = request.Select(e =>
-                  new { price =  _productPriceApi.GetById(e.ServiceCrmId, e.ServicePriceId).Data , product = e }
-                  ).ToList();
-
-            //var resultPrice = _productPriceApi.GetById(request.ServiceId, request.ServicePriceId).Data;
-
-            var resultContact = _contactApi.getAlllContact(rBusinessEmail).Data.FirstOrDefault();
-            var invoiceNumber = Guid.NewGuid();
-            var customeValue = _customValueApi.getAll().Data;
-
-            var lst = resultPrice.Select(e =>{
-                double amount = 0;
-                if (e.product.ServiceCrmId== "6709518969c01bbcc9341227" || e.product.ServiceCrmId == "67067863c2eb249cb0390e7e")
+                var request = resultShopping.Select((e) => new ServiceAppointmentInput()
                 {
-                    amount = getMinimumPrice(e.product.ServiceCrmId == "6709518969c01bbcc9341227", customeValue);
-                }
-                var isproductAmount = amount > (double.Parse(e.price.amount) * e.product.qty);
+                    FrequencyType = e.FrequencyType,
+                    OperationalAddressId = e.OperationalAddressId,
+                    ServiceKind = (ServiceKind)e.ServiceKind,
+                    //ServicePriceId=e.ServicePriceCrmId,
+                    ServiceTypeId = (ServiceType)e.ServiceId,
+                    StartDate = e.StartDate,
+                    //ServiceCrmId = e.ServiceCrmId,
+                    ProductPriceId = e.ProductPriceId.Value,
+                    ProductId = e.ProductId.Value,
+                    LocationCompanyIds = e.LocationCompanyIds.IsNullOrEmpty() ? new List<long>() : e.LocationCompanyIds.Split(",").Select((e) => long.Parse(e)).ToList(),
+                    qty = e.Qty
+                }).ToList();
 
-                return new ProductItemCommand()
+
+                var invoiceId = Guid.NewGuid();
+
+                 await _mediator.Send(new CreateInvoiceCommand()
                 {
-                    amount = (isproductAmount ? amount : double.Parse(e.price.amount)),
-                    currency = e.price.currency,
-                    name = _productApi.GetById(e.price.product).Data.name + " - " + e.price.name,
-                    priceId = e.price._id,
-                    productId = e.price.product,
-                    qty = (isproductAmount ? 1 : e.product.qty),
-                };
-              }).ToList();
+                    CompanyId = rCompanyId,
+                    InvoiceCrmId = invoiceId.ToString(),
+                    InvoiceNumber = invoiceId,
+                    InvoiceId = invoiceId.ToString(),
+                    Services = request,
+                    Amount = 0,
+                    OperationalAddressId = item.oprId,
+                    Address = item.item.First().Address
 
+                 });
 
-            var resultInvoceApi = _invoiceApi.CreateInvoice(createInvoceCommand(invoiceNumber.ToString(),company, resultContact, oprAddress,lst)).Data;
+            }
 
-            var result = await _mediator.Send(new CreateInvoiceCommand()
-            {
-                CompanyId = rCompanyId,
-                InvoiceCrmId = invoiceNumber.ToString(),
-                InvoiceNumber = invoiceNumber,
-                InvoiceId = resultInvoceApi._id,
-                Services = request,
-                Amount = lst.Sum(x => x.amount),
-
-            });
-
-
-            await _mediator.Send(new DeleteAllShoppingCardCommand()
+            var result = await _mediator.Send(new DeleteAllShoppingCardCommand()
             {
                 CompanyId = rCompanyId,
             });

@@ -27,7 +27,6 @@ namespace CMPNatural.Api.Controllers
         {
         }
 
-
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
@@ -69,6 +68,11 @@ namespace CMPNatural.Api.Controllers
             {
                 CompanyId = rCompanyId,
             })!;
+
+            if (resultCompany.Data == null)
+            {
+                return Ok(new NoAcess() { Data = null , Success = false });
+            }
 
             if(!((CompanyResponse)resultCompany.Data).Registered)
             {
