@@ -11,5 +11,6 @@ namespace CMPNatural.Core.Entities
 		public int Qty { get; set; }
 		public int ServiceType { get; set; }
 		public bool Enable { get; set; }
-	}
+        public virtual ICollection<LocationCompany> LocationCompany { get; set; }
+    }
 }

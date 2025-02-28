@@ -15,6 +15,8 @@ namespace CMPNatural.Core.Entities
 
         public long ProductId { get; set; }
 
+        public long? ProviderId { get; set; }
+
         public long CompanyId { get; set; }
 
         public int Status { get; set; }
@@ -26,6 +28,8 @@ namespace CMPNatural.Core.Entities
         public bool IsEmegency { get; set; }
 
         public int Qty { get; set; } = 1;
+
+        public DateTime DueDate { get; set; }
 
         public double Amount { get; set; }
 

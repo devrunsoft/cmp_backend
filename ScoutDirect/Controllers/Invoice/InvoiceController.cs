@@ -9,6 +9,7 @@ using CmpNatural.CrmManagment.Invoice;
 using CmpNatural.CrmManagment.Model;
 using CmpNatural.CrmManagment.Product;
 using CMPNatural.Api.Controllers._Base;
+using CMPNatural.Api.Service;
 using CMPNatural.Application;
 using CMPNatural.Application.Commands.Company;
 using CMPNatural.Application.Commands.Invoice;
@@ -90,11 +91,12 @@ namespace CMPNatural.Api.Controllers.Invoice
 
             var invoice = _invoiceApi.GetInvoice(resultdata.Data.InvoiceId);
 
-           var result= await _mediator.Send(new SentInvoiceCommand()
+            System.Enum.TryParse(invoice.Data.status, out InvoiceStatus invoiceStatus);
+            var result= await _mediator.Send(new SentInvoiceCommand()
             {
                 CompanyId = rCompanyId,
                 InvoiceId = resultdata.Data.Id,
-                Status = invoice.Data.status
+                Status = invoiceStatus
             });
 
             return Ok(result);
@@ -114,11 +116,12 @@ namespace CMPNatural.Api.Controllers.Invoice
 
             var invoice = _invoiceApi.GetInvoice(resultdata.Data.InvoiceId);
 
+            System.Enum.TryParse(invoice.Data.status, out InvoiceStatus invoiceStatus);
             var result = await _mediator.Send(new SentInvoiceCommand()
             {
                 CompanyId = rCompanyId,
                 InvoiceId = resultdata.Data.Id,
-                Status = invoice.Data.status
+                Status = invoiceStatus
             });
 
             return Ok(result);
@@ -142,7 +145,7 @@ namespace CMPNatural.Api.Controllers.Invoice
             {
                 CompanyId = rCompanyId,
                 InvoiceId = resultdata.Data.Id,
-                Status = ServiceStatus.sent.GetDescription()
+                Status = InvoiceStatus.Processing
             });
 
             return Ok(result);
@@ -154,66 +157,8 @@ namespace CMPNatural.Api.Controllers.Invoice
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Post([FromBody] List<ServiceAppointmentInput> data)
         {
-            var resultShopping= (await _mediator.Send(new GetAllShoppingCardCommand()
-            {
-                CompanyId = rCompanyId,
-            })).Data;
-
-            var company = (await _mediator.Send(new GetCompanyCommand()
-            {
-                CompanyId = rCompanyId,
-            })).Data;
-
-            var groupedData = resultShopping
-             .GroupBy(s => s.OperationalAddressId)
-                 .Select(g => new
-              {
-                  oprId = g.Key,
-                  item = g
-              })
-              .ToList();
-
-
-            foreach (var item in groupedData)
-            {
-
-                var request = resultShopping.Select((e) => new ServiceAppointmentInput()
-                {
-                    FrequencyType = e.FrequencyType,
-                    OperationalAddressId = e.OperationalAddressId,
-                    ServiceKind = (ServiceKind)e.ServiceKind,
-                    //ServicePriceId=e.ServicePriceCrmId,
-                    ServiceTypeId = (ServiceType)e.ServiceId,
-                    StartDate = e.StartDate,
-                    //ServiceCrmId = e.ServiceCrmId,
-                    ProductPriceId = e.ProductPriceId.Value,
-                    ProductId = e.ProductId.Value,
-                    LocationCompanyIds = e.LocationCompanyIds.IsNullOrEmpty() ? new List<long>() : e.LocationCompanyIds.Split(",").Select((e) => long.Parse(e)).ToList(),
-                    qty = e.Qty
-                }).ToList();
-
-
-                var invoiceId = Guid.NewGuid();
-
-                 await _mediator.Send(new CreateInvoiceCommand()
-                {
-                    CompanyId = rCompanyId,
-                    InvoiceCrmId = invoiceId.ToString(),
-                    InvoiceNumber = invoiceId,
-                    InvoiceId = invoiceId.ToString(),
-                    Services = request,
-                    Amount = 0,
-                    OperationalAddressId = item.oprId,
-                    Address = item.item.First().Address
-
-                 });
-
-            }
-
-            var result = await _mediator.Send(new DeleteAllShoppingCardCommand()
-            {
-                CompanyId = rCompanyId,
-            });
+            RegisterInvoiceService service = new RegisterInvoiceService(_mediator, rCompanyId);
+            var result = await service.call();
 
             return Ok(result);
         }
@@ -250,7 +195,7 @@ namespace CMPNatural.Api.Controllers.Invoice
             {
                 CompanyId = rCompanyId,
                 InvoiceId = InvoiceId,
-                Status = ServiceStatus.sent.ToString()
+                Status = InvoiceStatus.Processing
             });
 
             return Ok(resultInvoice);

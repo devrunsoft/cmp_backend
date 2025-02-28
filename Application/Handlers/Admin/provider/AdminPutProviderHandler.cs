@@ -35,6 +35,7 @@ namespace CMPNatural.Application
             entity.HealthDepartmentPermitExp = request.HealthDepartmentPermitExp;
             entity.EPAComplianceExp = request.EPAComplianceExp;
             entity.InsuranceExp = request.InsuranceExp;
+            entity.AreaLocation = request.AreaLocation;
 
 
             #region file

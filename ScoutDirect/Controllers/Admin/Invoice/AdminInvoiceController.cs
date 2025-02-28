@@ -6,11 +6,13 @@ using CmpNatural.CrmManagment.Invoice;
 using CmpNatural.CrmManagment.Model;
 using CmpNatural.CrmManagment.Product;
 using CMPNatural.Api.Controllers._Base;
+using CMPNatural.Api.Service;
 using CMPNatural.Application;
 using CMPNatural.Application.Commands.Admin.Invoice;
 using CMPNatural.Application.Commands.Company;
 using CMPNatural.Application.Commands.Invoice;
 using CMPNatural.Application.Commands.ShoppingCard;
+using CMPNatural.Application.Model;
 using CMPNatural.Application.Model.ServiceAppointment;
 using CMPNatural.Application.Responses;
 using CMPNatural.Core.Entities;
@@ -61,26 +63,72 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
             return Ok(result);
         }
 
-
-
-        [HttpPost("Sent")]
+        [HttpGet("{InvoiceId}/Provider")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Sent([FromQuery] string invoiceNumber)
+        public async Task<ActionResult> CheckInvoiceProvider([FromRoute] string InvoiceId)
         {
+            var result = await _mediator.Send(new AdminCheckInvoiceProviderCommand() { InvoiceId = InvoiceId });
+            return Ok(result);
+        }
 
-            var resultdata = await _mediator.Send(new AdminGetInvoiceNumberCommand()
+        [HttpPost("Provider")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> setInvoiceProvider([FromBody] AdminSetInvoiceProviderCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        //[HttpGet("OtherLocation/{LocationId}/Provider")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[EnableCors("AllowOrigin")]
+        //public async Task<ActionResult> CheckLocationProvider([FromRoute] long LocationId)
+        //{
+        //    var result = await _mediator.Send(new AdminCheckLocationProviderCommand() { LocationComanyId = LocationId });
+        //    return Ok(result);
+        //}
+
+        [HttpGet("OprLocation/{OperationalAddressId}/Provider")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> CheckOprLocationProvider([FromRoute] long OperationalAddressId)
+        {
+            var result = await _mediator.Send(new AdminCheckOprLocationProviderCommand() { OperationalAddressId = OperationalAddressId });
+            return Ok(result);
+        }
+
+
+        [HttpPost("OprLocation/Provider")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> setOprLocationProvider([FromBody] AdminSetOprLocationProviderCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+
+        [HttpPost("{clientId}/Sent/{invoiceNumber}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Sent([FromRoute] string invoiceNumber, [FromRoute] int clientId)
+        {
+            var rCompanyId = clientId;
+            var resultdata = await _mediator.Send(new GetInvoiceByInvoiceNumberCommand()
             {
+                CompanyId = rCompanyId,
                 invoiceNumber = invoiceNumber
             });
 
-             _invoiceApi.GetInvoice(resultdata.Data.InvoiceId);
-
-            var result = await _mediator.Send(new AdminSentInvoiceCommand()
+            var result = await _mediator.Send(new SentInvoiceCommand()
             {
+                CompanyId = rCompanyId,
                 InvoiceId = resultdata.Data.Id,
-                Status = ServiceStatus.sent.GetDescription()
+                Status = InvoiceStatus.Processing
             });
+
             return Ok(result);
         }
 
@@ -90,59 +138,21 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
         public async Task<ActionResult> Post([FromBody] List<ServiceAppointmentInput> r, [FromRoute] long clientId)
         {
             var rCompanyId = clientId;
-
-            var resultShopping = (await _mediator.Send(new GetAllShoppingCardCommand()
-            {
-                CompanyId = rCompanyId,
-            })).Data;
-
-
-            var company = (await _mediator.Send(new GetCompanyCommand()
-            {
-                CompanyId = rCompanyId,
-            })).Data;
-
-            var oprAddress = (await _mediator.Send(new GetAllOperationalAddressCommand()
-            {
-                CompanyId = rCompanyId,
-            })).Data.Where((e) => r.Any(p => p.OperationalAddressId == e.Id));
-
-
-            var request = resultShopping.Select((e) => new ServiceAppointmentInput()
-            {
-                FrequencyType = e.FrequencyType,
-                OperationalAddressId = e.OperationalAddressId,
-                ServiceKind = (ServiceKind)e.ServiceKind,
-                //ServicePriceId=e.ServicePriceCrmId,
-                ServiceTypeId = (ServiceType)e.ServiceId,
-                StartDate = e.StartDate,
-                //ServiceCrmId = e.ServiceCrmId,
-                ProductPriceId = e.ProductPriceId.Value,
-                ProductId = e.ProductId.Value,
-                LocationCompanyIds = e.LocationCompanyIds.IsNullOrEmpty() ? new List<long>() : e.LocationCompanyIds.Split(",").Select((e) => long.Parse(e)).ToList(),
-                qty = e.Qty
-            }).ToList();
-
-
-            var invoiceId = Guid.NewGuid();
-
-            var result = await _mediator.Send(new CreateInvoiceCommand()
-            {
-                CompanyId = rCompanyId,
-                InvoiceCrmId = invoiceId.ToString(),
-                InvoiceNumber = invoiceId,
-                InvoiceId = invoiceId.ToString(),
-                Services = request,
-                Amount = 0,
-            });
-
-
-            await _mediator.Send(new DeleteAllShoppingCardCommand()
-            {
-                CompanyId = rCompanyId,
-            });
-
+            RegisterInvoiceService service = new RegisterInvoiceService(_mediator, rCompanyId);
+             var result= await service.call();
             return Ok(result);
+
+        }
+
+        [HttpPut("{InvoiceId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Put([FromRoute] string InvoiceId , [FromBody] AdminUpdateInvoiceCommand command) {
+
+            command.InvoiceId = InvoiceId;
+            var result = await _mediator.Send(command);
+            return Ok(result);
+
         }
 
         [NonAction]

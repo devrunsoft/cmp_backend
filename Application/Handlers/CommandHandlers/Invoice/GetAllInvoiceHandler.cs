@@ -9,11 +9,12 @@ using CMPNatural.Core.Entities;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using CMPNatural.Application.Mapper;
 
 namespace CMPNatural.Application.Handlers
 {
 
-    public class GetAllInvoiceHandler : IRequestHandler<GetAllInvoiceCommand, CommandResponse<List<Invoice>>>
+    public class GetAllInvoiceHandler : IRequestHandler<GetAllInvoiceCommand, CommandResponse<List<InvoiceResponse>>>
     {
         private readonly IinvoiceRepository _invoiceRepository;
 
@@ -22,7 +23,7 @@ namespace CMPNatural.Application.Handlers
             _invoiceRepository = invoiceRepository;
         }
 
-        public async Task<CommandResponse<List<Invoice>>> Handle(GetAllInvoiceCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<List<InvoiceResponse>>> Handle(GetAllInvoiceCommand request, CancellationToken cancellationToken)
         {
             var entity = (await _invoiceRepository.GetAsync(p =>p.CompanyId == request.CompanyId, query => query.Include(i => i.InvoiceProduct)
           
@@ -31,7 +32,7 @@ namespace CMPNatural.Application.Handlers
             .ThenInclude(p=>p.Product)
             )).ToList();
 
-            return new Success<List<Invoice>>() { Data = entity, Message = "Successfull!" };
+            return new Success<List<InvoiceResponse>>() { Data = entity.Select((p)=> InvoiceMapper.Mapper.Map<InvoiceResponse>(p)).ToList(), Message = "Successfull!" };
 
         }
 

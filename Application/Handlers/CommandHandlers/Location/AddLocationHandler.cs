@@ -19,19 +19,22 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
     public class AddLocationHandler : IRequestHandler<AddLocationCompanyCommand, CommandResponse<object>>
     {
         private readonly ILocationCompanyRepository _locationRepository;
+        private readonly ICapacityRepository _capacityRepository;
 
-        public AddLocationHandler(ILocationCompanyRepository locationRepository)
+        public AddLocationHandler(ILocationCompanyRepository locationRepository, ICapacityRepository capacityRepository)
         {
             _locationRepository = locationRepository;
+            _capacityRepository = capacityRepository;
         }
 
         public async Task<CommandResponse<object>> Handle(AddLocationCompanyCommand request, CancellationToken cancellationToken)
         {
+            var cap =await _capacityRepository.GetByIdAsync(request.CompanyId);
 
             var entity = new LocationCompany()
             {
-                Capacity= request.Capacity,
-                Comment= request.Comment,
+                Capacity= cap.Qty,
+                Comment = request.Comment,
                 CompanyId= request.CompanyId,
                 Lat= request.Lat,
                 Long= request.Long,
@@ -40,7 +43,8 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                 PrimaryLastName= request.PrimaryLastName,
                 PrimaryPhonNumber= request.PrimaryPhonNumber,
                 Type= (int) request.Type,
-                OperationalAddressId = request.OperationalAddressId
+                OperationalAddressId = request.OperationalAddressId,
+                CapacityId = request.CapacityId
 
             };
 

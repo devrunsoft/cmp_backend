@@ -2,14 +2,39 @@
 using CMPNatural.Core.Entities;
 using CMPNatural.Core.Repositories;
 using infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+using ScoutDirect.Core.Base;
 using ScoutDirect.Core.Caching;
 using ScoutDirect.infrastructure.Repository;
+using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 
 namespace CMPNatural.infrastructure.Repository
 {
     public class ProviderReposiotry : Repository<Provider, long>, IProviderReposiotry
     {
         public ProviderReposiotry(ScoutDBContext context, Func<CacheTech, ICacheService> cacheService) : base(context, cacheService) { }
+
+        private IQueryable<Provider> GeAllQuery() => _dbContext.Provider;
+
+        public async Task<List<Provider>> GetAllSearchProviderAsync(double sLatitude, double sLongitude)
+        {
+            var cachedList = await GeAllQuery()
+             .ToListAsync();
+
+            return cachedList.Where(p =>  p.Distance(sLatitude, sLongitude) <= p.AreaLocation
+             )
+                .OrderBy(p => p.Distance(sLatitude, sLongitude))
+                .ThenByDescending(p => p.Id).ToList();
+        }
+
+
+        public async Task<List<Provider>> GetAllSearchProviderAllInvoiceAsync(List<ServiceAppointmentLocation> locations)
+        {
+            var cachedList = await GeAllQuery()
+            .ToListAsync();
+            return cachedList.Where(p => locations.Any(s => p.Distance(s.LocationCompany.Lat, s.LocationCompany.Long) <= p.AreaLocation)
+             ).ToList();
+        }
     }
 }
 

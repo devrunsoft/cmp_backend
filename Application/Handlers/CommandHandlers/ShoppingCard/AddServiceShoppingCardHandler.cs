@@ -20,20 +20,25 @@ namespace CMPNatural.Application.Handlers
         private readonly IServiceAppointmentRepository _serviceAppointmentRepository;
         private readonly IProductPriceRepository _productPriceRepository;
         private readonly IOperationalAddressRepository _operationalAddressRepository;
+        private readonly ILocationCompanyRepository _locationCompanyRepository;
 
         public AddServiceShoppingCardHandler(IShoppingCardRepository shoppingCardRepository , IServiceAppointmentRepository billingInformationRepository,
-            IProductPriceRepository productPriceRepository, IOperationalAddressRepository operationalAddressRepository)
+            IProductPriceRepository productPriceRepository, IOperationalAddressRepository operationalAddressRepository, ILocationCompanyRepository locationCompanyRepository)
         {
             _shoppingCardRepository = shoppingCardRepository;
             _serviceAppointmentRepository = billingInformationRepository;
             _productPriceRepository = productPriceRepository;
             _operationalAddressRepository = operationalAddressRepository;
+            _locationCompanyRepository = locationCompanyRepository;
         }
 
         public async Task<CommandResponse<ShoppingCard>> Handle(AddServiceShoppingCardCommand request, CancellationToken cancellationToken)
         {
             var price =(await _productPriceRepository.GetAsync(p=>p.Id == request.ProductPriceId && p.Enable!=false, query => query.Include(i => i.Product))).FirstOrDefault();
             var address = (await _operationalAddressRepository.GetAsync(p => p.Id == request.OperationalAddressId)).FirstOrDefault();
+            var locations = (await _locationCompanyRepository.GetAsync(p => request.LocationCompanyIds.Any(e=>e==p.Id),
+                p=>p.Include(p=>p.CapacityEntity))).ToList();
+
 
             var entity = new ShoppingCard()
             {
@@ -50,7 +55,7 @@ namespace CMPNatural.Application.Handlers
                 ServiceKind = (int) request.ServiceKind,
                 ServiceId = price.Product.ServiceType?? (int)ServiceType.Other,
                 LocationCompanyIds = string.Join(",", request.LocationCompanyIds),
-                Qty = request.qty,
+                Qty = locations.Sum(x=>x.CapacityEntity.Qty) ,
                 ProductPriceId = request.ProductPriceId,
                 ProductId = request.ProductId
 

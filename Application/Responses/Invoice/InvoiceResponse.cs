@@ -15,12 +15,13 @@ namespace CMPNatural.Application
         //public string ProductCrmId { get; set; }
         //public string ProductPriceCrmId { get; set; }
         public string InvoiceCrmId { get; set; } = null!;
-        public string? Status { get; set; }
+        public int Status { get; set; }
         public string? Link { get; set; }
         public double Amount { get; set; }
         //public Guid InvoiceNumber { get; set; }
         public string InvoiceId { get; set; } = null!;
-
+        public long OperationalAddressId { get; set; }
+        public string Address { get; set; } = "";
         public Provider Provider { get; set; } = null;
         public Company Company { get; set; } = null;
 
@@ -33,7 +34,8 @@ namespace CMPNatural.Application
 
         public string? InvoiceStatus {
             get {
-                return ProviderId==null ? Status : "assigned";
+
+                return ProviderId==null ? ((Core.Enums.InvoiceStatus)Status).GetDescription() : "assigned";
             }
         }
 
@@ -41,7 +43,7 @@ namespace CMPNatural.Application
         {
             get
             {
-                return Status == "paid" && ProviderId==null;
+                return Status == (int)Core.Enums.InvoiceStatus.paid && ProviderId==null;
 
             }
         }

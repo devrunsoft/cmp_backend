@@ -12,7 +12,7 @@ namespace CMPNatural.Application.Commands
 		public GetAllCapacityCommand()
 		{
 		}
-		public ServiceType ServiceType { get; set; }
+		public int ServiceType { get; set; }
 	}
 }
 

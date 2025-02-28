@@ -32,7 +32,7 @@ namespace CMPNatural.Application.Handlers
                 return new NoAcess<object>() { Message = "No Access To Delete This Service" };
             }
 
-            result.Status = (int)ServiceStatus.canceled;
+            result.Status = (int)ServiceStatus.Canceled;
             await _serviceAppointmentRepository.UpdateAsync(result);
             return new Success<object>() { Data = result, Message = "Service Deleted Successfully!" };
 

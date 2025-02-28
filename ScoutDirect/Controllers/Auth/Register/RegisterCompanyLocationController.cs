@@ -64,7 +64,8 @@ namespace CMPNatural.Api.Controllers
                 PrimaryLastName= input.PrimaryLastName,
                 PrimaryPhonNumber= input.PrimaryPhonNumber,
                 Type = input.Type,
-                OperationalAddressId = input.OperationalAddressId
+                OperationalAddressId = input.OperationalAddressId,
+                CapacityId = input.CapacityId
 
             });
 
@@ -88,7 +89,8 @@ namespace CMPNatural.Api.Controllers
                 PrimaryFirstName = input.PrimaryFirstName,
                 PrimaryLastName = input.PrimaryLastName,
                 PrimaryPhonNumber = input.PrimaryPhonNumber,
-                Type=input.Type
+                Type=input.Type,
+                CapacityId = input.CapacityId
 
             });
 

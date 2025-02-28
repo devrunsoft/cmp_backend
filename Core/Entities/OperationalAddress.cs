@@ -10,8 +10,8 @@ namespace CMPNatural.Core.Entities
         public long Id { get; set; }
         public long CompanyId { get; set; }
         public string? Name { get; set; }
-        public double? Lat { get; set; }
-        public double? Long { get; set; }
+        public double Lat { get; set; }
+        public double Long { get; set; }
         public string Address { get; set; }
 		public string CrossStreet { get; set; }
 		public string County { get; set; }

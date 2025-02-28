@@ -262,14 +262,14 @@ namespace ScoutDirect.Api
             });
 
             GlobalConfiguration.Configuration.UseMemoryStorage();
-            if (!env.IsDevelopment())
-            {
-                using (var scope = serviceProvider.CreateScope())
-            {
-                var syncService = scope.ServiceProvider.GetRequiredService<SyncByCrm>();
-                syncService.sync();
-            }
-               }
+            //if (!env.IsDevelopment())
+            //{
+            //    using (var scope = serviceProvider.CreateScope())
+            //{
+            //    var syncService = scope.ServiceProvider.GetRequiredService<SyncByCrm>();
+            //    syncService.sync();
+            //}
+            //   }
 
             //Admin_PusherService.ServerKey = Configuration.GetValue<string>("Admin_PusherService_ServerKey");
             //Customer_PusherService.ServerKey = Configuration.GetValue<string>("Customer_PusherService_ServerKey");

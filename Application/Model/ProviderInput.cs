@@ -15,6 +15,7 @@ namespace CMPNatural.Application.Model
         public string City { get; set; }
         public string Address { get; set; }
         public string County { get; set; }
+        public double AreaLocation { get; set; }
 
         public IFormFile BusinessLicense { get; set; }
         public DateTime? BusinessLicenseExp { get; set; }

@@ -25,7 +25,7 @@ namespace CMPNatural.Application.Handlers
         {
             var entity = (await _invoiceRepository.GetAsync(p=>p.CompanyId == request.CompanyId && p.Id == request.InvoiceId)).FirstOrDefault();
 
-            entity.Status = request.Status;
+            entity.Status = (int)request.Status;
 
             await _invoiceRepository.UpdateAsync(entity);
 

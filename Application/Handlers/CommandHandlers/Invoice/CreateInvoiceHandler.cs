@@ -50,7 +50,7 @@ namespace CMPNatural.Application.Handlers
                         ServiceTypeId = (int)request.ServiceTypeId,
                         ServicePriceCrmId = "",
                         ServiceCrmId = "",
-                        StartDate = request.StartDate??DateTime.Now,
+                        DueDate = request.StartDate??DateTime.Now,
                         OperationalAddressId = request.OperationalAddressId,
                         Status = (int)ServiceStatus.draft,
                         IsEmegency=false,
@@ -70,6 +70,7 @@ namespace CMPNatural.Application.Handlers
                     {
                         CompanyId = requests.CompanyId,
                         FrequencyType = request.FrequencyType,
+                        DueDate = DateTime.Now,
                         //LocationCompanyId=request.LocationCompanyId,
                         ServiceTypeId = (int)request.ServiceTypeId,
                         ServicePriceCrmId = "",
@@ -88,15 +89,13 @@ namespace CMPNatural.Application.Handlers
                     };
                     lstCustom.Add(command);
                 }
-
             }
-
 
             var entity = new Invoice()
             {
                 CompanyId = requests.CompanyId,
                 InvoiceCrmId= requests.InvoiceCrmId,
-                Status = "draft",
+                Status = (int)InvoiceStatus.draft,
                 InvoiceId = requests.InvoiceId,
                 BaseServiceAppointment = lstCustom,
                 Amount = requests.Amount,
@@ -106,9 +105,7 @@ namespace CMPNatural.Application.Handlers
                 OperationalAddressId = requests.OperationalAddressId
                 //InvoiceNumber = request.InvoiceNumber
             };
-
             var result = await _invoiceRepository.AddAsync(entity);
-
             return new Success<Invoice>() { Data = result, Message = "Successfull!" };
 
         }

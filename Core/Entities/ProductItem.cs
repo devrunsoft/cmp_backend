@@ -9,6 +9,7 @@ namespace CMPNatural.Core.Entities
     //Recurring or Onetime
     //public long Type { get; set; }
     public double Amount { get; set; }
+    public double MinimumAmount { get; set; }
     public long BillingPeriod { get; set; }
     public int NumberofPayments { get; set; }
     public double SetupFee { get; set; }
@@ -16,7 +17,6 @@ namespace CMPNatural.Core.Entities
     public string ServicePriceCrmId { get; set; }
     public bool Enable { get; set; }
     public Product Product { get; set; }
-
 
     public virtual ICollection<InvoiceProduct> InvoiceProduct { get; set; } = new List<InvoiceProduct>();
     public virtual ICollection<BaseServiceAppointment> ServiceAppointment { get; set; } = new List<BaseServiceAppointment>();

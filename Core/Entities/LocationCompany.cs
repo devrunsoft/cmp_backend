@@ -12,13 +12,16 @@ namespace CMPNatural.Core.Entities
         public string Name { get; set; }
         public double Lat { get; set; }
         public double Long { get; set; }
-        public string Capacity { get; set; }
+        public int Capacity { get; set; }
+        public long CapacityId { get; set; }
         public string Comment { get; set; }
         public string? PrimaryFirstName { get; set; }
         public string? PrimaryLastName { get; set; }
         public string? PrimaryPhonNumber { get; set; }
         public int Type { get; set; }
         public OperationalAddress OperationalAddress { get; set; }
+        public Capacity CapacityEntity { get; set; }
+        public virtual ICollection<ServiceAppointmentLocation> ServiceAppointmentLocations { get; set; } = new List<ServiceAppointmentLocation>();
 
     }
 }

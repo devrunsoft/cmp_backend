@@ -32,23 +32,23 @@ namespace CMPNatural.Api.Controllers.Admin.ProviderServiceAssignment
         }
 
 
-        [HttpPost("Assign")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Assign([FromBody] AdminPostProviderServiceAssignmentCommand command)
-        {
-            var result = await _mediator.Send(command);
-            return Ok(result);
-        }
+        //[HttpPost("Assign")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[EnableCors("AllowOrigin")]
+        //public async Task<ActionResult> Assign([FromBody] AdminPostProviderServiceAssignmentCommand command)
+        //{
+        //    var result = await _mediator.Send(command);
+        //    return Ok(result);
+        //}
 
-        [HttpPost("ChangeStatus")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> ChangeStatus([FromBody] AdminChangeStatusProviderServiceAssignmentCommand command)
-        {
-            var result = await _mediator.Send(command);
-            return Ok(result);
-        }
+        //[HttpPost("ChangeStatus")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[EnableCors("AllowOrigin")]
+        //public async Task<ActionResult> ChangeStatus([FromBody] AdminChangeStatusProviderServiceAssignmentCommand command)
+        //{
+        //    var result = await _mediator.Send(command);
+        //    return Ok(result);
+        //}
 
     }
 }

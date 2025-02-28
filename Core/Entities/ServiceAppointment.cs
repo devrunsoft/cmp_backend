@@ -5,7 +5,7 @@ namespace CMPNatural.Core.Entities
     {
 		public string FrequencyType { get; set; }
 
-		public DateTime StartDate { get; set; }
+		//public DateTime StartDate { get; set; }
 	}
 }
 

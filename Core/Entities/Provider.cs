@@ -9,6 +9,7 @@ namespace CMPNatural.Core.Entities
         public int Status { get; set; }
         public double Lat { get; set; }
         public double Long { get; set; }
+        public double AreaLocation { get; set; }
         public string City { get; set; } = "";
         public string Address { get; set; } = "";
         public string County { get; set; } = "";

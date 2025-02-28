@@ -108,6 +108,9 @@ namespace infrastructure.Data
             modelBuilder.Entity<LocationCompany>(entity =>
             {
                 entity.ToTable("LocationCompany");
+                entity.HasOne(d => d.CapacityEntity)
+                .WithMany(p => p.LocationCompany)
+                .HasForeignKey(d => d.CapacityId);
             });
 
             modelBuilder.Entity<DocumentSubmission>(entity =>
@@ -188,6 +191,11 @@ namespace infrastructure.Data
             modelBuilder.Entity<ServiceAppointmentLocation>(entity =>
             {
                 entity.ToTable("ServiceAppointmentLocation");
+
+                entity.HasOne(d => d.LocationCompany)
+                .WithMany(p => p.ServiceAppointmentLocations)
+                .HasForeignKey(d => d.LocationCompanyId);
+
             });
 
 

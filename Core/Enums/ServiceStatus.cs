@@ -10,23 +10,17 @@ namespace CMPNatural.Core.Enums
         [Description("draft")]
         draft = 1,
 
-        [Description("sent")]
-        sent = 2,
+        [Description("ShouldPay")]
+        ShouldPay = 2,
 
-        [Description("payment_processing")]
-        payment_processing = 3,
+        [Description("Proccessing")]
+        Proccessing = 3,
 
-        [Description("paid")]
-        paid = 4,
+        [Description("Complete")]
+        Complete = 4,
 
-        [Description("partially_paid")]
-        partially_paid = 5,
-
-        [Description("canceled")]
-        canceled = 6,
-
-        //[Description("assigned")]
-        //assigned = 7,
+        [Description("Canceled")]
+        Canceled = 5,
 
     }
 }

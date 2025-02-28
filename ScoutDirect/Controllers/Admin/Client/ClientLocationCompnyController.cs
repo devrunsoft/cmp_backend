@@ -1,4 +1,5 @@
 ﻿using System;
+using CMPNatural.Application;
 using CMPNatural.Application.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
@@ -38,6 +39,19 @@ namespace CMPNatural.Api.Controllers.Admin.Client
             return Ok(result);
         }
 
+        [HttpGet("OperationalAddress/OprAddress/{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> OprAddress([FromRoute] long Id)
+        {
+            var result = await _mediator.Send(new GetByIdServiceOperationalAddressCommand()
+            {
+                CompanyId = rCompanyId,
+                Id = Id
+            });
+            return Ok(result);
+        }
+
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -56,7 +70,8 @@ namespace CMPNatural.Api.Controllers.Admin.Client
                 PrimaryLastName = input.PrimaryLastName,
                 PrimaryPhonNumber = input.PrimaryPhonNumber,
                 Type = input.Type,
-                OperationalAddressId = input.OperationalAddressId
+                OperationalAddressId = input.OperationalAddressId,
+                CapacityId = input.CapacityId
 
             });
 
@@ -80,8 +95,8 @@ namespace CMPNatural.Api.Controllers.Admin.Client
                 PrimaryFirstName = input.PrimaryFirstName,
                 PrimaryLastName = input.PrimaryLastName,
                 PrimaryPhonNumber = input.PrimaryPhonNumber,
-                Type = input.Type
-
+                Type = input.Type,
+                CapacityId = input.CapacityId
             });
 
             return Ok(result);

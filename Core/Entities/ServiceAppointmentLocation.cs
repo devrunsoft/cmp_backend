@@ -10,7 +10,7 @@ namespace CMPNatural.Core.Entities
         public long LocationCompanyId { get; set; }
 
         public BaseServiceAppointment ServiceAppointment { get; set; }
+        public LocationCompany LocationCompany { get; set; }
 
     }
 }
-

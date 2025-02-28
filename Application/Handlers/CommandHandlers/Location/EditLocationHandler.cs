@@ -22,15 +22,18 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
     public class EditLocationHandler : IRequestHandler<EditLocationCompanyCommand, CommandResponse<object>>
     {
         private readonly ILocationCompanyRepository _locationRepository;
+        private readonly ICapacityRepository _capacityRepository;
 
-        public EditLocationHandler(ILocationCompanyRepository locationRepository)
+        public EditLocationHandler(ILocationCompanyRepository locationRepository, ICapacityRepository capacityRepository)
         {
             _locationRepository = locationRepository;
+            _capacityRepository = capacityRepository;
         }
 
         public async Task<CommandResponse<object>> Handle(EditLocationCompanyCommand request, CancellationToken cancellationToken)
         {
 
+            var cap = await _capacityRepository.GetByIdAsync(request.CompanyId);
             var entity = await _locationRepository.GetByIdAsync(request.Id);
 
             if (entity.CompanyId != request.CompanyId)
@@ -38,7 +41,7 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                 return new NoAcess() { Message = "No Access to Edit!" };
             }
 
-            entity.Capacity = request.Capacity;
+            entity.Capacity = cap.Qty;
             entity.Comment = request.Comment;
             entity.CompanyId = request.CompanyId;
             entity.Lat = request.Lat;
@@ -48,6 +51,7 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
             entity.PrimaryLastName = request.PrimaryLastName;
             entity.PrimaryPhonNumber = request.PrimaryPhonNumber;
             entity.Type = (int)request.Type;
+            entity.CapacityId = request.CapacityId;
 
             await _locationRepository.UpdateAsync(entity);
 

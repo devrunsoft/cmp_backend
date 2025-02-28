@@ -12,6 +12,7 @@ namespace CMPNatural.Application.Commands
         public double Lat { get; set; }
         public double Long { get; set; }
         public string Capacity { get; set; }
+        public long CapacityId { get; set; }
         public string Comment { get; set; }
         public string PrimaryFirstName { get; set; }
         public string PrimaryLastName { get; set; }

@@ -9,10 +9,6 @@ namespace CMPNatural.Application.Model.ServiceAppointment
 
         public ServiceType ServiceTypeId { get; set; } = ServiceType.Cooking_Oil_Collection;
 
-        //public string ServicePriceId { get; set; }
-
-        //public string ServiceCrmId { get; set; } = null!;
-
         public long ProductPriceId { get; set; }
 
         public long ProductId { get; set; }
@@ -28,7 +24,6 @@ namespace CMPNatural.Application.Model.ServiceAppointment
         public ServiceKind ServiceKind { get; set; } = ServiceKind.Custom;
 
         public int qty { get; set; } = 1;
-
     }
 }
 

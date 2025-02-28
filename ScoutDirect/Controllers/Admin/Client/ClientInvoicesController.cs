@@ -84,12 +84,12 @@ namespace CMPNatural.Api.Controllers.Admin.Client
             });
 
             var invoice = _invoiceApi.GetInvoice(resultdata.Data.InvoiceId);
-
+            System.Enum.TryParse(invoice.Data.status, out InvoiceStatus invoiceStatus);
             var result = await _mediator.Send(new SentInvoiceCommand()
             {
                 CompanyId = rCompanyId,
                 InvoiceId = resultdata.Data.Id,
-                Status = invoice.Data.status
+                Status = invoiceStatus
             });
 
             return Ok(result);
@@ -113,16 +113,16 @@ namespace CMPNatural.Api.Controllers.Admin.Client
             {
                 CompanyId = rCompanyId,
                 InvoiceId = resultdata.Data.Id,
-                Status = invoice.Data.status
+                //Status = invoice.Data.status
             });
 
             return Ok(result);
         }
 
-        [HttpPost("Sent")]
+        [HttpPost("Sent/{invoiceNumber}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Sent([FromQuery] string invoiceNumber)
+        public async Task<ActionResult> Sent([FromRoute] string invoiceNumber)
         {
 
             var resultdata = await _mediator.Send(new GetInvoiceByInvoiceNumberCommand()
@@ -131,13 +131,11 @@ namespace CMPNatural.Api.Controllers.Admin.Client
                 invoiceNumber = invoiceNumber
             });
 
-            var invoice = _invoiceApi.GetInvoice(resultdata.Data.InvoiceId);
-
             var result = await _mediator.Send(new SentInvoiceCommand()
             {
                 CompanyId = rCompanyId,
                 InvoiceId = resultdata.Data.Id,
-                Status = ServiceStatus.sent.GetDescription()
+                Status = InvoiceStatus.Processing
             });
 
             return Ok(result);

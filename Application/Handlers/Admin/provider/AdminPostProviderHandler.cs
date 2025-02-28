@@ -41,6 +41,7 @@ namespace CMPNatural.Application
                 HealthDepartmentPermitExp = request.HealthDepartmentPermitExp,
                 EPAComplianceExp = request.EPAComplianceExp,
                 InsuranceExp = request.InsuranceExp,
+                AreaLocation = request.AreaLocation
 
             };
             var result = await _providerReposiotry.AddAsync(entity);

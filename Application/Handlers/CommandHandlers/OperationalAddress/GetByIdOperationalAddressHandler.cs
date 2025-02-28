@@ -5,6 +5,7 @@ using ScoutDirect.Application.Responses;
 using CMPNatural.Core.Entities;
 using CMPNatural.Core.Repositories;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace CMPNatural.Application.Handlers
 {
@@ -20,7 +21,8 @@ namespace CMPNatural.Application.Handlers
         public async Task<CommandResponse<OperationalAddress>> Handle(GetByIdServiceOperationalAddressCommand request, CancellationToken cancellationToken)
         {
 
-            OperationalAddress result = (await _operationalAddressRepository.GetAsync(p => p.CompanyId == request.CompanyId && p.Id==request.Id)).FirstOrDefault();
+            OperationalAddress result = (await _operationalAddressRepository.GetAsync(p => p.CompanyId == request.CompanyId && p.Id==request.Id,
+                query=>query.Include(p=>p.LocationCompany))).FirstOrDefault();
 
             return new Success<OperationalAddress>() { Data = result };
         }

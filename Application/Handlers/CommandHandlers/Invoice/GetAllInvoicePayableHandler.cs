@@ -23,7 +23,7 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<List<Invoice>>> Handle(GetAllInvoicePayableCommand request, CancellationToken cancellationToken)
         {
-            var entity = (await _invoiceRepository.GetAsync(p => p.CompanyId == request.CompanyId&& p.Status == ServiceStatus.sent.GetDescription())).ToList();
+            var entity = (await _invoiceRepository.GetAsync(p => p.CompanyId == request.CompanyId&& p.Status == (int)InvoiceStatus.SentForPay)).ToList();
 
             return new Success<List<Invoice>>() { Data = entity, Message = "Successfull!" };
 
