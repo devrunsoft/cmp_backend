@@ -60,7 +60,7 @@ namespace CMPNatural.Api.Controllers.Admin.Auth
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
                 expires: DateTime.Now.AddDays(30),
-                claims: get_claims(data.PersonId , data.Email),
+                claims: get_claims(data.PersonId , data.Email, data.Role, data.Id),
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );
 
@@ -73,9 +73,11 @@ namespace CMPNatural.Api.Controllers.Admin.Auth
                  });
         }
 
-        private Claim[] get_claims(Guid PersonId, string Email)
+        private Claim[] get_claims(Guid PersonId, string Email,string Role , long AdminId)
         {
-            List<Claim> claims = new List<Claim>() { new Claim("isAdmin", "true"), new Claim("PersonId", PersonId.ToString()), new Claim("Email", Email) };
+            List<Claim> claims = new List<Claim>() { new Claim("isAdmin", "true"),
+                new Claim(ClaimTypes.NameIdentifier, AdminId.ToString()) ,
+                new Claim(ClaimTypes.Role, Role), new Claim("PersonId", PersonId.ToString()), new Claim("Email", Email) };
 
 
             return claims.ToArray();

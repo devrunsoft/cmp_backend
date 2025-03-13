@@ -17,8 +17,8 @@ namespace CMPNatural.Core.Entities
 
             var sCoord = new GeoCoordinate(sLatitude, sLongitude);
             var eCoord = new GeoCoordinate((double)Lat, (double)Long);
-
-            return sCoord.GetDistanceTo(eCoord);
+            var dis = sCoord.GetDistanceTo(eCoord);
+            return dis;
         }
     }
 }

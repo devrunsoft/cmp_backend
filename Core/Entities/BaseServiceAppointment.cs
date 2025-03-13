@@ -33,11 +33,11 @@ namespace CMPNatural.Core.Entities
 
         public double Amount { get; set; }
 
-        public Invoice Invoice { get; set; }
+        public virtual Invoice Invoice { get; set; }
 
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
 
-        public ProductPrice ProductPrice { get; set; }
+        public virtual ProductPrice ProductPrice { get; set; }
 
         public virtual ICollection<ServiceAppointmentLocation> ServiceAppointmentLocations { get; set; } = new List<ServiceAppointmentLocation>();
 

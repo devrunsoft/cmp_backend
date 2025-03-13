@@ -21,6 +21,8 @@ using CMPNatural.Application.Handlers;
 using CmpNatural.CrmManagment.Model;
 using CMPNatural.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using System.Text.Json.Serialization;
 
 namespace ScoutDirect.Api
 {
@@ -72,13 +74,20 @@ namespace ScoutDirect.Api
                     });
             });
 
-            services.AddSignalR().AddJsonProtocol(options =>
-            {
-                options.PayloadSerializerOptions.PropertyNamingPolicy = null;
-            });
 
-            services.AddControllers().AddNewtonsoftJson(x =>
+            //services.AddSignalR().AddJsonProtocol(options =>
+            //{
+            //    options.PayloadSerializerOptions.PropertyNamingPolicy = null;
+            //});
+
+            services.AddControllers()
+                .AddJsonOptions(x =>
+                {
+                    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+                })
+                .AddNewtonsoftJson(x =>
             {
+              
                 x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 x.UseMemberCasing();
             });

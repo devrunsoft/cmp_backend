@@ -12,7 +12,7 @@ namespace CMPNatural.Core.Entities
         public long CompanyId { get; set; }
         public int Status { get; set; }
         public DateTime AssignTime { get; set; }
-        public Invoice Invoice { get; set; }
-        public Company Company { get; set; }
+        public virtual Invoice Invoice { get; set; }
+        public virtual Company Company { get; set; }
     }
 }

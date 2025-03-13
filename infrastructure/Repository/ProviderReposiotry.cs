@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
 using CMPNatural.Core.Entities;
 using CMPNatural.Core.Repositories;
 using infrastructure.Data;
@@ -6,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using ScoutDirect.Core.Base;
 using ScoutDirect.Core.Caching;
 using ScoutDirect.infrastructure.Repository;
-using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 
 namespace CMPNatural.infrastructure.Repository
 {
@@ -14,11 +15,11 @@ namespace CMPNatural.infrastructure.Repository
     {
         public ProviderReposiotry(ScoutDBContext context, Func<CacheTech, ICacheService> cacheService) : base(context, cacheService) { }
 
-        private IQueryable<Provider> GeAllQuery() => _dbContext.Provider;
+        private IQueryable<Provider> GeAllQuery() => _dbContext.Provider.Include(p=>p.ProviderService);
 
-        public async Task<List<Provider>> GetAllSearchProviderAsync(double sLatitude, double sLongitude)
+        public async Task<List<Provider>> GetAllSearchProviderAsync(double sLatitude, double sLongitude, Expression<Func<Provider, bool>> expression)
         {
-            var cachedList = await GeAllQuery()
+            var cachedList = await GeAllQuery().Where(expression)
              .ToListAsync();
 
             return cachedList.Where(p =>  p.Distance(sLatitude, sLongitude) <= p.AreaLocation
@@ -32,7 +33,10 @@ namespace CMPNatural.infrastructure.Repository
         {
             var cachedList = await GeAllQuery()
             .ToListAsync();
-            return cachedList.Where(p => locations.Any(s => p.Distance(s.LocationCompany.Lat, s.LocationCompany.Long) <= p.AreaLocation)
+            return cachedList
+               .Where(p =>
+                  locations.Any(s => p.Distance(s.LocationCompany.Lat, s.LocationCompany.Long) <= p.AreaLocation) &&
+                  locations.All(loc => p.ProviderService.Any(service => service.ProductId == loc.ServiceAppointment.ProductId)) // Ensure all exist
              ).ToList();
         }
     }

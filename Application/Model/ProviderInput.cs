@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CMPNatural.Core.Enums;
 using Microsoft.AspNetCore.Http;
 
@@ -8,7 +9,7 @@ namespace CMPNatural.Application.Model
 	{
         public string Name { get; set; } = "";
         public double Rating { get; set; }
-        public ProviderStatus Status { get; set; }
+        public ProviderStatus Status { get; set; } = ProviderStatus.Pending;
 
         public double Lat { get; set; }
         public double Long { get; set; }
@@ -16,6 +17,8 @@ namespace CMPNatural.Application.Model
         public string Address { get; set; }
         public string County { get; set; }
         public double AreaLocation { get; set; }
+
+        public List<int> ProductIds { get; set; }
 
         public IFormFile BusinessLicense { get; set; }
         public DateTime? BusinessLicenseExp { get; set; }

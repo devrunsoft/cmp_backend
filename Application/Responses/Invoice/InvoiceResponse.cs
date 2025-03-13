@@ -22,8 +22,8 @@ namespace CMPNatural.Application
         public string InvoiceId { get; set; } = null!;
         public long OperationalAddressId { get; set; }
         public string Address { get; set; } = "";
-        public Provider Provider { get; set; } = null;
-        public Company Company { get; set; } = null;
+        public virtual Provider Provider { get; set; } = null;
+        public virtual Company Company { get; set; } = null;
 
         public virtual ICollection<InvoiceProduct> InvoiceProduct { get; set; } = new List<InvoiceProduct>();
 

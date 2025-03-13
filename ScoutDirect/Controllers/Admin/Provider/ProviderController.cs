@@ -70,7 +70,8 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
                 InsuranceExp = input.InsuranceExp,
                 WasteHaulerPermit = input.WasteHaulerPermit,
                 BaseVirtualPath = wwwPath,
-                AreaLocation = input.AreaLocation
+                AreaLocation = input.AreaLocation,
+                ProductIds = input.ProductIds
             });
 
             return Ok(result);
@@ -102,7 +103,8 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
                 InsuranceExp = input.InsuranceExp,
                 WasteHaulerPermit = input.WasteHaulerPermit,
                 BaseVirtualPath = wwwPath,
-                AreaLocation = input.AreaLocation
+                AreaLocation = input.AreaLocation,
+                ProductIds = input.ProductIds
             });
 
             return Ok(result);

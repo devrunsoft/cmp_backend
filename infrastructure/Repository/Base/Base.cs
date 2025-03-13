@@ -131,7 +131,12 @@ namespace ScoutDirect.infrastructure.Repository
 
         public async Task<PagesQueryResponse<T>> GetBasePagedAsync(PagedQueryRequest pagingParam, Expression<Func<T, bool>> expression, Func<IQueryable<T>, IQueryable<T>> includeFunc = null)
         {
-            var query = _dbContext.Set<T>().Where(expression).AsQueryable();
+            IQueryable<T> query = _dbContext.Set<T>();
+
+            if (expression != null)
+            {
+                query = query.Where(expression);
+            }
 
             if (includeFunc != null)
             {

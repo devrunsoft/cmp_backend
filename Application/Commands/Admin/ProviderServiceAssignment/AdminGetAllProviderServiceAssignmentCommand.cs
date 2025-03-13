@@ -8,13 +8,13 @@ using ScoutDirect.Core.Base;
 
 namespace CMPNatural.Application
 {
-	public class AdminGetAllProviderServiceAssignmentCommand : PagedQueryRequest, IRequest<CommandResponse<PagesQueryResponse<ProviderServiceAssignmentResponse>>>
+	public class AdminGetAllProviderServiceAssignmentCommand : PagedQueryRequest, IRequest<CommandResponse<PagesQueryResponse<BaseServiceAppointmentResponse>>>
     {
 		public AdminGetAllProviderServiceAssignmentCommand()
 		{
 		}
 
-		public int? providerId { get; set; }
+		public long? providerId { get; set; }
 	}
 }
 

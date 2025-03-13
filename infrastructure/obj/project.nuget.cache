@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "Z6vsZXARRdPARibCSF2qR5LFy7CfEN4ETbvRQgA+hVKJIlYXlNrbVKuBKYVyZKdGn9LSaP11rhEtGGWmb0C67g==",
+  "dgSpecHash": "adw+xD4Fg4M=",
   "success": true,
   "projectFilePath": "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/CMPNatural.infrastructure.csproj",
   "expectedPackageFiles": [
     "/Users/morteza/.nuget/packages/automapper/11.0.1/automapper.11.0.1.nupkg.sha512",
     "/Users/morteza/.nuget/packages/bouncycastle.cryptography/2.3.1/bouncycastle.cryptography.2.3.1.nupkg.sha512",
+    "/Users/morteza/.nuget/packages/castle.core/5.1.1/castle.core.5.1.1.nupkg.sha512",
     "/Users/morteza/.nuget/packages/fluentvalidation/10.4.0/fluentvalidation.10.4.0.nupkg.sha512",
     "/Users/morteza/.nuget/packages/geocoordinate.netcore/1.0.0.1/geocoordinate.netcore.1.0.0.1.nupkg.sha512",
     "/Users/morteza/.nuget/packages/google.protobuf/3.26.1/google.protobuf.3.26.1.nupkg.sha512",
@@ -26,6 +27,7 @@
     "/Users/morteza/.nuget/packages/microsoft.entityframeworkcore/8.0.7/microsoft.entityframeworkcore.8.0.7.nupkg.sha512",
     "/Users/morteza/.nuget/packages/microsoft.entityframeworkcore.abstractions/8.0.7/microsoft.entityframeworkcore.abstractions.8.0.7.nupkg.sha512",
     "/Users/morteza/.nuget/packages/microsoft.entityframeworkcore.analyzers/8.0.7/microsoft.entityframeworkcore.analyzers.8.0.7.nupkg.sha512",
+    "/Users/morteza/.nuget/packages/microsoft.entityframeworkcore.proxies/8.0.7/microsoft.entityframeworkcore.proxies.8.0.7.nupkg.sha512",
     "/Users/morteza/.nuget/packages/microsoft.entityframeworkcore.relational/8.0.5/microsoft.entityframeworkcore.relational.8.0.5.nupkg.sha512",
     "/Users/morteza/.nuget/packages/microsoft.extensions.caching.abstractions/8.0.0/microsoft.extensions.caching.abstractions.8.0.0.nupkg.sha512",
     "/Users/morteza/.nuget/packages/microsoft.extensions.caching.memory/8.0.0/microsoft.extensions.caching.memory.8.0.0.nupkg.sha512",

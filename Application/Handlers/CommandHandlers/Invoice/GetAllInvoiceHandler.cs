@@ -25,11 +25,11 @@ namespace CMPNatural.Application.Handlers
 
         public async Task<CommandResponse<List<InvoiceResponse>>> Handle(GetAllInvoiceCommand request, CancellationToken cancellationToken)
         {
-            var entity = (await _invoiceRepository.GetAsync(p =>p.CompanyId == request.CompanyId, query => query.Include(i => i.InvoiceProduct)
-          
+            var entity = (await _invoiceRepository.GetAsync(p =>p.CompanyId == request.CompanyId, query => query
             .Include(p=>p.BaseServiceAppointment)
-            .ThenInclude(p=>p.ProductPrice)
-            .ThenInclude(p=>p.Product)
+            //.ThenInclude(p=>p.ProductPrice)
+            //.Include(p => p.BaseServiceAppointment)
+            //.ThenInclude(p => p.Product)
             )).ToList();
 
             return new Success<List<InvoiceResponse>>() { Data = entity.Select((p)=> InvoiceMapper.Mapper.Map<InvoiceResponse>(p)).ToList(), Message = "Successfull!" };

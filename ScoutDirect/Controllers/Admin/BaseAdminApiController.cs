@@ -10,17 +10,15 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace CMPNatural.Api.Controllers.Admin
 {
-    [Authorize]
+    [Authorize(Roles = "SuperAdmin,LimitedAdmin")]
     [ApiController]
     [Route("api/admin/[controller]")]
     public class BaseAdminApiController : Controller
     {
         protected readonly IMediator _mediator;
-        
         public BaseAdminApiController(IMediator mediator)
         {
             _mediator = mediator;
-
         }
 
         public override void OnActionExecuting(ActionExecutingContext context)
@@ -43,6 +41,7 @@ namespace CMPNatural.Api.Controllers.Admin
         }
 
         protected Guid PersonId => Guid.Parse(Request.HttpContext.User.FindFirstValue("PersonId"));
+        protected long AdminId => long.Parse(Request.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
         protected long Email => long.Parse(Request.HttpContext.User.FindFirstValue("Email"));
 
     }

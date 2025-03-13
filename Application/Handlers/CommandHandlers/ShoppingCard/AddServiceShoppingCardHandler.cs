@@ -34,11 +34,17 @@ namespace CMPNatural.Application.Handlers
 
         public async Task<CommandResponse<ShoppingCard>> Handle(AddServiceShoppingCardCommand request, CancellationToken cancellationToken)
         {
+            int Qty = 1;
+
             var price =(await _productPriceRepository.GetAsync(p=>p.Id == request.ProductPriceId && p.Enable!=false, query => query.Include(i => i.Product))).FirstOrDefault();
             var address = (await _operationalAddressRepository.GetAsync(p => p.Id == request.OperationalAddressId)).FirstOrDefault();
-            var locations = (await _locationCompanyRepository.GetAsync(p => request.LocationCompanyIds.Any(e=>e==p.Id),
-                p=>p.Include(p=>p.CapacityEntity))).ToList();
 
+
+            if (price.Product.ServiceType == (int)ServiceType.Cooking_Oil_Collection || price.Product.ServiceType == (int)ServiceType.Grease_Trap_Management) {
+                var locations = (await _locationCompanyRepository.GetAsync(p => request.LocationCompanyIds.Any(e => e == p.Id),
+                    p => p.Include(p => p.CapacityEntity))).ToList();
+                Qty = locations.Sum(x => x.CapacityEntity.Qty);
+            }
 
             var entity = new ShoppingCard()
             {
@@ -55,7 +61,7 @@ namespace CMPNatural.Application.Handlers
                 ServiceKind = (int) request.ServiceKind,
                 ServiceId = price.Product.ServiceType?? (int)ServiceType.Other,
                 LocationCompanyIds = string.Join(",", request.LocationCompanyIds),
-                Qty = locations.Sum(x=>x.CapacityEntity.Qty) ,
+                Qty = Qty,
                 ProductPriceId = request.ProductPriceId,
                 ProductId = request.ProductId
 

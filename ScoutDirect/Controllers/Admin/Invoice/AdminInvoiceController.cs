@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using CmpNatural.CrmManagment.Api.CustomValue;
 using CmpNatural.CrmManagment.Command;
 using CmpNatural.CrmManagment.Contact;
@@ -18,6 +19,7 @@ using CMPNatural.Application.Responses;
 using CMPNatural.Core.Entities;
 using CMPNatural.Core.Enums;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -42,6 +44,17 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
             _productApi = productApi;
             _contactApi = contactApi;
             _customValueApi = customValueApi;
+        }
+
+
+        [HttpGet("report")]
+        [MenuAuthorize(MenuEnum.Home)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> GetReport()
+        {
+            var result = await _mediator.Send(new AdminGetReportCommand() { });
+            return Ok(result);
         }
 
         [HttpGet]
@@ -90,12 +103,14 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
         //    return Ok(result);
         //}
 
-        [HttpGet("OprLocation/{OperationalAddressId}/Provider")]
+        [HttpGet("OprLocation/{OperationalAddressId}/{ProductId}/Provider")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> CheckOprLocationProvider([FromRoute] long OperationalAddressId)
+        public async Task<ActionResult> CheckOprLocationProvider([FromRoute] long OperationalAddressId , [FromRoute] long ProductId)
         {
-            var result = await _mediator.Send(new AdminCheckOprLocationProviderCommand() { OperationalAddressId = OperationalAddressId });
+            var result = await _mediator.Send(new AdminCheckOprLocationProviderCommand() {
+                OperationalAddressId = OperationalAddressId,
+                ProductId = ProductId });
             return Ok(result);
         }
 

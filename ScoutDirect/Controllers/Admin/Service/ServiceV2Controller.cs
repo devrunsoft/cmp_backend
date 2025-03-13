@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CMPNatural.Application;
+using CMPNatural.Application.Commands;
 using CMPNatural.Application.Commands.Service;
+using CMPNatural.Application.Model;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -28,6 +30,44 @@ namespace CMPNatural.Api.Controllers.Admin.Service
 
             return Ok(result);
         }
+
+
+        [HttpPost("Product")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Post([FromBody] ProductInput input)
+        {
+            var result = await _mediator.Send(new AdminAddProductCommand(input));
+            return Ok(result);
+        }
+
+        [HttpPut("Product/{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Put([FromRoute] long Id,[FromBody] ProductInput input)
+        {
+            var result = await _mediator.Send(new AdminUpdateProductCommand(input, Id));
+            return Ok(result);
+        }
+
+        [HttpPost("ProductPrice/{productId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> PostPrice([FromRoute] long productId, [FromBody] ProductPriceInput input)
+        {
+            var result = await _mediator.Send(new AdminAddProductPriceCommand(input, productId));
+            return Ok(result);
+        }
+
+        [HttpPut("ProductPrice/{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> PutPrice([FromRoute] long Id, [FromBody] ProductPriceInput input)
+        {
+            var result = await _mediator.Send(new AdminUpdateProductPriceCommand(input, Id));
+            return Ok(result);
+        }
+
 
         [HttpGet("GetPaging")]
         [ProducesResponseType(StatusCodes.Status200OK)]

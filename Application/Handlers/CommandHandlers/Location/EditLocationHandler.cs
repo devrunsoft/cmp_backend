@@ -33,7 +33,7 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
         public async Task<CommandResponse<object>> Handle(EditLocationCompanyCommand request, CancellationToken cancellationToken)
         {
 
-            var cap = await _capacityRepository.GetByIdAsync(request.CompanyId);
+            var cap = await _capacityRepository.GetByIdAsync(request.CapacityId);
             var entity = await _locationRepository.GetByIdAsync(request.Id);
 
             if (entity.CompanyId != request.CompanyId)

@@ -1,0 +1,70 @@
+﻿using System;
+using CMPNatural.Application.Commands.Invoice;
+using CMPNatural.Core.Repositories;
+using MediatR;
+using ScoutDirect.Application.Responses;
+using System.Threading;
+using System.Threading.Tasks;
+using CMPNatural.Core.Entities;
+using System.Linq;
+using CMPNatural.Application.Responses.Report;
+using CMPNatural.Core.Enums;
+
+namespace CMPNatural.Application.Handlers
+{
+
+    public class AdminGetReportHandler : IRequestHandler<AdminGetReportCommand, CommandResponse<ReportResponse>>
+    {
+        private readonly IinvoiceRepository _invoiceRepository;
+
+        public AdminGetReportHandler(IinvoiceRepository invoiceRepository)
+        {
+            _invoiceRepository = invoiceRepository;
+        }
+
+        public async Task<CommandResponse<ReportResponse>> Handle(AdminGetReportCommand request, CancellationToken cancellationToken)
+        {
+            var entity = (await _invoiceRepository.GetAllAsync());
+            DateTime lastMonthStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(-1);
+            DateTime lastMonthEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddDays(-1);
+
+              var AllInvoiceAmount=  entity.Sum(x => x.Amount);
+            var roundedAllInvoiceAmount = AllInvoiceAmount.ToString("#,0.00");
+
+            var CompleteInvoiceAmount = entity.Where(x => x.Status == (int)InvoiceStatus.Complete).Sum(x => x.Amount);
+            var roundedCompleteInvoiceAmount = CompleteInvoiceAmount.ToString("#,0.00");
+
+            var ActiveInvoiceAmount = entity.Where(x => x.Status != (int)InvoiceStatus.Complete).Sum(x => x.Amount);
+            var roundedActiveInvoiceAmount = ActiveInvoiceAmount.ToString("#,0.00");
+
+            var data = new ReportResponse()
+            {
+                AllInvoiceAmount = roundedAllInvoiceAmount,
+                CompleteInvoiceAmount = roundedCompleteInvoiceAmount,
+                ActiveInvoiceAmount = roundedActiveInvoiceAmount,
+                //
+                ThisMountInvoiceAmount = new MounthReportEntity() {
+                    Amount = Math.Round(entity
+                .Where(x => x.RegisterDate.Year == DateTime.Now.Year && x.RegisterDate.Month == DateTime.Now.Month)
+                .Sum(x => x.Amount), 3) ,
+                  Date = DateTime.Now,
+                   CurrentMount = true
+                } ,
+                //
+                LastMountInvoiceAmount = new MounthReportEntity() {
+                    Amount =
+                     Math.Round(entity
+                .Where(x => x.RegisterDate >= lastMonthStart && x.RegisterDate <= lastMonthEnd)
+                .Sum(x => x.Amount), 3),
+                  Date = lastMonthStart,
+                   CurrentMount = false
+                } 
+              };
+
+            return new Success<ReportResponse>() { Data = data, Message = "Successfull!" };
+
+        }
+
+    }
+}
+

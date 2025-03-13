@@ -50,6 +50,8 @@
     <None Remove="Controllers\Client\" />
     <None Remove="Controllers\Capacity\" />
     <None Remove="Service\" />
+    <None Remove="Controllers\Admin\Admin\" />
+    <None Remove="Attribute\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FileContent\" />
@@ -76,6 +78,8 @@
     <Folder Include="Controllers\Client\" />
     <Folder Include="Controllers\Capacity\" />
     <Folder Include="Service\" />
+    <Folder Include="Controllers\Admin\Admin\" />
+    <Folder Include="Attribute\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\infrastructure\CMPNatural.infrastructure.csproj">

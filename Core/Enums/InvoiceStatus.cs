@@ -37,6 +37,15 @@ namespace CMPNatural.Core.Enums
         [Description("ProcessingPartialProvider")]
         ProcessingPartialProvider = 10,
 
+        [Description("ProcessingSeprateProvider")]
+        ProcessingSeprateProvider = 11,
+
+        [Description("Complete")]
+        Complete = 12,
+
+        [Description("PartialComplete")]
+        PartialComplete = 13,
+
     }
 }
 

@@ -10,13 +10,17 @@ namespace CMPNatural.Core.Entities
 
 		public string Email { get; set; }
 
-		public bool? IsActive { get; set; } = true;
+        //LimitedAdmin or SuperAdmin
+        public string Role { get; set; } = "LimitedAdmin";
+
+        public bool? IsActive { get; set; } = true;
 
         public Guid PersonId { get; set; }
 
-		public Person Person { get; set; }
+		public virtual Person Person { get; set; }
 
         public string? Password { get; set; }
+
     }
 }
 

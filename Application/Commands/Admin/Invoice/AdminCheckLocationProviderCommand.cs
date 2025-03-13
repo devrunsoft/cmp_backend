@@ -12,6 +12,7 @@ namespace CMPNatural.Application.Commands.Admin.Invoice
 		{
 		}
         public long LocationComanyId { get; set; }
+        public long ProductId { get; set; }
     }
 }
 

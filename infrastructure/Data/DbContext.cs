@@ -39,19 +39,34 @@ namespace infrastructure.Data
         public virtual DbSet<Vehicle> Vehicle { get; set; } = null!;
         public virtual DbSet<VehicleCompartment> VehicleCompartment { get; set; } = null!;
         public virtual DbSet<VehicleService> VehicleService { get; set; } = null!;
+        public virtual DbSet<Menu> Menu { get; set; } = null!;
+        public virtual DbSet<AdminMenuAccess> AdminMenuAccess { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+             //optionsBuilder.UseLazyLoadingProxies();
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseMySQL("Server=188.245.68.131;Port=3306;Database=ScoutDirect;User Id=sammy;Password=Sdsw#2a1@=7632;"
-
-        );
+                optionsBuilder.UseMySQL("Server=188.245.68.131;Port=3306;Database=ScoutDirect;User Id=sammy;Password=Sdsw#2a1@=7632;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Menu>(entity =>
+            {
+                entity.ToTable("Menu");
+            });
+
+            modelBuilder.Entity<AdminMenuAccess>(entity =>
+            {
+                entity.ToTable("AdminMenuAccess");
+
+                entity.HasOne(d => d.Menu)
+                .WithOne()
+                .HasForeignKey<AdminMenuAccess>(d => d.MenuId);
+            });
+
             modelBuilder.Entity<Driver>(entity =>
             {
                 entity.ToTable("Driver");
@@ -207,16 +222,37 @@ namespace infrastructure.Data
             modelBuilder.Entity<AdminEntity>(entity =>
             {
                 entity.ToTable("Admin");
+
+                entity.HasOne(d => d.Person)
+                .WithOne()
+                .HasForeignKey<AdminEntity>(d => d.PersonId);
             });
 
             modelBuilder.Entity<Provider>(entity =>
             {
                 entity.ToTable("Provider");
+
+                entity.HasMany(d => d.ProviderService)
+                .WithOne(p => p.Provider)
+.               HasForeignKey(d => d.ProviderId);
             });
 
             modelBuilder.Entity<Capacity>(entity =>
             {
                 entity.ToTable("Capacity");
+            });
+
+            modelBuilder.Entity<ProviderService>(entity =>
+            {
+             entity.ToTable("ProviderService");
+
+             entity.HasOne(d => d.Product)
+            .WithMany(p => p.ProviderService)
+            .HasForeignKey(d => d.ProductId);
+
+             entity.HasOne(d => d.Provider)
+            .WithMany(p => p.ProviderService)
+            .HasForeignKey(d => d.ProviderId);
             });
         }
 

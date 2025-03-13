@@ -7,8 +7,8 @@ namespace CMPNatural.Core.Entities
 		public long ProductPriceId { get; set; }
         public long InvoiceId { get; set; }
 
-		public ProductPrice ProductPrice { get; set; }
-        public Invoice Invoice { get; set; }
+		public virtual ProductPrice ProductPrice { get; set; }
+        public virtual Invoice Invoice { get; set; }
     }
 }
 

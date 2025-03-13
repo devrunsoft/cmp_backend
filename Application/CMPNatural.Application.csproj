@@ -200,6 +200,16 @@
     <None Remove="Handlers\Admin\Capacity\" />
     <None Remove="Commands\Capacity\" />
     <None Remove="Handlers\CommandHandlers\Capacity\" />
+    <None Remove="Responses\Report\" />
+    <None Remove="Mapper\BaseServiceAppointment\" />
+    <None Remove="Responses\BaseServiceAppointment\" />
+    <None Remove="Commands\Admin\ProductPrice\" />
+    <None Remove="Handlers\Admin\Product\" />
+    <None Remove="Handlers\Admin\ProductPrice\" />
+    <None Remove="Commands\Admin\AdminManagment\" />
+    <None Remove="Handlers\Admin\AdminManagment\" />
+    <None Remove="Commands\Admin\Menu\" />
+    <None Remove="Handlers\Admin\Menu\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -406,6 +416,16 @@
     <Folder Include="Handlers\Admin\Capacity\" />
     <Folder Include="Commands\Capacity\" />
     <Folder Include="Handlers\CommandHandlers\Capacity\" />
+    <Folder Include="Responses\Report\" />
+    <Folder Include="Mapper\BaseServiceAppointment\" />
+    <Folder Include="Responses\BaseServiceAppointment\" />
+    <Folder Include="Commands\Admin\ProductPrice\" />
+    <Folder Include="Handlers\Admin\Product\" />
+    <Folder Include="Handlers\Admin\ProductPrice\" />
+    <Folder Include="Commands\Admin\AdminManagment\" />
+    <Folder Include="Handlers\Admin\AdminManagment\" />
+    <Folder Include="Commands\Admin\Menu\" />
+    <Folder Include="Handlers\Admin\Menu\" />
   </ItemGroup> 
 
   <ItemGroup>

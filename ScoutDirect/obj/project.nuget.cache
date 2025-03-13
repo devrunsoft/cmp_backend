@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Eh8cXabVS+biNU4yOtwJ9U+3vGx0O0yfa8YPe+shZU/JX3qkeU1hp6pPCC7XqSG/JtuvJ95sztVaf0pvitSUrw==",
+  "dgSpecHash": "cosrxlic0gg=",
   "success": true,
   "projectFilePath": "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/CMPNatural.Api.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,7 @@
     "/Users/morteza/.nuget/packages/azure.core/1.35.0/azure.core.1.35.0.nupkg.sha512",
     "/Users/morteza/.nuget/packages/azure.identity/1.10.3/azure.identity.1.10.3.nupkg.sha512",
     "/Users/morteza/.nuget/packages/bouncycastle.cryptography/2.3.1/bouncycastle.cryptography.2.3.1.nupkg.sha512",
+    "/Users/morteza/.nuget/packages/castle.core/5.1.1/castle.core.5.1.1.nupkg.sha512",
     "/Users/morteza/.nuget/packages/elmah/1.2.2/elmah.1.2.2.nupkg.sha512",
     "/Users/morteza/.nuget/packages/elmah.corelibrary/1.2.2/elmah.corelibrary.1.2.2.nupkg.sha512",
     "/Users/morteza/.nuget/packages/elmahcore/2.1.2/elmahcore.2.1.2.nupkg.sha512",
@@ -50,6 +51,7 @@
     "/Users/morteza/.nuget/packages/microsoft.entityframeworkcore/8.0.7/microsoft.entityframeworkcore.8.0.7.nupkg.sha512",
     "/Users/morteza/.nuget/packages/microsoft.entityframeworkcore.abstractions/8.0.7/microsoft.entityframeworkcore.abstractions.8.0.7.nupkg.sha512",
     "/Users/morteza/.nuget/packages/microsoft.entityframeworkcore.analyzers/8.0.7/microsoft.entityframeworkcore.analyzers.8.0.7.nupkg.sha512",
+    "/Users/morteza/.nuget/packages/microsoft.entityframeworkcore.proxies/8.0.7/microsoft.entityframeworkcore.proxies.8.0.7.nupkg.sha512",
     "/Users/morteza/.nuget/packages/microsoft.entityframeworkcore.relational/8.0.7/microsoft.entityframeworkcore.relational.8.0.7.nupkg.sha512",
     "/Users/morteza/.nuget/packages/microsoft.entityframeworkcore.sqlserver/8.0.7/microsoft.entityframeworkcore.sqlserver.8.0.7.nupkg.sha512",
     "/Users/morteza/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",

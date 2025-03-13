@@ -28,7 +28,6 @@ namespace CMPNatural.Application
 
             var result = await _repository.AddAsync(entity);
             return new Success<Capacity>() { Data = result };
-
         }
     }
 }

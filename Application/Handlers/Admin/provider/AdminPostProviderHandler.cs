@@ -8,6 +8,7 @@ using CMPNatural.Core.Base;
 using System;
 using CMPNatural.Application.Commands.Admin.provider;
 using CMPNatural.Application.Services;
+using System.Collections.Generic;
 
 namespace CMPNatural.Application
 {
@@ -24,8 +25,11 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<Provider>> Handle(AdminPostProviderCommand request, CancellationToken cancellationToken)
         {
 
-
-
+            List<ProviderService> providerServices = new List<ProviderService>();
+            foreach (var item in request.ProductIds)
+            {
+                providerServices.Add(new ProviderService() { ProductId = item });
+            }
 
             var entity = new Provider()
             {
@@ -41,7 +45,8 @@ namespace CMPNatural.Application
                 HealthDepartmentPermitExp = request.HealthDepartmentPermitExp,
                 EPAComplianceExp = request.EPAComplianceExp,
                 InsuranceExp = request.InsuranceExp,
-                AreaLocation = request.AreaLocation
+                AreaLocation = request.AreaLocation,
+                ProviderService = providerServices
 
             };
             var result = await _providerReposiotry.AddAsync(entity);

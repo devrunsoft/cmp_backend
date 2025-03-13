@@ -10,6 +10,7 @@
 /Users/morteza/Desktop/publish/CMP/Azure.Core.dll
 /Users/morteza/Desktop/publish/CMP/Azure.Identity.dll
 /Users/morteza/Desktop/publish/CMP/BouncyCastle.Cryptography.dll
+/Users/morteza/Desktop/publish/CMP/Castle.Core.dll
 /Users/morteza/Desktop/publish/CMP/Elmah.dll
 /Users/morteza/Desktop/publish/CMP/ElmahCore.Mvc.dll
 /Users/morteza/Desktop/publish/CMP/ElmahCore.dll
@@ -37,6 +38,7 @@
 /Users/morteza/Desktop/publish/CMP/Microsoft.Data.SqlClient.dll
 /Users/morteza/Desktop/publish/CMP/Microsoft.EntityFrameworkCore.dll
 /Users/morteza/Desktop/publish/CMP/Microsoft.EntityFrameworkCore.Abstractions.dll
+/Users/morteza/Desktop/publish/CMP/Microsoft.EntityFrameworkCore.Proxies.dll
 /Users/morteza/Desktop/publish/CMP/Microsoft.EntityFrameworkCore.Relational.dll
 /Users/morteza/Desktop/publish/CMP/Microsoft.EntityFrameworkCore.SqlServer.dll
 /Users/morteza/Desktop/publish/CMP/Microsoft.Identity.Client.dll

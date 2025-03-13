@@ -20,9 +20,9 @@ namespace CMPNatural.Core.Entities
         public long OperationalAddressId { get; set; }
         public string Address { get; set; } = "";
 
-        public Company Company { get; set; } = null!;
+        public virtual Company Company { get; set; } = null!;
 
-        public Provider? Provider { get; set; }
+        public virtual Provider? Provider { get; set; }
 
         public virtual ICollection<InvoiceProduct> InvoiceProduct { get; set; } = new List<InvoiceProduct>();
 
