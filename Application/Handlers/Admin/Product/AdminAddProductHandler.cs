@@ -26,7 +26,8 @@ namespace CMPNatural.Application
                 Description = request.Description,
                 Type = (int)request.Type,
                 ProductType = request.ProductType,
-                IsEmergency = request.IsEmergency,
+                Order = request.Order
+                //IsEmergency = request.IsEmergency,
             };
 
             var result = await _repository.AddAsync(entity);

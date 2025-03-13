@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using CMPNatural.Core.Repositories;
 using CMPNatural.Core.Base;
 using CMPNatural.Application.Commands.Admin.provider;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CMPNatural.Application
 {
@@ -21,7 +23,7 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<Provider>> Handle(AdminGetProviderCommand request, CancellationToken cancellationToken)
         {
-            var invoices = (await _providerReposiotry.GetByIdAsync(request.Id));
+            var invoices = (await _providerReposiotry.GetAsync(p=>p.Id==request.Id,query=>query.Include(p=>p.ProviderService))).FirstOrDefault();
 
             return new Success<Provider>() { Data = invoices };
 

@@ -24,6 +24,17 @@ namespace CMPNatural.Core.Entities
 
         public virtual Provider? Provider { get; set; }
 
+        public long? ContractId { get; set; }
+
+
+        public string UniqueId
+        {
+            get
+            {
+                return $"{this.ContractId}-{this.CompanyId}-{Id}";
+            }
+        }
+
         public virtual ICollection<InvoiceProduct> InvoiceProduct { get; set; } = new List<InvoiceProduct>();
 
         public virtual ICollection<BaseServiceAppointment> BaseServiceAppointment { get; set; } = new List<BaseServiceAppointment>();

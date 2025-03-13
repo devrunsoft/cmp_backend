@@ -3,9 +3,6 @@ using CMPNatural.Application.Model;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using ScoutDirect.Core.Base;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CMPNatural.Api.Controllers.Admin.Capacity
 {
@@ -36,6 +33,18 @@ namespace CMPNatural.Api.Controllers.Admin.Capacity
                 Name = request.Name,
                 Qty = request.Qty,
                 ServiceType = request.ServiceType
+            });
+            return Ok(result);
+        }
+
+        [HttpDelete("{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Delete([FromRoute] long Id)
+        {
+            var result = await _mediator.Send(new AdminDeleteCapacityCommand()
+            {
+                Id = Id
             });
             return Ok(result);
         }

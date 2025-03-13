@@ -16,10 +16,11 @@ namespace CMPNatural.Application
             ProductType = input.ProductType;
             Type = input.Type;
             ServiceType = input.ServiceType;
-            IsEmergency = input.IsEmergency;
+            //IsEmergency = input.IsEmergency;
             CollectionIds = input.CollectionIds;
             ServiceCrmId = input.ServiceCrmId;
             Enable = input.Enable;
+            Order = input.Order;
         }
 	}
 }

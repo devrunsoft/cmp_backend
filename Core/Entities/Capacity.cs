@@ -10,7 +10,8 @@ namespace CMPNatural.Core.Entities
 		public string Name { get; set; }
 		public int Qty { get; set; }
 		public int ServiceType { get; set; }
-		public bool Enable { get; set; }
+        public int Order { get; set; }
+        public bool Enable { get; set; }
         public virtual ICollection<LocationCompany> LocationCompany { get; set; }
     }
 }

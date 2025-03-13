@@ -41,6 +41,7 @@ namespace infrastructure.Data
         public virtual DbSet<VehicleService> VehicleService { get; set; } = null!;
         public virtual DbSet<Menu> Menu { get; set; } = null!;
         public virtual DbSet<AdminMenuAccess> AdminMenuAccess { get; set; } = null!;
+        public virtual DbSet<Contract> Contract { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -53,6 +54,25 @@ namespace infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<InvoiceSource>(entity =>
+            {
+                entity.ToTable("InvoiceSource");
+            });
+
+            modelBuilder.Entity<CompanyContract>(entity =>
+            {
+                entity.ToTable("CompanyContract");
+
+                entity.HasOne(d => d.Company)
+                .WithMany(x=>x.CompanyContract)
+                .HasForeignKey(d => d.CompanyId);
+            });
+
+            modelBuilder.Entity<Contract>(entity =>
+            {
+                entity.ToTable("Contract");
+            });
+
             modelBuilder.Entity<Menu>(entity =>
             {
                 entity.ToTable("Menu");
@@ -61,7 +81,6 @@ namespace infrastructure.Data
             modelBuilder.Entity<AdminMenuAccess>(entity =>
             {
                 entity.ToTable("AdminMenuAccess");
-
                 entity.HasOne(d => d.Menu)
                 .WithOne()
                 .HasForeignKey<AdminMenuAccess>(d => d.MenuId);

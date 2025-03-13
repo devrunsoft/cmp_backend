@@ -21,9 +21,9 @@ namespace CMPNatural.Application
 
             entity.Enable = request.Enable;
             entity.Name = request.Name;
-            //entity.Qty = request.Qty;
-            //entity.ServiceType = (int)request.ServiceType;
-    
+            entity.Qty = request.Qty;
+            entity.ServiceType = (int)request.ServiceType;
+            entity.Order = request.Order;
 
             await _repository.UpdateAsync(entity);
             return new Success<Capacity>() { Data = entity };

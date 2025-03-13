@@ -30,6 +30,7 @@ namespace CMPNatural.Core.Entities
         public string? ProfilePicture { get; set; }
 
         public virtual ICollection<Invoice> Invoices { get; set; }
+        public virtual ICollection<CompanyContract> CompanyContract { get; set; }
 
     }
 }

@@ -7,21 +7,35 @@ using ScoutDirect.Application.Responses;
 using System.Threading;
 using System.Threading.Tasks;
 using CMPNatural.Application.Services;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CMPNatural.Application
 {
     public class AdminPutProviderHandler : IRequestHandler<AdminPutProviderCommand, CommandResponse<Provider>>
     {
         private readonly IProviderReposiotry _providerReposiotry;
+        private readonly IProviderServiceRepository _providerServiceRepository;
 
-        public AdminPutProviderHandler(IProviderReposiotry providerReposiotry)
+        public AdminPutProviderHandler(IProviderReposiotry providerReposiotry, IProviderServiceRepository providerServiceRepository)
         {
             _providerReposiotry = providerReposiotry;
+            _providerServiceRepository = providerServiceRepository;
         }
 
         public async Task<CommandResponse<Provider>> Handle(AdminPutProviderCommand request, CancellationToken cancellationToken)
         {
             var entity = await _providerReposiotry.GetByIdAsync(request.Id);
+            var providerService = (await _providerServiceRepository.GetAsync(p=>p.ProviderId == request.Id)).ToList();
+
+            if(providerService.Count>0)
+            await _providerServiceRepository.DeleteRangeAsync(providerService);
+
+            List<ProviderService> providerServices = new List<ProviderService>();
+            foreach (var item in request.ProductIds)
+            {
+                providerServices.Add(new ProviderService() { ProductId = item });
+            }
 
             entity.Lat = request.Lat;
             entity.Long = request.Long;
@@ -30,12 +44,13 @@ namespace CMPNatural.Application
             entity.Address = request.Address;
             entity.County = request.County;
             entity.City = request.City;
-            entity.Status = (int)request.Status;
+            //entity.Status = (int)request.Status;
             entity.BusinessLicenseExp = request.BusinessLicenseExp;
             entity.HealthDepartmentPermitExp = request.HealthDepartmentPermitExp;
             entity.EPAComplianceExp = request.EPAComplianceExp;
             entity.InsuranceExp = request.InsuranceExp;
             entity.AreaLocation = request.AreaLocation;
+            entity.ProviderService = providerServices;
 
 
             #region file

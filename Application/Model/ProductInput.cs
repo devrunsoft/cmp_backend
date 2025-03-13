@@ -10,10 +10,11 @@ namespace CMPNatural.Application.Model
         public string ProductType { get; set; } = "";
         public ServiceType? Type { get; set; }
         public ProductCollection? ServiceType { get; set; }
-        public bool IsEmergency { get; set; }
+        //public bool IsEmergency { get; set; }
         public string CollectionIds { get; set; } = "";
         public string ServiceCrmId { get; set; } = "";
         public bool Enable { get; set; }
+        public int Order { get; set; }
     }
 }
 

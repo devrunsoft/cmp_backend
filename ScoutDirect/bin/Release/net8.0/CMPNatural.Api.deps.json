@@ -13,6 +13,7 @@
           "CMPNatural.Application": "1.0.0",
           "CMPNatural.Core": "1.0.0",
           "CMPNatural.infrastructure": "1.0.0",
+          "CMPPayment": "1.0.0",
           "CmpNatural.CrmManagment": "1.0.0",
           "ElmahCore": "2.1.2",
           "Hangfire": "1.8.14",
@@ -915,6 +916,18 @@
           }
         }
       },
+      "Stripe.net/47.4.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3",
+          "System.Configuration.ConfigurationManager": "8.0.0"
+        },
+        "runtime": {
+          "lib/net8.0/Stripe.net.dll": {
+            "assemblyVersion": "47.4.0.0",
+            "fileVersion": "47.4.0.0"
+          }
+        }
+      },
       "Swashbuckle.AspNetCore/6.5.0": {
         "dependencies": {
           "Microsoft.Extensions.ApiDescription.Server": "6.0.5",
@@ -1442,6 +1455,14 @@
         },
         "runtime": {
           "CMPNatural.infrastructure.dll": {}
+        }
+      },
+      "CMPPayment/1.0.0": {
+        "dependencies": {
+          "Stripe.net": "47.4.0"
+        },
+        "runtime": {
+          "CMPPayment.dll": {}
         }
       }
     }
@@ -2096,6 +2117,13 @@
       "path": "shortid/3.0.1",
       "hashPath": "shortid.3.0.1.nupkg.sha512"
     },
+    "Stripe.net/47.4.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-paFQ1NFjdjd3BHkYS1qOmy7T+Bz663tgAC0unsGu7GLHrWTl5SISj6ukGB6nuycV6a1GA9VZr18eCi4pWNpE2w==",
+      "path": "stripe.net/47.4.0",
+      "hashPath": "stripe.net.47.4.0.nupkg.sha512"
+    },
     "Swashbuckle.AspNetCore/6.5.0": {
       "type": "package",
       "serviceable": true,
@@ -2532,6 +2560,11 @@
       "sha512": ""
     },
     "CMPNatural.infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CMPPayment/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

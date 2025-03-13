@@ -12,9 +12,6 @@ namespace CMPNatural.Core.Enums
 
         [Description("Emergency")]
         Emergency = 2,
-
-
-
     }
 }
 

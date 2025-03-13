@@ -13,10 +13,13 @@ namespace CMPNatural.Core.Entities
         public int? Type { get; set; }
         public int? ServiceType { get; set; }
 
-        public bool IsEmergency { get; set; }
+        public bool IsEmergency { get {
+                return this.ServiceType == (int)ProductCollection.ServiceEmergency;
+            } }
         public string CollectionIds { get; set; } = "";
         public string ServiceCrmId { get; set; } = "";
         public bool Enable { get; set; }
+        public int Order { get; set; }
 
         public virtual ICollection<ProviderService> ProviderService { get; set; } = new List<ProviderService>();
         public virtual ICollection<ProductPrice> ProductPrice { get; set; } = new List<ProductPrice>();

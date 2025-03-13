@@ -13,7 +13,8 @@ namespace CMPNatural.Core.Enums
         [Description("Product")]
         Product = 2,
 
-
+        [Description("ServiceEmergency")]
+        ServiceEmergency = 3,
 
     }
 }

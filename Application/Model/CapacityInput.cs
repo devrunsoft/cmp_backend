@@ -12,6 +12,7 @@ namespace CMPNatural.Application.Model
         public int Qty { get; set; }
         public ServiceType ServiceType { get; set; }
         public bool Enable { get; set; }
+        public int Order { get; set; }
     }
 }
 

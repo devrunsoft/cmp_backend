@@ -20,7 +20,7 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<PagesQueryResponse<Capacity>>> Handle(AdminGetAllCapacityCommand request, CancellationToken cancellationToken)
         {
-            var invoices = (await _repository.GetBasePagedAsync(request,p=> request.Enable != null? p.Enable : true ,null));
+            var invoices = (await _repository.GetBasePagedAsync(request, p=> request.Enable == null || p.Enable == request.Enable, null));
             return new Success<PagesQueryResponse<Capacity>>() { Data = invoices };
         }
     }

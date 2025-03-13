@@ -1,6 +1,4 @@
-﻿using System;
-using CMPNatural.Core.Base;
-using CMPNatural.Core.Repositories;
+﻿using CMPNatural.Core.Repositories;
 using MediatR;
 using ScoutDirect.Application.Responses;
 using System.Threading;
@@ -23,8 +21,9 @@ namespace CMPNatural.Application
                 Enable = request.Enable,
                 Name = request.Name,
                 Qty = request.Qty,
-                ServiceType = (int) request.ServiceType
-            };
+                ServiceType = (int) request.ServiceType,
+                Order = request.Order
+             };
 
             var result = await _repository.AddAsync(entity);
             return new Success<Capacity>() { Data = result };

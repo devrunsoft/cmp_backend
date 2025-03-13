@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using CMPNatural.Application;
+﻿using CMPNatural.Application;
 using CMPNatural.Application.Commands.Admin.AdminManagment;
 using CMPNatural.Application.Commands.Admin.Menu;
-using CMPNatural.Application.Commands.Admin.provider;
 using CMPNatural.Application.Handlers.Admin.AdminManagment;
 using CMPNatural.Application.Model;
 using MediatR;

@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CMPNatural.Application.Commands.Admin.Invoice;
+using CMPNatural.Application.Handlers;
 
 namespace CMPNatural.Application
 {
@@ -17,13 +18,18 @@ namespace CMPNatural.Application
         private readonly IinvoiceRepository _invoiceRepository;
         private readonly IProductPriceRepository _productPriceRepository;
         private readonly IBaseServiceAppointmentRepository _baseServiceAppointmentRepository;
+        private readonly IContractRepository _contractRepository;
+        private readonly ICompanyContractRepository _companyContractRepository;
 
         public AdminUpdateInvoiceHandler(IinvoiceRepository invoiceRepository, IProductPriceRepository productPriceRepository ,
-             IBaseServiceAppointmentRepository baseServiceAppointmentRepository)
+             IBaseServiceAppointmentRepository baseServiceAppointmentRepository, IContractRepository _contractRepository,
+             ICompanyContractRepository _companyContractRepository)
         {
             _invoiceRepository = invoiceRepository;
             _productPriceRepository = productPriceRepository;
             _baseServiceAppointmentRepository = baseServiceAppointmentRepository;
+            this._contractRepository = _contractRepository;
+            this._companyContractRepository = _companyContractRepository;
         }
 
         public async Task<CommandResponse<Invoice>> Handle(AdminUpdateInvoiceCommand requests, CancellationToken cancellationToken)
@@ -41,7 +47,7 @@ namespace CMPNatural.Application
             invoice.SendDate = DateTime.Now;
             invoice.Address = requests.Address;
             invoice.Status = requests.ForceToPay ? (int)InvoiceStatus.SentForPay : (int)InvoiceStatus.Processing;
-            invoice.Amount = requests.Amount;
+
 
 
             var services = (await _baseServiceAppointmentRepository.GetAsync(p => p.InvoiceId == invoice.Id)).ToList();
@@ -75,7 +81,7 @@ namespace CMPNatural.Application
                         Status = (int)ServiceStatus.draft,
                         IsEmegency = false,
                         Qty = request.qty,
-                        Amount = resultPrice.Amount * request.qty,
+                        Amount = request.Amount,
                         ProductId = request.ProductId,
                         ProductPriceId = request.ProductPriceId,
                         ServiceAppointmentLocations = request.LocationCompanyIds
@@ -91,14 +97,13 @@ namespace CMPNatural.Application
                         CompanyId = CompanyId,
                         FrequencyType = request.FrequencyType,
                         DueDate = DateTime.Now,
-                        //LocationCompanyId=request.LocationCompanyId,
                         ServiceTypeId = (int)request.ServiceTypeId,
                         ServicePriceCrmId = "",
                         ServiceCrmId = "",
-                        Amount = resultPrice.Amount * request.qty,
+                        Amount = request.Amount,
+                        Subsidy = request.Subsidy,
                         ProductId = request.ProductId,
                         ProductPriceId = request.ProductPriceId,
-                        //StartDate = request.StartDate,
                         OperationalAddressId = request.OperationalAddressId,
                         Status = (int)ServiceStatus.draft,
                         IsEmegency = true,
@@ -111,9 +116,26 @@ namespace CMPNatural.Application
                 }
             }
 
+            if (requests.CreateContract)
+            {
+
+                var result = await new AdminCreateCompanyContractHandler(_companyContractRepository, _contractRepository)
+                    .Create(invoice.InvoiceId, invoice.CompanyId);
+
+                if (!result.IsSucces())
+                {
+                    return new Success<Invoice>() { Data = invoice, Message = result.Message };
+                }
+                invoice.ContractId = result.Data.Id;
+            }
+
+
             invoice.BaseServiceAppointment = lstCustom;
             invoice.InvoiceProduct = invoiceProducts;
 
+            var invoiceAmount = requests.ServiceAppointment.Sum(x=> (x.Amount - x.Subsidy));
+
+            invoice.Amount = invoiceAmount;
             await _invoiceRepository.UpdateAsync(invoice);
             return new Success<Invoice>() { Data = invoice, Message = "Successfull!" };
 

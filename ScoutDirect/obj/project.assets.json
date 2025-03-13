@@ -1504,6 +1504,23 @@
           "lib/netstandard1.0/shortid.dll": {}
         }
       },
+      "Stripe.net/47.4.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3",
+          "System.Configuration.ConfigurationManager": "8.0.0"
+        },
+        "compile": {
+          "lib/net8.0/Stripe.net.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Stripe.net.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Swashbuckle.AspNetCore/6.5.0": {
         "type": "package",
         "dependencies": {
@@ -2567,6 +2584,20 @@
         },
         "runtime": {
           "bin/placeholder/CMPNatural.infrastructure.dll": {}
+        }
+      },
+      "CMPPayment/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "CMPNatural.Core": "1.0.0",
+          "Stripe.net": "47.4.0"
+        },
+        "compile": {
+          "bin/placeholder/CMPPayment.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CMPPayment.dll": {}
         }
       }
     }
@@ -4774,6 +4805,34 @@
         "lib/netstandard1.0/shortid.dll",
         "shortid.3.0.1.nupkg.sha512",
         "shortid.nuspec"
+      ]
+    },
+    "Stripe.net/47.4.0": {
+      "sha512": "paFQ1NFjdjd3BHkYS1qOmy7T+Bz663tgAC0unsGu7GLHrWTl5SISj6ukGB6nuycV6a1GA9VZr18eCi4pWNpE2w==",
+      "type": "package",
+      "path": "stripe.net/47.4.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "README.md",
+        "icon.png",
+        "lib/net461/Stripe.net.dll",
+        "lib/net461/Stripe.net.xml",
+        "lib/net5.0/Stripe.net.dll",
+        "lib/net5.0/Stripe.net.xml",
+        "lib/net6.0/Stripe.net.dll",
+        "lib/net6.0/Stripe.net.xml",
+        "lib/net7.0/Stripe.net.dll",
+        "lib/net7.0/Stripe.net.xml",
+        "lib/net8.0/Stripe.net.dll",
+        "lib/net8.0/Stripe.net.xml",
+        "lib/netcoreapp3.1/Stripe.net.dll",
+        "lib/netcoreapp3.1/Stripe.net.xml",
+        "lib/netstandard2.0/Stripe.net.dll",
+        "lib/netstandard2.0/Stripe.net.xml",
+        "stripe.net.47.4.0.nupkg.sha512",
+        "stripe.net.nuspec"
       ]
     },
     "Swashbuckle.AspNetCore/6.5.0": {
@@ -7601,6 +7660,11 @@
       "type": "project",
       "path": "../infrastructure/CMPNatural.infrastructure.csproj",
       "msbuildProject": "../infrastructure/CMPNatural.infrastructure.csproj"
+    },
+    "CMPPayment/1.0.0": {
+      "type": "project",
+      "path": "../CMPPayment/CMPPayment.csproj",
+      "msbuildProject": "../CMPPayment/CMPPayment.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -7610,6 +7674,7 @@
       "CMPNatural.Application >= 1.0.0",
       "CMPNatural.Core >= 1.0.0",
       "CMPNatural.infrastructure >= 1.0.0",
+      "CMPPayment >= 1.0.0",
       "CmpNatural.CrmManagment >= 1.0.0",
       "ElmahCore >= 2.1.2",
       "Hangfire >= 1.8.14",
@@ -7656,6 +7721,9 @@
             "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/CmpNatural.CrmManagment.csproj": {
               "projectPath": "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CmpNatural.CrmManagment/CmpNatural.CrmManagment.csproj"
             },
+            "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CMPPayment/CMPPayment.csproj": {
+              "projectPath": "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/CMPPayment/CMPPayment.csproj"
+            },
             "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Core/CMPNatural.Core.csproj": {
               "projectPath": "/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Core/CMPNatural.Core.csproj"
             },
@@ -7669,11 +7737,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {

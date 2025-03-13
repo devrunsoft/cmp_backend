@@ -23,6 +23,7 @@ using CMPNatural.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using System.Text.Json.Serialization;
+using CMPPayment;
 
 namespace ScoutDirect.Api
 {
@@ -271,6 +272,7 @@ namespace ScoutDirect.Api
             });
 
             GlobalConfiguration.Configuration.UseMemoryStorage();
+
             //if (!env.IsDevelopment())
             //{
             //    using (var scope = serviceProvider.CreateScope())

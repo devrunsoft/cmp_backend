@@ -127,3 +127,6 @@
 /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/obj/Debug/net8.0/ref/CMPNatural.Api.dll
 /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/bin/Debug/net8.0/Castle.Core.dll
 /Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.Proxies.dll
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/bin/Debug/net8.0/Stripe.net.dll
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/bin/Debug/net8.0/CMPPayment.dll
+/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/bin/Debug/net8.0/CMPPayment.pdb

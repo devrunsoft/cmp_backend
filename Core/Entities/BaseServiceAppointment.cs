@@ -33,6 +33,8 @@ namespace CMPNatural.Core.Entities
 
         public double Amount { get; set; }
 
+        public double Subsidy { get; set; }
+
         public virtual Invoice Invoice { get; set; }
 
         public virtual Product Product { get; set; }

@@ -20,7 +20,7 @@ namespace CMPNatural.Application.Handlers.CommandHandlers.Service
 
         public async Task<CommandResponse<List<Product>>> Handle(GetAllProductCommand request, CancellationToken cancellationToken)
         {
-            var result = (await _repository.GetAsync(p => p.Enable)).ToList();
+            var result = (await _repository.GetAsync(p => p.Enable)).OrderBy(x=>x.Order).ToList();
             return new Success<List<Product>>() { Data = result };
         }
     }

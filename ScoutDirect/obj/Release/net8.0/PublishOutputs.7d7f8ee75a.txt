@@ -59,6 +59,7 @@
 /Users/morteza/Desktop/publish/CMP/Newtonsoft.Json.dll
 /Users/morteza/Desktop/publish/CMP/Newtonsoft.Json.Bson.dll
 /Users/morteza/Desktop/publish/CMP/shortid.dll
+/Users/morteza/Desktop/publish/CMP/Stripe.net.dll
 /Users/morteza/Desktop/publish/CMP/Swashbuckle.AspNetCore.Swagger.dll
 /Users/morteza/Desktop/publish/CMP/Swashbuckle.AspNetCore.SwaggerGen.dll
 /Users/morteza/Desktop/publish/CMP/Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -102,7 +103,9 @@
 /Users/morteza/Desktop/publish/CMP/CMPNatural.Core.dll
 /Users/morteza/Desktop/publish/CMP/CmpNatural.CrmManagment.dll
 /Users/morteza/Desktop/publish/CMP/CMPNatural.infrastructure.dll
+/Users/morteza/Desktop/publish/CMP/CMPPayment.dll
 /Users/morteza/Desktop/publish/CMP/CMPNatural.infrastructure.pdb
 /Users/morteza/Desktop/publish/CMP/CMPNatural.Application.pdb
 /Users/morteza/Desktop/publish/CMP/CMPNatural.Core.pdb
 /Users/morteza/Desktop/publish/CMP/CmpNatural.CrmManagment.pdb
+/Users/morteza/Desktop/publish/CMP/CMPPayment.pdb

@@ -31,19 +31,8 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
     [Route("api/admin/[controller]")]
     public class AdminInvoiceController : BaseAdminApiController
     {
-        private InvoiceApi _invoiceApi;
-        private ProductPriceApi _productPriceApi;
-        private ProductListApi _productApi;
-        private ContactApi _contactApi;
-        private CustomValueApi _customValueApi;
-        public AdminInvoiceController(IMediator mediator, InvoiceApi invoiceApi, ProductPriceApi productPriceApi,
-            ProductListApi productApi, ContactApi contactApi, CustomValueApi customValueApi) : base(mediator)
+        public AdminInvoiceController(IMediator mediator) : base(mediator)
         {
-            _invoiceApi = invoiceApi;
-            _productPriceApi = productPriceApi;
-            _productApi = productApi;
-            _contactApi = contactApi;
-            _customValueApi = customValueApi;
         }
 
 
@@ -170,79 +159,79 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
 
         }
 
-        [NonAction]
-        double getMinimumPrice(bool isGreas, List<CustomValueResponse> lst)
-        {
-            double amount = 0;
-            string fieldKey = "";
+        //[NonAction]
+        //double getMinimumPrice(bool isGreas, List<CustomValueResponse> lst)
+        //{
+        //    double amount = 0;
+        //    string fieldKey = "";
 
-            if (isGreas)
-            {
-                fieldKey = "{{ custom_values.minimum_cost_for_grease_trap_management }}";
-            }
-            else
-            {
-                fieldKey = "{{ custom_values.minimum_cost_of_cooking_oil_pick_up }}";
-            }
+        //    if (isGreas)
+        //    {
+        //        fieldKey = "{{ custom_values.minimum_cost_for_grease_trap_management }}";
+        //    }
+        //    else
+        //    {
+        //        fieldKey = "{{ custom_values.minimum_cost_of_cooking_oil_pick_up }}";
+        //    }
 
-            var greasCustomValue = lst.Where(p => p.fieldKey == fieldKey).FirstOrDefault();
+        //    var greasCustomValue = lst.Where(p => p.fieldKey == fieldKey).FirstOrDefault();
 
-            if (greasCustomValue == null)
-            {
-                return amount;
-            }
+        //    if (greasCustomValue == null)
+        //    {
+        //        return amount;
+        //    }
 
-            return double.Parse(greasCustomValue.value);
+        //    return double.Parse(greasCustomValue.value);
 
-        }
+        //}
 
 
-        [NonAction]
-        CreateInvoiceApiCommand createInvoceCommand(string invoiceNumber,
-            CompanyResponse company,
-            ContactResponse resultContact,
-            IEnumerable<OperationalAddress> oprAddress,
-            List<ProductItemCommand> lst)
-        {
-            var command = new CreateInvoiceApiCommand
-            {
-                dueDate = DateOnly.FromDateTime(DateTime.Now.AddDays(10)),
-                issueDate = DateOnly.FromDateTime(DateTime.Now),
-                currency = "USD",
-                invoiceNumber = invoiceNumber.ToString(),
-                //
-                contactDetails = new ContactDetailsCommand
-                {
-                    name = company.PrimaryFirstName + " " + company.PrimaryLastName,
-                    email = company.BusinessEmail,
-                    phoneNo = company.PrimaryPhonNumber,
-                    id = resultContact.id,
-                    companyName = company.CompanyName,
-                    address = new Address()
-                    {
-                        addressLine1 = string.Join(" - ", oprAddress.Select((p => "address: " + p.Address)))
-                    }
+        //[NonAction]
+        //CreateInvoiceApiCommand createInvoceCommand(string invoiceNumber,
+        //    CompanyResponse company,
+        //    ContactResponse resultContact,
+        //    IEnumerable<OperationalAddress> oprAddress,
+        //    List<ProductItemCommand> lst)
+        //{
+        //    var command = new CreateInvoiceApiCommand
+        //    {
+        //        dueDate = DateOnly.FromDateTime(DateTime.Now.AddDays(10)),
+        //        issueDate = DateOnly.FromDateTime(DateTime.Now),
+        //        currency = "USD",
+        //        invoiceNumber = invoiceNumber.ToString(),
+        //        //
+        //        contactDetails = new ContactDetailsCommand
+        //        {
+        //            name = company.PrimaryFirstName + " " + company.PrimaryLastName,
+        //            email = company.BusinessEmail,
+        //            phoneNo = company.PrimaryPhonNumber,
+        //            id = resultContact.id,
+        //            companyName = company.CompanyName,
+        //            address = new Address()
+        //            {
+        //                addressLine1 = string.Join(" - ", oprAddress.Select((p => "address: " + p.Address)))
+        //            }
 
-                },
-                //
-                sentTo = new SendTo()
-                {
-                    email = new List<string>() { company.BusinessEmail }
-                },
-                name = company.PrimaryFirstName + " " + company.PrimaryLastName,
-                //
-                businessDetails = new BusinessDetailsCommand
-                {
-                    name = company.SecondaryFirstName + " " + company.SecondaryFirstName,
-                    phoneNo = company.SecondaryPhoneNumber,
-                    //customValues= new List<string>() { "string" }
-                },
-                //
-                items = lst,
-            };
+        //        },
+        //        //
+        //        sentTo = new SendTo()
+        //        {
+        //            email = new List<string>() { company.BusinessEmail }
+        //        },
+        //        name = company.PrimaryFirstName + " " + company.PrimaryLastName,
+        //        //
+        //        businessDetails = new BusinessDetailsCommand
+        //        {
+        //            name = company.SecondaryFirstName + " " + company.SecondaryFirstName,
+        //            phoneNo = company.SecondaryPhoneNumber,
+        //            //customValues= new List<string>() { "string" }
+        //        },
+        //        //
+        //        items = lst,
+        //    };
 
-            return command;
-        }
+        //    return command;
+        //}
 
 
 

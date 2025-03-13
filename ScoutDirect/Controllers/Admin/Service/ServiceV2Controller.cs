@@ -50,6 +50,18 @@ namespace CMPNatural.Api.Controllers.Admin.Service
             return Ok(result);
         }
 
+        [HttpDelete("Product/{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> DeleteProductPrice([FromRoute] long Id)
+        {
+            var result = await _mediator.Send(new AdminDeleteProductCommand()
+            {
+                Id = Id
+            });
+            return Ok(result);
+        }
+
         [HttpPost("ProductPrice/{productId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
@@ -68,6 +80,19 @@ namespace CMPNatural.Api.Controllers.Admin.Service
             return Ok(result);
         }
 
+
+
+        [HttpDelete("ProductPrice/{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> DeleteProduct([FromRoute] long Id)
+        {
+            var result = await _mediator.Send(new AdminDeleteProductPriceCommand()
+            {
+                Id = Id
+            });
+            return Ok(result);
+        }
 
         [HttpGet("GetPaging")]
         [ProducesResponseType(StatusCodes.Status200OK)]

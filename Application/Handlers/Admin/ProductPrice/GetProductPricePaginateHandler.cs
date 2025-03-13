@@ -21,9 +21,12 @@ namespace CMPNatural.Application.Handlers.CommandHandlers.Service
 
         public async Task<CommandResponse<PagesQueryResponse<ProductPrice>>> Handle(GetProductPricePaginateCommand request, CancellationToken cancellationToken)
         {
-            var result = (await _repository.GetBasePagedAsync(request, p=>p.ProductId==request.ProductId));
+            var result = (await _repository.GetBasePagedAsync(request, p =>
+            p.ProductId == request.ProductId &&
+
+            (request.Enable == null || p.Enable == request.Enable)
+                ));
             return new Success<PagesQueryResponse<ProductPrice>>() { Data = result };
         }
     }
 }
-

@@ -15,6 +15,7 @@ namespace CMPNatural.Application.Commands.Service
         }
 
         public long ProductId { get; set; }
+        public bool? Enable { get; set; }
     }
 }
 

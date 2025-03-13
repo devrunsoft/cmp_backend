@@ -3,6 +3,7 @@ using CMPNatural.Application;
 using CMPNatural.Application.Commands.Company;
 using CMPNatural.Application.Commands.ShoppingCard;
 using CMPNatural.Application.Model.ServiceAppointment;
+using CMPNatural.Core.Entities;
 using CMPNatural.Core.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
@@ -64,6 +65,17 @@ namespace CMPNatural.Api.Service
 
 
                 var invoiceId = Guid.NewGuid();
+
+                var resultInvoice = await _mediator.Send(new AddInvoiceSourceCommand()
+                {
+                    CompanyId = rCompanyId,
+                    InvoiceId = invoiceId.ToString(),
+                });
+
+                if (!resultInvoice.IsSucces())
+                {
+                    return new NoAcess() { Message = resultInvoice.Message };
+                }
 
                 await _mediator.Send(new CreateInvoiceCommand()
                 {

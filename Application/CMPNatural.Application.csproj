@@ -210,6 +210,16 @@
     <None Remove="Handlers\Admin\AdminManagment\" />
     <None Remove="Commands\Admin\Menu\" />
     <None Remove="Handlers\Admin\Menu\" />
+    <None Remove="Handlers\Admin\AppInformation\" />
+    <None Remove="Commands\Admin\AppInformation\" />
+    <None Remove="Commands\Admin\Config\" />
+    <None Remove="Handlers\Admin\Contract\" />
+    <None Remove="Commands\Admin\Contract\" />
+    <None Remove="Handlers\CommandHandlers\Contract\" />
+    <None Remove="Handlers\Admin\CompanyContract\" />
+    <None Remove="Commands\Admin\CompanyContract\" />
+    <None Remove="Commands\InvoiceSource\" />
+    <None Remove="Handlers\CommandHandlers\InvoiceSource\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -426,6 +436,16 @@
     <Folder Include="Handlers\Admin\AdminManagment\" />
     <Folder Include="Commands\Admin\Menu\" />
     <Folder Include="Handlers\Admin\Menu\" />
+    <Folder Include="Handlers\Admin\AppInformation\" />
+    <Folder Include="Commands\Admin\AppInformation\" />
+    <Folder Include="Commands\Admin\Config\" />
+    <Folder Include="Handlers\Admin\Contract\" />
+    <Folder Include="Commands\Admin\Contract\" />
+    <Folder Include="Handlers\CommandHandlers\Contract\" />
+    <Folder Include="Handlers\Admin\CompanyContract\" />
+    <Folder Include="Commands\Admin\CompanyContract\" />
+    <Folder Include="Commands\InvoiceSource\" />
+    <Folder Include="Handlers\CommandHandlers\InvoiceSource\" />
   </ItemGroup> 
 
   <ItemGroup>

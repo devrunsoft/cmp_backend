@@ -20,9 +20,7 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<PagesQueryResponse<Provider>>> Handle(AdminGetAllProviderCommand request, CancellationToken cancellationToken)
         {
             var invoices = (await _providerReposiotry.GetBasePagedAsync(request));
-
             return new Success<PagesQueryResponse<Provider>>() { Data = invoices };
-
         }
     }
 }

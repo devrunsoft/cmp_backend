@@ -26,7 +26,8 @@ namespace CMPNatural.Application
             entity.Description = request.Description;
             entity.Type = (int)request.Type;
             entity.ProductType = request.ProductType;
-            entity.IsEmergency = request.IsEmergency;
+            entity.Order = request.Order;
+            //entity.IsEmergency = request.IsEmergency;
 
             await _repository.UpdateAsync(entity);
             return new Success<Product>() { Data = entity };

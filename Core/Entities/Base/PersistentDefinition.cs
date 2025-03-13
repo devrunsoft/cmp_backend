@@ -29,4 +29,9 @@ namespace CMPNatural.Core.Entities
     public partial class ProviderService : IIdentityObject<long> { }
     public partial class Menu : IIdentityObject<long> { }
     public partial class AdminMenuAccess : IIdentityObject<long> { }
+    public partial class AppInformation : IIdentityObject<long> { }
+    public partial class Config : IIdentityObject<long> { }
+    public partial class Contract : IIdentityObject<long> { }
+    public partial class InvoiceSource : IIdentityObject<long> { }
+    public partial class CompanyContract : IIdentityObject<long> { }
 }

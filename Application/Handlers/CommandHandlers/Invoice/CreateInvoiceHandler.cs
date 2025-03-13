@@ -16,11 +16,13 @@ namespace CMPNatural.Application.Handlers
     public class CreateInvoiceHandler : IRequestHandler<CreateInvoiceCommand, CommandResponse<Invoice>>
     {
         private readonly IinvoiceRepository _invoiceRepository;
+        private readonly IInvoiceSourceRepository _invoiceSourceRepository;
         private readonly IProductPriceRepository _productPriceRepository;
 
-        public CreateInvoiceHandler(IinvoiceRepository invoiceRepository, IProductPriceRepository productPriceRepository)
+        public CreateInvoiceHandler(IinvoiceRepository invoiceRepository, IProductPriceRepository productPriceRepository, IInvoiceSourceRepository invoiceSourceRepository)
         {
             _invoiceRepository = invoiceRepository;
+            _invoiceSourceRepository = invoiceSourceRepository;
             _productPriceRepository = productPriceRepository;
         }
 
@@ -90,6 +92,10 @@ namespace CMPNatural.Application.Handlers
                     lstCustom.Add(command);
                 }
             }
+            await _invoiceSourceRepository.AddAsync(new InvoiceSource(){
+                CreatedAt = DateTime.Now,
+                InvoiceId = requests.InvoiceId,
+            });
 
             var entity = new Invoice()
             {

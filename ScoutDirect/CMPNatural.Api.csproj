@@ -52,6 +52,11 @@
     <None Remove="Service\" />
     <None Remove="Controllers\Admin\Admin\" />
     <None Remove="Attribute\" />
+    <None Remove="Controllers\Payment\" />
+    <None Remove="Controllers\Admin\AppInformation\" />
+    <None Remove="Controllers\Admin\Config\" />
+    <None Remove="Controllers\Admin\Contract\" />
+    <None Remove="Controllers\Admin\CompanyContract\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FileContent\" />
@@ -80,6 +85,11 @@
     <Folder Include="Service\" />
     <Folder Include="Controllers\Admin\Admin\" />
     <Folder Include="Attribute\" />
+    <Folder Include="Controllers\Payment\" />
+    <Folder Include="Controllers\Admin\AppInformation\" />
+    <Folder Include="Controllers\Admin\Config\" />
+    <Folder Include="Controllers\Admin\Contract\" />
+    <Folder Include="Controllers\Admin\CompanyContract\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\infrastructure\CMPNatural.infrastructure.csproj">
@@ -92,6 +102,9 @@
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
     <ProjectReference Include="..\CmpNatural.CrmManagment\CmpNatural.CrmManagment.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\CMPPayment\CMPPayment.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>
