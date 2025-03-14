@@ -220,6 +220,8 @@
     <None Remove="Commands\Admin\CompanyContract\" />
     <None Remove="Commands\InvoiceSource\" />
     <None Remove="Handlers\CommandHandlers\InvoiceSource\" />
+    <None Remove="Commands\CompanyContract\" />
+    <None Remove="Handlers\CommandHandlers\CompanyContract\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -446,6 +448,8 @@
     <Folder Include="Commands\Admin\CompanyContract\" />
     <Folder Include="Commands\InvoiceSource\" />
     <Folder Include="Handlers\CommandHandlers\InvoiceSource\" />
+    <Folder Include="Commands\CompanyContract\" />
+    <Folder Include="Handlers\CommandHandlers\CompanyContract\" />
   </ItemGroup> 
 
   <ItemGroup>

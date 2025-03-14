@@ -16,15 +16,35 @@ namespace CMPNatural.Application.Handlers
     public class AdminSentInvoiceHandler : IRequestHandler<AdminSentInvoiceCommand, CommandResponse<Invoice>>
     {
         private readonly IinvoiceRepository _invoiceRepository;
-        public AdminSentInvoiceHandler(IinvoiceRepository invoiceRepository)
+        private readonly IContractRepository _contractRepository;
+        private readonly ICompanyContractRepository _companyContractRepository;
+        private readonly IAppInformationRepository _appRepository;
+        public AdminSentInvoiceHandler(IinvoiceRepository invoiceRepository,
+             IContractRepository contractRepository,
+             ICompanyContractRepository companyContractRepository, IAppInformationRepository _appRepository)
         {
             _invoiceRepository = invoiceRepository;
+            _contractRepository = contractRepository;
+            _companyContractRepository = companyContractRepository;
+            this._appRepository = _appRepository;
         }
 
         public async Task<CommandResponse<Invoice>> Handle(AdminSentInvoiceCommand request, CancellationToken cancellationToken)
         {
             var entity = (await _invoiceRepository.GetAsync(p => p.Id == request.InvoiceId)).FirstOrDefault();
-            entity.Status = (int)request.Status;
+            entity.Status = (int)InvoiceStatus.PendingSignature;
+
+            //if (requests.CreateContract)
+            //{
+                var result = await new AdminCreateCompanyContractHandler(_companyContractRepository, _contractRepository , _invoiceRepository , _appRepository)
+                    .Create(entity.InvoiceId, entity.CompanyId);
+
+                if (!result.IsSucces())
+                {
+                    return new NoAcess<Invoice>() { Data = entity, Message = result.Message };
+                }
+                entity.ContractId = result.Data.Id;
+            //}
 
             entity.CalculateAmount();
 

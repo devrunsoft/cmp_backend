@@ -12,10 +12,10 @@ namespace CMPNatural.Core.Entities
         public int Status { get; set; }
         public string? Link { get; set; }
         public double Amount { get; set; }
-        //public Guid InvoiceNumber { get; set; }
         public string InvoiceId { get; set; } = null!;
-        public DateTime RegisterDate { get; set; }
+        //public DateTime RegisterDate { get; set; }
         public DateTime? SendDate { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         public long OperationalAddressId { get; set; }
         public string Address { get; set; } = "";
@@ -27,11 +27,11 @@ namespace CMPNatural.Core.Entities
         public long? ContractId { get; set; }
 
 
-        public string UniqueId
+        public string InvoiceNumber
         {
             get
             {
-                return $"{this.ContractId}-{this.CompanyId}-{Id}";
+                return $"{this.CreatedAt.Year}-{this.CompanyId}-{(this.ContractId==null?0:this.ContractId)}-{Id}";
             }
         }
 

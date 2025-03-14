@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CmpNatural.CrmManagment")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ca20b73a401957e1299d32ad73dd1addd0b10d46")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2212562e13f6e5acd67ade670ffdce8e37e96221")]
 [assembly: System.Reflection.AssemblyProductAttribute("CmpNatural.CrmManagment")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CmpNatural.CrmManagment")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

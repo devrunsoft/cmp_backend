@@ -26,6 +26,15 @@ namespace CMPNatural.Api.Controllers.Admin.CompanyContract
             return Ok(result);
         }
 
+        [HttpPut("sign/{clientId}/{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Sign([FromRoute] long Id, [FromRoute] long clientId)
+        {
+            var result = await _mediator.Send(new AdminSignCompanyContractCommand() { CompanyId = clientId, CompanyContractId = Id });
+            return Ok(result);
+        }
+
     }
 }
 

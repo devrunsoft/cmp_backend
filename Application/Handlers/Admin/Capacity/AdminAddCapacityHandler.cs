@@ -10,9 +10,9 @@ namespace CMPNatural.Application
     public class AdminAddCapacityHandler : IRequestHandler<AdminAddCapacityCommand, CommandResponse<Capacity>>
     {
         private readonly ICapacityRepository _repository;
-        public AdminAddCapacityHandler(ICapacityRepository providerReposiotry)
+        public AdminAddCapacityHandler(ICapacityRepository repository)
         {
-            _repository = providerReposiotry;
+            _repository = repository;
         }
         public async Task<CommandResponse<Capacity>> Handle(AdminAddCapacityCommand request, CancellationToken cancellationToken)
         {

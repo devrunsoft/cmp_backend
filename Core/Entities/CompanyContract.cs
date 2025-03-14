@@ -11,14 +11,15 @@ namespace CMPNatural.Core.Entities
 		public long ContractId { get; set; }
         public long CompanyId { get; set; }
         public string InvoiceId { get; set; }
-        public string Sign { get; set; }
+        public string? Sign { get; set; }
+        public string? AdminSign { get; set; }
         public int Status { get; set; }
 		public Company Company { get; set; }
         //public Invoice Invoice { get; set; }
 
-        public string UniqueId {
+        public string ContractNumber {
 			get {
-				return $"{this.ContractId}-{this.CompanyId}";
+				return $"{CreatedAt.Year}-{this.CompanyId}-{this.Id}";
 			}
 		} 
         public DateTime CreatedAt { get; set; }

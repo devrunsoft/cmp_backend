@@ -8,7 +8,7 @@ using CMPNatural.Core.Base;
 using Microsoft.EntityFrameworkCore;
 using CMPNatural.Application.Mapper;
 using CMPNatural.Application.Responses;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+
 using ScoutDirect.Core.Authentication;
 using System.Linq;
 using System.Collections.Generic;
@@ -27,7 +27,8 @@ namespace CMPNatural.Application.Handlers.Admin.Auth
 
         public async Task<CommandResponse<PagesQueryResponse<InvoiceResponse>>> Handle(AdminGetAllInvoiceCommand request, CancellationToken cancellationToken)
         {
-            var invoices = (await _invoiceRepository.GetBasePagedAsync(request, query => query.Include(i => i.Company)));
+            var invoices = (await _invoiceRepository.GetBasePagedAsync(request, x=> (request.Status == null || x.Status == (int)request.Status) ,
+                query => query.Include(i => i.Company)));
 
             var model = new PagesQueryResponse<InvoiceResponse>(
                 invoices.elements.Select(p => InvoiceMapper.Mapper.Map<InvoiceResponse>(p)).ToList(),

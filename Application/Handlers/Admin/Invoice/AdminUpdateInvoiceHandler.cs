@@ -20,16 +20,18 @@ namespace CMPNatural.Application
         private readonly IBaseServiceAppointmentRepository _baseServiceAppointmentRepository;
         private readonly IContractRepository _contractRepository;
         private readonly ICompanyContractRepository _companyContractRepository;
+        private readonly IAppInformationRepository _appRepository;
 
         public AdminUpdateInvoiceHandler(IinvoiceRepository invoiceRepository, IProductPriceRepository productPriceRepository ,
              IBaseServiceAppointmentRepository baseServiceAppointmentRepository, IContractRepository _contractRepository,
-             ICompanyContractRepository _companyContractRepository)
+             ICompanyContractRepository _companyContractRepository, IAppInformationRepository _appRepository)
         {
             _invoiceRepository = invoiceRepository;
             _productPriceRepository = productPriceRepository;
             _baseServiceAppointmentRepository = baseServiceAppointmentRepository;
             this._contractRepository = _contractRepository;
             this._companyContractRepository = _companyContractRepository;
+            this._appRepository = _appRepository;
         }
 
         public async Task<CommandResponse<Invoice>> Handle(AdminUpdateInvoiceCommand requests, CancellationToken cancellationToken)
@@ -44,14 +46,8 @@ namespace CMPNatural.Application
 
             var CompanyId = invoice.CompanyId;
 
-            invoice.SendDate = DateTime.Now;
-            invoice.Address = requests.Address;
-            invoice.Status = requests.ForceToPay ? (int)InvoiceStatus.SentForPay : (int)InvoiceStatus.Processing;
-
-
-
             var services = (await _baseServiceAppointmentRepository.GetAsync(p => p.InvoiceId == invoice.Id)).ToList();
-            await _baseServiceAppointmentRepository.DeleteRangeAsync(services);
+     
              
             List <BaseServiceAppointment> lstCustom = new List<BaseServiceAppointment>();
             List<ServiceAppointmentEmergency> lstCustomEmrgency = new List<ServiceAppointmentEmergency>();
@@ -119,12 +115,12 @@ namespace CMPNatural.Application
             if (requests.CreateContract)
             {
 
-                var result = await new AdminCreateCompanyContractHandler(_companyContractRepository, _contractRepository)
+                var result = await new AdminCreateCompanyContractHandler(_companyContractRepository, _contractRepository, _invoiceRepository, _appRepository)
                     .Create(invoice.InvoiceId, invoice.CompanyId);
 
                 if (!result.IsSucces())
                 {
-                    return new Success<Invoice>() { Data = invoice, Message = result.Message };
+                    return new NoAcess<Invoice>() { Data = invoice, Message = result.Message };
                 }
                 invoice.ContractId = result.Data.Id;
             }
@@ -132,11 +128,16 @@ namespace CMPNatural.Application
 
             invoice.BaseServiceAppointment = lstCustom;
             invoice.InvoiceProduct = invoiceProducts;
+            invoice.SendDate = DateTime.Now;
+            invoice.Address = requests.Address;
+            //invoice.Status = requests.ForceToPay ? (int)InvoiceStatus.SentForPay : (int)InvoiceStatus.Processing;
+            invoice.Status = (int)InvoiceStatus.PendingSignature;
 
             var invoiceAmount = requests.ServiceAppointment.Sum(x=> (x.Amount - x.Subsidy));
 
             invoice.Amount = invoiceAmount;
             await _invoiceRepository.UpdateAsync(invoice);
+            await _baseServiceAppointmentRepository.DeleteRangeAsync(services);
             return new Success<Invoice>() { Data = invoice, Message = "Successfull!" };
 
         }

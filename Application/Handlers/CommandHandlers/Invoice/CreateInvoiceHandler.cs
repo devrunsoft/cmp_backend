@@ -57,7 +57,8 @@ namespace CMPNatural.Application.Handlers
                         Status = (int)ServiceStatus.draft,
                         IsEmegency=false,
                         Qty = request.qty,
-                        Amount = resultPrice.Amount * request.qty,
+                        Amount = resultPrice.Amount,
+                        ProductPrice = resultPrice,
                         ProductId = request.ProductId,
                         ProductPriceId = request.ProductPriceId,
                         ServiceAppointmentLocations = request.LocationCompanyIds
@@ -105,12 +106,13 @@ namespace CMPNatural.Application.Handlers
                 InvoiceId = requests.InvoiceId,
                 BaseServiceAppointment = lstCustom,
                 Amount = requests.Amount,
-                RegisterDate= DateTime.Now,
                 InvoiceProduct = invoiceProducts,
                 Address = requests.Address,
-                OperationalAddressId = requests.OperationalAddressId
+                OperationalAddressId = requests.OperationalAddressId,
+                CreatedAt = DateTime.Now,
                 //InvoiceNumber = request.InvoiceNumber
             };
+            entity.CalculateAmount();
             var result = await _invoiceRepository.AddAsync(entity);
             return new Success<Invoice>() { Data = result, Message = "Successfull!" };
 

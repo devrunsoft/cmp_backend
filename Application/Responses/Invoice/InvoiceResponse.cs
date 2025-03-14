@@ -24,13 +24,15 @@ namespace CMPNatural.Application
         public string Address { get; set; } = "";
         public virtual Provider Provider { get; set; } = null;
         public virtual Company Company { get; set; } = null;
+        public string InvoiceNumber { get; set; }
+        public int ContractId { get; set; }
 
         public virtual ICollection<InvoiceProduct> InvoiceProduct { get; set; } = new List<InvoiceProduct>();
 
         public virtual ICollection<BaseServiceAppointment> BaseServiceAppointment { get; set; } = new List<BaseServiceAppointment>();
 
 
-        public DateTime RegisterDate { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         public string? InvoiceStatus {
             get {
@@ -43,7 +45,9 @@ namespace CMPNatural.Application
         {
             get
             {
-                return Status == (int)Core.Enums.InvoiceStatus.paid && ProviderId==null;
+                return
+                    //Status == (int)Core.Enums.InvoiceStatus.paid &&
+                    ProviderId==null;
 
             }
         }

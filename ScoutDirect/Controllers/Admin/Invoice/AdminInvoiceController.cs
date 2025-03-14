@@ -126,11 +126,11 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
                 invoiceNumber = invoiceNumber
             });
 
-            var result = await _mediator.Send(new SentInvoiceCommand()
+            var result = await _mediator.Send(new AdminSentInvoiceCommand()
             {
                 CompanyId = rCompanyId,
                 InvoiceId = resultdata.Data.Id,
-                Status = InvoiceStatus.Processing
+                //Status = InvoiceStatus.Processing
             });
 
             return Ok(result);

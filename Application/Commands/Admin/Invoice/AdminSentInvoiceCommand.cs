@@ -9,7 +9,8 @@ namespace CMPNatural.Application
     public class AdminSentInvoiceCommand : IRequest<CommandResponse<Invoice>>
     {
         public long InvoiceId { get; set; }
-        public InvoiceStatus Status { get; set; }
+        public long CompanyId { get; set; }
+        //public InvoiceStatus Status { get; set; }
     }
 }
 

@@ -77,79 +77,79 @@ namespace CMPNatural.Api.Controllers.Invoice
         }
 
 
-        [HttpGet("CheckPayment/{Id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> CheckPayment([FromRoute] long Id)
-        {
+        //[HttpGet("CheckPayment/{Id}")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[EnableCors("AllowOrigin")]
+        //public async Task<ActionResult> CheckPayment([FromRoute] long Id)
+        //{
 
-            var resultdata = await _mediator.Send(new GetInvoiceByIdCommand()
-            {
-                CompanyId = rCompanyId,
-                Id = Id
-            });
+        //    var resultdata = await _mediator.Send(new GetInvoiceByIdCommand()
+        //    {
+        //        CompanyId = rCompanyId,
+        //        Id = Id
+        //    });
 
-            var invoice = _invoiceApi.GetInvoice(resultdata.Data.InvoiceId);
+        //    var invoice = _invoiceApi.GetInvoice(resultdata.Data.InvoiceId);
 
-            System.Enum.TryParse(invoice.Data.status, out InvoiceStatus invoiceStatus);
-            var result= await _mediator.Send(new SentInvoiceCommand()
-            {
-                CompanyId = rCompanyId,
-                InvoiceId = resultdata.Data.Id,
-                Status = invoiceStatus
-            });
+        //    System.Enum.TryParse(invoice.Data.status, out InvoiceStatus invoiceStatus);
+        //    var result= await _mediator.Send(new SentInvoiceCommand()
+        //    {
+        //        CompanyId = rCompanyId,
+        //        InvoiceId = resultdata.Data.Id,
+        //        Status = invoiceStatus
+        //    });
 
-            return Ok(result);
-        }
+        //    return Ok(result);
+        //}
 
-        [HttpPost("Pay")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Pay([FromQuery] string invoiceNumber)
-        {
+        //[HttpPost("Pay")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[EnableCors("AllowOrigin")]
+        //public async Task<ActionResult> Pay([FromQuery] string invoiceNumber)
+        //{
 
-            var resultdata = await _mediator.Send(new GetInvoiceByInvoiceNumberCommand()
-            {
-                CompanyId = rCompanyId,
-                invoiceNumber = invoiceNumber
-            });
+        //    var resultdata = await _mediator.Send(new GetInvoiceByInvoiceNumberCommand()
+        //    {
+        //        CompanyId = rCompanyId,
+        //        invoiceNumber = invoiceNumber
+        //    });
 
-            var invoice = _invoiceApi.GetInvoice(resultdata.Data.InvoiceId);
+        //    var invoice = _invoiceApi.GetInvoice(resultdata.Data.InvoiceId);
 
-            System.Enum.TryParse(invoice.Data.status, out InvoiceStatus invoiceStatus);
-            var result = await _mediator.Send(new SentInvoiceCommand()
-            {
-                CompanyId = rCompanyId,
-                InvoiceId = resultdata.Data.Id,
-                Status = invoiceStatus
-            });
+        //    System.Enum.TryParse(invoice.Data.status, out InvoiceStatus invoiceStatus);
+        //    var result = await _mediator.Send(new SentInvoiceCommand()
+        //    {
+        //        CompanyId = rCompanyId,
+        //        InvoiceId = resultdata.Data.Id,
+        //        Status = invoiceStatus
+        //    });
 
-            return Ok(result);
-        }
+        //    return Ok(result);
+        //}
 
-        [HttpPost("Sent")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Sent([FromQuery] string invoiceNumber)
-        {
+        //[HttpPost("Sent")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[EnableCors("AllowOrigin")]
+        //public async Task<ActionResult> Sent([FromQuery] string invoiceNumber)
+        //{
 
-            var resultdata = await _mediator.Send(new GetInvoiceByInvoiceNumberCommand()
-            {
-                CompanyId = rCompanyId,
-                invoiceNumber = invoiceNumber
-            });
+        //    var resultdata = await _mediator.Send(new GetInvoiceByInvoiceNumberCommand()
+        //    {
+        //        CompanyId = rCompanyId,
+        //        invoiceNumber = invoiceNumber
+        //    });
 
-            var invoice = _invoiceApi.GetInvoice(resultdata.Data.InvoiceId);
+        //    var invoice = _invoiceApi.GetInvoice(resultdata.Data.InvoiceId);
 
-            var result = await _mediator.Send(new SentInvoiceCommand()
-            {
-                CompanyId = rCompanyId,
-                InvoiceId = resultdata.Data.Id,
-                Status = InvoiceStatus.Processing
-            });
+        //    var result = await _mediator.Send(new SentInvoiceCommand()
+        //    {
+        //        CompanyId = rCompanyId,
+        //        InvoiceId = resultdata.Data.Id,
+        //        Status = InvoiceStatus.Processing
+        //    });
 
-            return Ok(result);
-        }
+        //    return Ok(result);
+        //}
 
 
         [HttpPost]
@@ -191,15 +191,15 @@ namespace CMPNatural.Api.Controllers.Invoice
                 return Ok(resultInvoice);
             }
 
+            //TODO
             await _mediator.Send(new SentInvoiceCommand()
             {
                 CompanyId = rCompanyId,
                 InvoiceId = InvoiceId,
-                Status = InvoiceStatus.Processing
+                //Status = InvoiceStatus.Processing
             });
 
             return Ok(resultInvoice);
-
 
         }
 

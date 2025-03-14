@@ -45,7 +45,7 @@ namespace CMPNatural.Application.Handlers
                 //
                 ThisMountInvoiceAmount = new MounthReportEntity() {
                     Amount = Math.Round(entity
-                .Where(x => x.RegisterDate.Year == DateTime.Now.Year && x.RegisterDate.Month == DateTime.Now.Month)
+                .Where(x => x.CreatedAt.Year == DateTime.Now.Year && x.CreatedAt.Month == DateTime.Now.Month)
                 .Sum(x => x.Amount), 3) ,
                   Date = DateTime.Now,
                    CurrentMount = true
@@ -54,7 +54,7 @@ namespace CMPNatural.Application.Handlers
                 LastMountInvoiceAmount = new MounthReportEntity() {
                     Amount =
                      Math.Round(entity
-                .Where(x => x.RegisterDate >= lastMonthStart && x.RegisterDate <= lastMonthEnd)
+                .Where(x => x.CreatedAt >= lastMonthStart && x.CreatedAt <= lastMonthEnd)
                 .Sum(x => x.Amount), 3),
                   Date = lastMonthStart,
                    CurrentMount = false

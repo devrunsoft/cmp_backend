@@ -1,0 +1,51 @@
+﻿using CMPNatural.Core.Repositories;
+using MediatR;
+using ScoutDirect.Application.Responses;
+using System.Threading;
+using System.Threading.Tasks;
+using CMPNatural.Core.Entities;
+using ScoutDirect.Core.Repositories.Base;
+using CMPNatural.Core.Enums;
+using System.Linq;
+
+namespace CMPNatural.Application
+{
+    public class AdminSignCompanyContractHandler : IRequestHandler<AdminSignCompanyContractCommand, CommandResponse<CompanyContract>>
+    {
+        private readonly ICompanyContractRepository _repository;
+        private readonly IAppInformationRepository _apprepository;
+        private readonly IinvoiceRepository _invoiceRepository;
+        public AdminSignCompanyContractHandler(ICompanyContractRepository repository, IinvoiceRepository invoiceRepository, IAppInformationRepository apprepository)
+        {
+            _repository = repository;
+            _invoiceRepository = invoiceRepository;
+            _apprepository = apprepository;
+        }
+        public async Task<CommandResponse<CompanyContract>> Handle(AdminSignCompanyContractCommand request, CancellationToken cancellationToken)
+        {
+            var entity = await _repository.GetByIdAsync(request.CompanyContractId);
+            var appinformation = (await _apprepository.GetAllAsync()).FirstOrDefault();
+            if(appinformation==null || appinformation.Sign == null)
+            {
+                return new NoAcess<CompanyContract>() { Message = "Please add a sign in Company Information" };
+            }
+
+            entity.AdminSign = appinformation.Sign;
+            await _repository.UpdateAsync(entity);
+
+            //update Invoice
+            var invoice = await _invoiceRepository.GetAsync(x => x.InvoiceId == entity.InvoiceId && x.Status == (int)InvoiceStatus.Pending &&
+            x.CompanyId == request.CompanyId
+            );
+
+            foreach (var item in invoice)
+            {
+                item.Status = (int)InvoiceStatus.Processing;
+                await _invoiceRepository.UpdateAsync(item);
+            }
+
+            return new Success<CompanyContract>() { Data = entity };
+        }
+    }
+}
+

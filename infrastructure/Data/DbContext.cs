@@ -42,6 +42,7 @@ namespace infrastructure.Data
         public virtual DbSet<Menu> Menu { get; set; } = null!;
         public virtual DbSet<AdminMenuAccess> AdminMenuAccess { get; set; } = null!;
         public virtual DbSet<Contract> Contract { get; set; } = null!;
+        public virtual DbSet<AppInformation> AppInformation { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -54,6 +55,11 @@ namespace infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AppInformation>(entity =>
+            {
+                entity.ToTable("AppInformation");
+            });
+
             modelBuilder.Entity<InvoiceSource>(entity =>
             {
                 entity.ToTable("InvoiceSource");

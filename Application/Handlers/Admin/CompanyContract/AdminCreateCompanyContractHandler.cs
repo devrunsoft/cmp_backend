@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
+using System.Text;
 using System.Threading.Tasks;
 using CMPNatural.Core.Entities;
 using CMPNatural.Core.Enums;
 using CMPNatural.Core.Repositories;
+using Microsoft.EntityFrameworkCore;
 using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Application.Handlers
@@ -12,19 +16,33 @@ namespace CMPNatural.Application.Handlers
 	{
         private readonly ICompanyContractRepository _repository;
         private readonly IContractRepository _contractrepository;
-        public AdminCreateCompanyContractHandler(ICompanyContractRepository _repository, IContractRepository _contractrepository)
+        private readonly IAppInformationRepository _apprepository;
+        private readonly IinvoiceRepository _baseServicerepository;
+        public AdminCreateCompanyContractHandler(ICompanyContractRepository _repository, IContractRepository _contractrepository,
+            IinvoiceRepository baseServicerepository, IAppInformationRepository _apprepository)
 		{
             this._repository = _repository;
             this._contractrepository = _contractrepository;
+            this._baseServicerepository = baseServicerepository;
+            this._apprepository = _apprepository;
         }
 
         public async Task<CommandResponse<CompanyContract>> Create(string invoiceId, long companyId)
         {
+            var information = (await _apprepository.GetAllAsync()).LastOrDefault();
             var contract = (await _contractrepository.GetAsync(x => x.Active)).LastOrDefault();
             if (contract == null)
             {
                 return new NoAcess<CompanyContract>() {  Message = "No active contract found!" };
             }
+
+            var services = (await _baseServicerepository.GetAsync(x => x.InvoiceId == invoiceId, query => query
+            .Include(x=>x.BaseServiceAppointment)
+            .ThenInclude(x=>x.Product)
+            .Include(x => x.BaseServiceAppointment)
+            .ThenInclude(x => x.ProductPrice)
+            )).FirstOrDefault();
+
             var entity = new CompanyContract()
             {
                 CompanyId = companyId,
@@ -32,9 +50,60 @@ namespace CMPNatural.Application.Handlers
                 Status = (int)CompanyContractStatus.Created,
                 CreatedAt = DateTime.Now,
                 ContractId = contract.Id,
-                Content = contract.Content
             };
+
             var result = await _repository.AddAsync(entity);
+
+
+            var managementCompany = new
+            {
+                Logo = "<img src='company-logo.png' alt='Company Logo' />",
+                Name = $"{information.CompanyCeoFirstName}",
+                Address = $"{information.CompanyAddress}",
+                Phone = $"{information.CompanyAddress}",
+                AgreementTitle = $"SERVICE AGREEMENT #{result.ContractNumber}",
+                //AgreementText = "This Agreement is made and entered into by and between..."
+            };
+
+            // Service list
+            List<string> serviceList = services.BaseServiceAppointment
+                .Select(x => $"{x.Product.Name} - {x.ProductPrice.Name} "
+                           + $"<strong>Number of Payments:</strong> {x.ProductPrice.NumberofPayments}, "
+                           + $"<strong>Billing Period:</strong> {x.ProductPrice.BillingPeriod}")
+                .ToList();
+
+            StringBuilder fullContract = new StringBuilder();
+
+            fullContract.AppendLine("<div>");
+            fullContract.AppendLine(managementCompany.Logo);
+            fullContract.AppendLine($"<p>{managementCompany.Name}</p>");
+            fullContract.AppendLine($"<p>{managementCompany.Address}</p>");
+            fullContract.AppendLine($"<p>{managementCompany.Phone}</p>");
+            fullContract.AppendLine($"<p><strong>{managementCompany.AgreementTitle}</strong></p>");
+            //fullContract.AppendLine($"<p>{managementCompany.AgreementText}</p>");
+            fullContract.AppendLine("<br>");
+            fullContract.AppendLine("<hr>");
+            fullContract.AppendLine("<br>");
+            fullContract.AppendLine("<br>");
+            fullContract.AppendLine(contract.Content);
+            fullContract.AppendLine("<br>");
+            fullContract.AppendLine("<hr>");
+            fullContract.AppendLine("<br>");
+            fullContract.AppendLine("<br>");
+            fullContract.AppendLine("<h3>Items:</h3>");
+            fullContract.AppendLine("<ul>");
+            foreach (var service in serviceList)
+            {
+                fullContract.AppendLine($"<li>{service}</li>");
+            }
+            fullContract.AppendLine("</ul>");
+
+            fullContract.AppendLine("</div>");
+
+
+            //update
+            entity.Content = fullContract.ToString();
+            await _repository.UpdateAsync(entity);
             return new Success<CompanyContract>() { Data = result, Message = "Successfull!" };
         }
 	}

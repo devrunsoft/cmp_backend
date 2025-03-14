@@ -71,29 +71,29 @@ namespace CMPNatural.Api.Controllers.Admin.Client
         }
 
 
-        [HttpGet("CheckPayment/{Id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> CheckPayment([FromRoute] long Id)
-        {
+        //[HttpGet("CheckPayment/{Id}")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[EnableCors("AllowOrigin")]
+        //public async Task<ActionResult> CheckPayment([FromRoute] long Id)
+        //{
 
-            var resultdata = await _mediator.Send(new GetInvoiceByIdCommand()
-            {
-                CompanyId = rCompanyId,
-                Id = Id
-            });
+        //    var resultdata = await _mediator.Send(new GetInvoiceByIdCommand()
+        //    {
+        //        CompanyId = rCompanyId,
+        //        Id = Id
+        //    });
 
-            var invoice = _invoiceApi.GetInvoice(resultdata.Data.InvoiceId);
-            System.Enum.TryParse(invoice.Data.status, out InvoiceStatus invoiceStatus);
-            var result = await _mediator.Send(new SentInvoiceCommand()
-            {
-                CompanyId = rCompanyId,
-                InvoiceId = resultdata.Data.Id,
-                Status = invoiceStatus
-            });
+        //    var invoice = _invoiceApi.GetInvoice(resultdata.Data.InvoiceId);
+        //    System.Enum.TryParse(invoice.Data.status, out InvoiceStatus invoiceStatus);
+        //    var result = await _mediator.Send(new SentInvoiceCommand()
+        //    {
+        //        CompanyId = rCompanyId,
+        //        InvoiceId = resultdata.Data.Id,
+        //        Status = invoiceStatus
+        //    });
 
-            return Ok(result);
-        }
+        //    return Ok(result);
+        //}
 
         [HttpPost("Pay")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -135,7 +135,6 @@ namespace CMPNatural.Api.Controllers.Admin.Client
             {
                 CompanyId = rCompanyId,
                 InvoiceId = resultdata.Data.Id,
-                Status = InvoiceStatus.Processing
             });
 
             return Ok(result);
