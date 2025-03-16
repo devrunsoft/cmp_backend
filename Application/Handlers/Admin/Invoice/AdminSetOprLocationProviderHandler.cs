@@ -34,7 +34,7 @@ namespace CMPNatural.Application
             var invoice = (await _invoiceRepository.GetAsync(p => p.InvoiceId == request.InvoiceId, query =>
                 query.Include(p => p.BaseServiceAppointment))).FirstOrDefault();
 
-            if (!(invoice.Status == (int)InvoiceStatus.Processing || invoice.Status == (int)InvoiceStatus.ProcessingPartialProvider))
+            if (!(invoice.Status == (int)InvoiceStatus.Needs_Assignment))
             {
                 return new NoAcess<Invoice>() { Data = invoice };
             }
@@ -53,23 +53,30 @@ namespace CMPNatural.Application
                 var distinctProviders = invoice.BaseServiceAppointment.Select(p => p.ProviderId).Distinct().Count();
                 if (distinctProviders == 1)
                 {
-                    invoice.Status = (int)InvoiceStatus.ProcessingProvider;
+                    invoice.Status = (int)InvoiceStatus.Processing_Provider;
                     invoice.ProviderId = request.ProviderId;
                 }
                 else
                 {
-                 invoice.Status = (int)InvoiceStatus.ProcessingSeprateProvider;
+                 //invoice.Status = (int)InvoiceStatus.ProcessingSeprateProvider;
                 }
 
                 await _invoiceRepository.UpdateAsync(invoice);
 
             }
 
-            if (invoice.BaseServiceAppointment.Any(p => p.ProviderId != null) && invoice.BaseServiceAppointment.Any(p => p.ProviderId == null))
+            if (!invoice.BaseServiceAppointment.Any(p => p.ProviderId == null))
             {
-                invoice.Status = (int)InvoiceStatus.ProcessingPartialProvider;
+                invoice.Status = (int)InvoiceStatus.Processing_Provider;
                 await _invoiceRepository.UpdateAsync(invoice);
             }
+
+
+            //if (invoice.BaseServiceAppointment.Any(p => p.ProviderId != null) && invoice.BaseServiceAppointment.Any(p => p.ProviderId == null))
+            //{
+            //    invoice.Status = (int)InvoiceStatus.ProcessingPartialProvider;
+            //    await _invoiceRepository.UpdateAsync(invoice);
+            //}
 
             return new Success<Invoice>() { Data = invoice };
         }

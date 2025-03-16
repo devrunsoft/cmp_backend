@@ -14,7 +14,7 @@ namespace CMPNatural.Core.Entities
         public int? ServiceType { get; set; }
 
         public bool IsEmergency { get {
-                return this.ServiceType == (int)ProductCollection.ServiceEmergency;
+                return this.Type == (int)ProductCollection.ServiceEmergency;
             } }
         public string CollectionIds { get; set; } = "";
         public string ServiceCrmId { get; set; } = "";

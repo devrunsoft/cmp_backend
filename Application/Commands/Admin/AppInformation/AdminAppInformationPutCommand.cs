@@ -1,5 +1,6 @@
 ﻿using CMPNatural.Core.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Application
@@ -10,12 +11,13 @@ namespace CMPNatural.Application
 		{
 		}
         public string CompanyTitle { get; set; }
-        public string CompanyIcon { get; set; }
+        public IFormFile CompanyIcon { get; set; }
         public string CompanyAddress { get; set; }
         public string CompanyPhoneNumber { get; set; }
         public string CompanyCeoLastName { get; set; }
         public string CompanyCeoFirstName { get; set; }
         public string Sign { get; set; }
+        public string? BaseVirtualPath { get; set; } = ""; 
     }
 }
 

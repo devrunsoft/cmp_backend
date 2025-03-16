@@ -102,7 +102,7 @@ namespace CMPNatural.Application.Handlers
             {
                 CompanyId = requests.CompanyId,
                 InvoiceCrmId= requests.InvoiceCrmId,
-                Status = (int)InvoiceStatus.draft,
+                Status = (int)InvoiceStatus.Draft,
                 InvoiceId = requests.InvoiceId,
                 BaseServiceAppointment = lstCustom,
                 Amount = requests.Amount,

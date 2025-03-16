@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Barbara.Application">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Application/Barbara.Application.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

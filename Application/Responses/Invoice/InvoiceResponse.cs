@@ -24,8 +24,8 @@ namespace CMPNatural.Application
         public string Address { get; set; } = "";
         public virtual Provider Provider { get; set; } = null;
         public virtual Company Company { get; set; } = null;
-        public string InvoiceNumber { get; set; }
-        public int ContractId { get; set; }
+        //public string InvoiceNumber { get; set; }
+        public int? ContractId { get; set; }
 
         public virtual ICollection<InvoiceProduct> InvoiceProduct { get; set; } = new List<InvoiceProduct>();
 
@@ -37,7 +37,15 @@ namespace CMPNatural.Application
         public string? InvoiceStatus {
             get {
 
-                return ProviderId==null ? ((Core.Enums.InvoiceStatus)Status).GetDescription() : "assigned";
+                return ((Core.Enums.InvoiceStatus)Status).GetDescription();
+            }
+        }
+
+        public string InvoiceNumber
+        {
+            get
+            {
+                return this.ContractId == null ? "---" : $"{this.CreatedAt.Year}-{this.CompanyId}-{(this.ContractId == null ? 0 : this.ContractId)}-{Id}";
             }
         }
 

@@ -39,7 +39,7 @@ namespace CMPNatural.Application
 
             var invoice = (await _invoiceRepository.GetAsync(p => p.InvoiceId == requests.InvoiceId)).FirstOrDefault();
 
-            if (invoice.Status == (int)InvoiceStatus.paid)
+            if (invoice.Status != (int)InvoiceStatus.Draft)
             {
                 return new NoAcess<Invoice>() { Message = "No Access To Edit Paid Invoice" };
             }
@@ -131,7 +131,7 @@ namespace CMPNatural.Application
             invoice.SendDate = DateTime.Now;
             invoice.Address = requests.Address;
             //invoice.Status = requests.ForceToPay ? (int)InvoiceStatus.SentForPay : (int)InvoiceStatus.Processing;
-            invoice.Status = (int)InvoiceStatus.PendingSignature;
+            invoice.Status = (int)InvoiceStatus.Pending_Signature;
 
             var invoiceAmount = requests.ServiceAppointment.Sum(x=> (x.Amount - x.Subsidy));
 

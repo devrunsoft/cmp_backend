@@ -13,8 +13,8 @@ namespace CMPNatural.Core.Enums
         [Description("Pending_Signature")]
         Pending_Signature = 2,
 
-        [Description("Pending")]
-        Pending = 3,
+        [Description("Needs_Admin_Signature")]
+        Needs_Admin_Signature = 3,
 
         [Description("Needs_Assignment")]
         Needs_Assignment = 4,

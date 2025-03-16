@@ -14,10 +14,11 @@ namespace CMPNatural.Api.Controllers.Admin.AppInformation
     [Authorize(Roles = "SuperAdmin")]
     public class AppInformationController : BaseAdminApiController
     {
-        protected readonly IMediator _mediator;
-        public AppInformationController(IMediator mediator) : base(mediator)
+        private readonly IWebHostEnvironment Environment;
+        public AppInformationController(IMediator mediator,
+            IWebHostEnvironment _environment) : base(mediator)
         {
-            _mediator = mediator;
+            Environment = _environment;
         }
 
         [HttpGet]
@@ -33,8 +34,11 @@ namespace CMPNatural.Api.Controllers.Admin.AppInformation
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Put([FromBody] AdminAppInformationPutCommand request)
+        public async Task<ActionResult> Put([FromForm] AdminAppInformationPutCommand request)
         {
+            string wwwPath = Environment.ContentRootPath;
+            request.BaseVirtualPath= wwwPath;
+
             var result = await _mediator.Send(request);
             return Ok(result);
         }

@@ -27,14 +27,6 @@ namespace CMPNatural.Core.Entities
         public long? ContractId { get; set; }
 
 
-        public string InvoiceNumber
-        {
-            get
-            {
-                return $"{this.CreatedAt.Year}-{this.CompanyId}-{(this.ContractId==null?0:this.ContractId)}-{Id}";
-            }
-        }
-
         public virtual ICollection<InvoiceProduct> InvoiceProduct { get; set; } = new List<InvoiceProduct>();
 
         public virtual ICollection<BaseServiceAppointment> BaseServiceAppointment { get; set; } = new List<BaseServiceAppointment>();

@@ -38,3 +38,17 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+/Application/bin/
+/Application/obj/
+/CmpNatural.CrmManagment/bin/
+/CmpNatural.CrmManagment/obj/
+/CMPPayment/bin/
+/CMPPayment/obj/
+/Core/bin/
+/Core/obj/
+/CrmManagment/bin/
+/CrmManagment/obj/
+/infrastructure/bin/
+/infrastructure/obj/
+/ScoutDirect/bin/
+/ScoutDirect/obj/

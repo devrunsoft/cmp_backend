@@ -26,13 +26,13 @@ namespace CMPNatural.Application
             await _repository.UpdateAsync(entity);
 
             //update Invoice
-            var invoice = await _invoiceRepository.GetAsync(x => x.InvoiceId == entity.InvoiceId && x.Status == (int)InvoiceStatus.PendingSignature &&
+            var invoice = await _invoiceRepository.GetAsync(x => x.InvoiceId == entity.InvoiceId && x.Status == (int)InvoiceStatus.Pending_Signature &&
             x.CompanyId == request.CompanyId
             );
 
             foreach (var item in invoice)
             {
-                item.Status = (int)InvoiceStatus.Processing;
+                item.Status = (int)InvoiceStatus.Needs_Admin_Signature;
                 await _invoiceRepository.UpdateAsync(item);
             }
 

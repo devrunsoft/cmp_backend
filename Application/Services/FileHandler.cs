@@ -9,20 +9,20 @@ namespace CMPNatural.Application.Services
 	{
         public static string ProviderDriverfileHandler(string BaseVirtualPath, IFormFile file, string key, dynamic uniqueId, string path)
         {
-            return ProviderfileHandler(BaseVirtualPath, file, key, $"Provider/{uniqueId}/Driver/{path}");
+            return AppfileHandler(BaseVirtualPath, file, key, $"Provider/{uniqueId}/Driver/{path}");
         }
 
         public static string ProviderVehiclefileHandler(string BaseVirtualPath, IFormFile file, string key, dynamic uniqueId, string path)
         {
-            return ProviderfileHandler(BaseVirtualPath, file, key,  $"Provider/{uniqueId}/Vehicle/{path}");
+            return AppfileHandler(BaseVirtualPath, file, key,  $"Provider/{uniqueId}/Vehicle/{path}");
         }
 
         public static string ProviderfileHandler(string BaseVirtualPath, IFormFile file, string key, dynamic uniqueId, string path)
         {
-            return ProviderfileHandler(BaseVirtualPath, file, key, $"Provider/{uniqueId}/{path}");
+            return AppfileHandler(BaseVirtualPath, file, key, $"Provider/{uniqueId}/{path}");
         }
 
-        private static string ProviderfileHandler(string BaseVirtualPath, IFormFile file, string key,string folderName)
+        public static string AppfileHandler(string BaseVirtualPath, IFormFile file, string key, string folderName)
         {
             if (file == null)
                 return null;
