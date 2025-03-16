@@ -35,7 +35,6 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
         {
         }
 
-
         [HttpGet("report")]
         [MenuAuthorize(MenuEnum.Home)]
         [ProducesResponseType(StatusCodes.Status200OK)]

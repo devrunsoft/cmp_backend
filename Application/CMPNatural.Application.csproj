@@ -178,7 +178,6 @@
     <None Remove="Handlers\Admin\Auth\" />
     <None Remove="Commands\Admin\Invoice\" />
     <None Remove="Handlers\Admin\Invoice\" />
-    <None Remove="Commands\Admin\provider\" />
     <None Remove="Commands\Admin\ProviderServiceAssignment\" />
     <None Remove="Handlers\Admin\ProviderServiceAssignment\" />
     <None Remove="Mapper\Invoice\" />
@@ -405,7 +404,6 @@
     <Folder Include="Handlers\Admin\Auth\" />
     <Folder Include="Commands\Admin\Invoice\" />
     <Folder Include="Handlers\Admin\Invoice\" />
-    <Folder Include="Commands\Admin\provider\" />
     <Folder Include="Commands\Admin\ProviderServiceAssignment\" />
     <Folder Include="Handlers\Admin\ProviderServiceAssignment\" />
     <Folder Include="Mapper\Invoice\" />

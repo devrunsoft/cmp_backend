@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using CMPNatural.Core.Repositories;
 using CMPNatural.Core.Base;
-using CMPNatural.Application.Commands.Admin.provider;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 

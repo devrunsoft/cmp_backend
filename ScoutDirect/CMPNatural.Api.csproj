@@ -26,9 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="FileContent\" />
     <None Remove="Controllers\_Base\" />
-    <None Remove="FileContent\1\" />
     <None Remove="Controllers\Auth\" />
     <None Remove="Controllers\Auth\Register\" />
     <None Remove="View\" />
@@ -58,11 +56,10 @@
     <None Remove="Controllers\Admin\Contract\" />
     <None Remove="Controllers\Admin\CompanyContract\" />
     <None Remove="Controllers\CompanyContract\" />
+    <None Remove="Controllers\Admin\FileController\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="FileContent\" />
     <Folder Include="Controllers\_Base\" />
-    <Folder Include="FileContent\1\" />
     <Folder Include="Controllers\Auth\" />
     <Folder Include="Controllers\Auth\Register\" />
     <Folder Include="View\" />
@@ -92,6 +89,7 @@
     <Folder Include="Controllers\Admin\Contract\" />
     <Folder Include="Controllers\Admin\CompanyContract\" />
     <Folder Include="Controllers\CompanyContract\" />
+    <Folder Include="Controllers\Admin\FileController\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\infrastructure\CMPNatural.infrastructure.csproj">

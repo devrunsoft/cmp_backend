@@ -52,3 +52,5 @@ next-env.d.ts
 /infrastructure/obj/
 /ScoutDirect/bin/
 /ScoutDirect/obj/
+/ScoutDirect/FileContent/
+/ScoutDirect/log/

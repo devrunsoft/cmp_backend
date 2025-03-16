@@ -6,7 +6,7 @@ using MediatR;
 using ScoutDirect.Application.Responses;
 using ScoutDirect.Core.Base;
 
-namespace CMPNatural.Application.Commands.Admin.provider
+namespace CMPNatural.Application
 {
     public class AdminPostProviderCommand : ProviderInput , IRequest<CommandResponse<Provider>>
     {

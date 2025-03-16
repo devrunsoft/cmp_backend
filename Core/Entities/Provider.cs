@@ -1,4 +1,6 @@
 ﻿using System;
+using CMPNatural.Core.Enums;
+
 namespace CMPNatural.Core.Entities
 {
 	public partial class Provider
@@ -6,7 +8,7 @@ namespace CMPNatural.Core.Entities
         public long Id { get; set; }
         public string Name { get; set; } = "";
         public double Rating { get; set; }
-        public int Status { get; set; }
+        public ProviderStatus Status { get; set; }
         public double Lat { get; set; }
         public double Long { get; set; }
         public double AreaLocation { get; set; }

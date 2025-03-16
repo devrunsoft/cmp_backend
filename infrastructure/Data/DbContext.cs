@@ -257,6 +257,10 @@ namespace infrastructure.Data
             {
                 entity.ToTable("Provider");
 
+                entity
+                .Property(p => p.Status)
+                .HasConversion<int>();
+
                 entity.HasMany(d => d.ProviderService)
                 .WithOne(p => p.Provider)
 .               HasForeignKey(d => d.ProviderId);

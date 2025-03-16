@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using CmpNatural.CrmManagment.Invoice;
 using CMPNatural.Application;
-using CMPNatural.Application.Commands.Admin.provider;
 using CMPNatural.Application.Model;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using MySqlX.XDevAPI.Common;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -39,14 +39,14 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> get([FromRoute] int Id)
         {
-            var result = await _mediator.Send(new AdminGetProviderCommand() { Id = Id});
+            var result = await _mediator.Send(new AdminGetProviderCommand() { Id = Id });
             return Ok(result);
         }
 
         [HttpPut("{Id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Put([FromRoute] long Id , [FromForm] ProviderInput input)
+        public async Task<ActionResult> Put([FromRoute] long Id, [FromForm] ProviderInput input)
         {
             string wwwPath = Environment.ContentRootPath;
             var result = await _mediator.Send(new AdminPutProviderCommand()
@@ -62,7 +62,7 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
                 Rating = input.Rating,
                 BusinessLicense = input.BusinessLicense,
                 BusinessLicenseExp = input.BusinessLicenseExp,
-                EPACompliance =  input.EPACompliance,
+                EPACompliance = input.EPACompliance,
                 EPAComplianceExp = input.EPAComplianceExp,
                 HealthDepartmentPermit = input.HealthDepartmentPermit,
                 HealthDepartmentPermitExp = input.HealthDepartmentPermitExp,
@@ -108,6 +108,15 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
             });
 
             return Ok(result);
+        }
+
+        [HttpPut("ChangeStatus/{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> ChangeStatus([FromRoute] long Id, [FromBody] AdminChangeStatusProviderCommand command)
+        {
+            command.ProviderId = Id;
+            return Ok(command);
         }
     }
 }

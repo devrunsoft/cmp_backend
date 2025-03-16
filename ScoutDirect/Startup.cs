@@ -71,7 +71,8 @@ namespace ScoutDirect.Api
                     {
                         builder.AllowAnyOrigin()
                                .AllowAnyHeader()
-                               .AllowAnyMethod();
+                               .AllowAnyMethod()
+                               .WithExposedHeaders("content-disposition");
                     });
             });
 
