@@ -143,6 +143,10 @@ namespace infrastructure.Data
             modelBuilder.Entity<Company>(entity =>
             {
                 entity.ToTable("Company");
+
+                entity.HasOne(d => d.BillingInformation)
+                .WithOne(p => p.Company)
+                .HasForeignKey<BillingInformation>(d => d.CompanyId);
             });
 
             modelBuilder.Entity<LocationCompany>(entity =>

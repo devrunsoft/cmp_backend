@@ -26,7 +26,7 @@ namespace CMPNatural.Application
                 CompanyIcon = FileHandler.AppfileHandler(request.BaseVirtualPath, request.CompanyIcon, "CompanyIcon", "Admin/AppInfromation");
 
             var entity = (await _repository.GetAllAsync()).FirstOrDefault();
-
+            entity.CompanyPhoneNumber = request.CompanyPhoneNumber;
             entity.CompanyTitle = request.CompanyTitle;
             entity.CompanyAddress = request.CompanyAddress;
             entity.CompanyCeoFirstName = request.CompanyCeoFirstName;

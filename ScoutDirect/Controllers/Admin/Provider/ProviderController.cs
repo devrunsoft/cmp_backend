@@ -116,7 +116,8 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
         public async Task<ActionResult> ChangeStatus([FromRoute] long Id, [FromBody] AdminChangeStatusProviderCommand command)
         {
             command.ProviderId = Id;
-            return Ok(command);
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
     }
 }

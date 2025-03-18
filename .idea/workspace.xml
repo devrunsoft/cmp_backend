@@ -5,24 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="54e99ebd-4141-4ee4-8b77-8ea39660b8e4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/CMPNatural/xs/UserPrefs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/CMPNatural/xs/UserPrefs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/CMPNatural/xs/project-cache/CMPNatural.Api-Debug.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/CMPNatural/xs/project-cache/CMPNatural.Api-Debug.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.vs/CMPNatural/xs/project-cache/CMPNatural.Application-Debug.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/CMPNatural/xs/project-cache/CMPNatural.Application-Debug.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/CMPNatural.Application.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Application/CMPNatural.Application.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/Commands/Admin/provider/AdminGetProviderCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Commands/Admin/provider/AdminGetProviderCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Commands/Admin/provider/AdminPostProviderCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Commands/Admin/provider/AdminPostProviderCommand.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/Commands/Admin/provider/AdminPutProviderCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Commands/Admin/provider/AdminPutProviderCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Handlers/Admin/provider/AdminGetProviderHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Handlers/Admin/provider/AdminGetProviderHandler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/Handlers/Admin/provider/AdminPostProviderHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Handlers/Admin/provider/AdminPostProviderHandler.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Application/Handlers/Admin/provider/AdminPutProviderHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Handlers/Admin/provider/AdminPutProviderHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Entities/Provider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Entities/Provider.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ScoutDirect/CMPNatural.Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/CMPNatural.Api.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/Admin/Invoice/AdminInvoiceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/Admin/Invoice/AdminInvoiceController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/Admin/Provider/ProviderController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/Admin/Provider/ProviderController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ScoutDirect/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/infrastructure/Data/DbContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/infrastructure/Data/DbContext.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +43,7 @@
       <option name="presentableId" value="Default" />
       <updated>1742123880784</updated>
       <workItem from="1742123886351" duration="581000" />
-      <workItem from="1742151420311" duration="317000" />
+      <workItem from="1742151420311" duration="445000" />
     </task>
     <servers />
   </component>

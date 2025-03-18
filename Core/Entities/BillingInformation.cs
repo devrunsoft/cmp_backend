@@ -17,6 +17,7 @@ namespace CMPNatural.Core.Entities
         public string? ZIPCode { get; set; }
         public bool IsPaypal { get; set; }
 		public long CompanyId { get; set; }
+		public virtual Company Company { get; set; }
 	}
 }
 

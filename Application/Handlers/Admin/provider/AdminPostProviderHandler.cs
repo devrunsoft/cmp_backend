@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using CMPNatural.Core.Repositories;
 using CMPNatural.Core.Base;
 using System;
-using CMPNatural.Application.Commands.Admin.provider;
 using CMPNatural.Application.Services;
 using System.Collections.Generic;
 
@@ -40,7 +39,7 @@ namespace CMPNatural.Application
                 Address = request.Address,
                 County = request.County,
                 City = request.City,
-                Status = (int) request.Status,
+                Status = request.Status,
                 BusinessLicenseExp = request.BusinessLicenseExp,
                 HealthDepartmentPermitExp = request.HealthDepartmentPermitExp,
                 EPAComplianceExp = request.EPAComplianceExp,

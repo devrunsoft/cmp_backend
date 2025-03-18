@@ -57,19 +57,20 @@ namespace CMPNatural.Application.Handlers
 
             var managementCompany = new
             {
-                Logo = "<img src='company-logo.png' alt='Company Logo' />",
+                Logo = $"<img width={40} height={40}  src='https://api.app-cmp.com{information.CompanyIcon}' alt='Company Logo' />",
                 Name = $"{information.CompanyCeoFirstName}",
                 Address = $"{information.CompanyAddress}",
                 Phone = $"{information.CompanyAddress}",
+                TotalAmount = $"{services.Amount}",
                 AgreementTitle = $"SERVICE AGREEMENT #{result.ContractNumber}",
                 //AgreementText = "This Agreement is made and entered into by and between..."
             };
 
             // Service list
             List<string> serviceList = services.BaseServiceAppointment
-                .Select(x => $"{x.Product.Name} - {x.ProductPrice.Name} "
-                           + $"<strong>Number of Payments:</strong> {x.ProductPrice.NumberofPayments}, "
-                           + $"<strong>Billing Period:</strong> {x.ProductPrice.BillingPeriod}")
+                .Select(x => $"<strong>{x.Product.Name}</strong>  - <strong>{x.ProductPrice.Name} </strong> "
+                           + $"Number of Payments:{x.ProductPrice.NumberofPayments}, "
+                           + $"Billing Period: {x.ProductPrice.BillingPeriod}")
                 .ToList();
 
             StringBuilder fullContract = new StringBuilder();
@@ -97,6 +98,8 @@ namespace CMPNatural.Application.Handlers
                 fullContract.AppendLine($"<li>{service}</li>");
             }
             fullContract.AppendLine("</ul>");
+
+            fullContract.AppendLine($"<p>Total: <strong>{managementCompany.TotalAmount}</strong></p>");
 
             fullContract.AppendLine("</div>");
 

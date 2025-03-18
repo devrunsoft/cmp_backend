@@ -24,6 +24,7 @@ namespace CMPNatural.Application
         public string Address { get; set; } = "";
         public virtual Provider Provider { get; set; } = null;
         public virtual Company Company { get; set; } = null;
+        public virtual BillingInformation BillingInformation { get; set; } = null;
         //public string InvoiceNumber { get; set; }
         public int? ContractId { get; set; }
 

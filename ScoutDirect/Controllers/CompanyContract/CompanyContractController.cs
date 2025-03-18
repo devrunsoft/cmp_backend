@@ -28,6 +28,15 @@ namespace CMPNatural.Api.Controllers.CompanyContract
             return Ok(result);
         }
 
+        [HttpGet("Signable")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Signable()
+        {
+            var result = await _mediator.Send(new GetAllSiganbleCompanyContractCommand() { CompanyId = rCompanyId });
+            return Ok(result);
+        }
+
         [HttpGet("{Id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]

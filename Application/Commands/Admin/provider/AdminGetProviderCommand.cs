@@ -5,10 +5,10 @@ using MediatR;
 using ScoutDirect.Application.Responses;
 using ScoutDirect.Core.Base;
 
-namespace CMPNatural.Application.Commands.Admin.provider
+namespace CMPNatural.Application
 
 { 
-    public class AdminGetProviderCommand :IRequest<CommandResponse<Provider>>
+    public class AdminGetProviderCommand : IRequest<CommandResponse<Provider>>
     {
         public long Id { get; set; }
     }

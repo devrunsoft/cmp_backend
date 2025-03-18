@@ -4,8 +4,8 @@ using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Application.Model.ServiceAppointment
 {
-	public class ServiceAppointmentInput
-	{
+    public partial class ServiceAppointmentInput
+    {
 
         public ServiceType ServiceTypeId { get; set; } = ServiceType.Cooking_Oil_Collection;
 
@@ -28,6 +28,19 @@ namespace CMPNatural.Application.Model.ServiceAppointment
         public double Subsidy { get; set; } = 0;
 
         public double Amount { get; set; } = 0;
-    }
-}
 
+        public double TotlaAmount { get; set; } = 0;
+    }
+
+    public partial class ServiceAppointmentInput
+    {
+
+       public double calculateAmount()
+        {
+            var amount = (this.qty * this.Amount) - this.Subsidy;
+            return amount;
+        }
+
+    }
+
+}

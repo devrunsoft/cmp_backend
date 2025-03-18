@@ -75,6 +75,7 @@ namespace CMPNatural.Application
                         DueDate = request.StartDate ?? DateTime.Now,
                         OperationalAddressId = request.OperationalAddressId,
                         Status = (int)ServiceStatus.draft,
+                        Subsidy = request.Subsidy,
                         IsEmegency = false,
                         Qty = request.qty,
                         Amount = request.Amount,
@@ -110,11 +111,25 @@ namespace CMPNatural.Application
                     };
                     lstCustom.Add(command);
                 }
-            }
+            }   
+
+
+
+
+            invoice.BaseServiceAppointment = lstCustom;
+            invoice.InvoiceProduct = invoiceProducts;
+            invoice.SendDate = DateTime.Now;
+            invoice.Address = requests.Address;
+            //invoice.Status = requests.ForceToPay ? (int)InvoiceStatus.SentForPay : (int)InvoiceStatus.Processing;
+            invoice.Status = (int)InvoiceStatus.Pending_Signature;
+            //var invoiceAmount = requests.ServiceAppointment.Sum(x=> (x.TotlaAmount));
+            invoice.Amount = requests.Amount;
+            await _invoiceRepository.UpdateAsync(invoice);
+            await _baseServiceAppointmentRepository.DeleteRangeAsync(services);
+
 
             if (requests.CreateContract)
             {
-
                 var result = await new AdminCreateCompanyContractHandler(_companyContractRepository, _contractRepository, _invoiceRepository, _appRepository)
                     .Create(invoice.InvoiceId, invoice.CompanyId);
 
@@ -126,18 +141,7 @@ namespace CMPNatural.Application
             }
 
 
-            invoice.BaseServiceAppointment = lstCustom;
-            invoice.InvoiceProduct = invoiceProducts;
-            invoice.SendDate = DateTime.Now;
-            invoice.Address = requests.Address;
-            //invoice.Status = requests.ForceToPay ? (int)InvoiceStatus.SentForPay : (int)InvoiceStatus.Processing;
-            invoice.Status = (int)InvoiceStatus.Pending_Signature;
 
-            var invoiceAmount = requests.ServiceAppointment.Sum(x=> (x.Amount - x.Subsidy));
-
-            invoice.Amount = invoiceAmount;
-            await _invoiceRepository.UpdateAsync(invoice);
-            await _baseServiceAppointmentRepository.DeleteRangeAsync(services);
             return new Success<Invoice>() { Data = invoice, Message = "Successfull!" };
 
         }

@@ -17,7 +17,7 @@ namespace CMPNatural.Api.Controllers.Admin.CompanyContract
         {
         }
 
-        [HttpGet]
+        [HttpGet()]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Get([FromQuery] AdminGetPaginateCompanyContractCommand command)
