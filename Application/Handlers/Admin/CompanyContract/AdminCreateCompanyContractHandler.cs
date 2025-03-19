@@ -69,7 +69,7 @@ namespace CMPNatural.Application.Handlers
             // Service list
             List<string> serviceList = services.BaseServiceAppointment
                 .Select(x => $"<strong>{x.Product.Name}</strong>  - <strong>{x.ProductPrice.Name} </strong> "
-                           + $"Number of Payments:{x.ProductPrice.NumberofPayments}, "
+                           + $"- Number of Payments: {x.ProductPrice.NumberofPayments}, "
                            + $"Billing Period: {x.ProductPrice.BillingPeriod}")
                 .ToList();
 
@@ -99,7 +99,7 @@ namespace CMPNatural.Application.Handlers
             }
             fullContract.AppendLine("</ul>");
 
-            fullContract.AppendLine($"<p>Total: <strong>{managementCompany.TotalAmount}</strong></p>");
+            fullContract.AppendLine($"<p>Total: <strong>${managementCompany.TotalAmount}</strong></p>");
 
             fullContract.AppendLine("</div>");
 

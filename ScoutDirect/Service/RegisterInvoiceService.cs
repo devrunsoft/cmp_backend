@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using CMPNatural.Application;
 using CMPNatural.Application.Commands.Company;
 using CMPNatural.Application.Commands.ShoppingCard;
@@ -23,7 +24,7 @@ namespace CMPNatural.Api.Service
             this.rCompanyId = rCompanyId;
         }
 
-		public async Task<CommandResponse<object>> call()
+		public async Task<List<CommandResponse<Invoice>>> call()
 		{
             var resultShopping = (await _mediator.Send(new GetAllShoppingCardCommand()
             {
@@ -44,6 +45,7 @@ namespace CMPNatural.Api.Service
                  })
               .ToList();
 
+            List<CommandResponse<Invoice>> invoices = new List<CommandResponse<Invoice>>();
 
             foreach (var item in groupedData)
             {
@@ -74,10 +76,10 @@ namespace CMPNatural.Api.Service
 
                 if (!resultInvoice.IsSucces())
                 {
-                    return new NoAcess() { Message = resultInvoice.Message };
+                    return invoices;
                 }
 
-                await _mediator.Send(new CreateInvoiceCommand()
+              var invoice = await _mediator.Send(new CreateInvoiceCommand()
                 {
                     CompanyId = rCompanyId,
                     InvoiceCrmId = invoiceId.ToString(),
@@ -89,6 +91,7 @@ namespace CMPNatural.Api.Service
                     Address = item.item.First().Address
 
                 });
+                invoices.Add(invoice);
 
             }
 
@@ -97,7 +100,7 @@ namespace CMPNatural.Api.Service
                 CompanyId = rCompanyId,
             });
 
-            return result;
+            return invoices;
         }
 
 	}

@@ -13,7 +13,7 @@ namespace CMPNatural.Api.Controllers
 
     [ApiController]
     [Route("api/[controller]")]
-    public class RegisterCompanyLocationController: BaseApiController
+    public class RegisterCompanyLocationController: BaseClientApiController
     {
 
         public RegisterCompanyLocationController(IMediator mediator):base(mediator)

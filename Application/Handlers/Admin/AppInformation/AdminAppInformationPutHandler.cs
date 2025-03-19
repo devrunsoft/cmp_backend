@@ -33,6 +33,7 @@ namespace CMPNatural.Application
             entity.CompanyCeoLastName = request.CompanyCeoLastName;
             entity.Sign = request.Sign;
             entity.CompanyIcon = CompanyIcon;
+            entity.CompanyEmail = request.CompanyEmail;
 
             await _repository.UpdateAsync(entity);
             return new Success<AppInformation>() { Data = entity };

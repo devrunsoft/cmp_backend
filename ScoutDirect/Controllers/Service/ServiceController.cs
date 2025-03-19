@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CmpNatural.CrmManagment.Product;
-using CMPNatural.Api.Controllers._Base;
 using CMPNatural.Application;
 using CMPNatural.Application.Responses.Service;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using ScoutDirect.Api.Controllers._Base;
 using ScoutDirect.Application.Responses;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -18,7 +18,7 @@ namespace CMPNatural.Api.Controllers.ServiceAppointment
 
     [ApiController]
     [Route("api/[controller]")]
-    public class ServiceController : CmpBaseController
+    public class ServiceController : BaseClientApiController
     {
         private ProductListApi _api;
         private ProductPriceApi _priceapi;

@@ -2,17 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CMPNatural.Api.Controllers._Base;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Hosting;
+using ScoutDirect.Api.Controllers._Base;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CMPNatural.Api.Controllers
 {
-    public class FileController : BaseAppApiController
+    public class FileController : BaseApiController
     {
         private readonly IWebHostEnvironment Environment;
         public FileController(IMediator mediator, IWebHostEnvironment _environment) : base(mediator)

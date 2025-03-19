@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CMPNatural.Api.Controllers._Base;
+﻿
 using CMPNatural.Application;
 using CMPNatural.Application.Commands.OperationalAddress;
 using CMPNatural.Application.Commands.ServiceAppointment;
@@ -12,6 +8,7 @@ using CMPNatural.Core.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using ScoutDirect.Api.Controllers._Base;
 using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Api.Controllers.ServiceAppointment
@@ -19,7 +16,7 @@ namespace CMPNatural.Api.Controllers.ServiceAppointment
 
     [ApiController]
     [Route("api/[controller]")]
-    public class ServiceAppointmentController : CmpBaseController
+    public class ServiceAppointmentController : BaseClientApiController
     {
         public ServiceAppointmentController(IMediator mediator) : base(mediator)
         {

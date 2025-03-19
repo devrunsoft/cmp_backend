@@ -11,7 +11,7 @@ namespace CMPNatural.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class BilingInformationController : BaseApiController
+    public class BilingInformationController : BaseClientApiController
     {
         public BilingInformationController(IMediator mediator) : base(mediator)
         {

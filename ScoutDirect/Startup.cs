@@ -19,11 +19,9 @@ using ScoutDirect.infrastructure.Repository;
 using ScoutDirect.Core.Repositories.Base;
 using CMPNatural.Application.Handlers;
 using CmpNatural.CrmManagment.Model;
-using CMPNatural.Application.Services;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using System.Text.Json.Serialization;
-using CMPPayment;
+using CMPEmail;
+using CMPEmail.Email;
 
 namespace ScoutDirect.Api
 {
@@ -185,6 +183,8 @@ namespace ScoutDirect.Api
 
             services.Configure<CacheConfiguration>(Configuration.GetSection("CacheConfiguration"));
             services.Configure<AppVersionModel>(Configuration.GetSection("AppVersion"));
+            services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.AddTransient<IEmailSender, EmailSender>();
             //services.Configure<AppConfigModel>(Configuration.GetSection("AppConfig"));
 
             //For In-Memory Caching

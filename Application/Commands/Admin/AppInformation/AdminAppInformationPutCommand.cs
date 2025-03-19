@@ -13,6 +13,7 @@ namespace CMPNatural.Application
         public string CompanyTitle { get; set; }
         public IFormFile CompanyIcon { get; set; }
         public string CompanyAddress { get; set; }
+        public string CompanyEmail { get; set; }
         public string CompanyPhoneNumber { get; set; }
         public string CompanyCeoLastName { get; set; }
         public string CompanyCeoFirstName { get; set; }

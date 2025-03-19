@@ -8,7 +8,6 @@ using CmpNatural.CrmManagment.Contact;
 using CmpNatural.CrmManagment.Invoice;
 using CmpNatural.CrmManagment.Model;
 using CmpNatural.CrmManagment.Product;
-using CMPNatural.Api.Controllers._Base;
 using CMPNatural.Api.Service;
 using CMPNatural.Application;
 using CMPNatural.Application.Commands.Company;
@@ -25,16 +24,16 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using ScoutDirect.Api.Controllers._Base;
 using ScoutDirect.Application.Responses;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CMPNatural.Api.Controllers.Invoice
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public class InvoiceController : CmpBaseController
+ 
+    public class InvoiceController : BaseClientApiController
     {
 
         private InvoiceApi _invoiceApi;
@@ -159,8 +158,13 @@ namespace CMPNatural.Api.Controllers.Invoice
         {
             RegisterInvoiceService service = new RegisterInvoiceService(_mediator, rCompanyId);
             var result = await service.call();
+            foreach (var item in result)
+            {
+                var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminInvoices, item.Data.InvoiceId);
+                 sendEmailToAdmin(emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern);
+            }
 
-            return Ok(result);
+            return Ok(new Success<object>());
         }
 
 

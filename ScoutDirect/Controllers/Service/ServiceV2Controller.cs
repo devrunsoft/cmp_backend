@@ -1,18 +1,18 @@
 ﻿using System;
 using CmpNatural.CrmManagment.Product;
-using CMPNatural.Api.Controllers._Base;
 using CMPNatural.Application;
 using CMPNatural.Application.Commands.Service;
 using Google.Protobuf.WellKnownTypes;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using ScoutDirect.Api.Controllers._Base;
 
 namespace CMPNatural.Api.Controllers.Service
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ServiceV2Controller : CmpBaseController
+    public class ServiceV2Controller : BaseClientApiController
     {
         public ServiceV2Controller(IMediator mediator) : base(mediator)
         {

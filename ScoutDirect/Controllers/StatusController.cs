@@ -21,7 +21,7 @@ using ScoutDirect.Application.Responses;
 namespace CMPNatural.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class RegisterStatusController : BaseApiController
+    public class RegisterStatusController : BaseClientApiController
     {
         public RegisterStatusController(IMediator mediator) : base(mediator)
         {

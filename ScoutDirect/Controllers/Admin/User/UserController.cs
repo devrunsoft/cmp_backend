@@ -1,5 +1,4 @@
 ﻿using System;
-using CMPNatural.Api.Controllers._Base;
 using CMPNatural.Application;
 using MediatR;
 using Microsoft.AspNetCore.Cors;

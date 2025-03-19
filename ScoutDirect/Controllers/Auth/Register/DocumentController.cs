@@ -15,7 +15,7 @@ namespace CMPNatural.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class DocumentController : BaseApiController
+    public class DocumentController : BaseClientApiController
     {
         private readonly IWebHostEnvironment Environment;
         public DocumentController(IMediator mediator, IWebHostEnvironment _environment) : base(mediator)

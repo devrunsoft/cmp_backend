@@ -7,16 +7,17 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using ScoutDirect.Api.Controllers._Base;
 
 namespace CMPNatural.Api.Controllers.Admin
 {
     [Authorize(Roles = "SuperAdmin,LimitedAdmin")]
     [ApiController]
     [Route("api/admin/[controller]")]
-    public class BaseAdminApiController : Controller
+    public class BaseAdminApiController : BaseApiController
     {
         protected readonly IMediator _mediator;
-        public BaseAdminApiController(IMediator mediator)
+        public BaseAdminApiController(IMediator mediator): base(mediator)
         {
             _mediator = mediator;
         }

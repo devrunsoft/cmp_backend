@@ -15,7 +15,7 @@ using ScoutDirect.Api.Controllers._Base;
 
 namespace CMPNatural.Api.Controllers.Payment
 {
-    public class PaymentController : BaseApiController
+    public class PaymentController : BaseClientApiController
     {
         public PaymentController(IMediator mediator) : base(mediator)
         {

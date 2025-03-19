@@ -30,14 +30,13 @@ namespace CMPNatural.Api.Controllers.Admin.AppInformation
             return Ok(result);
         }
 
-
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Put([FromForm] AdminAppInformationPutCommand request)
         {
             string wwwPath = Environment.ContentRootPath;
-            request.BaseVirtualPath= wwwPath;
+            request.BaseVirtualPath = wwwPath;
 
             var result = await _mediator.Send(request);
             return Ok(result);

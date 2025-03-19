@@ -17,6 +17,7 @@
     <None Remove="Repositories\Sync\**" />
     <None Remove="UOW\**" />
     <None Remove="Microsoft.AspNetCore.Http" />
+    <None Remove="Helper\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -71,4 +72,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Helper\" />
+  </ItemGroup>
 </Project>

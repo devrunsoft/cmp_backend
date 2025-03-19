@@ -6,7 +6,6 @@ using CmpNatural.CrmManagment.Contact;
 using CmpNatural.CrmManagment.Invoice;
 using CmpNatural.CrmManagment.Model;
 using CmpNatural.CrmManagment.Product;
-using CMPNatural.Api.Controllers._Base;
 using CMPNatural.Api.Service;
 using CMPNatural.Application;
 using CMPNatural.Application.Commands.Admin.Invoice;
@@ -132,6 +131,12 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
                 //Status = InvoiceStatus.Processing
             });
 
+            if (result.Data.ContractId != null)
+            {
+                var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminHasCreateContract, result.Data.ContractId.Value);
+                 sendEmailToClient(rCompanyId ,emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern);
+            }
+
             return Ok(result);
         }
 
@@ -154,6 +159,12 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
 
             command.InvoiceId = InvoiceId;
             var result = await _mediator.Send(command);
+
+            if (result.Data.ContractId != null)
+            {
+                var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminHasCreateContract, result.Data.ContractId.Value);
+                 sendEmailToAdmin(emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern);
+            }
             return Ok(result);
 
         }

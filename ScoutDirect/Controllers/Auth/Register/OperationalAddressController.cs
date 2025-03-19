@@ -17,7 +17,7 @@ using ScoutDirect.Api.Controllers._Base;
 namespace CMPNatural.Api.Controllers.Auth.Register
 {
     [Route("api/[controller]")]
-    public class OperationalAddressController : BaseApiController
+    public class OperationalAddressController : BaseClientApiController
     {
         public OperationalAddressController(IMediator mediator) : base(mediator)
         {

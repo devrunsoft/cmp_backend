@@ -13,7 +13,7 @@ using ScoutDirect.Api.Controllers._Base;
 
 namespace CMPNatural.Api.Controllers.CompanyContract
 {
-    public class CompanyContractController : BaseApiController
+    public class CompanyContractController : BaseClientApiController
     {
         public CompanyContractController(IMediator mediator) : base(mediator)
         {
@@ -42,7 +42,7 @@ namespace CMPNatural.Api.Controllers.CompanyContract
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Get([FromRoute] long Id)
         {
-            var result = await _mediator.Send(new GetAllCompanyContractCommand() { CompanyId = rCompanyId });
+            var result = await _mediator.Send(new GetCompanyContractCommand() { CompanyId = rCompanyId  , ContractId = Id});
             return Ok(result);
         }
 

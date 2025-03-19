@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CMPNatural.Api.Controllers._Base;
+﻿
 using CMPNatural.Application;
 using CMPNatural.Application.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using ScoutDirect.Api.Controllers._Base;
 using ScoutDirect.Application.Responses;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CMPNatural.Api.Controllers.Client.Capacity
 {
-    public class CapacityController : BaseAppApiController
+    public class CapacityController : BaseClientApiController
     {
         public CapacityController(IMediator mediator) : base(mediator)
         {

@@ -54,3 +54,5 @@ next-env.d.ts
 /ScoutDirect/obj/
 /ScoutDirect/FileContent/
 /ScoutDirect/log/
+/CMPEmail/bin/
+/CMPEmail/obj/

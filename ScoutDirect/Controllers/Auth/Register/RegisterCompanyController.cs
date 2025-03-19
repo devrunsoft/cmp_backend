@@ -21,7 +21,7 @@ namespace CMPNatural.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class RegisterCompanyController : BaseApiController
+    public class RegisterCompanyController : BaseClientApiController
     {
         protected readonly IMediator _mediator;
         private readonly IConfiguration _configuration;

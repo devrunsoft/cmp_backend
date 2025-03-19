@@ -107,5 +107,8 @@
     <ProjectReference Include="..\CMPPayment\CMPPayment.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+    <ProjectReference Include="..\CMPEmail\CMPEmail.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
 </Project>
