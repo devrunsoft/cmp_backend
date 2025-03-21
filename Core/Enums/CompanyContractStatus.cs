@@ -15,6 +15,9 @@ namespace CMPNatural.Core.Enums
 
         [Description("Signed")]
         Signed = 3,
+
+        [Description("Needs_Admin_Signature")]
+        Needs_Admin_Signature = 4,
     }
 }
 

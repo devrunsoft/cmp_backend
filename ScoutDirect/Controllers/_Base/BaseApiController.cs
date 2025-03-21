@@ -7,6 +7,8 @@ using ScoutDirect.Core.Caching;
 
 namespace ScoutDirect.Api.Controllers._Base
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class BaseApiController : Controller
     {
         protected readonly IMediator _mediator;

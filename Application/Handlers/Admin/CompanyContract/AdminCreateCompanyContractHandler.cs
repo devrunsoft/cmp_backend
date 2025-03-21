@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection.Metadata;
+using System.Runtime.CompilerServices;
+using System.Security.Policy;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CMPNatural.Core.Entities;
 using CMPNatural.Core.Enums;
+using CMPNatural.Core.Helper;
 using CMPNatural.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
 using ScoutDirect.Application.Responses;
@@ -27,16 +32,17 @@ namespace CMPNatural.Application.Handlers
             this._apprepository = _apprepository;
         }
 
-        public async Task<CommandResponse<CompanyContract>> Create(string invoiceId, long companyId)
+        public async Task<CommandResponse<CompanyContract>> Create(Invoice invoice, long companyId)
         {
             var information = (await _apprepository.GetAllAsync()).LastOrDefault();
             var contract = (await _contractrepository.GetAsync(x => x.Active)).LastOrDefault();
+            var company = invoice.Company;
             if (contract == null)
             {
                 return new NoAcess<CompanyContract>() {  Message = "No active contract found!" };
             }
 
-            var services = (await _baseServicerepository.GetAsync(x => x.InvoiceId == invoiceId, query => query
+            var services = (await _baseServicerepository.GetAsync(x => x.InvoiceId == invoice.InvoiceId, query => query
             .Include(x=>x.BaseServiceAppointment)
             .ThenInclude(x=>x.Product)
             .Include(x => x.BaseServiceAppointment)
@@ -46,7 +52,7 @@ namespace CMPNatural.Application.Handlers
             var entity = new CompanyContract()
             {
                 CompanyId = companyId,
-                InvoiceId = invoiceId,
+                InvoiceId = invoice.InvoiceId,
                 Status = (int)CompanyContractStatus.Created,
                 CreatedAt = DateTime.Now,
                 ContractId = contract.Id,
@@ -55,60 +61,70 @@ namespace CMPNatural.Application.Handlers
             var result = await _repository.AddAsync(entity);
 
 
-            var managementCompany = new
-            {
-                Logo = $"<img width={40} height={40}  src='https://api.app-cmp.com{information.CompanyIcon}' alt='Company Logo' />",
-                Name = $"{information.CompanyCeoFirstName}",
-                Address = $"{information.CompanyAddress}",
-                Phone = $"{information.CompanyAddress}",
-                TotalAmount = $"{services.Amount}",
-                AgreementTitle = $"SERVICE AGREEMENT #{result.ContractNumber}",
-                //AgreementText = "This Agreement is made and entered into by and between..."
-            };
-
             // Service list
             List<string> serviceList = services.BaseServiceAppointment
                 .Select(x => $"<strong>{x.Product.Name}</strong>  - <strong>{x.ProductPrice.Name} </strong> "
-                           + $"- Number of Payments: {x.ProductPrice.NumberofPayments}, "
-                           + $"Billing Period: {x.ProductPrice.BillingPeriod}")
+                           + $"- <strong>Number of Payments:</strong> {x.ProductPrice.NumberofPayments}, "
+                           + $"<strong>Billing Period:</strong> {x.ProductPrice.BillingPeriod}" +
+                           $"<br> <strong>Start Date:</strong> {x.DueDate.ToString("MM/dd/yyyy")}" +
+                           $" - <strong>Preferred Days:</strong> {x.DayOfWeek} ({ConvertTimeToString(x.FromHour)} until {ConvertTimeToString(x.ToHour)})" +
+                           $"<br> <strong>Total:</strong> ${x.TotalAmount}"
+                           )
                 .ToList();
-
-            StringBuilder fullContract = new StringBuilder();
-
-            fullContract.AppendLine("<div>");
-            fullContract.AppendLine(managementCompany.Logo);
-            fullContract.AppendLine($"<p>{managementCompany.Name}</p>");
-            fullContract.AppendLine($"<p>{managementCompany.Address}</p>");
-            fullContract.AppendLine($"<p>{managementCompany.Phone}</p>");
-            fullContract.AppendLine($"<p><strong>{managementCompany.AgreementTitle}</strong></p>");
-            //fullContract.AppendLine($"<p>{managementCompany.AgreementText}</p>");
-            fullContract.AppendLine("<br>");
-            fullContract.AppendLine("<hr>");
-            fullContract.AppendLine("<br>");
-            fullContract.AppendLine("<br>");
-            fullContract.AppendLine(contract.Content);
-            fullContract.AppendLine("<br>");
-            fullContract.AppendLine("<hr>");
-            fullContract.AppendLine("<br>");
-            fullContract.AppendLine("<br>");
-            fullContract.AppendLine("<h3>Items:</h3>");
-            fullContract.AppendLine("<ul>");
-            foreach (var service in serviceList)
+            var managementCompany = new
             {
-                fullContract.AppendLine($"<li>{service}</li>");
-            }
-            fullContract.AppendLine("</ul>");
+                Logo = $"<img width={40} height={40}  src='https://api.app-cmp.com{information.CompanyIcon}' alt='Company Logo' />",
+                //Name = $"{information.CompanyCeoFirstName}",
+                //Address = $"{information.CompanyAddress}",
+                //Phone = $"{information.CompanyAddress}",
+                //TotalAmount = $"{services.Amount}",
+                //AgreementTitle = $"SERVICE AGREEMENT #{result.ContractNumber}",
+                Services = $"<ul>{string.Join("", serviceList.Select(service => $"<li>{service}</li>"))}</ul>"
+        };
 
-            fullContract.AppendLine($"<p>Total: <strong>${managementCompany.TotalAmount}</strong></p>");
 
-            fullContract.AppendLine("</div>");
 
+
+            var dbContent = contract.Content.ToString();
+
+          dbContent = dbContent.Replace(ContractKeysEnum.ManagmentCompanyLogo.GetDescription(), managementCompany.Logo);
+          dbContent=  dbContent.Replace(ContractKeysEnum.ManagmentCompanyName.GetDescription(), information.CompanyTitle);
+          dbContent=  dbContent.Replace(ContractKeysEnum.ManagmentCompanyEmail.GetDescription(), information.CompanyEmail);
+          dbContent=  dbContent.Replace(ContractKeysEnum.ManagmentCompanyPhoneNumber.GetDescription(), information.CompanyPhoneNumber);
+          dbContent=  dbContent.Replace(ContractKeysEnum.ManagmentCompanyFirstName.GetDescription(), information.CompanyCeoFirstName);
+          dbContent=  dbContent.Replace(ContractKeysEnum.ManagmentCompanyLastName.GetDescription(), information.CompanyCeoLastName);
+          dbContent=  dbContent.Replace(ContractKeysEnum.ManagmentCompanyAddress.GetDescription(), information.CompanyAddress);
+             ///////
+          dbContent=  dbContent.Replace(ContractKeysEnum.ClientFirstName.GetDescription(), company.PrimaryFirstName);
+          dbContent=  dbContent.Replace(ContractKeysEnum.ClientLastName.GetDescription(), company.PrimaryLastName);
+          dbContent=  dbContent.Replace(ContractKeysEnum.ClientAddress.GetDescription(), invoice.Address);
+          dbContent=  dbContent.Replace(ContractKeysEnum.ClientCompanyName.GetDescription(), company.CompanyName);
+          dbContent=  dbContent.Replace(ContractKeysEnum.ServiceItems.GetDescription(), managementCompany.Services);
+          dbContent=  dbContent.Replace(ContractKeysEnum.ContractNumber.GetDescription(), result.ContractNumber);
+
+          dbContent = CompanyContractHelper.HideByKey(ContractKeysEnum.ClientSign.GetDescription(), dbContent);
+          dbContent = CompanyContractHelper.HideByKey(ContractKeysEnum.ManagmentCompanySign.GetDescription(), dbContent);
+          dbContent = CompanyContractHelper.HideByKey(ContractKeysEnum.ClientSignDateTime.GetDescription(), dbContent);
 
             //update
-            entity.Content = fullContract.ToString();
+            entity.Content = dbContent.ToString();
             await _repository.UpdateAsync(entity);
             return new Success<CompanyContract>() { Data = result, Message = "Successfull!" };
         }
-	}
+
+        private static string ConvertTimeToString(int totalMinutes)
+        {
+            int hours = totalMinutes / 60;
+            int minutes = totalMinutes % 60;
+
+            // Convert 24-hour time to 12-hour format
+            string period = hours >= 12 ? "PM" : "AM";
+            int twelveHourFormat = hours % 12 == 0 ? 12 : hours % 12;
+
+            return $"{twelveHourFormat:D2}:{minutes:D2} {period}";
+        }
+
+
+    }
 }
 

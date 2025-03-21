@@ -53,6 +53,15 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
             return Ok(result);
         }
 
+        [HttpGet("CreatedInvoice")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> GetAllInvoice([FromQuery] AdminGetAllCreatedInvoiceCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
         [HttpGet("{InvoiceId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]

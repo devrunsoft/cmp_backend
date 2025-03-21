@@ -7,6 +7,7 @@ using CMPNatural.Core.Entities;
 using ScoutDirect.Core.Repositories.Base;
 using CMPNatural.Core.Enums;
 using System.Linq;
+using CMPNatural.Core.Helper;
 
 namespace CMPNatural.Application
 {
@@ -29,18 +30,23 @@ namespace CMPNatural.Application
             {
                 return new NoAcess<CompanyContract>() { Message = "Please add a sign in Company Information" };
             }
+            var content = entity.Content;
+            content = CompanyContractHelper.ShowByKey(ContractKeysEnum.ManagmentCompanySign.GetDescription(), content, CompanyContractHelper.SignFont);
+            content = content.Replace(ContractKeysEnum.ManagmentCompanySign.GetDescription(), appinformation.Sign);
 
+            entity.Content = content;
+            entity.Status = (int)CompanyContractStatus.Signed;
             entity.AdminSign = appinformation.Sign;
             await _repository.UpdateAsync(entity);
 
             //update Invoice
-            var invoice = await _invoiceRepository.GetAsync(x => x.InvoiceId == entity.InvoiceId && x.Status == (int)InvoiceStatus.Needs_Admin_Signature &&
+            var invoice = await _invoiceRepository.GetAsync(x => x.InvoiceId == entity.InvoiceId && x.Status == InvoiceStatus.Needs_Admin_Signature &&
             x.CompanyId == request.CompanyId
             );
 
             foreach (var item in invoice)
             {
-                item.Status = (int)InvoiceStatus.Needs_Assignment;
+                item.Status = InvoiceStatus.Needs_Assignment;
                 await _invoiceRepository.UpdateAsync(item);
             }
 

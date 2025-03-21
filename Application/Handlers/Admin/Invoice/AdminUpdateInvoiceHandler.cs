@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CMPNatural.Application.Commands.Admin.Invoice;
 using CMPNatural.Application.Handlers;
+using Microsoft.EntityFrameworkCore;
 
 namespace CMPNatural.Application
 {
@@ -37,9 +38,9 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<Invoice>> Handle(AdminUpdateInvoiceCommand requests, CancellationToken cancellationToken)
         {
 
-            var invoice = (await _invoiceRepository.GetAsync(p => p.InvoiceId == requests.InvoiceId)).FirstOrDefault();
+            var invoice = (await _invoiceRepository.GetAsync(p => p.InvoiceId == requests.InvoiceId, query => query.Include(x => x.Company))).FirstOrDefault();
 
-            if (invoice.Status != (int)InvoiceStatus.Draft)
+            if (invoice.Status != InvoiceStatus.Draft)
             {
                 return new NoAcess<Invoice>() { Message = "No Access To Edit Paid Invoice" };
             }
@@ -80,10 +81,14 @@ namespace CMPNatural.Application
                         Qty = request.qty,
                         Amount = request.Amount,
                         ProductId = request.ProductId,
+                        ProductPrice = resultPrice,
                         ProductPriceId = request.ProductPriceId,
                         ServiceAppointmentLocations = request.LocationCompanyIds
                            .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
-                           .ToList()
+                           .ToList(),
+                        DayOfWeek = string.Join(",", request.DayOfWeek.Select(x => x.GetDescription())),
+                        FromHour = request.FromHour,
+                        ToHour = request.ToHour,
                     };
                     lstCustom.Add(command);
                 }
@@ -100,6 +105,7 @@ namespace CMPNatural.Application
                         Amount = request.Amount,
                         Subsidy = request.Subsidy,
                         ProductId = request.ProductId,
+                        ProductPrice = resultPrice,
                         ProductPriceId = request.ProductPriceId,
                         OperationalAddressId = request.OperationalAddressId,
                         Status = (int)ServiceStatus.draft,
@@ -107,7 +113,10 @@ namespace CMPNatural.Application
                         Qty = request.qty,
                         ServiceAppointmentLocations = request.LocationCompanyIds
                         .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
-                        .ToList()
+                        .ToList(),
+                        DayOfWeek = string.Join(",", request.DayOfWeek.Select(x => x.GetDescription())),
+                        FromHour = request.FromHour,
+                        ToHour = request.ToHour,
                     };
                     lstCustom.Add(command);
                 }
@@ -121,9 +130,11 @@ namespace CMPNatural.Application
             invoice.SendDate = DateTime.Now;
             invoice.Address = requests.Address;
             //invoice.Status = requests.ForceToPay ? (int)InvoiceStatus.SentForPay : (int)InvoiceStatus.Processing;
-            invoice.Status = (int)InvoiceStatus.Pending_Signature;
+            invoice.Status = InvoiceStatus.Pending_Signature;
             //var invoiceAmount = requests.ServiceAppointment.Sum(x=> (x.TotlaAmount));
             invoice.Amount = requests.Amount;
+            invoice.CalculateAmountByamount();
+
             await _invoiceRepository.UpdateAsync(invoice);
             await _baseServiceAppointmentRepository.DeleteRangeAsync(services);
 
@@ -131,7 +142,7 @@ namespace CMPNatural.Application
             if (requests.CreateContract)
             {
                 var result = await new AdminCreateCompanyContractHandler(_companyContractRepository, _contractRepository, _invoiceRepository, _appRepository)
-                    .Create(invoice.InvoiceId, invoice.CompanyId);
+                    .Create(invoice, invoice.CompanyId);
 
                 if (!result.IsSucces())
                 {

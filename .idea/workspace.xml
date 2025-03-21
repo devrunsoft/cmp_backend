@@ -5,10 +5,49 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="54e99ebd-4141-4ee4-8b77-8ea39660b8e4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Application/Commands/Admin/provider/AdminGetProviderCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Commands/Admin/provider/AdminGetProviderCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Commands/Admin/provider/AdminPutProviderCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Commands/Admin/provider/AdminPutProviderCommand.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Handlers/Admin/provider/AdminPostProviderHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Handlers/Admin/provider/AdminPostProviderHandler.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Application/Handlers/Admin/provider/AdminPutProviderHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Handlers/Admin/provider/AdminPutProviderHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/CMPNatural/xs/UserPrefs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/CMPNatural/xs/UserPrefs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/CMPNatural/xs/project-cache/CMPNatural.Api-Debug.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/CMPNatural/xs/project-cache/CMPNatural.Api-Debug.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/CMPNatural/xs/project-cache/CMPNatural.Application-Debug.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/CMPNatural/xs/project-cache/CMPNatural.Application-Debug.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.vs/CMPNatural/xs/project-cache/CMPNatural.Core-Debug.json" beforeDir="false" afterPath="$PROJECT_DIR$/.vs/CMPNatural/xs/project-cache/CMPNatural.Core-Debug.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Commands/Admin/AppInformation/AdminAppInformationPutCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Commands/Admin/AppInformation/AdminAppInformationPutCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Handlers/Admin/AppInformation/AdminAppInformationPutHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Handlers/Admin/AppInformation/AdminAppInformationPutHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Handlers/Admin/CompanyContract/AdminCreateCompanyContractHandler.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Handlers/Admin/CompanyContract/AdminCreateCompanyContractHandler.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Application/Handlers/CommandHandlers/Invoice/DeleteInvoiceCommand.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Application/Handlers/CommandHandlers/Invoice/DeleteInvoiceCommand.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMPNatural.sln" beforeDir="false" afterPath="$PROJECT_DIR$/CMPNatural.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/CMPNatural.Core.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Core/CMPNatural.Core.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Entities/AppInformation.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Entities/AppInformation.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/CMPNatural.Api.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/CMPNatural.Api.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/Admin/AppInformation/AppInformationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/Admin/AppInformation/AppInformationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/Admin/BaseAdminApiController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/Admin/BaseAdminApiController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/Admin/Client/ClientInvoicesController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/Admin/Client/ClientInvoicesController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/Admin/Invoice/AdminInvoiceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/Admin/Invoice/AdminInvoiceController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/Admin/User/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/Admin/User/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/Auth/Register/BilingInformationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/Auth/Register/BilingInformationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/Auth/Register/BusinessTypeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/Auth/Register/BusinessTypeController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/Auth/Register/DocumentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/Auth/Register/DocumentController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/Auth/Register/OperationalAddressController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/Auth/Register/OperationalAddressController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/Auth/Register/RegisterCompanyController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/Auth/Register/RegisterCompanyController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/Auth/Register/RegisterCompanyLocationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/Auth/Register/RegisterCompanyLocationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/Capacity/CapacityController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/Capacity/CapacityController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/CompanyContract/CompanyContractController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/CompanyContract/CompanyContractController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/FileController/FileController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/FileController/FileController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/Invoice/InvoiceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/Invoice/InvoiceController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/Payment/PaymentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/Payment/PaymentController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/Service/ServiceAppointmentController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/Service/ServiceAppointmentController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/Service/ServiceAppointmentEmergencyController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/Service/ServiceAppointmentEmergencyController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/Service/ServiceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/Service/ServiceController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/Service/ServiceV2Controller.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/Service/ServiceV2Controller.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/StatusController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/StatusController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/_Base/BaseApiController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/_Base/BaseApiController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/_Base/BaseAppApiController.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/_Base/BaseRegisteredController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/_Base/BaseRegisteredController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/dashboard/OperationalAddressDashboardController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/dashboard/OperationalAddressDashboardController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/dashboard/OtherCompanyLocationControllerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/dashboard/OtherCompanyLocationControllerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Controllers/shoppingcard/ShoppingCardController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Controllers/shoppingcard/ShoppingCardController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Service/RegisterInvoiceService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Service/RegisterInvoiceService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ScoutDirect/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ScoutDirect/appsettings.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +83,7 @@
       <updated>1742123880784</updated>
       <workItem from="1742123886351" duration="581000" />
       <workItem from="1742151420311" duration="445000" />
+      <workItem from="1742344720252" duration="661000" />
     </task>
     <servers />
   </component>

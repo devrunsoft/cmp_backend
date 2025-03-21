@@ -50,6 +50,14 @@ namespace CMPNatural.Application
             }
         }
 
+        public string RequestNumber
+        {
+            get
+            {
+                return $"{this.CreatedAt.Year}-{this.CompanyId}-{Id}";
+            }
+        }
+
         public bool CanAssign
         {
             get

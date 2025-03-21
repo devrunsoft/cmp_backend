@@ -7,17 +7,20 @@ namespace CMPNatural.Core.Enums
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum ProviderServiceAssignmentStatus
     {
-        [Description("assigned")]
-        assigned = 1,
+        [Description("Assigned")]
+        Assigned = 1,
 
-        [Description("canceledByAdmin")]
-        canceled = 2,
+        [Description("Canceled_By_Admin")]
+        Canceled_By_Admin = 2,
 
-        [Description("canceledByProvider")]
-        canceledByProvider = 3,
+        [Description("canceled_By_Provider")]
+        canceled_By_Provider = 3,
 
-        [Description("completed")]
-        completed = 4,
+        [Description("Prosessing")]
+        Prosessing = 4,
+
+        [Description("Completed")]
+        Completed = 5,
     }
 }
 

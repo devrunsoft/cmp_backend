@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using CMPNatural.Core.Entities;
 using ScoutDirect.Core.Repositories.Base;
 using CMPNatural.Core.Enums;
+using CMPNatural.Core.Helper;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace CMPNatural.Application
 {
@@ -21,18 +24,27 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<CompanyContract>> Handle(SignCompanyContractCommand request, CancellationToken cancellationToken)
         {
             var entity = await _repository.GetByIdAsync(request.CompanyContractId);
-            entity.Status = (int)CompanyContractStatus.Signed;
+            entity.Status = (int)CompanyContractStatus.Needs_Admin_Signature;
             entity.Sign = request.Sign;
+            entity.ClientSignDate = DateTime.Now;
+            var content = entity.Content;
+            string formattedTime = entity.ClientSignDate.Value.ToString("hh:mm tt");
+            content = CompanyContractHelper.ShowByKey(ContractKeysEnum.ClientSign.GetDescription(), content, CompanyContractHelper.SignFont);
+            content = CompanyContractHelper.ShowByKey(ContractKeysEnum.ClientSignDateTime.GetDescription(), content);
+            content = content.Replace(ContractKeysEnum.ClientSign.GetDescription(), request.Sign);
+            content = content.Replace(ContractKeysEnum.ClientSignDateTime.GetDescription(), $"{entity.ClientSignDate.Value.ToString("MM/dd/yyyy")} {formattedTime}");
+            entity.Content = content;
+
             await _repository.UpdateAsync(entity);
 
             //update Invoice
-            var invoice = await _invoiceRepository.GetAsync(x => x.InvoiceId == entity.InvoiceId && x.Status == (int)InvoiceStatus.Pending_Signature &&
+            var invoice = await _invoiceRepository.GetAsync(x => x.InvoiceId == entity.InvoiceId && x.Status == InvoiceStatus.Pending_Signature &&
             x.CompanyId == request.CompanyId
             );
 
             foreach (var item in invoice)
             {
-                item.Status = (int)InvoiceStatus.Needs_Admin_Signature;
+                item.Status = InvoiceStatus.Needs_Admin_Signature;
                 await _invoiceRepository.UpdateAsync(item);
             }
 

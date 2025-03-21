@@ -63,7 +63,10 @@ namespace CMPNatural.Application.Handlers
                 LocationCompanyIds = string.Join(",", request.LocationCompanyIds),
                 Qty = Qty,
                 ProductPriceId = request.ProductPriceId,
-                ProductId = request.ProductId
+                ProductId = request.ProductId,
+                DayOfWeek = string.Join(",", request.DayOfWeek.Select(x => x.GetDescription())),
+                FromHour = request.FromHour,
+                ToHour = request.ToHour,
 
             };
             var result = await _shoppingCardRepository.AddAsync(entity);

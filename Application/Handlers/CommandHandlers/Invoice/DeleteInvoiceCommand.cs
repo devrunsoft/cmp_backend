@@ -27,12 +27,12 @@ namespace CMPNatural.Application.Handlers
         {
             var entity = (await _invoiceRepository.GetAsync(p => p.CompanyId == request.CompanyId && p.Id == request.InvoiceId)).FirstOrDefault();
 
-            if(entity.Status != (int)InvoiceStatus.Draft)
+            if(entity.Status != InvoiceStatus.Draft)
             {
                 return new NoAcess<object>() { Data = entity, Message = "Your service is currently being processed." };
             }
 
-            entity.Status = (int)InvoiceStatus.Canceled;
+            entity.Status = InvoiceStatus.Canceled;
             await _invoiceRepository.UpdateAsync(entity);
 
             if (entity.ContractId != null)

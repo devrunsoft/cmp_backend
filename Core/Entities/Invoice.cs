@@ -1,4 +1,6 @@
 ﻿using System;
+using CMPNatural.Core.Enums;
+
 namespace CMPNatural.Core.Entities
 {
 	public partial class Invoice
@@ -9,7 +11,7 @@ namespace CMPNatural.Core.Entities
         //public string ProductCrmId { get; set; }
         //public string ProductPriceCrmId { get; set; }
         public string InvoiceCrmId { get; set; } = null!;
-        public int Status { get; set; }
+        public InvoiceStatus Status { get; set; }
         public string? Link { get; set; }
         public double Amount { get; set; }
         public string InvoiceId { get; set; } = null!;

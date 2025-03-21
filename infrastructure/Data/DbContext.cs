@@ -225,6 +225,10 @@ namespace infrastructure.Data
                 entity.HasMany(d => d.InvoiceProduct)
                 .WithOne(p => p.Invoice)
                 .HasForeignKey(d => d.InvoiceId);
+
+                entity
+                .Property(p => p.Status)
+                .HasConversion<int>();
             });
 
             modelBuilder.Entity<ShoppingCard>(entity =>

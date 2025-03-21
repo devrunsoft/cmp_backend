@@ -62,7 +62,10 @@ namespace CMPNatural.Api.Service
                     ProductPriceId = e.ProductPriceId.Value,
                     ProductId = e.ProductId.Value,
                     LocationCompanyIds = e.LocationCompanyIds.IsNullOrEmpty() ? new List<long>() : e.LocationCompanyIds.Split(",").Select((e) => long.Parse(e)).ToList(),
-                    qty = e.Qty
+                    qty = e.Qty,
+                    DayOfWeek = e.DayOfWeek.Split(",").Select(x => (DayOfWeekEnum)Enum.Parse(typeof(DayOfWeekEnum), x.Trim())).ToList(),
+                    FromHour = e.FromHour,
+                    ToHour = e.ToHour
                 }).ToList();
 
 

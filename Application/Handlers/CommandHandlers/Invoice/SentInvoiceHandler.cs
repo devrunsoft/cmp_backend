@@ -29,7 +29,7 @@ namespace CMPNatural.Application.Handlers
 
            var amount=  entity.BaseServiceAppointment.Sum(x=>x.ProductPrice.Amount * x.Qty);
 
-            entity.Status = (int)InvoiceStatus.Pending_Signature;
+            entity.Status = InvoiceStatus.Pending_Signature;
             entity.Amount = amount;
 
             await _invoiceRepository.UpdateAsync(entity);

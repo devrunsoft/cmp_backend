@@ -33,6 +33,14 @@ namespace CMPNatural.Core.Entities
 
         public double Amount { get; set; }
 
+        public decimal TotalAmount { get; set; }
+
+        public string DayOfWeek { get; set; } = "";
+
+        public int FromHour { get; set; } = 480; //8 AM
+
+        public int ToHour { get; set; } = 1080; //6 PM
+
         public double Subsidy { get; set; }
 
         public virtual Invoice Invoice { get; set; }

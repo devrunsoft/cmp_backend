@@ -31,10 +31,10 @@ namespace CMPNatural.Application.Handlers
               var AllInvoiceAmount=  entity.Sum(x => x.Amount);
             var roundedAllInvoiceAmount = AllInvoiceAmount.ToString("#,0.00");
 
-            var CompleteInvoiceAmount = entity.Where(x => x.Status == (int)InvoiceStatus.Complete).Sum(x => x.Amount);
+            var CompleteInvoiceAmount = entity.Where(x => x.Status == InvoiceStatus.Complete).Sum(x => x.Amount);
             var roundedCompleteInvoiceAmount = CompleteInvoiceAmount.ToString("#,0.00");
 
-            var ActiveInvoiceAmount = entity.Where(x => x.Status != (int)InvoiceStatus.Complete).Sum(x => x.Amount);
+            var ActiveInvoiceAmount = entity.Where(x => x.Status != InvoiceStatus.Complete).Sum(x => x.Amount);
             var roundedActiveInvoiceAmount = ActiveInvoiceAmount.ToString("#,0.00");
 
             var data = new ReportResponse()

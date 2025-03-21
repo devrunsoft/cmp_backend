@@ -5,9 +5,11 @@ using System.Threading.Tasks;
 using CMPNatural.Application;
 using CMPNatural.Application.Commands.Admin;
 using CMPNatural.Application.Model;
+using CMPNatural.Core.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Api.Controllers.Admin.Contract
 {
@@ -20,7 +22,7 @@ namespace CMPNatural.Api.Controllers.Admin.Contract
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Get([FromQuery] AdminGetAllContractCommand command)
+        public async Task<ActionResult> GetAll([FromQuery] AdminGetAllContractCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);
@@ -54,6 +56,20 @@ namespace CMPNatural.Api.Controllers.Admin.Contract
         {
             var result = await _mediator.Send(new AdminEditContractCommand(request,Id));
             return Ok(result);
+        }
+
+        [HttpGet("AllKeys")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public ActionResult GetAllKeys()
+        {
+            var data = Enum.GetValues(typeof(ContractKeysEnum)).Cast<ContractKeysEnum>()
+                .Select(x=> new NameAndValue<string>() {
+                    name = x.ToString(),
+                    value = x.GetDescription()
+                }).ToList();
+
+            return Ok(new Success<List<NameAndValue<string>>>() { Data = data });
         }
 
     }

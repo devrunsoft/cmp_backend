@@ -13,6 +13,7 @@ namespace CMPNatural.Core.Entities
         public string InvoiceId { get; set; }
         public string? Sign { get; set; }
         public string? AdminSign { get; set; }
+        public DateTime? ClientSignDate { get; set; }
         public int Status { get; set; }
 		public Company Company { get; set; }
         //public Invoice Invoice { get; set; }

@@ -12,22 +12,32 @@ using CMPNatural.Application.Responses;
 using ScoutDirect.Core.Authentication;
 using System.Linq;
 using System.Collections.Generic;
+using CMPNatural.Application.Commands.Admin.Invoice;
+using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Application.Handlers.Admin.Auth
 {
 
-    public class AdminGetAllInvoiceHandler : IRequestHandler<AdminGetAllInvoiceCommand, CommandResponse<PagesQueryResponse<InvoiceResponse>>>
+    public class AdminGetAllCreatedInvoiceHandler : IRequestHandler<AdminGetAllCreatedInvoiceCommand, CommandResponse<PagesQueryResponse<InvoiceResponse>>>
     {
         private readonly IinvoiceRepository _invoiceRepository;
 
-        public AdminGetAllInvoiceHandler(IinvoiceRepository invoiceRepository)
+        public AdminGetAllCreatedInvoiceHandler(IinvoiceRepository invoiceRepository)
         {
             _invoiceRepository = invoiceRepository;
         }
 
-        public async Task<CommandResponse<PagesQueryResponse<InvoiceResponse>>> Handle(AdminGetAllInvoiceCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<PagesQueryResponse<InvoiceResponse>>> Handle(AdminGetAllCreatedInvoiceCommand request, CancellationToken cancellationToken)
         {
-            var invoices = (await _invoiceRepository.GetBasePagedAsync(request, x=> (request.Status == null || x.Status == request.Status) ,
+            if(request.Status == InvoiceStatus.Draft){
+              return new NoAcess<PagesQueryResponse<InvoiceResponse>>() { };
+            }
+
+            var invoices = (await _invoiceRepository.GetBasePagedAsync(request, x=> (request.Status == null ?
+            x.Status != InvoiceStatus.Draft && x.Status != InvoiceStatus.Needs_Admin_Signature &&
+            x.Status != InvoiceStatus.Pending_Signature
+            : x.Status == request.Status),
+
                 query => query.Include(i => i.Company)));
 
             var model = new PagesQueryResponse<InvoiceResponse>(

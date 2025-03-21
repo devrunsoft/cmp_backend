@@ -10,6 +10,7 @@ using System.Linq;
 using CMPNatural.Core.Enums;
 using CMPNatural.Application.Commands.Admin.Invoice;
 using CMPNatural.Core.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CMPNatural.Application.Handlers
 {
@@ -31,13 +32,13 @@ namespace CMPNatural.Application.Handlers
 
         public async Task<CommandResponse<Invoice>> Handle(AdminSentInvoiceCommand request, CancellationToken cancellationToken)
         {
-            var entity = (await _invoiceRepository.GetAsync(p => p.Id == request.InvoiceId)).FirstOrDefault();
-            entity.Status = (int)InvoiceStatus.Pending_Signature;
+            var entity = (await _invoiceRepository.GetAsync(p => p.Id == request.InvoiceId,query=>query.Include(x=>x.Company))).FirstOrDefault();
+            entity.Status = InvoiceStatus.Pending_Signature;
 
             //if (requests.CreateContract)
             //{
                 var result = await new AdminCreateCompanyContractHandler(_companyContractRepository, _contractRepository , _invoiceRepository , _appRepository)
-                    .Create(entity.InvoiceId, entity.CompanyId);
+                    .Create(entity, entity.CompanyId);
 
                 if (!result.IsSucces())
                 {

@@ -9,16 +9,36 @@ namespace CMPNatural.Core.Entities
 
             foreach (var item in this.BaseServiceAppointment)
             {
-                var am = (item.ProductPrice.Amount * item.Qty);
+                var am =  Math.Round((item.ProductPrice.Amount * item.Qty) + double.Epsilon, 2);
                 var seviceAmount = ((am < item.ProductPrice.MinimumAmount) ?
                     item.ProductPrice.MinimumAmount : am) - item.Subsidy;
 
+                item.TotalAmount = (decimal)seviceAmount;
                 amount += seviceAmount;
             }
 
             this.Amount = amount;
             return amount;
         }
-      }
+
+        public double CalculateAmountByamount()
+        {
+            double amount = 0;
+
+            foreach (var item in this.BaseServiceAppointment)
+            {
+                var am = Math.Round((item.Amount * item.Qty) + double.Epsilon, 2);
+                var seviceAmount = ((am < item.ProductPrice.MinimumAmount) ?
+                    item.ProductPrice.MinimumAmount : am) - item.Subsidy;
+
+                item.TotalAmount = (decimal)seviceAmount;
+                amount += seviceAmount;
+            }
+
+            this.Amount = amount;
+            return amount;
+        }
+
+    }
 }
 

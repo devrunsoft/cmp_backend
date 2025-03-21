@@ -63,7 +63,10 @@ namespace CMPNatural.Application.Handlers
                         ProductPriceId = request.ProductPriceId,
                         ServiceAppointmentLocations = request.LocationCompanyIds
                         .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
-                        .ToList()
+                        .ToList(),
+                     DayOfWeek = string.Join(",", request.DayOfWeek.Select(x => x.GetDescription())),
+                     FromHour = request.FromHour,
+                     ToHour = request.ToHour,
                  };
                     lstCustom.Add(command);
                 }
@@ -88,7 +91,10 @@ namespace CMPNatural.Application.Handlers
                         Qty = request.qty,
                         ServiceAppointmentLocations = request.LocationCompanyIds
                         .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
-                        .ToList()
+                        .ToList(),
+                        DayOfWeek = string.Join(",", request.DayOfWeek.Select(x => x.GetDescription())),
+                        FromHour = request.FromHour,
+                        ToHour = request.ToHour,
                     };
                     lstCustom.Add(command);
                 }
@@ -102,7 +108,7 @@ namespace CMPNatural.Application.Handlers
             {
                 CompanyId = requests.CompanyId,
                 InvoiceCrmId= requests.InvoiceCrmId,
-                Status = (int)InvoiceStatus.Draft,
+                Status = InvoiceStatus.Draft,
                 InvoiceId = requests.InvoiceId,
                 BaseServiceAppointment = lstCustom,
                 Amount = requests.Amount,

@@ -27,7 +27,7 @@ namespace CMPNatural.Application
             var result = (await _serviceAppointmentRepository.GetAsync(
                 (p) =>
                 p.CompanyId == request.CompanyId &&
-                p.Invoice.Status == (int)ServiceStatus.Proccessing,
+                p.Invoice.Status == InvoiceStatus.Processing_Provider,
                 query => query.Include(i => i.Product).Include(i => i.ProductPrice)
                 )
                 ).ToList();

@@ -30,6 +30,12 @@ namespace CMPNatural.Application.Model.ServiceAppointment
         public double Amount { get; set; } = 0;
 
         public double TotlaAmount { get; set; } = 0;
+
+        public List<DayOfWeekEnum> DayOfWeek { get; set; }
+
+        public int FromHour { get; set; } = 480; //8 AM
+
+        public int ToHour { get; set; } = 1080; //6 PM
     }
 
     public partial class ServiceAppointmentInput

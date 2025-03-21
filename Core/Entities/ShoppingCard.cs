@@ -39,6 +39,12 @@ namespace CMPNatural.Core.Entities
 
         public string LocationCompanyIds { get; set; }
 
+        public string DayOfWeek { get; set; } = "";
+
+        public int FromHour { get; set; } = 480; //8 AM
+
+        public int ToHour { get; set; } = 1080; //6 PM
+
     }
 }
 
