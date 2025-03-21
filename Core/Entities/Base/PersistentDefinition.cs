@@ -34,4 +34,5 @@ namespace CMPNatural.Core.Entities
     public partial class Contract : IIdentityObject<long> { }
     public partial class InvoiceSource : IIdentityObject<long> { }
     public partial class CompanyContract : IIdentityObject<long> { }
+    public partial class TermsConditions : IIdentityObject<long> { }
 }
