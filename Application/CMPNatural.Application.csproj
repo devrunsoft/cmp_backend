@@ -226,6 +226,8 @@
     <None Remove="Responses\AdminMenuRepresentation\" />
     <None Remove="Handlers\Admin\Manifest\" />
     <None Remove="Commands\Admin\Manifest\" />
+    <None Remove="Handlers\Provider\Provider\" />
+    <None Remove="Commands\Provider\Provider\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -458,6 +460,8 @@
     <Folder Include="Responses\AdminMenuRepresentation\" />
     <Folder Include="Handlers\Admin\Manifest\" />
     <Folder Include="Commands\Admin\Manifest\" />
+    <Folder Include="Handlers\Provider\Provider\" />
+    <Folder Include="Commands\Provider\Provider\" />
   </ItemGroup> 
 
   <ItemGroup>

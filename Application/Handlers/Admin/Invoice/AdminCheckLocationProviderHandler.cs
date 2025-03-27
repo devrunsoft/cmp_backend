@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
 
-namespace CMPNatural.Application.Handlers.Admin.Invoice
+namespace CMPNatural.Application
 {
     public class AdminCheckOprLocationProviderHandler : IRequestHandler<AdminCheckLocationProviderCommand, CommandResponse<List<Provider>>>
     {

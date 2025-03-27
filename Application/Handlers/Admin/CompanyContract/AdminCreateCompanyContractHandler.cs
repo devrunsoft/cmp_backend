@@ -88,11 +88,12 @@ namespace CMPNatural.Application.Handlers
 
 
             var dbContent = contract.Content.ToString();
+            string cleanedNumber = Regex.Replace(information.CompanyPhoneNumber, @"^\+1\s*|\D", "");
 
-          dbContent = dbContent.Replace(ContractKeysEnum.ManagmentCompanyLogo.GetDescription(), managementCompany.Logo);
+            dbContent = dbContent.Replace(ContractKeysEnum.ManagmentCompanyLogo.GetDescription(), managementCompany.Logo);
           dbContent=  dbContent.Replace(ContractKeysEnum.ManagmentCompanyName.GetDescription(), information.CompanyTitle);
           dbContent=  dbContent.Replace(ContractKeysEnum.ManagmentCompanyEmail.GetDescription(), information.CompanyEmail);
-          dbContent=  dbContent.Replace(ContractKeysEnum.ManagmentCompanyPhoneNumber.GetDescription(), information.CompanyPhoneNumber);
+          dbContent=  dbContent.Replace(ContractKeysEnum.ManagmentCompanyPhoneNumber.GetDescription(), cleanedNumber);
           dbContent=  dbContent.Replace(ContractKeysEnum.ManagmentCompanyFirstName.GetDescription(), information.CompanyCeoFirstName);
           dbContent=  dbContent.Replace(ContractKeysEnum.ManagmentCompanyLastName.GetDescription(), information.CompanyCeoLastName);
           dbContent=  dbContent.Replace(ContractKeysEnum.ManagmentCompanyAddress.GetDescription(), information.CompanyAddress);

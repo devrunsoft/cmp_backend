@@ -4,7 +4,7 @@ using ScoutDirect.Application.Responses;
 using System.Collections.Generic;
 using CMPNatural.Core.Entities;
 
-namespace CMPNatural.Application.Commands.Admin.Invoice
+namespace CMPNatural.Application
 {
 	public class AdminCheckLocationProviderCommand : IRequest<CommandResponse<List<Provider>>>
     {

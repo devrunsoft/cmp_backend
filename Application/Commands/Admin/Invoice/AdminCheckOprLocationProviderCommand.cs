@@ -4,7 +4,7 @@ using MediatR;
 using ScoutDirect.Application.Responses;
 using System.Collections.Generic;
 
-namespace CMPNatural.Application.Commands.Admin.Invoice
+namespace CMPNatural.Application
 {
     public class AdminCheckOprLocationProviderCommand : IRequest<CommandResponse<List<Provider>>>
     {

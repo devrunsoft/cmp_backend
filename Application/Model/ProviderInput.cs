@@ -18,6 +18,9 @@ namespace CMPNatural.Application.Model
         public string County { get; set; }
         public double AreaLocation { get; set; }
 
+        public string Email { get; set; } = "";
+        public string PhoneNumber { get; set; } = "";
+
         public List<int> ProductIds { get; set; }
 
         public IFormFile BusinessLicense { get; set; }
