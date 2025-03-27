@@ -30,7 +30,7 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<Invoice>> Handle(AdminSetInvoiceProviderCommand request, CancellationToken cancellationToken)
         {
             //int MaxDistance = 2000; //meter
-            var invoice = (await _invoiceRepository.GetAsync(p => p.InvoiceId == request.InvoiceId, query=>
+            var invoice = (await _invoiceRepository.GetAsync(p => p.Id == request.InvoiceId, query=>
             query.Include(p=>p.BaseServiceAppointment))).FirstOrDefault();
 
              if (invoice.Status != InvoiceStatus.Needs_Assignment)
@@ -41,7 +41,8 @@ namespace CMPNatural.Application
             foreach (var serviceAppointment in invoice.BaseServiceAppointment)
             {
                   serviceAppointment.ProviderId = request.ProviderId;
-                  await _baseServiceAppointmentRepository.UpdateAsync(serviceAppointment);
+                  serviceAppointment.Status = ServiceStatus.Proccessing;
+                await _baseServiceAppointmentRepository.UpdateAsync(serviceAppointment);
             }
             invoice.ProviderId = request.ProviderId;
             invoice.Status = InvoiceStatus.Processing_Provider;

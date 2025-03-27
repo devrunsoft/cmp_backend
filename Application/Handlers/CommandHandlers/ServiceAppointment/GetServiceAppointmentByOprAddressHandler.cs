@@ -28,7 +28,7 @@ namespace CMPNatural.Application.Handlers
                 (p)=> p.OperationalAddressId==request.OperationalAddressId &&
                 p.CompanyId==request.CompanyId &&
                 p.Invoice.Status == InvoiceStatus.Processing_Provider &&
-                p.Status != (int)ServiceStatus.Canceled
+                p.Status != ServiceStatus.Canceled
                 )
                 ).ToList();
 

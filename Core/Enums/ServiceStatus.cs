@@ -7,8 +7,8 @@ namespace CMPNatural.Core.Enums
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum ServiceStatus
     {
-        [Description("draft")]
-        draft = 1,
+        [Description("Draft")]
+        Draft = 1,
 
         [Description("ShouldPay")]
         ShouldPay = 2,
@@ -21,6 +21,9 @@ namespace CMPNatural.Core.Enums
 
         [Description("Canceled")]
         Canceled = 5,
+
+        [Description("Scaduled")]
+        Scaduled = 6,
 
     }
 }

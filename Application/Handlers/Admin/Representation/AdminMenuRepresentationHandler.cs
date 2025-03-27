@@ -17,11 +17,15 @@ namespace CMPNatural.Application
     {
         private readonly IinvoiceRepository _invoiceRepository;
         private readonly ICompanyContractRepository _companyContract;
+        private readonly IManifestRepository _manifestRepository;
 
-        public AdminMenuRepresentationHandler(IinvoiceRepository iinvoiceRepository, ICompanyContractRepository companyContract)
+        public AdminMenuRepresentationHandler(IinvoiceRepository iinvoiceRepository, ICompanyContractRepository companyContract,
+             IManifestRepository _manifestRepository
+            )
         {
             _invoiceRepository = iinvoiceRepository;
             _companyContract = companyContract;
+            this._manifestRepository = _manifestRepository;
         }
 
         public async Task<CommandResponse<AdminMenuRepresentationResponse>> Handle(AdminMenuRepresentationCommand request, CancellationToken cancellationToken)
@@ -29,7 +33,7 @@ namespace CMPNatural.Application
 
             var invoices = (await _invoiceRepository.GetAsync(x => 
                 x.Status != InvoiceStatus.Draft && x.Status != InvoiceStatus.Needs_Admin_Signature &&
-                x.Status != InvoiceStatus.Pending_Signature
+                x.Status != InvoiceStatus.Pending_Signature && x.Status != InvoiceStatus.Needs_Assignment
                 )).Count();
 
               var requests = (await _invoiceRepository.GetAsync(x =>
@@ -40,7 +44,11 @@ namespace CMPNatural.Application
               x.Status == (int)CompanyContractStatus.Needs_Admin_Signature
               )).Count();
 
-            var model = new AdminMenuRepresentationResponse() { InvoicesCount = invoices, RequestsCount = requests, ContractsCount = ContractsCount };
+            var ManifestCount = (await _manifestRepository.GetAsync(x =>
+             x.Status == ManifestStatus.Draft
+                 )).Count();
+
+            var model = new AdminMenuRepresentationResponse() { InvoicesCount = invoices, RequestsCount = requests, ContractsCount = ContractsCount , ManifestCount = ManifestCount };
 
             return new Success<AdminMenuRepresentationResponse>() { Data = model };
 

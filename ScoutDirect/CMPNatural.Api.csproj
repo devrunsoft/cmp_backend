@@ -58,6 +58,7 @@
     <None Remove="Controllers\CompanyContract\" />
     <None Remove="Controllers\FileController\" />
     <None Remove="Controllers\Admin\Representation\" />
+    <None Remove="Controllers\Admin\Manifest\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\_Base\" />
@@ -92,6 +93,7 @@
     <Folder Include="Controllers\CompanyContract\" />
     <Folder Include="Controllers\FileController\" />
     <Folder Include="Controllers\Admin\Representation\" />
+    <Folder Include="Controllers\Admin\Manifest\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\infrastructure\CMPNatural.infrastructure.csproj">

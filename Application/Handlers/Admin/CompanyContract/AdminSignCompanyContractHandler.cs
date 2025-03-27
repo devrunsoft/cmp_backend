@@ -16,11 +16,15 @@ namespace CMPNatural.Application
         private readonly ICompanyContractRepository _repository;
         private readonly IAppInformationRepository _apprepository;
         private readonly IinvoiceRepository _invoiceRepository;
-        public AdminSignCompanyContractHandler(ICompanyContractRepository repository, IinvoiceRepository invoiceRepository, IAppInformationRepository apprepository)
+        private readonly IManifestRepository _manifestRepository;
+        public AdminSignCompanyContractHandler(ICompanyContractRepository repository, IinvoiceRepository invoiceRepository, IAppInformationRepository apprepository,
+            IManifestRepository _manifestRepository
+            )
         {
             _repository = repository;
             _invoiceRepository = invoiceRepository;
             _apprepository = apprepository;
+            this._manifestRepository = _manifestRepository;
         }
         public async Task<CommandResponse<CompanyContract>> Handle(AdminSignCompanyContractCommand request, CancellationToken cancellationToken)
         {
@@ -48,6 +52,7 @@ namespace CMPNatural.Application
             {
                 item.Status = InvoiceStatus.Needs_Assignment;
                 await _invoiceRepository.UpdateAsync(item);
+                await new AdminCreateManifestHandler(_manifestRepository, _invoiceRepository, _apprepository).Create(item);
             }
 
             return new Success<CompanyContract>() { Data = entity };

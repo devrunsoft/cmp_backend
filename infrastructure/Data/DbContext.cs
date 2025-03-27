@@ -1,6 +1,7 @@
 ﻿
 using Barbara.Core.Entities;
 using CMPNatural.Core.Entities;
+using CMPNatural.Core.Enums;
 using Microsoft.EntityFrameworkCore;
 using ScoutDirect.Core.Entities;
 using ScoutDirect.Core.Entities.Base;
@@ -44,6 +45,7 @@ namespace infrastructure.Data
         public virtual DbSet<Contract> Contract { get; set; } = null!;
         public virtual DbSet<AppInformation> AppInformation { get; set; } = null!;
         public virtual DbSet<TermsConditions> TermsConditions { get; set; } = null!;
+        public virtual DbSet<Manifest> Manifest { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -56,6 +58,22 @@ namespace infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Manifest>(entity =>
+            {
+                entity.ToTable("Manifest");
+
+                entity.Property(p => p.Status)
+             .HasConversion(
+              x => x.ToString(),
+              x => (ManifestStatus)Enum.Parse(typeof(ManifestStatus), x)
+              );
+
+
+                entity.HasOne(d => d.Invoice)
+                .WithOne()
+                .HasForeignKey<Manifest>(d => d.InvoiceId);
+            });
+
             modelBuilder.Entity<TermsConditions>(entity =>
             {
                 entity.ToTable("TermsConditions");
@@ -189,6 +207,9 @@ namespace infrastructure.Data
             modelBuilder.Entity<BaseServiceAppointment>(entity =>
             {
                 entity.ToTable("BaseServiceAppointment");
+
+                entity.Property(p => p.Status)
+                .HasConversion<int>();
 
                 entity.HasOne(sa => sa.Product)
                 .WithMany(sal => sal.ServiceAppointment)

@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CMPNatural.Core.Entities;
 using CMPNatural.Core.Enums;
+using CMPNatural.Core.Extentions;
 using CMPNatural.Core.Helper;
 using CMPNatural.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -66,11 +67,12 @@ namespace CMPNatural.Application.Handlers
                 .Select(x => $"<strong>{x.Product.Name}</strong>  - <strong>{x.ProductPrice.Name} </strong> "
                            + $"- <strong>Number of Payments:</strong> {x.ProductPrice.NumberofPayments}, "
                            + $"<strong>Billing Period:</strong> {x.ProductPrice.BillingPeriod}" +
-                           $"<br> <strong>Start Date:</strong> {x.DueDate.ToString("MM/dd/yyyy")}" +
-                           $" - <strong>Preferred Days:</strong> {x.DayOfWeek} ({ConvertTimeToString(x.FromHour)} until {ConvertTimeToString(x.ToHour)})" +
+                           $"<br> <strong>Start Date:</strong> {x.DueDate.ToDateString()}" +
+                           $" - <strong>Preferred Days:</strong> {x.DayOfWeek} ({(x.FromHour.ConvertTimeToString())} until {(x.ToHour.ConvertTimeToString())})" +
                            $"<br> <strong>Total:</strong> ${x.TotalAmount}"
                            )
                 .ToList();
+
             var managementCompany = new
             {
                 Logo = $"<img width={40} height={40}  src='https://api.app-cmp.com{information.CompanyIcon}' alt='Company Logo' />",
@@ -112,17 +114,7 @@ namespace CMPNatural.Application.Handlers
             return new Success<CompanyContract>() { Data = result, Message = "Successfull!" };
         }
 
-        private static string ConvertTimeToString(int totalMinutes)
-        {
-            int hours = totalMinutes / 60;
-            int minutes = totalMinutes % 60;
 
-            // Convert 24-hour time to 12-hour format
-            string period = hours >= 12 ? "PM" : "AM";
-            int twelveHourFormat = hours % 12 == 0 ? 12 : hours % 12;
-
-            return $"{twelveHourFormat:D2}:{minutes:D2} {period}";
-        }
 
 
     }

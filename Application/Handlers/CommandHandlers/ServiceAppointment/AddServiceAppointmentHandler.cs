@@ -34,7 +34,7 @@ namespace CMPNatural.Application.Handlers
                 ProductPriceId = request.ProductPriceId,
                 DueDate =request.StartDate ?? DateTime.Now,
                 OperationalAddressId =request.OperationalAddressId,
-                Status = (int)ServiceStatus.draft,
+                Status = ServiceStatus.Draft,
                 InvoiceId = request.InvoiceId
             };
 

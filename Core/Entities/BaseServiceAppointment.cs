@@ -1,4 +1,6 @@
 ﻿using System;
+using CMPNatural.Core.Enums;
+
 namespace CMPNatural.Core.Entities
 {
 	public partial class BaseServiceAppointment
@@ -19,7 +21,7 @@ namespace CMPNatural.Core.Entities
 
         public long CompanyId { get; set; }
 
-        public int Status { get; set; }
+        public ServiceStatus Status { get; set; }
 
         public long OperationalAddressId { get; set; }
         

@@ -4,7 +4,7 @@ using ScoutDirect.Core.Repositories.Base;
 
 namespace CMPNatural.Core.Repositories
 {
-    public interface ILocationCompanyRepository : IRepository<LocationCompany, long>
+    public interface IManifestRepository : IRepository<Manifest, long>
     {
     }
 }

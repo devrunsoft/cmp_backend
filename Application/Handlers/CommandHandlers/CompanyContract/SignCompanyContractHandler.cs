@@ -9,6 +9,7 @@ using CMPNatural.Core.Enums;
 using CMPNatural.Core.Helper;
 using Microsoft.EntityFrameworkCore;
 using System;
+using CMPNatural.Core.Extentions;
 
 namespace CMPNatural.Application
 {
@@ -32,7 +33,7 @@ namespace CMPNatural.Application
             content = CompanyContractHelper.ShowByKey(ContractKeysEnum.ClientSign.GetDescription(), content, CompanyContractHelper.SignFont);
             content = CompanyContractHelper.ShowByKey(ContractKeysEnum.ClientSignDateTime.GetDescription(), content);
             content = content.Replace(ContractKeysEnum.ClientSign.GetDescription(), request.Sign);
-            content = content.Replace(ContractKeysEnum.ClientSignDateTime.GetDescription(), $"{entity.ClientSignDate.Value.ToString("MM/dd/yyyy")} {formattedTime}");
+            content = content.Replace(ContractKeysEnum.ClientSignDateTime.GetDescription(), $"{entity.ClientSignDate.Value.ToDateString()} {formattedTime}");
             entity.Content = content;
 
             await _repository.UpdateAsync(entity);

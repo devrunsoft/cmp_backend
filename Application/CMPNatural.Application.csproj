@@ -224,6 +224,8 @@
     <None Remove="Commands\Admin\Representation\" />
     <None Remove="Handlers\Admin\Representation\" />
     <None Remove="Responses\AdminMenuRepresentation\" />
+    <None Remove="Handlers\Admin\Manifest\" />
+    <None Remove="Commands\Admin\Manifest\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -454,6 +456,8 @@
     <Folder Include="Commands\Admin\Representation\" />
     <Folder Include="Handlers\Admin\Representation\" />
     <Folder Include="Responses\AdminMenuRepresentation\" />
+    <Folder Include="Handlers\Admin\Manifest\" />
+    <Folder Include="Commands\Admin\Manifest\" />
   </ItemGroup> 
 
   <ItemGroup>

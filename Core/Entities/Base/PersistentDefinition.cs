@@ -35,4 +35,5 @@ namespace CMPNatural.Core.Entities
     public partial class InvoiceSource : IIdentityObject<long> { }
     public partial class CompanyContract : IIdentityObject<long> { }
     public partial class TermsConditions : IIdentityObject<long> { }
+    public partial class Manifest : IIdentityObject<long> { }
 }

@@ -27,7 +27,7 @@ namespace CMPNatural.Application.Handlers
                 (p) => p.Id == request.Id &&
                 p.CompanyId == request.CompanyId &&
                 p.Invoice.Status == InvoiceStatus.Processing_Provider &&
-                p.Status != (int)ServiceStatus.Canceled
+                p.Status != ServiceStatus.Canceled
                 )
                 ).FirstOrDefault();
 

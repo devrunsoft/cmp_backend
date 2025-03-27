@@ -35,6 +35,7 @@ namespace CMPNatural.infrastructure.Repository
             .ToListAsync();
             return cachedList
                .Where(p =>
+               p.Status == Core.Enums.ProviderStatus.Approved &&
                   locations.Any(s => p.Distance(s.LocationCompany.Lat, s.LocationCompany.Long) <= p.AreaLocation) &&
                   locations.All(loc => p.ProviderService.Any(service => service.ProductId == loc.ServiceAppointment.ProductId)) // Ensure all exist
              ).ToList();

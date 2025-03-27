@@ -23,7 +23,7 @@ namespace CMPNatural.Application.Handlers
 
             var result = (await _serviceAppointmentRepository.GetAsync(p => p.ServiceCrmId == request.ServiceId));
             var entity = result.FirstOrDefault();
-            entity.Status = (int)request.Status;
+            entity.Status = request.Status;
 
                 await _serviceAppointmentRepository.UpdateAsync(entity);
 

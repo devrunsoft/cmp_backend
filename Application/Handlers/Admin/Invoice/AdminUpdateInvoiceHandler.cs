@@ -75,7 +75,7 @@ namespace CMPNatural.Application
                         ServiceCrmId = "",
                         DueDate = request.StartDate ?? DateTime.Now,
                         OperationalAddressId = request.OperationalAddressId,
-                        Status = (int)ServiceStatus.draft,
+                        Status = ServiceStatus.Draft,
                         Subsidy = request.Subsidy,
                         IsEmegency = false,
                         Qty = request.qty,
@@ -108,7 +108,7 @@ namespace CMPNatural.Application
                         ProductPrice = resultPrice,
                         ProductPriceId = request.ProductPriceId,
                         OperationalAddressId = request.OperationalAddressId,
-                        Status = (int)ServiceStatus.draft,
+                        Status = ServiceStatus.Draft,
                         IsEmegency = true,
                         Qty = request.qty,
                         ServiceAppointmentLocations = request.LocationCompanyIds

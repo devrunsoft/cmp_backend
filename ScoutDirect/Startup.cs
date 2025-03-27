@@ -22,6 +22,7 @@ using CmpNatural.CrmManagment.Model;
 using System.Text.Json.Serialization;
 using CMPEmail;
 using CMPEmail.Email;
+using Microsoft.Extensions.Options;
 
 namespace ScoutDirect.Api
 {
@@ -84,11 +85,13 @@ namespace ScoutDirect.Api
                 .AddJsonOptions(x =>
                 {
                     x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+                    x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 })
                 .AddNewtonsoftJson(x =>
             {
               
                 x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                x.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
                 x.UseMemberCasing();
             });
 
