@@ -296,6 +296,13 @@ namespace infrastructure.Data
                 .Property(p => p.Status)
                 .HasConversion<int>();
 
+                entity
+              .Property(p => p.RegistrationStatus)
+             .HasConversion(
+              x => x.ToString(),
+              x => (ProviderRegistrationStatus)Enum.Parse(typeof(ProviderRegistrationStatus), x)
+              );
+
                 entity.HasMany(d => d.ProviderService)
                 .WithOne(p => p.Provider)
 .               HasForeignKey(d => d.ProviderId);

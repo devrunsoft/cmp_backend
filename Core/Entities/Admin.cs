@@ -3,12 +3,10 @@ namespace CMPNatural.Core.Entities
 {
 	 public partial class AdminEntity
 	{
-		public AdminEntity()
-		{
-		}
+
 		public long Id { get; set; }
 
-		public string Email { get; set; }
+		public string Email { get; set; } = null!;
 
         //LimitedAdmin or SuperAdmin
         public string Role { get; set; } = "LimitedAdmin";
@@ -20,6 +18,12 @@ namespace CMPNatural.Core.Entities
 		public virtual Person Person { get; set; }
 
         public string? Password { get; set; }
+
+		public bool TwoFactor { get; set; }
+
+        public string? Code { get; set; } = "";
+
+        public DateTime? CodeTime { get; set; }
 
     }
 }

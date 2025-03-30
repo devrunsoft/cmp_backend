@@ -19,7 +19,7 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
     public class ProviderController : BaseAdminApiController
     {
         private readonly IWebHostEnvironment Environment;
-        public ProviderController(IMediator mediator, IHttpContextAccessor httpContextAccessor,
+        public ProviderController(IMediator mediator,
             IWebHostEnvironment _environment) : base(mediator)
         {
             Environment = _environment;

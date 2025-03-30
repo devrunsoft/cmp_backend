@@ -26,6 +26,7 @@ namespace CMPNatural.Application
             entity.Email = request.Email;
             entity.IsActive = request.IsActive;
             entity.Password = request.Password;
+            entity.TwoFactor = request.TwoFactor;
 
              await _repository.UpdateAsync(entity);
             return new Success<AdminEntity>() { Data = entity };

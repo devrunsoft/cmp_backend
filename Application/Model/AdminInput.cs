@@ -14,6 +14,8 @@ namespace CMPNatural.Application.Model
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
+
+        public bool TwoFactor { get; set; }
     }
 }
 

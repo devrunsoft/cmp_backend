@@ -50,6 +50,8 @@ namespace CMPNatural.Application
             entity.InsuranceExp = request.InsuranceExp;
             entity.AreaLocation = request.AreaLocation;
             entity.ProviderService = providerServices;
+            entity.PhoneNumber = request.PhoneNumber;
+            entity.Email = request.Email;
 
 
             #region file

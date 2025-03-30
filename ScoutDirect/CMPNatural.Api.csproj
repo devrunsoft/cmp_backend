@@ -26,14 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Controllers\_Base\" />
-    <None Remove="Controllers\Auth\" />
-    <None Remove="Controllers\Auth\Register\" />
     <None Remove="View\" />
-    <None Remove="Controllers\dashboard\" />
-    <None Remove="Controllers\Service\" />
-    <None Remove="Controllers\Invoice\" />
-    <None Remove="Controllers\shoppingcard\" />
     <None Remove="Controllers\Admin\" />
     <None Remove="Controllers\Admin\Auth\" />
     <None Remove="Controllers\Admin\Provider\" />
@@ -46,29 +39,28 @@
     <None Remove="Controllers\Admin\Client\" />
     <None Remove="Controllers\Admin\Capacity\" />
     <None Remove="Controllers\Client\" />
-    <None Remove="Controllers\Capacity\" />
     <None Remove="Service\" />
     <None Remove="Controllers\Admin\Admin\" />
     <None Remove="Attribute\" />
-    <None Remove="Controllers\Payment\" />
     <None Remove="Controllers\Admin\AppInformation\" />
     <None Remove="Controllers\Admin\Config\" />
     <None Remove="Controllers\Admin\Contract\" />
     <None Remove="Controllers\Admin\CompanyContract\" />
-    <None Remove="Controllers\CompanyContract\" />
     <None Remove="Controllers\FileController\" />
     <None Remove="Controllers\Admin\Representation\" />
     <None Remove="Controllers\Admin\Manifest\" />
+    <None Remove="Controllers\Client\Auth\" />
+    <None Remove="Controllers\Client\Invoice\" />
+    <None Remove="Controllers\Client\Payment\" />
+    <None Remove="Controllers\Client\Service\" />
+    <None Remove="Controllers\Client\_Base\" />
+    <None Remove="Controllers\Client\CompanyContract\" />
+    <None Remove="Controllers\Client\Capacity\" />
+    <None Remove="Controllers\Provider\" />
+    <None Remove="Controllers\Provider\Base\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\_Base\" />
-    <Folder Include="Controllers\Auth\" />
-    <Folder Include="Controllers\Auth\Register\" />
     <Folder Include="View\" />
-    <Folder Include="Controllers\dashboard\" />
-    <Folder Include="Controllers\Service\" />
-    <Folder Include="Controllers\Invoice\" />
-    <Folder Include="Controllers\shoppingcard\" />
     <Folder Include="Controllers\Admin\" />
     <Folder Include="Controllers\Admin\Auth\" />
     <Folder Include="Controllers\Admin\Provider\" />
@@ -81,19 +73,26 @@
     <Folder Include="Controllers\Admin\Client\" />
     <Folder Include="Controllers\Admin\Capacity\" />
     <Folder Include="Controllers\Client\" />
-    <Folder Include="Controllers\Capacity\" />
     <Folder Include="Service\" />
     <Folder Include="Controllers\Admin\Admin\" />
     <Folder Include="Attribute\" />
-    <Folder Include="Controllers\Payment\" />
     <Folder Include="Controllers\Admin\AppInformation\" />
     <Folder Include="Controllers\Admin\Config\" />
     <Folder Include="Controllers\Admin\Contract\" />
     <Folder Include="Controllers\Admin\CompanyContract\" />
-    <Folder Include="Controllers\CompanyContract\" />
     <Folder Include="Controllers\FileController\" />
     <Folder Include="Controllers\Admin\Representation\" />
     <Folder Include="Controllers\Admin\Manifest\" />
+    <Folder Include="Controllers\Client\" />
+    <Folder Include="Controllers\Client\Auth\" />
+    <Folder Include="Controllers\Client\Invoice\" />
+    <Folder Include="Controllers\Client\Payment\" />
+    <Folder Include="Controllers\Client\Service\" />
+    <Folder Include="Controllers\Client\_Base\" />
+    <Folder Include="Controllers\Client\CompanyContract\" />
+    <Folder Include="Controllers\Client\Capacity\" />
+    <Folder Include="Controllers\Provider\" />
+    <Folder Include="Controllers\Provider\Base\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\infrastructure\CMPNatural.infrastructure.csproj">

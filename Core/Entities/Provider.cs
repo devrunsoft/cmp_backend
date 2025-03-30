@@ -7,16 +7,18 @@ namespace CMPNatural.Core.Entities
 	{
         public long Id { get; set; }
         public string Name { get; set; } = "";
-        public double Rating { get; set; }
+        public double? Rating { get; set; } = 0;
         public ProviderStatus Status { get; set; }
-        public double Lat { get; set; }
-        public double Long { get; set; }
-        public double AreaLocation { get; set; }
-        public string City { get; set; } = "";
-        public string Address { get; set; } = "";
-        public string County { get; set; } = "";
+        public double? Lat { get; set; } = 0;
+        public double? Long { get; set; } = 0;
+        public double? AreaLocation { get; set; } = 0;
+        public string? City { get; set; } = "";
+        public string? Address { get; set; } = "";
+        public string? County { get; set; } = "";
         public string Email { get; set; } = "";
         public string PhoneNumber { get; set; } = "";
+        public string Password { get; set; } = "";
+        public ProviderRegistrationStatus RegistrationStatus { get; set; } = ProviderRegistrationStatus.Complete;
 
         public string? BusinessLicense { get; set; }
         public DateTime? BusinessLicenseExp { get; set; }

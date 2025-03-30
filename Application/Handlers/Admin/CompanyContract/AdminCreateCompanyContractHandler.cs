@@ -36,6 +36,10 @@ namespace CMPNatural.Application.Handlers
         public async Task<CommandResponse<CompanyContract>> Create(Invoice invoice, long companyId)
         {
             var information = (await _apprepository.GetAllAsync()).LastOrDefault();
+            if (information == null)
+            {
+                return new NoAcess<CompanyContract>() { Message = "Please complete the information" };
+            }
             var contract = (await _contractrepository.GetAsync(x => x.Active)).LastOrDefault();
             var company = invoice.Company;
             if (contract == null)

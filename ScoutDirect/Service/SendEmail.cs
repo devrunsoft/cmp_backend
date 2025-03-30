@@ -63,6 +63,23 @@ namespace CMPNatural.Api.Controllers.Service
             });
         }
 
+        public static void Send(this IEmailSender emailSender, string subject, string body, string email)
+        {
+            Task.Run(async () =>
+            {
+                    MailModel model = new MailModel()
+                    {
+                        toEmail = email,
+                        Body = body,
+                        Subject = subject,
+                        Name = $"",
+                        CompanyName = "",
+                        Link = ""
+                    };
+                    emailSender.SendEmail(model);
+            });
+        }
+
         //public static void SendTestAdmin(this IEmailSender emailSender, string subject, string body, IServiceScopeFactory serviceScopeFactory, string? link)
         //{
         //    Task.Run(async () =>
@@ -100,7 +117,6 @@ namespace CMPNatural.Api.Controllers.Service
         {
             if (!_cache.TryGet("CompanyEmail", out AppInformation to))
             {
-
                 var result = await _mediator.Send(new AdminAppInformationGetCommand());
                 to = result.Data;
                 _cache.Set("CompanyEmail", to);

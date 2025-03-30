@@ -33,7 +33,8 @@ namespace CMPNatural.Application
             Role = "LimitedAdmin",
             IsActive = request.IsActive,
             Password = request.Password,
-            Person = person
+            Person = person,
+            TwoFactor = request.TwoFactor
             };
 
             var result = await _repository.AddAsync(entity);

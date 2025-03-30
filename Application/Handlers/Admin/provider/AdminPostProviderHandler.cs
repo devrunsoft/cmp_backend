@@ -45,6 +45,8 @@ namespace CMPNatural.Application
                 EPAComplianceExp = request.EPAComplianceExp,
                 InsuranceExp = request.InsuranceExp,
                 AreaLocation = request.AreaLocation,
+                PhoneNumber = request.PhoneNumber,
+                Email = request.Email,
                 ProviderService = providerServices
 
             };
