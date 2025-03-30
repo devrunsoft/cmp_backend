@@ -46,18 +46,26 @@ namespace infrastructure.Data
         public virtual DbSet<AppInformation> AppInformation { get; set; } = null!;
         public virtual DbSet<TermsConditions> TermsConditions { get; set; } = null!;
         public virtual DbSet<Manifest> Manifest { get; set; } = null!;
+        public virtual DbSet<BillingInformationProvider> BillingInformationProvider { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
              //optionsBuilder.UseLazyLoadingProxies();
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseMySQL("Server=188.245.68.131;Port=3306;Database=ScoutDirect;User Id=sammy;Password=Sdsw#2a1@=7632;");
-            }
+            //if (!optionsBuilder.IsConfigured)
+            //{
+            //    optionsBuilder.UseMySQL("Server=188.245.68.131;Port=3306;Database=ScoutDirect;User Id=sammy;Password=Sdsw#2a1@=7632;");
+            //}
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<BillingInformationProvider>(entity =>
+            {
+                entity.ToTable("BillingInformationProvider");
+            });
+
+
             modelBuilder.Entity<Manifest>(entity =>
             {
                 entity.ToTable("Manifest");

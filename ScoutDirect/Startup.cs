@@ -52,9 +52,11 @@ namespace ScoutDirect.Api
 
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IWebHostEnvironment _env;
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            _env = env;
         }
 
         public IConfiguration Configuration { get; }
@@ -97,10 +99,16 @@ namespace ScoutDirect.Api
 
             //remove
             services.AddControllersWithViews();
-
-            services.AddDbContext<ScoutDBContext>(options => options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")
-            ));
-
+            if (_env.IsDevelopment())
+            {
+                services.AddDbContext<ScoutDBContext>(options =>
+                    options.UseMySQL(Configuration.GetConnectionString("LocalConnection")));
+            }
+            else
+            {
+                services.AddDbContext<ScoutDBContext>(options =>
+                    options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
+            }
             services.AddAutoMapper(typeof(Startup));
             //services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 

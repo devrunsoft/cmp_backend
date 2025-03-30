@@ -12,8 +12,6 @@ namespace CMPNatural.infrastructure.Repository
     public class BillingInformationRepository : Repository<BillingInformation, long>, IBillingInformationRepository
     {
         public BillingInformationRepository(ScoutDBContext context, Func<CacheTech, ICacheService> cacheService) : base(context, cacheService) { }
-
-
     }
 }
 

@@ -234,6 +234,7 @@
     <None Remove="Handlers\Provider\Manifest\" />
     <None Remove="Handlers\Provider\Invoice\" />
     <None Remove="Commands\Provider\Invoice\" />
+    <None Remove="Handlers\Provider\Billing\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -474,6 +475,7 @@
     <Folder Include="Handlers\Provider\Manifest\" />
     <Folder Include="Handlers\Provider\Invoice\" />
     <Folder Include="Commands\Provider\Invoice\" />
+    <Folder Include="Handlers\Provider\Billing\" />
   </ItemGroup> 
 
   <ItemGroup>
