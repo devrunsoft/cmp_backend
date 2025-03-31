@@ -50,10 +50,15 @@ namespace CMPNatural.Application
 
 
             result.BusinessLicense = BusinessLicense;
+            result.BusinessLicenseExp = request.BusinessLicenseExp;
+            //
             result.HealthDepartmentPermit = HealthDepartmentPermit;
+            result.HealthDepartmentPermitExp = request.HealthDepartmentPermitExp;
             result.WasteHaulerPermit = WasteHaulerPermit;
             result.EPACompliance = EPACompliance;
+            result.EPAComplianceExp = request.EPAComplianceExp;
             result.Insurance = Insurance;
+            result.InsuranceExp = request.InsuranceExp;
 
             await _repository.UpdateAsync(result);
 
