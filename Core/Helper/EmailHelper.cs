@@ -17,7 +17,7 @@ public static class EmailLinkHelper
             case EmailLinkEnum.ClientHasSigned:
                 return new EmailDetails
                 {
-                    LinkPattern = $"/invoice/{id}",
+                    LinkPattern = $"/company-contract",
                     Subject = "Sign Notification",
                     Body = $"\n\nPlease review the contract. You can access the contract details using the button below:\n\nThank you."
                 };

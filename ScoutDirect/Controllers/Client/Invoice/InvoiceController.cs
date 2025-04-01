@@ -36,19 +36,9 @@ namespace CMPNatural.Api.Controllers.Invoice
     public class InvoiceController : BaseClientApiController
     {
 
-        private InvoiceApi _invoiceApi;
-        private ProductPriceApi _productPriceApi;
-        private ProductListApi _productApi;
-        private ContactApi _contactApi;
-        private CustomValueApi _customValueApi;
-        public InvoiceController(IMediator mediator, InvoiceApi invoiceApi, ProductPriceApi productPriceApi,
-            ProductListApi productApi, ContactApi contactApi, CustomValueApi customValueApi) : base(mediator)
+
+        public InvoiceController(IMediator mediator, InvoiceApi invoiceApi) : base(mediator)
         {
-            _invoiceApi = invoiceApi;
-            _productPriceApi = productPriceApi;
-            _productApi = productApi;
-            _contactApi = contactApi;
-            _customValueApi = customValueApi;
         }
 
         [HttpGet]
@@ -76,81 +66,6 @@ namespace CMPNatural.Api.Controllers.Invoice
         }
 
 
-        //[HttpGet("CheckPayment/{Id}")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[EnableCors("AllowOrigin")]
-        //public async Task<ActionResult> CheckPayment([FromRoute] long Id)
-        //{
-
-        //    var resultdata = await _mediator.Send(new GetInvoiceByIdCommand()
-        //    {
-        //        CompanyId = rCompanyId,
-        //        Id = Id
-        //    });
-
-        //    var invoice = _invoiceApi.GetInvoice(resultdata.Data.InvoiceId);
-
-        //    System.Enum.TryParse(invoice.Data.status, out InvoiceStatus invoiceStatus);
-        //    var result= await _mediator.Send(new SentInvoiceCommand()
-        //    {
-        //        CompanyId = rCompanyId,
-        //        InvoiceId = resultdata.Data.Id,
-        //        Status = invoiceStatus
-        //    });
-
-        //    return Ok(result);
-        //}
-
-        //[HttpPost("Pay")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[EnableCors("AllowOrigin")]
-        //public async Task<ActionResult> Pay([FromQuery] string invoiceNumber)
-        //{
-
-        //    var resultdata = await _mediator.Send(new GetInvoiceByInvoiceNumberCommand()
-        //    {
-        //        CompanyId = rCompanyId,
-        //        invoiceNumber = invoiceNumber
-        //    });
-
-        //    var invoice = _invoiceApi.GetInvoice(resultdata.Data.InvoiceId);
-
-        //    System.Enum.TryParse(invoice.Data.status, out InvoiceStatus invoiceStatus);
-        //    var result = await _mediator.Send(new SentInvoiceCommand()
-        //    {
-        //        CompanyId = rCompanyId,
-        //        InvoiceId = resultdata.Data.Id,
-        //        Status = invoiceStatus
-        //    });
-
-        //    return Ok(result);
-        //}
-
-        //[HttpPost("Sent")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[EnableCors("AllowOrigin")]
-        //public async Task<ActionResult> Sent([FromQuery] string invoiceNumber)
-        //{
-
-        //    var resultdata = await _mediator.Send(new GetInvoiceByInvoiceNumberCommand()
-        //    {
-        //        CompanyId = rCompanyId,
-        //        invoiceNumber = invoiceNumber
-        //    });
-
-        //    var invoice = _invoiceApi.GetInvoice(resultdata.Data.InvoiceId);
-
-        //    var result = await _mediator.Send(new SentInvoiceCommand()
-        //    {
-        //        CompanyId = rCompanyId,
-        //        InvoiceId = resultdata.Data.Id,
-        //        Status = InvoiceStatus.Processing
-        //    });
-
-        //    return Ok(result);
-        //}
-
-
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
@@ -168,164 +83,51 @@ namespace CMPNatural.Api.Controllers.Invoice
         }
 
 
+        //[HttpDelete("{InvoiceId}")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[EnableCors("AllowOrigin")]
+        //public async Task<ActionResult> Delete([FromRoute] long InvoiceId)
+        //{
 
-        [HttpPut("{InvoiceId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Put([FromRoute] long InvoiceId)
-        {
+        //    var resultInvoie = await _mediator.Send(new GetInvoiceByIdCommand()
+        //    {
+        //        CompanyId = rCompanyId,
+        //        Id = InvoiceId
+        //    });
 
-            var resultInvoie = await _mediator.Send(new GetInvoiceByIdCommand()
-            {
-                CompanyId = rCompanyId,
-                Id = InvoiceId
-            });
-
-            if (!resultInvoie.IsSucces())
-            {
-                return Ok(resultInvoie);
-            }
-
-            var resultInvoice = _invoiceApi.SendInvoice(resultInvoie.Data.InvoiceId,
-                new SendInvoiceCommand() { sentTo = new SentTo() { email = new List<string>() { rBusinessEmail } } }
-                );
-
-            if (!resultInvoice.IsSucces())
-            {
-                return Ok(resultInvoice);
-            }
-
-            //TODO
-            await _mediator.Send(new SentInvoiceCommand()
-            {
-                CompanyId = rCompanyId,
-                InvoiceId = InvoiceId,
-                //Status = InvoiceStatus.Processing
-            });
-
-            return Ok(resultInvoice);
-
-        }
-
-        [NonAction]
-        double getMinimumPrice(bool isGreas , List<CustomValueResponse> lst)
-        {
-            double amount = 0;
-            string fieldKey = "";
-
-            if (isGreas)
-            {
-                fieldKey = "{{ custom_values.minimum_cost_for_grease_trap_management }}";
-            }
-            else
-            {
-                fieldKey = "{{ custom_values.minimum_cost_of_cooking_oil_pick_up }}";
-            }
-
-               var greasCustomValue= lst.Where(p => p.fieldKey == fieldKey).FirstOrDefault();
-
-                if (greasCustomValue == null)
-                {
-                    return amount;
-                }
-
-              return double.Parse(greasCustomValue.value);
-
-        }
-
-        [NonAction]
-        CreateInvoiceApiCommand createInvoceCommand(string invoiceNumber,
-            CompanyResponse company,
-            ContactResponse resultContact ,
-            IEnumerable<OperationalAddress> oprAddress,
-            List<ProductItemCommand> lst)
-        {
-            var command = new CreateInvoiceApiCommand
-            {
-                dueDate = DateOnly.FromDateTime(DateTime.Now.AddDays(10)),
-                issueDate = DateOnly.FromDateTime(DateTime.Now),
-                currency = "USD",
-                invoiceNumber = invoiceNumber.ToString(),
-                //
-                contactDetails = new ContactDetailsCommand
-                {
-                    name = company.PrimaryFirstName + " " + company.PrimaryLastName,
-                    email = rBusinessEmail,
-                    phoneNo = company.PrimaryPhonNumber,
-                    id = resultContact.id,
-                    companyName = company.CompanyName,
-                    address = new Address()
-                    {
-                        addressLine1 = string.Join(" - ", oprAddress.Select((p => "address: " + p.Address)))
-                    }
-
-                },
-                //
-                sentTo = new SendTo()
-                {
-                    email = new List<string>() { rBusinessEmail }
-                },
-                name = company.PrimaryFirstName + " " + company.PrimaryLastName,
-                //
-                businessDetails = new BusinessDetailsCommand
-                {
-                    name = company.SecondaryFirstName + " " + company.SecondaryFirstName,
-                    phoneNo = company.SecondaryPhoneNumber,
-                    //customValues= new List<string>() { "string" }
-                },
-                //
-                items = lst,
-            };
-
-            return command;
-        }
+        //    if (!resultInvoie.IsSucces())
+        //    {
+        //        return Ok(resultInvoie);
+        //    }
 
 
-        [HttpDelete("{InvoiceId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Delete([FromRoute] long InvoiceId)
-        {
+        //    //var resultGet = _invoiceApi.GetInvoice(resultInvoie.Data.InvoiceId
+        //    // );
 
-            var resultInvoie = await _mediator.Send(new GetInvoiceByIdCommand()
-            {
-                CompanyId = rCompanyId,
-                Id = InvoiceId
-            });
-
-            if (!resultInvoie.IsSucces())
-            {
-                return Ok(resultInvoie);
-            }
+        //    //var resultUpdate = _invoiceApi.Update(resultInvoie.Data.InvoiceId,
+        //    //  resultGet.Data
+        //    // );
 
 
-            //var resultGet = _invoiceApi.GetInvoice(resultInvoie.Data.InvoiceId
-            // );
+        //    var resultInvoice = _invoiceApi.DeleteInvoice(resultInvoie.Data.InvoiceId,
+        //        new DeleteInvoiceGoCommand()
+        //        );
 
-            //var resultUpdate = _invoiceApi.Update(resultInvoie.Data.InvoiceId,
-            //  resultGet.Data
-            // );
+        //    //if (!resultInvoice.IsSucces())
+        //    //{
+        //    //    return Ok(resultInvoice);
+        //    //}
 
+        //    var result = await _mediator.Send(new DeleteInvoiceCommand()
+        //    {
+        //        CompanyId = rCompanyId,
+        //        InvoiceId = InvoiceId,
+        //    });
 
-            var resultInvoice = _invoiceApi.DeleteInvoice(resultInvoie.Data.InvoiceId,
-                new DeleteInvoiceGoCommand()
-                );
-
-            //if (!resultInvoice.IsSucces())
-            //{
-            //    return Ok(resultInvoice);
-            //}
-
-            var result = await _mediator.Send(new DeleteInvoiceCommand()
-            {
-                CompanyId = rCompanyId,
-                InvoiceId = InvoiceId,
-            });
-
-            return Ok(result);
+        //    return Ok(result);
 
 
-        }
+        //}
 
     }
 }

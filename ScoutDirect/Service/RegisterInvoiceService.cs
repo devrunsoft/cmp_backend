@@ -47,10 +47,10 @@ namespace CMPNatural.Api.Service
 
             List<CommandResponse<Invoice>> invoices = new List<CommandResponse<Invoice>>();
 
-            foreach (var item in groupedData)
+            foreach (var i in groupedData)
             {
 
-                var request = resultShopping.Select((e) => new ServiceAppointmentInput()
+                var request = i.item.Select((e) => new ServiceAppointmentInput()
                 {
                     FrequencyType = e.FrequencyType,
                     OperationalAddressId = e.OperationalAddressId,
@@ -90,8 +90,8 @@ namespace CMPNatural.Api.Service
                     InvoiceId = invoiceId.ToString(),
                     Services = request,
                     Amount = 0,
-                    OperationalAddressId = item.oprId,
-                    Address = item.item.First().Address
+                    OperationalAddressId = i.oprId,
+                    Address = i.item.First().Address
 
                 });
                 invoices.Add(invoice);

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using CMPNatural.Application;
 using CMPNatural.Application.Commands;
+using CMPNatural.Core.Enums;
+using Elmah.ContentSyndication;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -52,6 +54,8 @@ namespace CMPNatural.Api.Controllers.CompanyContract
         public async Task<ActionResult> Sign([FromRoute] long Id , [FromBody] SignCompanyContractCommand command)
         {
             var result = await _mediator.Send(new SignCompanyContractCommand() { CompanyId = rCompanyId , CompanyContractId = Id  , Sign = command .Sign});
+            var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.ClientHasSigned, result.Data.Id);
+            sendEmailToAdmin(emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern);
             return Ok(result);
         }
     }
