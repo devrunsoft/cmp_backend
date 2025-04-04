@@ -56,7 +56,10 @@ namespace CMPNatural.Api.Controllers.Admin.Client
                 LocationCompanyIds = request.LocationCompanyIds,
                 qty = request.qty,
                 ProductId = request.ProductId,
-                ProductPriceId = request.ProductPriceId
+                ProductPriceId = request.ProductPriceId,
+                DayOfWeek = request.DayOfWeek,
+                FromHour = request.FromHour,
+                ToHour = request.ToHour
             });
             return Ok(result);
         }

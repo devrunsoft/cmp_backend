@@ -32,7 +32,7 @@ namespace CMPNatural.Application.Handlers
                 ServiceCrmId= "",
                 ProductId = request.ProductId,
                 ProductPriceId = request.ProductPriceId,
-                DueDate =request.StartDate ?? DateTime.Now,
+                StartDate = request.StartDate ?? DateTime.Now,
                 OperationalAddressId =request.OperationalAddressId,
                 Status = ServiceStatus.Draft,
                 InvoiceId = request.InvoiceId

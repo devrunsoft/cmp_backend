@@ -44,21 +44,26 @@ namespace CMPNatural.Application
             };
 
             var result = await _repository.AddAsync(entity);
-            List<string> serviceList = services.BaseServiceAppointment
-             .Select(x =>
-             $"<td class=\"bold\">Services:" +
-             $"</<td>" +
-             $"<td colspan=\"5\">" +
-             $"<strong>{x.Product.Name}</strong> - <strong>{x.ProductPrice.Name} </strong>" +
-             $" - <strong>Preferred Days:</strong> {x.DayOfWeek} ({(x.FromHour.ConvertTimeToString())} until {(x.ToHour.ConvertTimeToString())})" +
-             $"</td>")
-             .ToList();
+            string servicesHtml = string.Join("<br/>",
+                services.BaseServiceAppointment.Select(x =>
+                    $"<strong>{x.Product.Name}</strong> - <strong>{x.ProductPrice.Name}</strong> " +
+                    $"- <strong>Preferred Days:</strong> {x.DayOfWeek} " +
+                    $"({x.FromHour.ConvertTimeToString()} until {x.ToHour.ConvertTimeToString()})"
+                )
+            );
+
+            string finalHtmlRow =
+                $"<tr>" +
+                $"<td class=\"bold\">Service:</td>" +
+                $"<td colspan=\"5\">{servicesHtml}</td>" +
+                $"</tr>";
+
 
             var managementCompany = new
             {
                 Logo = $"<img width={40} height={40}  src='https://api.app-cmp.com{information.CompanyIcon}' alt='Company Logo' />",
 
-                Services = $"<tr>{string.Join("", serviceList.Select(service => $"{service}"))}</tr>"
+                Services = finalHtmlRow
             };
 
             StringBuilder sb = new StringBuilder();

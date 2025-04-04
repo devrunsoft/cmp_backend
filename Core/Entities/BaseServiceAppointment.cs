@@ -31,7 +31,7 @@ namespace CMPNatural.Core.Entities
 
         public int Qty { get; set; } = 1;
 
-        public DateTime DueDate { get; set; }
+        public DateTime StartDate { get; set; }
 
         public double Amount { get; set; }
 

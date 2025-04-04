@@ -36,6 +36,7 @@ namespace CMPNatural.Application.Handlers.Admin.Auth
             var invoices = (await _invoiceRepository.GetBasePagedAsync(request, x=> (request.Status == null ?
             x.Status != InvoiceStatus.Draft && x.Status != InvoiceStatus.Needs_Admin_Signature &&
             x.Status != InvoiceStatus.Pending_Signature && x.Status != InvoiceStatus.Needs_Assignment
+            && x.Status != InvoiceStatus.Processing_Provider
             : x.Status == request.Status),
 
                 query => query.Include(i => i.Company)));

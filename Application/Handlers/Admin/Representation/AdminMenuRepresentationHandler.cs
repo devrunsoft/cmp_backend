@@ -33,7 +33,8 @@ namespace CMPNatural.Application
 
             var invoices = (await _invoiceRepository.GetAsync(x => 
                 x.Status != InvoiceStatus.Draft && x.Status != InvoiceStatus.Needs_Admin_Signature &&
-                x.Status != InvoiceStatus.Pending_Signature && x.Status != InvoiceStatus.Needs_Assignment
+                x.Status != InvoiceStatus.Pending_Signature && x.Status != InvoiceStatus.Needs_Assignment &&
+                x.Status != InvoiceStatus.Processing_Provider
                 )).Count();
 
               var requests = (await _invoiceRepository.GetAsync(x =>

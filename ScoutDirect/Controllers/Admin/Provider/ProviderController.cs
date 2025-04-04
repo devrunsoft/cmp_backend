@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CmpNatural.CrmManagment.Invoice;
-using CMPNatural.Application;
+﻿using CMPNatural.Application;
 using CMPNatural.Application.Model;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using MySqlX.XDevAPI.Common;
+using ScoutDirect.Application.Responses;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -71,7 +66,9 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
                 WasteHaulerPermit = input.WasteHaulerPermit,
                 BaseVirtualPath = wwwPath,
                 AreaLocation = input.AreaLocation,
-                ProductIds = input.ProductIds
+                ProductIds = input.ProductIds,
+                Email = input.Email,
+                PhoneNumber = input.PhoneNumber
             });
 
             return Ok(result);
@@ -104,8 +101,15 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
                 WasteHaulerPermit = input.WasteHaulerPermit,
                 BaseVirtualPath = wwwPath,
                 AreaLocation = input.AreaLocation,
-                ProductIds = input.ProductIds
+                ProductIds = input.ProductIds,
+                Email = input.Email,
+                PhoneNumber = input.PhoneNumber
             });
+
+            if (result.IsSucces())
+            {
+                SendToProvider("Your Account Credentials", $"<p style=\"margin: 5px 0;\"> <strong>Username/Email:</strong> <span style=\"color: #16a085; font-family: monospace;\">{result.Data.Email}</span> </p> <p style=\"margin: 5px 0;\"> <strong>Password:</strong> <span style=\"color: #c0392b; font-family: monospace;\">{result.Data.Password}</span> </p>", input.Email);
+            }
 
             return Ok(result);
         }

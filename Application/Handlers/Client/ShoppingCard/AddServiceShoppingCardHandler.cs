@@ -67,7 +67,7 @@ namespace CMPNatural.Application.Handlers
                 DayOfWeek = string.Join(",", request.DayOfWeek.Select(x => x.GetDescription())),
                 FromHour = request.FromHour,
                 ToHour = request.ToHour,
-
+                
             };
             var result = await _shoppingCardRepository.AddAsync(entity);
 

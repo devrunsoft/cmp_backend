@@ -263,7 +263,10 @@ namespace infrastructure.Data
 
                 entity
                 .Property(p => p.Status)
-                .HasConversion<int>();
+             .HasConversion(
+              x => (int)x,
+              x => (InvoiceStatus)x
+              );
             });
 
             modelBuilder.Entity<ShoppingCard>(entity =>

@@ -73,7 +73,7 @@ namespace CMPNatural.Application
                         ServiceTypeId = (int)request.ServiceTypeId,
                         ServicePriceCrmId = "",
                         ServiceCrmId = "",
-                        DueDate = request.StartDate ?? DateTime.Now,
+                        StartDate = request.StartDate ?? DateTime.Now,
                         OperationalAddressId = request.OperationalAddressId,
                         Status = ServiceStatus.Draft,
                         Subsidy = request.Subsidy,
@@ -98,7 +98,7 @@ namespace CMPNatural.Application
                     {
                         CompanyId = CompanyId,
                         FrequencyType = request.FrequencyType,
-                        DueDate = DateTime.Now,
+                        StartDate = DateTime.Now,
                         ServiceTypeId = (int)request.ServiceTypeId,
                         ServicePriceCrmId = "",
                         ServiceCrmId = "",

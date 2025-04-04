@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using CMPNatural.Application.Services;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace CMPNatural.Application
 {
@@ -24,6 +25,12 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<Provider>> Handle(AdminPutProviderCommand request, CancellationToken cancellationToken)
         {
+            var emailPattern = @"^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$";
+            if (!Regex.IsMatch(request.Email, emailPattern))
+            {
+                return new NoAcess<Provider>() { Message = "The email format is invalid. Please provide a valid email address." };
+            }
+
             var entity = await _providerReposiotry.GetByIdAsync(request.Id);
             var providerService = (await _providerServiceRepository.GetAsync(p=>p.ProviderId == request.Id)).ToList();
 

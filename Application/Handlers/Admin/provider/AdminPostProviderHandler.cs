@@ -8,6 +8,8 @@ using CMPNatural.Core.Base;
 using System;
 using CMPNatural.Application.Services;
 using System.Collections.Generic;
+using CMPNatural.Core.Helper;
+using System.Text.RegularExpressions;
 
 namespace CMPNatural.Application
 {
@@ -23,6 +25,11 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<Provider>> Handle(AdminPostProviderCommand request, CancellationToken cancellationToken)
         {
+            var emailPattern = @"^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$";
+            if (!Regex.IsMatch(request.Email, emailPattern))
+            {
+                return new NoAcess<Provider>() { Message = "The email format is invalid. Please provide a valid email address." };
+            }
 
             List<ProviderService> providerServices = new List<ProviderService>();
             foreach (var item in request.ProductIds)
@@ -81,6 +88,7 @@ namespace CMPNatural.Application
             result.WasteHaulerPermit = WasteHaulerPermit;
             result.EPACompliance = EPACompliance;
             result.Insurance = Insurance;
+            result.Password = PasswordGenerator.GenerateSecurePassword();
 
             await _providerReposiotry.UpdateAsync(result);
 

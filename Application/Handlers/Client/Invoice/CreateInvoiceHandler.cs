@@ -52,7 +52,7 @@ namespace CMPNatural.Application.Handlers
                         ServiceTypeId = (int)request.ServiceTypeId,
                         ServicePriceCrmId = "",
                         ServiceCrmId = "",
-                        DueDate = request.StartDate??DateTime.Now,
+                        StartDate = request.StartDate??DateTime.Now,
                         OperationalAddressId = request.OperationalAddressId,
                         Status = ServiceStatus.Draft,
                         IsEmegency =false,
@@ -76,7 +76,7 @@ namespace CMPNatural.Application.Handlers
                     {
                         CompanyId = requests.CompanyId,
                         FrequencyType = request.FrequencyType,
-                        DueDate = DateTime.Now,
+                        StartDate = DateTime.Now,
                         //LocationCompanyId=request.LocationCompanyId,
                         ServiceTypeId = (int)request.ServiceTypeId,
                         ServicePriceCrmId = "",

@@ -28,6 +28,36 @@ namespace CMPNatural.Core.Enums
         [Description("Canceled")]
         Canceled = 7,
 
+        [Description("Edited_Provider")]
+        Edited_Provider = 8,
+
+        [Description("Submited_Provider")]
+        Submited_Provider = 9,
+
+    }
+
+    public static class InvoiceStatusExtensions
+    {
+        //public static List<InvoiceStatus> invoiceSkipable { get {
+
+        //        return new List<InvoiceStatus>()
+        //        {
+        //             InvoiceStatus.Draft,
+        //             InvoiceStatus.Needs_Admin_Signature,
+        //             InvoiceStatus.Pending_Signature,
+        //             InvoiceStatus.Needs_Assignment,
+        //             InvoiceStatus.Processing_Provider
+        //    };
+        //    } }
+        public static bool IsSkippable(this InvoiceStatus status)
+        {
+            return status == InvoiceStatus.Draft ||
+                   status == InvoiceStatus.Needs_Admin_Signature ||
+                   status == InvoiceStatus.Pending_Signature ||
+                   status == InvoiceStatus.Needs_Assignment ||
+                   status == InvoiceStatus.Processing_Provider;
+        }
     }
 }
+
 
