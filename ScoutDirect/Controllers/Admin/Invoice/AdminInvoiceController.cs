@@ -22,7 +22,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using MySqlX.XDevAPI;
+using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Api.Controllers.Admin.Invoice
 {
@@ -152,12 +152,12 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
         [HttpPost("{clientId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Post([FromBody] List<ServiceAppointmentInput> r, [FromRoute] long clientId)
+        public async Task<ActionResult> Post([FromRoute] long clientId)
         {
             var rCompanyId = clientId;
             RegisterInvoiceService service = new RegisterInvoiceService(_mediator, rCompanyId);
              var result= await service.call();
-            return Ok(result);
+            return Ok(new Success<object>() { Data = result });
 
         }
 
