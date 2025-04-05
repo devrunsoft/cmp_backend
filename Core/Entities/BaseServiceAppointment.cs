@@ -23,6 +23,8 @@ namespace CMPNatural.Core.Entities
 
         public ServiceStatus Status { get; set; }
 
+        public CancelEnum? CancelBy { get; set; }
+
         public long OperationalAddressId { get; set; }
         
         public long InvoiceId { get; set; }

@@ -9,6 +9,7 @@ namespace CMPEmail.Email
         public string Name { get; set; } = "";
         public string Link { get; set; } = "";
         public string CompanyName { get; set; } = "";
+        public string buttonText { get; set; } = "Check Now";
     }
 }
 

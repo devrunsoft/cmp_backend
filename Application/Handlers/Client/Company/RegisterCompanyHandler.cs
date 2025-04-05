@@ -12,6 +12,7 @@ using CMPNatural.Core.Entities;
 using CMPNatural.Application.Mapper;
 using CMPNatural.Application.Commands;
 using CMPNatural.Core.Repositories;
+using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Application.Handlers
 {
@@ -53,7 +54,8 @@ namespace CMPNatural.Application.Handlers
                     Type=(int)request.Type,
                     Password=request.Password,
                     ActivationLink = Guid.NewGuid(),
-                    PersonId = personId
+                    PersonId = personId,
+                    Status = CompanyStatus.Approved
 
                 };
 

@@ -176,6 +176,12 @@ namespace infrastructure.Data
             {
                 entity.ToTable("Company");
 
+                entity.Property(d => d.Status)
+                .HasConversion(
+                x => x.ToString(),
+                x => (CompanyStatus)Enum.Parse(typeof(CompanyStatus), x)
+                );
+
                 entity.HasOne(d => d.BillingInformation)
                 .WithOne(p => p.Company)
                 .HasForeignKey<BillingInformation>(d => d.CompanyId);
@@ -218,6 +224,12 @@ namespace infrastructure.Data
 
                 entity.Property(p => p.Status)
                 .HasConversion<int>();
+
+                entity.Property(p => p.CancelBy)
+                .HasConversion(
+                 x => x.ToString(),
+                 x => x == null ? null : (CancelEnum)Enum.Parse(typeof(CancelEnum), x)
+                 );
 
                 entity.HasOne(sa => sa.Product)
                 .WithMany(sal => sal.ServiceAppointment)

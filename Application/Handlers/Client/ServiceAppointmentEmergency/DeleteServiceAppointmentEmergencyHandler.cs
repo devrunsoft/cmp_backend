@@ -16,12 +16,20 @@ namespace CMPNatural.Application.Handlers
 
     public class DeleteServiceAppointmentEmergencyHandler : IRequestHandler<DeleteServiceAppointmentEmergencyCommand, CommandResponse<object>>
     {
-        private readonly IServiceAppointmentEmergencyRepository _serviceAppointmentRepository;
+        private readonly IBaseServiceAppointmentRepository _serviceAppointmentRepository;
+        private readonly IManifestRepository _manifestRepository;
+        private readonly IinvoiceRepository _iinvoiceRepository;
+        private readonly ICompanyContractRepository _companyContractRepository;
 
-        public DeleteServiceAppointmentEmergencyHandler(IServiceAppointmentEmergencyRepository billingInformationRepository)
+        public DeleteServiceAppointmentEmergencyHandler(IBaseServiceAppointmentRepository _serviceAppointmentRepository, IManifestRepository _manifestRepository,
+            IinvoiceRepository _iinvoiceRepository, ICompanyContractRepository _companyContractRepository)
         {
-            _serviceAppointmentRepository = billingInformationRepository;
+            this._serviceAppointmentRepository = _serviceAppointmentRepository;
+            this._manifestRepository = _manifestRepository;
+            this._iinvoiceRepository = _iinvoiceRepository;
+            this._companyContractRepository = _companyContractRepository;
         }
+
 
         public async Task<CommandResponse<object>> Handle(DeleteServiceAppointmentEmergencyCommand request, CancellationToken cancellationToken)
         {
@@ -29,11 +37,10 @@ namespace CMPNatural.Application.Handlers
 
             if (result == null)
             {
-                return new NoAcess<object>() { Message = "No Access To Delete This Service" };
+                return new NoAcess<object>() { Message = "No Access To Cancel This Service" };
             }
 
-            result.Status = ServiceStatus.Canceled;
-            await _serviceAppointmentRepository.UpdateAsync(result);
+            result = await new CancelService(_serviceAppointmentRepository, _manifestRepository, _iinvoiceRepository, _companyContractRepository).cancel(result, CancelEnum.ByClient);
             return new Success<object>() { Data = result, Message = "Service Deleted Successfully!" };
 
         }

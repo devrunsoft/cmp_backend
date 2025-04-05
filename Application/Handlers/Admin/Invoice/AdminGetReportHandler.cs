@@ -24,7 +24,7 @@ namespace CMPNatural.Application.Handlers
 
         public async Task<CommandResponse<ReportResponse>> Handle(AdminGetReportCommand request, CancellationToken cancellationToken)
         {
-            var entity = (await _invoiceRepository.GetAllAsync());
+            var entity = (await _invoiceRepository.GetAsync(x=>x.Status!= InvoiceStatus.Canceled));
             DateTime lastMonthStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(-1);
             DateTime lastMonthEnd = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddDays(-1);
 

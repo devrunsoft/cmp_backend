@@ -1,4 +1,5 @@
 ﻿using Barbara.Application.Responses.Base;
+using CMPNatural.Core.Enums;
 using ScoutDirect.Application.Responses.Base;
 using System;
 
@@ -20,6 +21,7 @@ namespace CMPNatural.Application.Responses
         public string AccountNumber { get; set; }
         public bool Registered { get; set; }
         public bool Accepted { get; set; }
+        public CompanyStatus Status { get; set; }
         public int Type { get; set; }
         public Guid? ActivationLink { get; set; } = null;
         public string? ActivationLinkGo { get; set; } = null;

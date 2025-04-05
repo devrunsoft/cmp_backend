@@ -18,6 +18,10 @@ namespace CMPNatural.Core.Enums
 
         [Description("Needs_Admin_Signature")]
         Needs_Admin_Signature = 4,
+
+        [Description("Canceld")]
+        Canceld = 5,
+
     }
 }
 
