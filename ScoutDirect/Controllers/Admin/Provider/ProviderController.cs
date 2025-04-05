@@ -108,7 +108,7 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
 
             if (result.IsSucces())
             {
-                SendToProvider("Your Account Credentials", $"<p style=\"margin: 5px 0;\"> <strong>Username/Email:</strong> <span style=\"color: #16a085; font-family: monospace;\">{result.Data.Email}</span> </p> <p style=\"margin: 5px 0;\"> <strong>Password:</strong> <span style=\"color: #c0392b; font-family: monospace;\">{result.Data.Password}</span> </p>", input.Email);
+                SendToProvider("Your Account Credentials", $"<p style=\"margin: 5px 0;\"> <strong>Username/Email:</strong> <span style=\"color: #16a085; font-family: monospace;\">{result.Data.Email}</span> </p> <p style=\"margin: 5px 0;\"> <strong>Password:</strong> <span style=\"color: #c0392b; font-family: monospace;\">{result.Data.Password}</span> </p>", input.Email,"Login");
             }
 
             return Ok(result);

@@ -11,7 +11,8 @@ public static class EmailLinkHelper
                 {
                     LinkPattern = $"/invoice/{id}",
                     Subject = "Service Registration",
-                    Body = $"\n\nPlease review the invoice. You can access the invoice details using the button below:"
+                    Body = $"\n\nPlease review the invoice. You can access the invoice details using the button below:",
+                    ButtonText = "Check Now"
                 };
 
             case EmailLinkEnum.ClientHasSigned:
@@ -19,7 +20,8 @@ public static class EmailLinkHelper
                 {
                     LinkPattern = $"/company-contract",
                     Subject = "Sign Notification",
-                    Body = $"\n\nPlease review the contract. You can access the contract details using the button below:"
+                    Body = $"\n\nPlease review the contract. You can access the contract details using the button below:",
+                    ButtonText = "Check Now"
                 };
 
             case EmailLinkEnum.AdminHasCreateContract:
@@ -27,7 +29,8 @@ public static class EmailLinkHelper
                 {
                     LinkPattern = $"/dashboard/contract?id={id}",
                     Subject = "Sign Notification",
-                    Body = $"\n\nPlease review your contract. You can access the contract details using the button below:"
+                    Body = $"\n\nPlease review your contract. You can access the contract details using the button below:",
+                    ButtonText = "Check Now"
                 };
 
             default:
@@ -48,4 +51,5 @@ public class EmailDetails
     public string LinkPattern { get; set; }
     public string Subject { get; set; }
     public string Body { get; set; }
+    public string ButtonText { get; set; }
 }

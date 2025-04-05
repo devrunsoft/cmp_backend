@@ -12,7 +12,7 @@ namespace CMPNatural.Api.Controllers.Service
 	public static class SendEmail
 	{
 
-        public static void SendClient(this IEmailSender emailSender, long CompanyId ,string subject, string body, IServiceScopeFactory serviceScopeFactory, string? link )
+        public static void SendClient(this IEmailSender emailSender, long CompanyId ,string subject, string body, IServiceScopeFactory serviceScopeFactory, string? link , string buttonText = "")
 		{
             Task.Run(async () =>
             {
@@ -31,14 +31,15 @@ namespace CMPNatural.Api.Controllers.Service
                         Subject = subject,
                         Name = to.PrimaryFirstName,
                         CompanyName = appinformation.CompanyTitle,
-                        Link = $"https://client.app-cmp.com{link}"
+                        Link = $"https://client.app-cmp.com{link}",
+                        buttonText = buttonText
 
                     };
                     emailSender.SendEmail(model);
                 }
             });
         }
-        public static void SendAdmin(this IEmailSender emailSender, string subject, string body, IServiceScopeFactory serviceScopeFactory, string? link)
+        public static void SendAdmin(this IEmailSender emailSender, string subject, string body, IServiceScopeFactory serviceScopeFactory, string? link, string buttonText = "")
         {
             Task.Run(async () =>
             {
@@ -56,7 +57,8 @@ namespace CMPNatural.Api.Controllers.Service
                         Subject = subject,
                         Name = $"{appinformation.CompanyCeoFirstName}",
                         CompanyName = appinformation.CompanyTitle,
-                        Link = $"https://admin.app-cmp.com{link}"
+                        Link = $"https://admin.app-cmp.com{link}",
+                        buttonText = buttonText
                     };
                     emailSender.SendEmail(model);
                 }
@@ -68,7 +70,7 @@ namespace CMPNatural.Api.Controllers.Service
             Send(emailSender, subject, body, email, $"https://provider.app-cmp.com");
         }
 
-        public static void Send(this IEmailSender emailSender, string subject, string body, string email, string link="")
+        public static void Send(this IEmailSender emailSender, string subject, string body, string email, string link = "", string buttonText = "")
         {
             Task.Run(async () =>
             {
@@ -79,6 +81,7 @@ namespace CMPNatural.Api.Controllers.Service
                         Subject = subject,
                         Name = $"",
                         CompanyName = "",
+                        buttonText= buttonText,
                         Link = link
                     };
                     emailSender.SendEmail(model);

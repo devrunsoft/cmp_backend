@@ -143,7 +143,7 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
             if (result.Data.ContractId != null)
             {
                 var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminHasCreateContract, result.Data.ContractId.Value);
-                 sendEmailToClient(rCompanyId ,emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern);
+                 sendEmailToClient(rCompanyId ,emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern, emailDetails.ButtonText);
             }
 
             return Ok(result);
@@ -172,7 +172,7 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
             if (result.Data.ContractId != null)
             {
                 var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminHasCreateContract, result.Data.ContractId.Value);
-                 sendEmailToAdmin(emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern);
+                sendEmailToClient(result.Data.CompanyId, emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern, emailDetails.ButtonText);
             }
             return Ok(result);
 

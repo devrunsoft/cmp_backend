@@ -55,7 +55,7 @@ namespace CMPNatural.Api.Controllers.CompanyContract
         {
             var result = await _mediator.Send(new SignCompanyContractCommand() { CompanyId = rCompanyId , CompanyContractId = Id  , Sign = command .Sign});
             var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.ClientHasSigned, result.Data.Id);
-            sendEmailToAdmin(emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern);
+            sendEmailToAdmin(emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern, emailDetails.ButtonText);
             return Ok(result);
         }
     }

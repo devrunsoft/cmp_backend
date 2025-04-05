@@ -76,7 +76,7 @@ namespace CMPNatural.Api.Controllers.Invoice
             foreach (var item in result)
             {
                 var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminInvoices, item.Data.InvoiceId);
-                 sendEmailToAdmin(emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern);
+                 sendEmailToAdmin(emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern, emailDetails.ButtonText);
             }
 
             return Ok(new Success<object>());

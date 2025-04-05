@@ -23,40 +23,40 @@ namespace ScoutDirect.Api.Controllers._Base
 
 
         [NonAction]
-        public void SendToProvider(string subject, string body, string email)
+        public void SendToProvider(string subject, string body, string email, string buttonText)
         {
             emailSender.SendToProvider(subject, body, email);
         }
 
 
         [NonAction]
-        public void sendEmail(string subject, string body, string email)
+        public void sendEmail(string subject, string body, string email, string link="", string buttonText="")
         {
-            emailSender.Send(subject, body, email);
+            emailSender.Send(subject, body, email, link , buttonText);
         }
 
         [NonAction]
         public void sendEmailToAdmin(string subject, string body)
         {
-           emailSender.SendAdmin(subject, body, serviceScopeFactory , null);
+           emailSender.SendAdmin(subject, body, serviceScopeFactory , null , null);
         }
 
         [NonAction]
         public void sendEmailToClient(long companyId ,string subject, string body)
         {
-             emailSender.SendClient(companyId, subject, body, serviceScopeFactory, null);
+             emailSender.SendClient(companyId, subject, body, serviceScopeFactory, null , null);
         }
 
         [NonAction]
-        public void sendEmailToAdmin(string subject, string body,string Link)
+        public void sendEmailToAdmin(string subject, string body,string Link, string buttonText)
         {
-             emailSender.SendAdmin(subject, body, serviceScopeFactory, Link);
+             emailSender.SendAdmin(subject, body, serviceScopeFactory, Link , buttonText);
         }
 
         [NonAction]
-        public void sendEmailToClient(long companyId, string subject, string body,string Link)
+        public void sendEmailToClient(long companyId, string subject, string body,string Link, string buttonText)
         {
-            emailSender.SendClient(companyId, subject, body, serviceScopeFactory, Link);
+            emailSender.SendClient(companyId, subject, body, serviceScopeFactory, Link, buttonText);
         }
 
 
