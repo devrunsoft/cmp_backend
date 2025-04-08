@@ -70,7 +70,8 @@ namespace CMPNatural.Application.Handlers
             List<string> serviceList = services.BaseServiceAppointment
                 .Select(x => $"<strong>{x.Product.Name}</strong>  - <strong>{x.ProductPrice.Name} </strong> "
                            + $"- <strong>Number of Payments:</strong> {x.ProductPrice.NumberofPayments}, "
-                           + $"<strong>Billing Period:</strong> {x.ProductPrice.BillingPeriod}" +
+                           +
+                           //$"<strong>Billing Period:</strong> {x.ProductPrice.BillingPeriod}" +
                            $"<br> <strong>Start Date:</strong> {x.StartDate.ToDateString()}" +
                            $" - <strong>Preferred Days:</strong> {x.DayOfWeek} ({(x.FromHour.ConvertTimeToString())} until {(x.ToHour.ConvertTimeToString())})" +
                            $"<br> <strong>Total:</strong> ${x.TotalAmount}"

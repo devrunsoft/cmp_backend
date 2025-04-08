@@ -7,8 +7,6 @@ using CMPNatural.Application.Model.ServiceAppointment;
 using CMPNatural.Core.Entities;
 using CMPNatural.Core.Enums;
 using MediatR;
-using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using ScoutDirect.Application.Responses;
 
@@ -24,7 +22,7 @@ namespace CMPNatural.Api.Service
             this.rCompanyId = rCompanyId;
         }
 
-		public async Task<List<CommandResponse<Invoice>>> call()
+        public async Task<List<CommandResponse<Invoice>>> call()
 		{
             var resultShopping = (await _mediator.Send(new GetAllShoppingCardCommand()
             {
@@ -49,7 +47,6 @@ namespace CMPNatural.Api.Service
 
             foreach (var i in groupedData)
             {
-
                 var request = i.item.Select((e) => new ServiceAppointmentInput()
                 {
                     FrequencyType = e.FrequencyType,

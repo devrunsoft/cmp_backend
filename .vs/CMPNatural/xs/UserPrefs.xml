@@ -1,35 +1,43 @@
-﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{36794759-A62F-43C3-B7D2-DE0D42AA2780}|https">
+﻿<Properties StartupConfiguration="{36794759-A62F-43C3-B7D2-DE0D42AA2780}|https" GitUserInfo="UsingMD">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.CMPNatural.Api PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Provider/ProviderAuthController.cs" relfile="ScoutDirect/Controllers/Provider/ProviderAuthController.cs" line="33" column="1" />
       <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Core/Enums/InvoiceStatus.cs" relfile="Core/Enums/InvoiceStatus.cs" line="54" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Admin/ProviderServiceArea/AdminAddAllProviderServiceAreaHandler.cs" relfile="Application/Handlers/Admin/ProviderServiceArea/AdminAddAllProviderServiceAreaHandler.cs" line="26" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Admin/ProviderServiceArea/AdminAddAllProviderServiceAreaHandler.cs" relfile="Application/Handlers/Admin/ProviderServiceArea/AdminAddAllProviderServiceAreaHandler.cs" line="47" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Admin/ProviderServiceArea/AdminAddAllProviderServiceAreaHandler.cs" relfile="Application/Handlers/Admin/ProviderServiceArea/AdminAddAllProviderServiceAreaHandler.cs" line="45" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Admin/ProviderServiceArea/AdminAddAllProviderServiceAreaHandler.cs" relfile="Application/Handlers/Admin/ProviderServiceArea/AdminAddAllProviderServiceAreaHandler.cs" line="44" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/infrastructure/Repository/ProviderReposiotry.cs" relfile="infrastructure/Repository/ProviderReposiotry.cs" line="22" column="1" />
+      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Core/Extentions/Provider.cs" relfile="Core/Extentions/Provider.cs" line="39" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Application/Handlers/Client/Invoice/CreateInvoiceHandler.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Core/Extentions/Provider.cs">
     <Files>
-      <File FileName="ScoutDirect/Controllers/Provider/ProviderAuthController.cs" />
+      <File FileName="ScoutDirect/Controllers/Provider/ProviderAuthController.cs" Line="76" Column="46" />
       <File FileName="ScoutDirect/Controllers/Admin/BaseAdminApiController.cs" />
       <File FileName="ScoutDirect/Controllers/Admin/BaseAdminClientApiController.cs" />
-      <File FileName="ScoutDirect/Controllers/Admin/BaseAdminProviderApiController.cs" />
-      <File FileName="ScoutDirect/Controllers/Client/_Base/BaseApiController.cs" Line="28" Column="28" />
+      <File FileName="ScoutDirect/Controllers/Admin/BaseAdminProviderApiController.cs" Line="10" Column="18" />
+      <File FileName="ScoutDirect/Controllers/Client/_Base/BaseApiController.cs" />
       <File FileName="ScoutDirect/Controllers/Provider/Base/BaseProviderApiController.cs" />
       <File FileName="ScoutDirect/Controllers/Client/_Base/BaseClientApiController.cs" />
       <File FileName="ScoutDirect/Controllers/Client/Dashboard/OperationalAddressDashboardController.cs" />
       <File FileName="ScoutDirect/Controllers/Admin/Product/ProductController.cs" />
       <File FileName="ScoutDirect/Controllers/Admin/Capacity/CapacityController.cs" />
       <File FileName="Application/Commands/Provider/Provider/RegisterProviderCommand.cs" />
-      <File FileName="ScoutDirect/Controllers/Admin/Auth/AdminAuthController.cs" Line="45" Column="44" />
+      <File FileName="ScoutDirect/Controllers/Admin/Auth/AdminAuthController.cs" />
       <File FileName="ScoutDirect/Controllers/Admin/Admin/AdminManagmentController.cs" />
       <File FileName="Application/Commands/Provider/Provider/RegisterProviderOperationalAddressCommand.cs" />
       <File FileName="Application/Commands/Admin/Provider/AdminPostProviderCommand.cs" />
       <File FileName="Application/Model/ProviderInput.cs" />
       <File FileName="Application/Handlers/Provider/Provider/RegisterProviderOperationalAddressHandler.cs" />
-      <File FileName="Application/Handlers/Provider/Provider/RegisterProviderHandler.cs" Line="24" Column="1" />
-      <File FileName="Core/Entities/Provider.cs" />
+      <File FileName="Application/Handlers/Provider/Provider/RegisterProviderHandler.cs" />
+      <File FileName="Core/Entities/Provider.cs" Line="6" Column="23" />
       <File FileName="ScoutDirect/Properties/launchSettings.json" />
-      <File FileName="ScoutDirect/appsettings.json" />
+      <File FileName="ScoutDirect/appsettings.json" Line="13" Column="71" />
       <File FileName="Application/Commands/Provider/Provider/LoginProviderCommand.cs" />
       <File FileName="Application/Commands/Admin/AdminManagment/AdminAddAdminCommand.cs" />
       <File FileName="Application/Model/AdminInput.cs" />
@@ -40,16 +48,16 @@
       <File FileName="Application/Handlers/Admin/AdminManagment/AdminUpdateAdminHandler.cs" />
       <File FileName="Application/Commands/Admin/Menu/AdminGetallMenuCommand.cs" />
       <File FileName="Application/Handlers/Admin/Menu/AdminGetallMenuHandler.cs" />
-      <File FileName="ScoutDirect/Controllers/Admin/User/UserController.cs" />
+      <File FileName="ScoutDirect/Controllers/Admin/User/UserController.cs" Line="34" Column="80" />
       <File FileName="Application/Commands/Admin/Menu/AdminGetAllMenuByAdminCommand.cs" />
-      <File FileName="Application/Handlers/Admin/Menu/AdminGetAllMenuByAdminHandler.cs" />
-      <File FileName="infrastructure/Repository/Base/Base.cs" Line="65" Column="1" />
+      <File FileName="Application/Handlers/Admin/Menu/AdminGetAllMenuByAdminHandler.cs" Line="41" Column="10" />
+      <File FileName="infrastructure/Repository/Base/Base.cs" />
       <File FileName="Core/Repositories/Base/IRepository.cs" />
       <File FileName="Core/Repositories/IAdminRepository.cs" />
-      <File FileName="ScoutDirect/Service/SendEmail.cs" Line="75" Column="54" />
+      <File FileName="ScoutDirect/Service/SendEmail.cs" />
       <File FileName="Application/Commands/Admin/AdminTwoFactorCommand.cs" />
       <File FileName="Application/Commands/Admin/AdminLoginCommand.cs" />
-      <File FileName="Application/Handlers/Admin/AdminTwoFactorHandler.cs" />
+      <File FileName="Application/Handlers/Admin/AdminTwoFactorHandler.cs" Line="14" Column="6" />
       <File FileName="Application/Handlers/Admin/Auth/AdminLoginHandler.cs" />
       <File FileName="Application/Responses/Base/CommandResponse.cs" />
       <File FileName="CmpNatural.CrmManagment/Api/CustomValue/CustomValueApi.cs" />
@@ -58,30 +66,30 @@
       <File FileName="CmpNatural.CrmManagment/Api/Product/ProductList.cs" />
       <File FileName="CmpNatural.CrmManagment/Api/Product/ProductPrice.cs" />
       <File FileName="ScoutDirect/Attribute/MenuAuthorizeAttribute.cs" />
-      <File FileName="ScoutDirect/Controllers/UserController.cs" />
+      <File FileName="ScoutDirect/Controllers/UserController.cs" Line="58" Column="1" />
       <File FileName="CMPEmail/Email/MailModel.cs" />
       <File FileName="CMPEmail/Email/MailService.cs" />
       <File FileName="CMPEmail/Email/IMailService.cs" />
       <File FileName="CMPEmail/EmailTemplate/Template1.cs" />
-      <File FileName="Application/Commands/Admin/AdminLoginCodeCommand.cs" />
+      <File FileName="Application/Commands/Admin/AdminLoginCodeCommand.cs" Line="7" Column="80" />
       <File FileName="Application/Handlers/Admin/Auth/AdminLoginCodeHandler.cs" />
-      <File FileName="ScoutDirect/Controllers/Admin/Invoice/AdminInvoiceController.cs" Line="217" Column="10" />
+      <File FileName="ScoutDirect/Controllers/Admin/Invoice/AdminInvoiceController.cs" Line="122" Column="1" />
       <File FileName="Core/Enums/MenuEnum.cs" />
       <File FileName="Application/Handlers/Admin/CheckMenuAccessHandler.cs" />
       <File FileName="Core/Caching/ICacheService.cs" />
       <File FileName="ScoutDirect/Program.cs" />
       <File FileName="infrastructure/Repository/AdminMenuAccessRepository.cs" />
-      <File FileName="infrastructure/Repository/BaseServiceAppointmentRepository.cs" Line="10" Column="72" />
+      <File FileName="infrastructure/Repository/BaseServiceAppointmentRepository.cs" />
       <File FileName="infrastructure/Repository/VehicleRepository.cs" />
       <File FileName="infrastructure/Repository/AppInformationRepository.cs" />
       <File FileName="Application/Commands/Admin/Menu/AdminAddMenuCommand.cs" />
       <File FileName="Core/Enums/ProviderRegistrationStatus.cs" />
-      <File FileName="Application/Handlers/Admin/Provider/AdminPostProviderHandler.cs" Line="21" Column="66" />
+      <File FileName="Application/Handlers/Admin/Provider/AdminPostProviderHandler.cs" />
       <File FileName="Application/Commands/Provider/Biling/ProviderAddBilingCommand.cs" />
       <File FileName="ScoutDirect/Controllers/Admin/Service/ServiceV2Controller.cs" />
       <File FileName="ScoutDirect/Controllers/ServiceController.cs" />
       <File FileName="Application/Commands/Provider/Provider/RegisterProviderDocumentCommand.cs" />
-      <File FileName="ScoutDirect/Controllers/Admin/Provider/ProviderController.cs" Line="49" Column="25" />
+      <File FileName="ScoutDirect/Controllers/Admin/Provider/ProviderController.cs" Line="31" Column="1" />
       <File FileName="Application/Handlers/Provider/LoginProviderHandler.cs" />
       <File FileName="ScoutDirect/Controllers/Provider/ProviderController.cs" />
       <File FileName="ScoutDirect/Controllers/Provider/ProviderInvoiceController.cs" />
@@ -102,22 +110,22 @@
       <File FileName="Application/Commands/Admin/Invoice/AdminGetInvoiceCommand.cs" />
       <File FileName="Application/Handlers/Provider/Invoice/ProviderGetAllInvoiceHandler.cs" />
       <File FileName="Application/Handlers/Provider/Invoice/ProviderGetInvoiceHandler.cs" />
-      <File FileName="Application/Handlers/Admin/Invoice/AdminGetAllInvoiceHandler.cs" Line="19" Column="54" />
+      <File FileName="Application/Handlers/Admin/Invoice/AdminGetAllInvoiceHandler.cs" />
       <File FileName="Core/Entities/Invoice.cs" />
       <File FileName="Application/Handlers/Admin/Invoice/AdminGetInvoiceNumberHandler.cs" />
-      <File FileName="Application/Handlers/Admin/CompanyContract/AdminCreateCompanyContractHandler.cs" Line="74" Column="76" />
+      <File FileName="Application/Handlers/Admin/CompanyContract/AdminCreateCompanyContractHandler.cs" />
       <File FileName="Application/Handlers/Admin/AppInformation/AdminAppInformationPutHandler.cs" />
       <File FileName="Application/Handlers/Admin/Invoice/AdminSentInvoiceHandler.cs" />
       <File FileName="Application/Handlers/Admin/Invoice/AdminGetInvoiceHandler.cs" />
       <File FileName="ScoutDirect/Startup.cs" />
       <File FileName="Core/Entities/BillingInformationProvider.cs" />
       <File FileName="Core/Entities/BillingInformation.cs" />
-      <File FileName="Core/Entities/Base/PersistentDefinition.cs" />
+      <File FileName="Core/Entities/Base/PersistentDefinition.cs" Line="24" Column="55" />
       <File FileName="Core/Repositories/IBillingInformationRepository.cs" />
       <File FileName="infrastructure/Repository/BillingInformationProviderRepository.cs" />
-      <File FileName="infrastructure/RegisterDependency.cs" />
+      <File FileName="infrastructure/RegisterDependency.cs" Line="60" Column="54" />
       <File FileName="infrastructure/Repository/BillingInformationRepository.cs" />
-      <File FileName="infrastructure/Data/DbContext.cs" Line="265" Column="41" />
+      <File FileName="infrastructure/Data/DbContext.cs" Line="332" Column="1" />
       <File FileName="ScoutDirect/Controllers/Provider/ProviderBillingInformationController.cs" />
       <File FileName="Application/Model/BilingInformationInput.cs" />
       <File FileName="Application/Handlers/Provider/Billing/ProviderAddBilingHandler.cs" />
@@ -129,54 +137,142 @@
       <File FileName="CMPEmail/Email/EmailWebHook.cs" />
       <File FileName="CmpNatural.CrmManagment/Webhook/ForgotPassword.cs" />
       <File FileName="ScoutDirect/Controllers/Client/Invoice/InvoiceController.cs" />
-      <File FileName="Core/Helper/EmailHelper.cs" Line="20" Column="56" />
-      <File FileName="ScoutDirect/Controllers/Client/CompanyContract/CompanyContractController.cs" Line="57" Column="1" />
+      <File FileName="Core/Helper/EmailHelper.cs" />
+      <File FileName="ScoutDirect/Controllers/Client/CompanyContract/CompanyContractController.cs" />
       <File FileName="Core/Enums/EmailLinkEnum.cs" />
-      <File FileName="Application/Handlers/Client/Invoice/CreateInvoiceHandler.cs" Line="101" Column="14" />
+      <File FileName="Application/Handlers/Client/Invoice/CreateInvoiceHandler.cs" />
       <File FileName="Application/Handlers/Admin/Invoice/AdminSetOprLocationProviderHandler.cs" />
-      <File FileName="ScoutDirect/Service/RegisterInvoiceService.cs" />
-      <File FileName="ScoutDirect/Controllers/Admin/Provider/DriverController.cs" Line="15" Column="78" />
-      <File FileName="ScoutDirect/Controllers/Client/Auth/Register/RegisterCompanyController.cs" Line="61" Column="1" />
-      <File FileName="Core/Helper/PasswordGenerator.cs" Line="8" Column="35" />
-      <File FileName="Application/Handlers/Provider/Provider/RegisterProviderDocumentHandler.cs" Line="1" Column="1" />
-      <File FileName="Application/Handlers/Admin/Provider/AdminPutProviderHandler.cs" Line="20" Column="62" />
-      <File FileName="Application/Handlers/Client/ShoppingCard/AddServiceShoppingCardHandler.cs" Line="54" Column="63" />
-      <File FileName="ScoutDirect/Controllers/Admin/Client/ClientShoppingCardController.cs" Line="56" Column="65" />
-      <File FileName="Application/Handlers/Admin/ProviderServiceAssignment/AdminPostProviderServiceAssignmentHandler.cs" Line="1" Column="1" />
-      <File FileName="Application/Handlers/Admin/Invoice/AdminSetInvoiceProviderHandler.cs" Line="48" Column="53" />
-      <File FileName="Core/Enums/InvoiceStatus.cs" Line="37" Column="6" />
-      <File FileName="Application/Handlers/Admin/Invoice/AdminGetAllCreatedInvoiceHandler.cs" Line="33" Column="35" />
-      <File FileName="Application/Handlers/Admin/Manifest/AdminCreateManifestHandler.cs" Line="60" Column="1" />
-      <File FileName="Application/Handlers/Admin/Representation/AdminMenuRepresentationHandler.cs" Line="39" Column="1" />
-      <File FileName="Core/Enums/ManifestStatus.cs" Line="8" Column="17" />
-      <File FileName="Core/Entities/BaseServiceAppointment.cs" Line="46" Column="44" />
-      <File FileName="Application/Handlers/Client/ServiceAppointment/AddServiceAppointmentHandler.cs" Line="50" Column="1" />
-      <File FileName="Application/Handlers/Admin/Invoice/AdminUpdateInvoiceHandler.cs" Line="101" Column="34" />
-      <File FileName="Application/Responses/BaseServiceAppointment/BaseServiceAppointment.cs" Line="35" Column="34" />
-      <File FileName="CmpNatural.CrmManagment/Command/CreateInvoiceCommand.cs" Line="16" Column="32" />
+      <File FileName="ScoutDirect/Service/RegisterInvoiceService.cs" Line="48" Column="5" />
+      <File FileName="ScoutDirect/Controllers/Admin/Provider/DriverController.cs" Line="45" Column="1" />
+      <File FileName="ScoutDirect/Controllers/Client/Auth/Register/RegisterCompanyController.cs" />
+      <File FileName="Core/Helper/PasswordGenerator.cs" />
+      <File FileName="Application/Handlers/Provider/Provider/RegisterProviderDocumentHandler.cs" />
+      <File FileName="Application/Handlers/Admin/Provider/AdminPutProviderHandler.cs" />
+      <File FileName="Application/Handlers/Client/ShoppingCard/AddServiceShoppingCardHandler.cs" />
+      <File FileName="ScoutDirect/Controllers/Admin/Client/ClientShoppingCardController.cs" />
+      <File FileName="Application/Handlers/Admin/ProviderServiceAssignment/AdminPostProviderServiceAssignmentHandler.cs" />
+      <File FileName="Application/Handlers/Admin/Invoice/AdminSetInvoiceProviderHandler.cs" />
+      <File FileName="Core/Enums/InvoiceStatus.cs" />
+      <File FileName="Application/Handlers/Admin/Invoice/AdminGetAllCreatedInvoiceHandler.cs" />
+      <File FileName="Application/Handlers/Admin/Manifest/AdminCreateManifestHandler.cs" />
+      <File FileName="Application/Handlers/Admin/Representation/AdminMenuRepresentationHandler.cs" />
+      <File FileName="Core/Enums/ManifestStatus.cs" />
+      <File FileName="Core/Entities/BaseServiceAppointment.cs" />
+      <File FileName="Application/Handlers/Client/ServiceAppointment/AddServiceAppointmentHandler.cs" />
+      <File FileName="Application/Handlers/Admin/Invoice/AdminUpdateInvoiceHandler.cs" />
+      <File FileName="Application/Responses/BaseServiceAppointment/BaseServiceAppointment.cs" />
+      <File FileName="CmpNatural.CrmManagment/Command/CreateInvoiceCommand.cs" />
+      <File FileName="ScoutDirect/Controllers/Client/Shoppingcard/ShoppingCardController.cs" />
+      <File FileName="Application/Handlers/Client/BilingInformation/AddBillingInformationHandler.cs" />
+      <File FileName="ScoutDirect/Controllers/Client/Service/ServiceAppointmentController.cs" />
+      <File FileName="Application/Handlers/Client/ServiceAppointment/DeleteServiceAppointmentHandler.cs" />
+      <File FileName="Core/Enums/ServiceStatus.cs" />
+      <File FileName="Core/Enums/CancelEnum.cs" Line="7" Column="1" />
+      <File FileName="Application/Handlers/CancelService.cs" />
+      <File FileName="Core/Repositories/IServiceAppointmentRepository.cs" />
+      <File FileName="Core/Repositories/IBaseServiceAppointmentRepository.cs" />
+      <File FileName="Core/Extentions/Invoice.cs" />
+      <File FileName="Core/Entities/CompanyContract.cs" />
+      <File FileName="Core/Enums/CompanyContractStatus.cs" />
+      <File FileName="Application/Handlers/Client/ServiceAppointmentEmergency/DeleteServiceAppointmentEmergencyHandler.cs" />
+      <File FileName="ScoutDirect/Controllers/Admin/Client/ClientServiceController.cs" />
+      <File FileName="Application/Handlers/Client/ServiceAppointment/GetAllBaseServiceAppointmentHandler.cs" />
+      <File FileName="Core/Entities/Company.cs" />
+      <File FileName="Core/Enums/CompanyStatus.cs" />
+      <File FileName="Core/Enums/ProviderStatus.cs" />
+      <File FileName="Application/Handlers/Client/Company/RegisterCompanyHandler.cs" />
+      <File FileName="ScoutDirect/Controllers/Admin/Company/CompanyController.cs" />
+      <File FileName="Application/Commands/Admin/Company/AdminGetAllUserCommand.cs" />
+      <File FileName="Application/Commands/Admin/Company/AdminGetCompanyCommand.cs" />
+      <File FileName="Application/Handlers/Admin/Comapny/AdminGetCompanyHandler.cs" />
+      <File FileName="Application/Handlers/Admin/Comapny/AdminGetAllCompanyHandler.cs" />
+      <File FileName="Application/Responses/Base/CompanyResponse.cs" />
+      <File FileName="Application/Commands/Admin/Provider/AdminChangeStatusProviderCommand.cs" />
+      <File FileName="Application/Commands/Admin/Company/AdminChangeStatusClientCommand.cs" />
+      <File FileName="Application/Handlers/Admin/Provider/AdminChangeStatusProviderHandler.cs" />
+      <File FileName="Application/Handlers/Admin/Comapny/AdminchangeStatusClientHandler.cs" />
+      <File FileName="infrastructure/Repository/CompanyRepository.cs" />
+      <File FileName="Application/Commands/LoginCommand.cs" />
+      <File FileName="Application/Handlers/Client/QueryHandlers/GetLoginQuery.cs" />
+      <File FileName="infrastructure/Repository/InvoiceRepository.cs" />
+      <File FileName="Application/Responses/Invoice/InvoiceResponse.cs" />
+      <File FileName="Application/Commands/Client/ShoppingCard/GetAllShoppingCardCommand.cs" />
+      <File FileName="Core/Entities/ShoppingCard.cs" />
+      <File FileName="Core/Entities/ServiceArea.cs" Line="28" Column="41" />
+      <File FileName="Core/Entities/ServiceAppointmentEmergency.cs" />
+      <File FileName="Core/Entities/ProviderService.cs" />
+      <File FileName="Application/Commands/Client/Invoice/DeleteInvoiceCommand.cs" />
+      <File FileName="Application/Handlers/Client/Invoice/DeleteInvoiceCommand.cs" />
+      <File FileName="Application/Commands/Admin/Invoice/AdminUpdateInvoiceCommand.cs" />
+      <File FileName="Application/Model/InvoiceInput.cs" />
+      <File FileName="Application/Model/ServiceAppointment/ServiceAppointmentInput.cs" />
+      <File FileName="Application/Commands/Admin/Invoice/AdminGetAllCreatedInvoiceCommand.cs" />
+      <File FileName="Core/Entities/Product.cs" />
+      <File FileName="Core/Entities/ProductItem.cs" />
+      <File FileName="ScoutDirect/Controllers/Admin/CompanyContract/CompanyContractController.cs" />
+      <File FileName="Application/Commands/Admin/CompanyContract/AdminGetPaginateCompanyContractCommand.cs" />
+      <File FileName="Core/Enums/ServiceAreaTypeEnum.cs" Line="13" Column="33" />
+      <File FileName="infrastructure/Repository/ServiceAreaRepository.cs" Line="10" Column="66" />
+      <File FileName="infrastructure/Repository/ServiceAppointmentRepository.cs" Line="1" Column="1" />
+      <File FileName="infrastructure/Repository/ServiceAppointmentEmergencyRepository.cs" Line="1" Column="1" />
+      <File FileName="infrastructure/Repository/ProviderReposiotry.cs" Line="27" Column="40" />
+      <File FileName="infrastructure/Repository/MenuRepository.cs" Line="10" Column="1" />
+      <File FileName="Core/Repositories/IServiceAreaRepository.cs" Line="7" Column="44" />
+      <File FileName="Core/Repositories/ICapacityRepository.cs" Line="7" Column="1" />
+      <File FileName="ScoutDirect/Controllers/Admin/Provider/ServiceAreaController.cs" Line="58" Column="1" />
+      <File FileName="Application/Model/ServiceAreaInput.cs" Line="20" Column="1" />
+      <File FileName="Application/Commands/Admin/ProviderServiceArea/AdminGetAllProviderServiceArea.cs" Line="9" Column="87" />
+      <File FileName="Application/Commands/Admin/ProviderServiceArea/AdminAddProviderServiceArea.cs" Line="24" Column="6" />
+      <File FileName="Application/Commands/Admin/ProviderServiceArea/AdminDeleteProviderServiceArea.cs" Line="20" Column="1" />
+      <File FileName="Application/Handlers/Admin/ProviderServiceArea/AdminAddAllProviderServiceAreaHandler.cs" Line="7" Column="58" />
+      <File FileName="Application/Handlers/Admin/ProviderServiceArea/AdminGetAllProviderServiceAreaHandler.cs" Line="15" Column="111" />
+      <File FileName="Application/Handlers/Admin/Contract/AdminAddContractHandler.cs" Line="11" Column="1" />
+      <File FileName="Application/Handlers/Admin/Contract/AdminEditContractHandler.cs" Line="12" Column="45" />
+      <File FileName="Application/Handlers/Admin/Contract/AdminGetAllContractHandler.cs" Line="21" Column="54" />
+      <File FileName="Application/Handlers/Admin/ProviderServiceArea/AdminDeleteProviderServiceAreaHandler.cs" Line="36" Column="2" />
+      <File FileName="Application/Commands/Admin/ProviderServiceArea/AdminAddAllProviderServiceAreaCommand.cs" Line="10" Column="68" />
+      <File FileName="Application/Handlers/Admin/ProviderServiceArea/AdminAddAllProviderServiceAreaHandler.cs" Line="45" Column="1" />
+      <File FileName="Core/Extentions/Provider.cs" Line="10" Column="23" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="CMPNatural">
-            <Node name="CMPNatural.Api" selected="True" />
-            <Node name="CMPNatural.Core" expanded="True">
-              <Node name="Entities" expanded="True" />
-            </Node>
-            <Node name="CmpNatural.CrmManagment" expanded="True">
-              <Node name="Command" expanded="True" />
-            </Node>
-            <Node name="CMPNatural.infrastructure" expanded="True">
-              <Node name="Data" expanded="True" />
-              <Node name="Repository" expanded="True">
-                <Node name="Base" expanded="True" />
+          <Node name="CMPNatural" expanded="True">
+            <Node name="CMPEmail" expanded="True" />
+            <Node name="CMPNatural.Api">
+              <Node name="Controllers" expanded="True">
+                <Node name="Admin" expanded="True">
+                  <Node name="Invoice" expanded="True" />
+                  <Node name="Provider" expanded="True" />
+                  <Node name="User" expanded="True" />
+                </Node>
               </Node>
+            </Node>
+            <Node name="CMPNatural.Application" expanded="True">
+              <Node name="Commands" expanded="True">
+                <Node name="Admin" expanded="True">
+                  <Node name="ProviderServiceArea" expanded="True" />
+                </Node>
+              </Node>
+              <Node name="Handlers" expanded="True">
+                <Node name="Admin" expanded="True">
+                  <Node name="Contract" expanded="True" />
+                  <Node name="Menu" expanded="True" />
+                  <Node name="ProviderServiceArea" expanded="True" />
+                </Node>
+              </Node>
+            </Node>
+            <Node name="CMPNatural.Core">
+              <Node name="Dependencies" expanded="True">
+                <Node name="PackageDependencies" expanded="True" />
+              </Node>
+            </Node>
+            <Node name="CMPNatural.infrastructure">
+              <Node name="Data" expanded="True" />
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.CMPNatural.Api PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

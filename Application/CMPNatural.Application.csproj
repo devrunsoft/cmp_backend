@@ -235,6 +235,8 @@
     <None Remove="Handlers\Provider\Invoice\" />
     <None Remove="Commands\Provider\Invoice\" />
     <None Remove="Handlers\Provider\Billing\" />
+    <None Remove="Commands\Admin\ProviderServiceArea\" />
+    <None Remove="Handlers\Admin\ProviderServiceArea\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -476,6 +478,8 @@
     <Folder Include="Handlers\Provider\Invoice\" />
     <Folder Include="Commands\Provider\Invoice\" />
     <Folder Include="Handlers\Provider\Billing\" />
+    <Folder Include="Commands\Admin\ProviderServiceArea\" />
+    <Folder Include="Handlers\Admin\ProviderServiceArea\" />
   </ItemGroup> 
 
   <ItemGroup>

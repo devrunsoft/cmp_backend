@@ -35,6 +35,7 @@ namespace CMPNatural.Core.Entities
         public DateTime? InsuranceExp { get; set; }
 
         public virtual ICollection<ProviderService> ProviderService { get; set; } = new List<ProviderService>();
+        public virtual ICollection<ServiceArea> ServiceArea { get; set; } = new List<ServiceArea>();
 
 
     }

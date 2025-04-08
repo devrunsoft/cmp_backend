@@ -5,16 +5,13 @@ using System.Text.Json.Serialization;
 namespace CMPNatural.Core.Enums
 {
     [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum CancelEnum
+    public enum ServiceAreaTypeEnum
     {
-        [Description("ByClient")]
-        ByClient,
+        [Description("Circle")]
+        Circle=1,
 
-        [Description("ByAdmin")]
-        ByAdmin,
-
-        [Description("ByProvider")]
-        ByProvider,
+        [Description("Polygon")]
+        Polygon=2,
     }
 }
 

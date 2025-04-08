@@ -13,8 +13,8 @@ namespace CMPNatural.Core.Entities
     public long BillingPeriod { get; set; }
     public int NumberofPayments { get; set; }
     public double SetupFee { get; set; }
-        public string ServiceCrmId { get; set; } = "";
-        public string ServicePriceCrmId { get; set; } = "";
+    public string? ServiceCrmId { get; set; } = "";
+    public string? ServicePriceCrmId { get; set; } = "";
     public bool Enable { get; set; }
     public int Order { get; set; }
 

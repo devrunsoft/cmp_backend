@@ -15,17 +15,17 @@ namespace CMPNatural.infrastructure.Repository
     {
         public ProviderReposiotry(ScoutDBContext context, Func<CacheTech, ICacheService> cacheService) : base(context, cacheService) { }
 
-        private IQueryable<Provider> GeAllQuery() => _dbContext.Provider.Include(p=>p.ProviderService);
+        private IQueryable<Provider> GeAllQuery() => _dbContext.Provider.Include(p=>p.ProviderService).Include(x=>x.ServiceArea);
 
         public async Task<List<Provider>> GetAllSearchProviderAsync(double sLatitude, double sLongitude, Expression<Func<Provider, bool>> expression)
         {
             var cachedList = await GeAllQuery().Where(expression)
              .ToListAsync();
 
-            return cachedList.Where(p =>  p.Distance(sLatitude, sLongitude) <= p.AreaLocation
+            return cachedList.Where(p =>  p.IsPointInCity(sLatitude, sLongitude)
              )
-                .OrderBy(p => p.Distance(sLatitude, sLongitude))
-                .ThenByDescending(p => p.Id).ToList();
+                //.OrderBy(p => p.Distance(sLatitude, sLongitude))
+                .OrderBy(p => p.Id).ToList();
         }
 
 
@@ -36,7 +36,7 @@ namespace CMPNatural.infrastructure.Repository
             return cachedList
                .Where(p =>
                p.Status == Core.Enums.ProviderStatus.Approved &&
-                  locations.Any(s => p.Distance(s.LocationCompany.Lat, s.LocationCompany.Long) <= p.AreaLocation) &&
+                  locations.Any(s => p.IsPointInCity(s.LocationCompany.Lat, s.LocationCompany.Long)) &&
                   locations.All(loc => p.ProviderService.Any(service => service.ProductId == loc.ServiceAppointment.ProductId)) // Ensure all exist
              ).ToList();
         }

@@ -54,6 +54,7 @@ namespace ScoutDirect.infrastructure
             services.AddTransient<ITermsConditionsRepository, TermsConditionsRepository>();
             services.AddTransient<IManifestRepository, ManifestRepository>();
             services.AddTransient<IBillingInformationProviderRepository, BillingInformationProviderRepository>();
+            services.AddTransient<IServiceAreaRepository, ServiceAreaRepository>();
 
             services.AddTransient<ProductListApi>();
             services.AddTransient<ProductPriceApi>();

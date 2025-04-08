@@ -83,51 +83,33 @@ namespace CMPNatural.Api.Controllers.Invoice
         }
 
 
-        //[HttpDelete("{InvoiceId}")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[EnableCors("AllowOrigin")]
-        //public async Task<ActionResult> Delete([FromRoute] long InvoiceId)
-        //{
+        [HttpDelete("{InvoiceId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Delete([FromRoute] long InvoiceId)
+        {
 
-        //    var resultInvoie = await _mediator.Send(new GetInvoiceByIdCommand()
-        //    {
-        //        CompanyId = rCompanyId,
-        //        Id = InvoiceId
-        //    });
+            var resultInvoie = await _mediator.Send(new GetInvoiceByIdCommand()
+            {
+                CompanyId = rCompanyId,
+                Id = InvoiceId
+            });
 
-        //    if (!resultInvoie.IsSucces())
-        //    {
-        //        return Ok(resultInvoie);
-        //    }
+            if (!resultInvoie.IsSucces())
+            {
+                return Ok(resultInvoie);
+            }
 
+            var result = await _mediator.Send(new DeleteInvoiceCommand()
+            {
+                CompanyId = rCompanyId,
+                InvoiceId = InvoiceId,
+            });
 
-        //    //var resultGet = _invoiceApi.GetInvoice(resultInvoie.Data.InvoiceId
-        //    // );
-
-        //    //var resultUpdate = _invoiceApi.Update(resultInvoie.Data.InvoiceId,
-        //    //  resultGet.Data
-        //    // );
-
-
-        //    var resultInvoice = _invoiceApi.DeleteInvoice(resultInvoie.Data.InvoiceId,
-        //        new DeleteInvoiceGoCommand()
-        //        );
-
-        //    //if (!resultInvoice.IsSucces())
-        //    //{
-        //    //    return Ok(resultInvoice);
-        //    //}
-
-        //    var result = await _mediator.Send(new DeleteInvoiceCommand()
-        //    {
-        //        CompanyId = rCompanyId,
-        //        InvoiceId = InvoiceId,
-        //    });
-
-        //    return Ok(result);
+            return Ok(result);
 
 
-        //}
+        }
 
     }
 }

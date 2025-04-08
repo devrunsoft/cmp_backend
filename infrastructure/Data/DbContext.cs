@@ -47,6 +47,7 @@ namespace infrastructure.Data
         public virtual DbSet<TermsConditions> TermsConditions { get; set; } = null!;
         public virtual DbSet<Manifest> Manifest { get; set; } = null!;
         public virtual DbSet<BillingInformationProvider> BillingInformationProvider { get; set; } = null!;
+        public virtual DbSet<ServiceArea> ServiceArea { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -59,12 +60,20 @@ namespace infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ServiceArea>(entity =>
+            {
+                entity.ToTable("ServiceArea");
+                entity.Property(d => d.ServiceAreaType)
+                    .HasConversion(
+                    x => x.ToString(),
+                    x => (ServiceAreaTypeEnum)Enum.Parse(typeof(ServiceAreaTypeEnum), x)
+                    );
+            });
 
             modelBuilder.Entity<BillingInformationProvider>(entity =>
             {
                 entity.ToTable("BillingInformationProvider");
             });
-
 
             modelBuilder.Entity<Manifest>(entity =>
             {
@@ -321,14 +330,18 @@ namespace infrastructure.Data
 
                 entity
               .Property(p => p.RegistrationStatus)
-             .HasConversion(
-              x => x.ToString(),
-              x => (ProviderRegistrationStatus)Enum.Parse(typeof(ProviderRegistrationStatus), x)
-              );
+                .HasConversion(
+                  x => x.ToString(),
+                   x => (ProviderRegistrationStatus)Enum.Parse(typeof(ProviderRegistrationStatus), x)
+                  );
 
                 entity.HasMany(d => d.ProviderService)
                 .WithOne(p => p.Provider)
 .               HasForeignKey(d => d.ProviderId);
+
+                entity.HasMany(d => d.ServiceArea)
+                .WithOne(p => p.Provider)
+                .HasForeignKey(d => d.ProviderId);
             });
 
             modelBuilder.Entity<Capacity>(entity =>

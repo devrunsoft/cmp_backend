@@ -10,9 +10,6 @@ namespace CMPNatural.Core.Enums
         [Description("Draft")]
         Draft,
 
-        //[Description("ReadyToAssign")]
-        //ReadyToAssign,
-
         [Description("AssignDateTime")]
         AssignDateTime,
 
