@@ -54,7 +54,6 @@ namespace CMPNatural.Api.Controllers
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> PutBilling([FromBody] ProviderAddBilingCommand command)
         {
-            //command.ProviderId = rProviderId;
             var result = await _mediator.Send(command);
             return Ok(result);
         }
