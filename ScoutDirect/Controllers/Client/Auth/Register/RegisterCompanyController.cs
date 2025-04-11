@@ -97,13 +97,13 @@ namespace CMPNatural.Api.Controllers
             });
             if (result.IsSucces())
             {
-                emailSender((CompanyResponse) result.Data);
+                EmailSender((CompanyResponse) result.Data);
             }
             return Ok(result);
         }
 
 
-        void emailSender(CompanyResponse data)
+        void EmailSender(CompanyResponse data)
         {
             string host;
 
@@ -154,7 +154,7 @@ namespace CMPNatural.Api.Controllers
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );
 
-            emailSender(data);
+            EmailSender(data);
 
 
             return Ok(new Success<object>()
@@ -214,8 +214,6 @@ namespace CMPNatural.Api.Controllers
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Put([FromBody] UpdateCompanyInput request)
         {
-
-
             var resultBillingAddress = await _mediator.Send(new AddOrUpdateBillingAddressCommand()
             {
                 CompanyId = rCompanyId,
@@ -238,7 +236,6 @@ namespace CMPNatural.Api.Controllers
                 SecondaryPhoneNumber = request.SecondaryPhoneNumber,
             });
             return Ok(result);
-
         }
 
 

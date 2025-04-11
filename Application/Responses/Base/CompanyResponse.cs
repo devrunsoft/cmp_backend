@@ -1,4 +1,5 @@
 ﻿using Barbara.Application.Responses.Base;
+using CMPNatural.Core.Entities;
 using CMPNatural.Core.Enums;
 using ScoutDirect.Application.Responses.Base;
 using System;
@@ -26,6 +27,7 @@ namespace CMPNatural.Application.Responses
         public Guid? ActivationLink { get; set; } = null;
         public string? ActivationLinkGo { get; set; } = null;
         public string? ProfilePicture { get; set; } = null;
+        public BillingInformation? BillingInformation { get; set; } = null;
 
 
     }

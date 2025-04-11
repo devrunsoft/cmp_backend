@@ -27,6 +27,15 @@ namespace CMPNatural.Api.Controllers.Provider
             var result = await _mediator.Send(new ProviderAddBilingCommand(input,rProviderId));
             return Ok(result);
         }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Get()
+        {
+            var result = await _mediator.Send(new ProviderGetBilingCommand() { ProviderId = rProviderId });
+            return Ok(result);
+        }
     }
 }
 

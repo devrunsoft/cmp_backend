@@ -33,6 +33,7 @@ public static class EmailLinkHelper
                     ButtonText = "Check Now"
                 };
 
+
             default:
                 throw new ArgumentOutOfRangeException();
         }

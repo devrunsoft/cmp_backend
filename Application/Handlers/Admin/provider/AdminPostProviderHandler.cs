@@ -54,7 +54,7 @@ namespace CMPNatural.Application
                 AreaLocation = request.AreaLocation,
                 PhoneNumber = request.PhoneNumber,
                 Email = request.Email,
-                ProviderService = providerServices
+                ProviderService = providerServices,
 
             };
             var result = await _providerReposiotry.AddAsync(entity);

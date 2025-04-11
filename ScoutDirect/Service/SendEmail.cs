@@ -65,9 +65,9 @@ namespace CMPNatural.Api.Controllers.Service
             });
         }
 
-        public static void SendToProvider(this IEmailSender emailSender, string subject, string body, string email)
+        public static void SendToProvider(this IEmailSender emailSender, string subject, string body, string email, string buttonText = "")
         {
-            Send(emailSender, subject, body, email, $"https://provider.app-cmp.com");
+            Send(emailSender, subject, body, email, $"https://provider.app-cmp.com", buttonText);
         }
 
         public static void Send(this IEmailSender emailSender, string subject, string body, string email, string link = "", string buttonText = "")

@@ -5,10 +5,9 @@ using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Application
 {
-	public class ProviderGetDocumentCommand : IRequest<CommandResponse<Provider>>
+	public class ProviderActivateEmailCommand : IRequest<CommandResponse<Provider>>
     {
-		public ProviderGetDocumentCommand()
-		{
-		}
-	}
+        public Guid activationLink { get; set; }
+    }
 }
+

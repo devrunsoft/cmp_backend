@@ -13,6 +13,8 @@ namespace CMPNatural.Core.Enums
         Approved = 2,
         [Description("Blocked")]
         Blocked = 3,
+        [Description("PendingEmail")]
+        PendingEmail = 4,
     }
 
 }

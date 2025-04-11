@@ -1,19 +1,14 @@
 ﻿using System;
-using CMPNatural.Application.Commands;
-using CMPNatural.Application.Mapper;
-using CMPNatural.Application.Responses;
 using CMPNatural.Core.Entities;
 using MediatR;
 using ScoutDirect.Application.Responses;
-using ScoutDirect.Core.Repositories;
 using System.Threading;
 using System.Threading.Tasks;
-using CMPNatural.Application.Commands.Admin;
 using CMPNatural.Core.Repositories;
 using System.Linq;
 using ScoutDirect.Core.Caching;
 
-namespace CMPNatural.Application.Handlers.Admin.Auth
+namespace CMPNatural.Application
 {
 
     public class LoginProviderHandler : IRequestHandler<LoginProviderCommand, CommandResponse<Provider>>
@@ -38,6 +33,13 @@ namespace CMPNatural.Application.Handlers.Admin.Auth
             if (admin.Status == Core.Enums.ProviderStatus.Blocked)
             {
                 return new NoAcess<Provider>() { Message = "Your account is blocked. Please contact support for assistance." };
+            }
+            if (admin.Status == Core.Enums.ProviderStatus.PendingEmail)
+            {
+                return new NoAcess<Provider>()
+                {
+                    Message = "Your account is pending email verification. Please check your inbox and click the activation link to continue."
+                };
             }
             if (admin.Password != request.Password)
             {

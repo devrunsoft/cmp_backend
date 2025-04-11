@@ -36,12 +36,8 @@ namespace CMPNatural.Api.Controllers.Provider
         [HttpGet("Document")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> GetDodument([FromForm] RegisterProviderDocumentCommand command)
+        public async Task<ActionResult> GetDodument([FromForm] ProviderGetDocumentCommand command)
         {
-            string wwwPath = Environment.ContentRootPath;
-            command.BaseVirtualPath = wwwPath;
-            command.ProviderId = rProviderId;
-
             var result = await _mediator.Send(command);
             return Ok(result);
         }

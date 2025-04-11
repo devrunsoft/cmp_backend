@@ -1,19 +1,22 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
+using CmpNatural.CrmManagment.Webhook;
 using CMPNatural.Application;
-using CMPNatural.Application.Commands.Admin.Menu;
-using CMPNatural.Application.Commands.Provider.Biling;
+using CMPNatural.Application.Responses;
 using CMPNatural.Core.Entities;
+using CMPNatural.Core.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using MySqlX.XDevAPI.Common;
 using ScoutDirect.Api.Controllers._Base;
 using ScoutDirect.Application.Responses;
 
-namespace CMPNatural.Api.Controllers
+namespace CMPNatural.Api
 {
     public class ProviderAuthController : BaseProviderApiController
     {
@@ -23,19 +26,6 @@ namespace CMPNatural.Api.Controllers
         {
             _configuration = configuration;
             Environment = _environment;
-        }
-
-        [HttpPut("Document")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> PutDodument([FromForm] RegisterProviderDocumentCommand command)
-        {
-            string wwwPath = Environment.ContentRootPath;
-            command.BaseVirtualPath = wwwPath;
-            command.ProviderId = rProviderId;
-
-            var result = await _mediator.Send(command);
-            return Ok(result);
         }
 
 
@@ -49,11 +39,13 @@ namespace CMPNatural.Api.Controllers
             return Ok(result);
         }
 
-        [HttpPut("Billing")]
+        [HttpPut]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> PutBilling([FromBody] ProviderAddBilingCommand command)
+        public async Task<ActionResult> PutOperationalAddress([FromBody] RegisterProviderOperationalAddressCommand command)
         {
+            command.ProviderId = rProviderId;
             var result = await _mediator.Send(command);
             return Ok(result);
         }
@@ -69,23 +61,12 @@ namespace CMPNatural.Api.Controllers
                 return Ok(result);
 
             var data = result.Data;
-            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
-            var token = new JwtSecurityToken(
-                issuer: _configuration["JWT:ValidIssuer"],
-                audience: _configuration["JWT:ValidAudience"],
-                expires: DateTime.Now.AddDays(30),
-                claims: get_claims(data.Email, data.Id),
-                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-                );
-
-            return Ok(new Success<object>()
+            if (result.IsSucces())
             {
-                Data = new
-                {
-                    token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo,
-                }
-            });
+                EmailSender(data);
+            }
+
+            return Ok(result);
         }
 
         [HttpPost("Login")]
@@ -115,8 +96,27 @@ namespace CMPNatural.Api.Controllers
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expiration = token.ValidTo,
+                    isFirstLogin = data.HasLogin
                 }
             });
+        }
+
+        private void EmailSender(Provider data)
+        {
+            string host;
+
+            if (Environment.IsDevelopment())
+            {
+                host = "https://localhost:7089";
+            }
+            else
+            {
+                host = "https://api.app-cmp.com";
+            }
+
+            var link = host + "/api/Provider/Provider/Activate?activationLink=" + data.ActivationLink!.Value.ToString();
+            sendEmail("Activation Link","\n\nThank you for signing up!\n\nTo activate your account and get started, please click the button below. This helps us verify your email address and complete your registration.\n\nIf you did not request this, you can safely ignore this message.\n",
+                data.Email, link, "Activate Account\n");
         }
 
         private Claim[] get_claims( string Email, long ProviderId)
@@ -126,18 +126,6 @@ namespace CMPNatural.Api.Controllers
                 new Claim("Email", Email)
             };
             return claims.ToArray();
-        }
-
-
-        [HttpPut]
-        [AllowAnonymous]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> PutOperationalAddress([FromBody] RegisterProviderOperationalAddressCommand command)
-        {
-            command.ProviderId = rProviderId;
-            var result = await _mediator.Send(command);
-            return Ok(result);
         }
 
     }

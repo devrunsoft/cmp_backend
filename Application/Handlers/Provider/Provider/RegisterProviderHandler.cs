@@ -7,6 +7,7 @@ using CMPNatural.Core.Entities;
 using CMPNatural.Core.Enums;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System;
 
 namespace CMPNatural.Application
 {
@@ -32,7 +33,6 @@ namespace CMPNatural.Application
             {
                 return new NoAcess<Provider>() { Message = "This email is already registered. Please use a different email." };
             }
-
             var entity = new Provider()
             {
                 Name = request.Name,
@@ -42,12 +42,12 @@ namespace CMPNatural.Application
                 AreaLocation = 0,
                 Lat= 0,
                 Long = 0,
-                Status = ProviderStatus.Pending,
-                RegistrationStatus = ProviderRegistrationStatus.Basic_Information
+                Status = ProviderStatus.PendingEmail,
+                RegistrationStatus = ProviderRegistrationStatus.Basic_Information,
+                ActivationLink = Guid.NewGuid(),
             };
 
             var result = await _repository.AddAsync(entity);
-
             return new Success<Provider>() { Data = result };
         }
     }

@@ -25,7 +25,7 @@ namespace ScoutDirect.Api.Controllers._Base
         [NonAction]
         public void SendToProvider(string subject, string body, string email, string buttonText)
         {
-            emailSender.SendToProvider(subject, body, email);
+            emailSender.SendToProvider(subject, body, email, buttonText);
         }
 
 
