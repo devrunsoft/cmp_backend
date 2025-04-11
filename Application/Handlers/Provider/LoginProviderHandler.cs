@@ -45,7 +45,15 @@ namespace CMPNatural.Application
             {
                 return new NoAcess<Provider>() { Message = "Login failed. Please check your username and password and try again." };
             }
+            bool HasLogin = true;
+            if (admin.HasLogin != true)
+            {
+                HasLogin = false;
+            }
 
+            admin.HasLogin = true;
+            await _reposiotry.UpdateAsync(admin);
+            admin.HasLogin = HasLogin;
             return new Success<Provider>() { Data = admin };
 
 
