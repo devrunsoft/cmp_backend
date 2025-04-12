@@ -54,7 +54,7 @@ namespace CMPNatural.Application
 
             string finalHtmlRow =
                 $"<tr>" +
-                $"<td class=\"bold\">Service:</td>" +
+                $"<td class=\"bold\">Services:</td>" +
                 $"<td colspan=\"5\">{servicesHtml}</td>" +
                 $"</tr>";
 

@@ -94,7 +94,7 @@ namespace ScoutDirect.infrastructure.Repository
         {
             var parameter = Expression.Parameter(typeof(T), "x");
             var properties = typeof(T).GetProperties()
-                .Where(p => p.PropertyType == typeof(string) || p.PropertyType.IsValueType); 
+                .Where(p => p.PropertyType == typeof(string) || p.PropertyType.IsValueType && !p.PropertyType.IsEnum); 
 
             Expression? finalExpression = null;
             foreach (var property in properties)

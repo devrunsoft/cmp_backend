@@ -23,6 +23,7 @@ using System.Text.Json.Serialization;
 using CMPEmail;
 using CMPEmail.Email;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace ScoutDirect.Api
 {
@@ -82,6 +83,11 @@ namespace ScoutDirect.Api
             //{
             //    options.PayloadSerializerOptions.PropertyNamingPolicy = null;
             //});
+
+            services.Configure<FormOptions>(options =>
+            {
+                options.MultipartBodyLengthLimit = 104857600; // 100 MB
+            });
 
             services.AddControllers()
                 .AddJsonOptions(x =>

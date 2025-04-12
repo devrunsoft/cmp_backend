@@ -31,7 +31,15 @@ namespace CMPNatural.Core.Entities
 
 		public bool? IsEdited { get; set; }
 
-		public virtual Invoice Invoice { get; set; }
+        //public string InvoiceNumber
+        //{
+        //    get
+        //    {
+        //        return this.ContractId == null ? "---" : $"{this.CreatedAt.Year}-{this.CompanyId}-{(this.ContractId == null ? 0 : this.ContractId)}-{Id}";
+        //    }
+        //}
+
+        public virtual Invoice Invoice { get; set; }
 
 	}
 }
