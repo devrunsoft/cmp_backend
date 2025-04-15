@@ -41,6 +41,11 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                 return new NoAcess() { Message = "No Access to Edit!" };
             }
 
+            if (cap==null)
+            {
+                return new NoAcess() { Message = "Please Select the Capacity!" };
+            }
+
             entity.Capacity = cap.Qty;
             entity.Comment = request.Comment;
             entity.CompanyId = request.CompanyId;
@@ -52,6 +57,7 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
             entity.PrimaryPhonNumber = request.PrimaryPhonNumber;
             entity.Type = (int)request.Type;
             entity.CapacityId = request.CapacityId;
+            entity.Address = request.Address??"";
 
             await _locationRepository.UpdateAsync(entity);
 

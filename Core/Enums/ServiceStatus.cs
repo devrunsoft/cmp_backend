@@ -25,6 +25,12 @@ namespace CMPNatural.Core.Enums
         [Description("Scaduled")]
         Scaduled = 6,
 
+        [Description("Updated_Provider")]
+        Updated_Provider = 7,
+
+        [Description("Submited_Provider")]
+        Submited_Provider = 8,
+
     }
 }
 

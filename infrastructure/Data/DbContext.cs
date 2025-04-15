@@ -60,6 +60,27 @@ namespace infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            //modelBuilder.Entity<InvoiceProvider>(entity =>
+            //{
+            //    entity.ToTable("InvoiceProvider");
+            //    entity.HasMany(d => d.BaseServiceAppointment)
+            //          .WithOne(p => p.Invoice)
+            //     .HasForeignKey(d => d.InvoiceId);
+
+            //    entity
+            //    .Property(p => p.Status)
+            //      .HasConversion(
+            //       x => (int)x,
+            //       x => (InvoiceStatus)x
+            //       );
+            //});
+
+            //modelBuilder.Entity<BaseServiceAppointmentProvider>(entity =>
+            //{
+            //    entity.ToTable("BaseServiceAppointmentProvider");
+            //});
+
             modelBuilder.Entity<ServiceArea>(entity =>
             {
                 entity.ToTable("ServiceArea");
@@ -288,7 +309,15 @@ namespace infrastructure.Data
               x => (int)x,
               x => (InvoiceStatus)x
               );
+
+                entity.Property(d => d.PaymentStatus)
+            .HasConversion(
+              x => x.ToString(),
+            x => (PaymentStatus)Enum.Parse(typeof(PaymentStatus), x)
+    );
+
             });
+
 
             modelBuilder.Entity<ShoppingCard>(entity =>
             {

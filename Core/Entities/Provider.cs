@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Xml.Linq;
 using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Core.Entities
@@ -17,7 +19,7 @@ namespace CMPNatural.Core.Entities
         public string? County { get; set; } = "";
         public string Email { get; set; } = "";
         public string PhoneNumber { get; set; } = "";
-        public string Password { get; set; } = "";
+        public string? Password { get; set; } = "";
         public ProviderRegistrationStatus RegistrationStatus { get; set; } = ProviderRegistrationStatus.Complete;
 
         public string? BusinessLicense { get; set; }
@@ -36,6 +38,11 @@ namespace CMPNatural.Core.Entities
 
         public Guid? ActivationLink { get; set; } = null;
         public bool? HasLogin { get; set; }
+
+        public string? ManagerFirstName { get; set; }
+        public string? ManagerLastName { get; set; }
+        public string? ManagerPhoneNumber { get; set; }
+       
 
         public virtual ICollection<ProviderService> ProviderService { get; set; } = new List<ProviderService>();
         public virtual ICollection<ServiceArea> ServiceArea { get; set; } = new List<ServiceArea>();

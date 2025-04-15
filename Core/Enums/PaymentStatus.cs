@@ -15,8 +15,8 @@ namespace CMPNatural.Core.Enums
         Sent_For_Pay = 2,
 
         //optional pay
-        [Description("Payment_Processing")]
-        Payment_Processing = 3,
+        [Description("Ready_For_Pay")]
+        Ready_For_Pay = 3,
 
         [Description("Partially_paid")]
         Partially_paid = 4,

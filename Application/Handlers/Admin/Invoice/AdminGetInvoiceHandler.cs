@@ -22,7 +22,7 @@ namespace CMPNatural.Application.Handlers.Admin.Invoice
 
         public async Task<CommandResponse<InvoiceResponse>> Handle(AdminGetInvoiceCommand request, CancellationToken cancellationToken)
         {
-            var invoices = (await _invoiceRepository.GetAsync(p=>p.InvoiceId == request.InvoiceId,
+            var invoices = (await _invoiceRepository.GetAsync(p=>p.Id == request.InvoiceId,
                 query => query.Include(i => i.Company)
                 .ThenInclude(x=>x.BillingInformation)
                 .Include(i => i.Provider)

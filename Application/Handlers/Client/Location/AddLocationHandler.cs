@@ -44,7 +44,8 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                 PrimaryPhonNumber= request.PrimaryPhonNumber,
                 Type= (int) request.Type,
                 OperationalAddressId = request.OperationalAddressId,
-                CapacityId = request.CapacityId
+                CapacityId = request.CapacityId,
+                Address = request.Address
 
             };
 

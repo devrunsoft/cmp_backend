@@ -9,6 +9,10 @@ namespace CMPNatural.Core.Enums
     {
         [Description("Approved")]
         Approved,
+
+        [Description("Pending")]
+        Pending,
+
         [Description("Blocked")]
         Blocked
     }

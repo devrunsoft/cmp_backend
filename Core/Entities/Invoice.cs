@@ -12,6 +12,7 @@ namespace CMPNatural.Core.Entities
         //public string ProductPriceCrmId { get; set; }
         public string InvoiceCrmId { get; set; } = null!;
         public InvoiceStatus Status { get; set; }
+        public PaymentStatus PaymentStatus { get; set; }
         public string? Link { get; set; }
         public double Amount { get; set; }
         public string InvoiceId { get; set; } = null!;

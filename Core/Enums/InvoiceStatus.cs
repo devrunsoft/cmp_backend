@@ -28,11 +28,14 @@ namespace CMPNatural.Core.Enums
         [Description("Canceled")]
         Canceled = 7,
 
-        [Description("Edited_Provider")]
-        Edited_Provider = 8,
+        [Description("Updated_Provider")]
+        Updated_Provider = 8,
 
         [Description("Submited_Provider")]
         Submited_Provider = 9,
+
+        [Description("Send_Payment")]
+        Send_Payment = 10,
 
     }
 

@@ -36,6 +36,10 @@ namespace CMPNatural.Application.Model
 
         public IFormFile Insurance { get; set; }
         public DateTime? InsuranceExp { get; set; }
+
+        public string? ManagerFirstName { get; set; }
+        public string? ManagerLastName { get; set; }
+        public string? ManagerPhoneNumber { get; set; }
     }
 }
 

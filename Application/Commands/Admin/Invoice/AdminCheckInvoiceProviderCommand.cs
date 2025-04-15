@@ -12,7 +12,7 @@ namespace CMPNatural.Application
 		public AdminCheckInvoiceProviderCommand()
 		{
 		}
-		public string InvoiceId { get; set; }
+		public long InvoiceId { get; set; }
 	}
 }
 

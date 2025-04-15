@@ -17,7 +17,7 @@ namespace CMPNatural.Core.Entities
 
 		public virtual Person Person { get; set; }
 
-        public string? Password { get; set; }
+        public string Password { get; set; }
 
 		public bool TwoFactor { get; set; }
 

@@ -33,11 +33,13 @@ namespace CMPNatural.Core.Entities
 
         public int Qty { get; set; } = 1;
 
+        public int? FactQty { get; set; }
+
         public DateTime StartDate { get; set; }
 
         public double Amount { get; set; }
 
-        public decimal TotalAmount { get; set; }
+        public decimal? TotalAmount { get; set; }
 
         public string DayOfWeek { get; set; } = "";
 

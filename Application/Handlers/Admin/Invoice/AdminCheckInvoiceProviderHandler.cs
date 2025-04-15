@@ -27,7 +27,7 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<List<Provider>>> Handle(AdminCheckInvoiceProviderCommand request, CancellationToken cancellationToken)
         {
             //int MaxDistance = 2000; //meter
-            var invoices = (await _invoiceRepository.GetAsync(p=>p.InvoiceId== request.InvoiceId,
+            var invoices = (await _invoiceRepository.GetAsync(p=>p.Id== request.InvoiceId,
                 query => query.Include(i => i.BaseServiceAppointment)
                 .ThenInclude(i => i.ServiceAppointmentLocations)
                 .ThenInclude(p => p.LocationCompany))).FirstOrDefault();

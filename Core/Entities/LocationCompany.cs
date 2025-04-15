@@ -10,11 +10,12 @@ namespace CMPNatural.Core.Entities
         public long CompanyId { get; set; }
         public long OperationalAddressId { get; set; }
         public string Name { get; set; }
+        public string Address { get; set; }
         public double Lat { get; set; }
         public double Long { get; set; }
         public int Capacity { get; set; }
         public long CapacityId { get; set; }
-        public string Comment { get; set; }
+        public string? Comment { get; set; }
         public string? PrimaryFirstName { get; set; }
         public string? PrimaryLastName { get; set; }
         public string? PrimaryPhonNumber { get; set; }

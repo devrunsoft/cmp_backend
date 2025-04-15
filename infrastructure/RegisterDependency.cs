@@ -18,7 +18,6 @@ namespace ScoutDirect.infrastructure
     {
         public static void RegisterRepositories(this IServiceCollection services)
         {
-
             services.AddTransient<ICompanyRepository, CompanyRepository>();
             services.AddTransient<ILocationCompanyRepository, LocationCompanyRepository>();
             services.AddTransient<IDocumentRepository, DocumentRepository>();
@@ -55,6 +54,8 @@ namespace ScoutDirect.infrastructure
             services.AddTransient<IManifestRepository, ManifestRepository>();
             services.AddTransient<IBillingInformationProviderRepository, BillingInformationProviderRepository>();
             services.AddTransient<IServiceAreaRepository, ServiceAreaRepository>();
+            services.AddTransient<IServiceAppointmentLocationRepository, ServiceAppointmentLocationRepository>();
+            //services.AddTransient<IinvoiceProviderRepository, InvoiceProviderRepository>();
 
             services.AddTransient<ProductListApi>();
             services.AddTransient<ProductPriceApi>();

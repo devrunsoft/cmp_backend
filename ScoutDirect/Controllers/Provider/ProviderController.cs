@@ -43,30 +43,7 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
         public async Task<ActionResult> Put([FromForm] ProviderInput input)
         {
             string wwwPath = Environment.ContentRootPath;
-            var result = await _mediator.Send(new AdminPutProviderCommand()
-            {
-                Id = rProviderId,
-                Status = input.Status,
-                Address = input.Address,
-                City = input.City,
-                County = input.County,
-                Lat = input.Lat,
-                Long = input.Long,
-                Name = input.Name,
-                Rating = input.Rating,
-                BusinessLicense = input.BusinessLicense,
-                BusinessLicenseExp = input.BusinessLicenseExp,
-                EPACompliance = input.EPACompliance,
-                EPAComplianceExp = input.EPAComplianceExp,
-                HealthDepartmentPermit = input.HealthDepartmentPermit,
-                HealthDepartmentPermitExp = input.HealthDepartmentPermitExp,
-                Insurance = input.Insurance,
-                InsuranceExp = input.InsuranceExp,
-                WasteHaulerPermit = input.WasteHaulerPermit,
-                BaseVirtualPath = wwwPath,
-                AreaLocation = input.AreaLocation,
-                ProductIds = input.ProductIds
-            });
+            var result = await _mediator.Send(new AdminPutProviderCommand(input, rProviderId , wwwPath));
 
             return Ok(result);
         }

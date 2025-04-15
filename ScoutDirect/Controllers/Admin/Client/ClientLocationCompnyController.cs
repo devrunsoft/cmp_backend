@@ -71,7 +71,8 @@ namespace CMPNatural.Api.Controllers.Admin.Client
                 PrimaryPhonNumber = input.PrimaryPhonNumber,
                 Type = input.Type,
                 OperationalAddressId = input.OperationalAddressId,
-                CapacityId = input.CapacityId
+                CapacityId = input.CapacityId,
+                Address = input.Address
 
             });
 
@@ -96,7 +97,8 @@ namespace CMPNatural.Api.Controllers.Admin.Client
                 PrimaryLastName = input.PrimaryLastName,
                 PrimaryPhonNumber = input.PrimaryPhonNumber,
                 Type = input.Type,
-                CapacityId = input.CapacityId
+                CapacityId = input.CapacityId,
+                Address = input.Address
             });
 
             return Ok(result);

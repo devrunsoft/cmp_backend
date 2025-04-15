@@ -38,17 +38,14 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<Invoice>> Handle(AdminUpdateInvoiceCommand requests, CancellationToken cancellationToken)
         {
 
-            var invoice = (await _invoiceRepository.GetAsync(p => p.InvoiceId == requests.InvoiceId, query => query.Include(x => x.Company))).FirstOrDefault();
-
+            var invoice = (await _invoiceRepository.GetAsync(p => p.Id == requests.InvoiceId, query => query.Include(x => x.Company))).FirstOrDefault();
             if (invoice.Status != InvoiceStatus.Draft)
             {
                 return new NoAcess<Invoice>() { Message = "No Access To Edit Paid Invoice" };
             }
 
             var CompanyId = invoice.CompanyId;
-
             var services = (await _baseServiceAppointmentRepository.GetAsync(p => p.InvoiceId == invoice.Id)).ToList();
-     
              
             List <BaseServiceAppointment> lstCustom = new List<BaseServiceAppointment>();
             List<ServiceAppointmentEmergency> lstCustomEmrgency = new List<ServiceAppointmentEmergency>();
@@ -63,13 +60,12 @@ namespace CMPNatural.Application
 
                 var resultPrice = await _productPriceRepository.GetByIdAsync(request.ProductPriceId);
 
-                if (request.ServiceKind == Core.Enums.ServiceKind.Custom)
+                if (request.ServiceKind == ServiceKind.Custom)
                 {
                     var command = new ServiceAppointment()
                     {
                         CompanyId = CompanyId,
                         FrequencyType = request.FrequencyType,
-                        //LocationCompanyId=request.LocationCompanyId,
                         ServiceTypeId = (int)request.ServiceTypeId,
                         ServicePriceCrmId = "",
                         ServiceCrmId = "",
@@ -123,21 +119,16 @@ namespace CMPNatural.Application
             }   
 
 
-
-
             invoice.BaseServiceAppointment = lstCustom;
             invoice.InvoiceProduct = invoiceProducts;
             invoice.SendDate = DateTime.Now;
             invoice.Address = requests.Address;
-            //invoice.Status = requests.ForceToPay ? (int)InvoiceStatus.SentForPay : (int)InvoiceStatus.Processing;
             invoice.Status = InvoiceStatus.Pending_Signature;
-            //var invoiceAmount = requests.ServiceAppointment.Sum(x=> (x.TotlaAmount));
             invoice.Amount = requests.Amount;
             invoice.CalculateAmountByamount();
 
             await _invoiceRepository.UpdateAsync(invoice);
             await _baseServiceAppointmentRepository.DeleteRangeAsync(services);
-
 
             if (requests.CreateContract)
             {
@@ -150,8 +141,6 @@ namespace CMPNatural.Application
                 }
                 invoice.ContractId = result.Data.Id;
             }
-
-
 
             return new Success<Invoice>() { Data = invoice, Message = "Successfull!" };
 

@@ -23,7 +23,7 @@ namespace CMPNatural.Core.Enums
         Canceled,
 
         [Description("Send_To_Admin")]
-        Sent,
+        Send_To_Admin,
 
         [Description("Completed")]
         Completed,

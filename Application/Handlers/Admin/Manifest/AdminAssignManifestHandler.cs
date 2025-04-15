@@ -11,26 +11,47 @@ using CMPNatural.Core.Enums;
 using CMPNatural.Core.Helper;
 using CMPNatural.Core.Extentions;
 using Microsoft.EntityFrameworkCore;
+using ScoutDirect.Core.Repositories;
+using System.ServiceModel.Channels;
 
 namespace CMPNatural.Application
 {
     public class AdminAssignManifestHandler : IRequestHandler<AdminAssignManifestCommand, CommandResponse<Manifest>>
     {
         private readonly IManifestRepository _repository;
+        private readonly ICompanyRepository _companyrepository;
         private readonly IProviderReposiotry _providerRepository;
         private readonly IMediator _mediator;
 
-        public AdminAssignManifestHandler(IManifestRepository _repository, IProviderReposiotry _providerRepository, IMediator _mediator)
+        public AdminAssignManifestHandler(IManifestRepository _repository, IProviderReposiotry _providerRepository, IMediator _mediator, ICompanyRepository _companyrepository)
         {
             this._repository = _repository;
             this._providerRepository = _providerRepository;
             this._mediator = _mediator;
+            this._companyrepository = _companyrepository;
         }
 
         public async Task<CommandResponse<Manifest>> Handle(AdminAssignManifestCommand request, CancellationToken cancellationToken)
         {
-            var entity = (await _repository.GetAsync(p=> p.Id == request.Id && p.Status == ManifestStatus.Draft)).FirstOrDefault();
+            var entity = (await _repository.GetAsync(p=> p.Id == request.Id && p.Status == ManifestStatus.Draft,query=>query.Include(x=>x.Invoice))).FirstOrDefault();
             var provider = (await _providerRepository.GetAsync(p => p.Id == request.ProviderId && p.Status == ProviderStatus.Approved)).FirstOrDefault();
+            var company = (await _companyrepository.GetAsync(p => p.Id == entity.Invoice.CompanyId)).FirstOrDefault();
+
+            if (company.Status == CompanyStatus.Pending)
+            {
+                return new NoAcess<Manifest>
+                {
+                    Message = "The manifest cannot be assigned because the associated company is currently pending"
+                };
+            }
+
+            if (company.Status == CompanyStatus.Blocked)
+            {
+                return new NoAcess<Manifest>
+                {
+                    Message = "The manifest cannot be assigned because the associated company is currently blocked."
+                };
+            }
 
             entity.ServiceDateTime = request.ServiceDateTime.ToLocalTime();
             entity.ProviderId = provider.Id;

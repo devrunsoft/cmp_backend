@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using CMPNatural.Core.Entities;
+using System.Linq;
 using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Application.Model.ServiceAppointment
 {
     public partial class ServiceAppointmentInput
     {
+        public long? Id { get; set; }
 
         public ServiceType ServiceTypeId { get; set; } = ServiceType.Cooking_Oil_Collection;
 
@@ -37,6 +40,37 @@ namespace CMPNatural.Application.Model.ServiceAppointment
 
         public int ToHour { get; set; } = 1080; //6 PM
     }
+
+
+    public static class ServiceAppointmentMapper
+    {
+        public static BaseServiceAppointment ToEntity(this ServiceAppointmentInput input, BaseServiceAppointment model, long companyId, long invoiceId)
+        {
+            if (input == null) return null;
+
+            model.Id = input.Id ?? 0;
+            model.ServiceTypeId = (long)input.ServiceTypeId;
+            model.ProductPriceId = input.ProductPriceId;
+            model.ProductId = input.ProductId;
+            model.OperationalAddressId = input.OperationalAddressId;
+            model.CompanyId = companyId;
+            model.InvoiceId = invoiceId;
+            model.Qty = input.qty;
+            model.Subsidy = input.Subsidy;
+            model.Amount = input.Amount;
+            model.TotalAmount = (decimal)input.TotlaAmount;
+            model.StartDate = input.StartDate ?? DateTime.UtcNow;
+            model.DayOfWeek = input.DayOfWeek != null ? string.Join(",", input.DayOfWeek.Select(d => d.ToString())) : "";
+            model.FromHour = input.FromHour;
+
+            return model;
+        }
+    }
+
+    //public partial class ProviderServiceAppointmentInput : ServiceAppointmentInput
+    //{
+    //    public long Id { get; set; }
+    //}
 
     public partial class ServiceAppointmentInput
     {

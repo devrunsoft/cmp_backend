@@ -44,32 +44,7 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
         public async Task<ActionResult> Put([FromRoute] long Id, [FromForm] ProviderInput input)
         {
             string wwwPath = Environment.ContentRootPath;
-            var result = await _mediator.Send(new AdminPutProviderCommand()
-            {
-                Id = Id,
-                Status = input.Status,
-                Address = input.Address,
-                City = input.City,
-                County = input.County,
-                Lat = input.Lat,
-                Long = input.Long,
-                Name = input.Name,
-                Rating = input.Rating,
-                BusinessLicense = input.BusinessLicense,
-                BusinessLicenseExp = input.BusinessLicenseExp,
-                EPACompliance = input.EPACompliance,
-                EPAComplianceExp = input.EPAComplianceExp,
-                HealthDepartmentPermit = input.HealthDepartmentPermit,
-                HealthDepartmentPermitExp = input.HealthDepartmentPermitExp,
-                Insurance = input.Insurance,
-                InsuranceExp = input.InsuranceExp,
-                WasteHaulerPermit = input.WasteHaulerPermit,
-                BaseVirtualPath = wwwPath,
-                AreaLocation = input.AreaLocation,
-                ProductIds = input.ProductIds,
-                Email = input.Email,
-                PhoneNumber = input.PhoneNumber
-            });
+            var result = await _mediator.Send(new AdminPutProviderCommand(input, Id, wwwPath));
 
             return Ok(result);
         }
@@ -80,31 +55,7 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
         public async Task<ActionResult> Post([FromForm] ProviderInput input)
         {
             string wwwPath = Environment.ContentRootPath;
-            var result = await _mediator.Send(new AdminPostProviderCommand()
-            {
-                Status = input.Status,
-                Address = input.Address,
-                City = input.City,
-                County = input.County,
-                Lat = input.Lat,
-                Long = input.Long,
-                Name = input.Name,
-                Rating = input.Rating,
-                BusinessLicense = input.BusinessLicense,
-                BusinessLicenseExp = input.BusinessLicenseExp,
-                EPACompliance = input.EPACompliance,
-                EPAComplianceExp = input.EPAComplianceExp,
-                HealthDepartmentPermit = input.HealthDepartmentPermit,
-                HealthDepartmentPermitExp = input.HealthDepartmentPermitExp,
-                Insurance = input.Insurance,
-                InsuranceExp = input.InsuranceExp,
-                WasteHaulerPermit = input.WasteHaulerPermit,
-                BaseVirtualPath = wwwPath,
-                AreaLocation = input.AreaLocation,
-                ProductIds = input.ProductIds,
-                Email = input.Email,
-                PhoneNumber = input.PhoneNumber
-            });
+            var result = await _mediator.Send(new AdminPostProviderCommand(input, wwwPath));
 
             if (result.IsSucces())
             {

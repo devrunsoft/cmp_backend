@@ -55,6 +55,9 @@ namespace CMPNatural.Application
                 PhoneNumber = request.PhoneNumber,
                 Email = request.Email,
                 ProviderService = providerServices,
+                ManagerFirstName = request.ManagerFirstName,
+                ManagerLastName = request.ManagerLastName,
+                ManagerPhoneNumber = request.ManagerPhoneNumber,
 
             };
             var result = await _providerReposiotry.AddAsync(entity);
