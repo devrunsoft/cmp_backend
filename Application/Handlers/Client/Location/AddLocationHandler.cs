@@ -45,7 +45,7 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                 Type= (int) request.Type,
                 OperationalAddressId = request.OperationalAddressId,
                 CapacityId = request.CapacityId,
-                Address = request.Address
+                Address = request.Address?? ""
 
             };
 

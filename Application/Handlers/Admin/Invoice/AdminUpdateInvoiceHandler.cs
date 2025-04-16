@@ -127,7 +127,6 @@ namespace CMPNatural.Application
             invoice.Amount = requests.Amount;
             invoice.CalculateAmountByamount();
 
-            await _invoiceRepository.UpdateAsync(invoice);
             await _baseServiceAppointmentRepository.DeleteRangeAsync(services);
 
             if (requests.CreateContract)
@@ -141,6 +140,7 @@ namespace CMPNatural.Application
                 }
                 invoice.ContractId = result.Data.Id;
             }
+            await _invoiceRepository.UpdateAsync(invoice);
 
             return new Success<Invoice>() { Data = invoice, Message = "Successfull!" };
 
