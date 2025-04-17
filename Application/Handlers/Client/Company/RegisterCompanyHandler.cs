@@ -31,8 +31,12 @@ namespace CMPNatural.Application.Handlers
         {
             var company = await _companyRepository.GetByEmailAsync(request.BusinessEmail);
 
-            if (company == null || !company.Registered)
+            if (company != null)
             {
+                return new NoAcess() { Message = "A company with this email already exists. Please use a different email or log in." };
+            }
+
+
                 var personId = Guid.NewGuid();
                 var person = new Person() { FirstName = request.PrimaryFirstName, LastName = request.PrimaryLastName, Id = personId };
                 await _personRepository.AddAsync(person);
@@ -52,7 +56,7 @@ namespace CMPNatural.Application.Handlers
                     SecondaryPhoneNumber= request.SecondaryPhoneNumber,
                     Registered=false,
                     Type=(int)request.Type,
-                    Password=request.Password,
+                    Password = request.Password,
                     ActivationLink = Guid.NewGuid(),
                     PersonId = personId,
                     Status = CompanyStatus.Approved
@@ -61,9 +65,7 @@ namespace CMPNatural.Application.Handlers
 
                 await _companyRepository.AddAsync(company);
                 return new Success<object>() { Data = CompanyMapper.Mapper.Map<CompanyResponse>(company) };
-            }
 
-            return new NoAcess();
         }
 
     }

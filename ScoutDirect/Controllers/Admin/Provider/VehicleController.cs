@@ -76,7 +76,7 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
 
                 Weight = request.Weight,
                 
-                VehicleCompartment = request.VehicleCompartment,
+                VehicleCompartments = request.VehicleCompartments,
                 VehicleService = request.VehicleService,
                 Name = request.Name,
                 BaseVirtualPath = wwwPath
@@ -112,7 +112,7 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
                 Name = request.Name,
                 Weight = request.Weight,
 
-                VehicleCompartment = request.VehicleCompartment,
+                VehicleCompartments = request.VehicleCompartments,
                 VehicleService = request.VehicleService,
                 BaseVirtualPath = wwwPath
             });

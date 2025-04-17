@@ -1,4 +1,6 @@
 ﻿using System;
+using CMPNatural.Core.Enums;
+
 namespace CMPNatural.Core.Entities
 {
 	public partial class VehicleService
@@ -8,7 +10,7 @@ namespace CMPNatural.Core.Entities
 		}
 		public long Id { get; set; }
 		public long VehicleId { get; set; }
-        public long ProductId { get; set; }
+        public VehicleServiceStatus VehicleServiceStatus { get; set; }
     }
 }
 

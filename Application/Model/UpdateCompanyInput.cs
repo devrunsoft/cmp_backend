@@ -20,5 +20,11 @@ namespace CMPNatural.Application.Model
         public string State { get; set; } = "";
 
     }
+    public class AddCompanyInput : UpdateCompanyInput
+    {
+
+        public string BusinessEmail { get; set; }
+
+    }
 }
 

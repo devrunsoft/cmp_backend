@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CMPNatural.Core.Entities;
+using CMPNatural.Core.Enums;
 using Microsoft.AspNetCore.Http;
 
 namespace CMPNatural.Application.Model
@@ -25,8 +26,10 @@ namespace CMPNatural.Application.Model
         public IFormFile PeriodicVehicleInspections { get; set; } = null!;
         public DateTime PeriodicVehicleInspectionsExp { get; set; }
 
-        public List<VehicleCompartment> VehicleCompartment { get; set; } = new List<VehicleCompartment>();
-        public List<VehicleService> VehicleService { get; set; } = new List<VehicleService>();
+        public int CapacityId { get; set; }
+
+        public List<int> VehicleCompartments { get; set; } = new List<int>();
+        public List<VehicleServiceStatus> VehicleService { get; set; } = new List<VehicleServiceStatus>();
     }
 }
 

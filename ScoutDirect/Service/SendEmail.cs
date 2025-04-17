@@ -69,6 +69,10 @@ namespace CMPNatural.Api.Controllers.Service
         {
             Send(emailSender, subject, body, email, $"https://provider.app-cmp.com", buttonText);
         }
+        public static void SendToClient(this IEmailSender emailSender, string subject, string body, string email, string buttonText = "")
+        {
+            Send(emailSender, subject, body, email, $"https://client.app-cmp.com", buttonText);
+        }
 
         public static void Send(this IEmailSender emailSender, string subject, string body, string email, string link = "", string buttonText = "")
         {

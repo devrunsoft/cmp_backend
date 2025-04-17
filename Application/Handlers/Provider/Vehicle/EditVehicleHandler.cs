@@ -49,7 +49,7 @@ namespace CMPNatural.Application
             if (request.PeriodicVehicleInspections != null)
                 PeriodicVehicleInspections = FileHandler.ProviderDriverfileHandler(request.BaseVirtualPath, request.PeriodicVehicleInspections, "PeriodicVehicleInspections", request.ProviderId, path);
 
-            entity.Capacity = request.Capacity;
+            entity.Cap = request.Capacity;
             if (VehicleRegistration != null)
                 entity.VehicleRegistration = VehicleRegistration;
             entity.VehicleRegistrationExp = request.VehicleRegistrationExp;

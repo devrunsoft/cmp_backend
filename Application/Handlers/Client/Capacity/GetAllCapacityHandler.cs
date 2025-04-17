@@ -22,7 +22,9 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<List<Capacity>>> Handle(GetAllCapacityCommand request, CancellationToken cancellationToken)
         {
-            var invoices = (await _repository.GetAsync(p =>  p.Enable==true && p.ServiceType == request.ServiceType)).OrderBy(x => x.Order).ToList();
+            var invoices = (await _repository.GetAsync(p =>  p.Enable == true &&
+            (request.ServiceType == null || p.ServiceType == request.ServiceType))).OrderBy(x => x.Order).ToList();
+
             return new Success<List<Capacity>>() { Data = invoices };
         }
     }

@@ -134,10 +134,11 @@ namespace CMPNatural.Api.Controllers
             }
 
             var result = await _mediator.Send(command);
-              if (!result.IsSucces())
+            if (!result.IsSucces())
             {
-                return Ok(new CommandResponse<object>() { Success = false, Message = "This Company is exist" });
+                return Ok(result);
             }
+
             var data =(CompanyResponse) result.Data;
             if (data.Id == null)
             {

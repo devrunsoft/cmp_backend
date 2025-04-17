@@ -162,6 +162,10 @@ namespace infrastructure.Data
             modelBuilder.Entity<Vehicle>(entity =>
             {
                 entity.ToTable("Vehicle");
+
+                //entity.HasOne(d => d.Capacity)
+                //.WithOne()
+                //.HasForeignKey<Vehicle>(d => d.CapacityId);
             });
 
             modelBuilder.Entity<VehicleCompartment>(entity =>

@@ -31,10 +31,22 @@ namespace CMPNatural.Application
             var MeasurementCertificate = FileHandler.ProviderDriverfileHandler(request.BaseVirtualPath, request.MeasurementCertificate, "MeasurementCertificate", request.ProviderId, path);
             var PeriodicVehicleInspections = FileHandler.ProviderDriverfileHandler(request.BaseVirtualPath, request.PeriodicVehicleInspections, "PeriodicVehicleInspections", request.ProviderId, path);
 
+            List<VehicleCompartment> vehicleCompartments = new List<VehicleCompartment>();
+            foreach (var item in request.VehicleCompartments)
+            {
+                vehicleCompartments.Add(new VehicleCompartment() { Capacity = item });
+            }
+
+            List<VehicleService> VehicleService = new List<VehicleService>();
+            foreach (var item in request.VehicleService)
+            {
+                VehicleService.Add(new VehicleService() { VehicleServiceStatus = item });
+            }
+
             var entity = new Vehicle()
             {
                 ProviderId = request.ProviderId,
-                Capacity = request.Capacity,
+                Cap = request.Capacity,
                 VehicleRegistration= VehicleRegistration,
                 VehicleRegistrationExp = request.VehicleRegistrationExp,
 
@@ -52,9 +64,11 @@ namespace CMPNatural.Application
 
                 Weight = request.Weight,
 
-                VehicleCompartment = request.VehicleCompartment,
-                VehicleService = request.VehicleService,
-                Name = request.Name
+                VehicleCompartment = vehicleCompartments,
+                VehicleService = VehicleService,
+                Name = request.Name,
+                CapacityId = request.CapacityId,
+                CompartmentSize = request.VehicleCompartments.Count
             };
 
             var result = await _repository.AddAsync(entity);
