@@ -14,16 +14,8 @@ namespace CMPNatural.Core.Entities
 		{
 		}
 
-        //public double Distance(double sLatitude, double sLongitude)
-        //{
-        //    if (Lat == null || Long == null)
-        //        return double.MaxValue;
+        const double MetersPerMile = 1609.344;
 
-        //    var sCoord = new GeoCoordinate(sLatitude, sLongitude);
-        //    var eCoord = new GeoCoordinate((double)Lat, (double)Long);
-        //    var dis = sCoord.GetDistanceTo(eCoord);
-        //    return dis;
-        //}
 
         private bool IsDistanceIn(double sLatitude, double sLongitude,ServiceArea model)
         {
@@ -33,7 +25,7 @@ namespace CMPNatural.Core.Entities
             var sCoord = new GeoCoordinate(sLatitude, sLongitude);
             var eCoord = new GeoCoordinate(model.Lat.Value, model.Lng.Value);
             var dis = sCoord.GetDistanceTo(eCoord);
-            return dis <= model.Radius;
+            return dis <= (model.Radius * MetersPerMile);
         }
         public bool IsPointInCity(double lat, double lng)
         {

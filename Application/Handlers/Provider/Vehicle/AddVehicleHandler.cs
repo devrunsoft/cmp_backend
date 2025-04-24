@@ -32,21 +32,42 @@ namespace CMPNatural.Application
             var PeriodicVehicleInspections = FileHandler.ProviderDriverfileHandler(request.BaseVirtualPath, request.PeriodicVehicleInspections, "PeriodicVehicleInspections", request.ProviderId, path);
 
             List<VehicleCompartment> vehicleCompartments = new List<VehicleCompartment>();
-            foreach (var item in request.VehicleCompartments)
+            for (int i = 0; i < request.VehicleCompartments.Count; i++)
             {
-                vehicleCompartments.Add(new VehicleCompartment() { Capacity = item });
+                var capacity = request.VehicleCompartments[i];
+                if (capacity <= 0)
+                {
+                    return new NoAcess<Vehicle>()
+                    {
+                        Message = $"Compartment {i + 1} must have a capacity greater than 0."
+                    };
+                }
+
+                vehicleCompartments.Add(new VehicleCompartment() { Capacity = capacity });
             }
 
-            List<VehicleService> VehicleService = new List<VehicleService>();
-            foreach (var item in request.VehicleService)
+            List<VehicleService> vehicleServices = new List<VehicleService>();
+            foreach (var service in request.VehicleService)
             {
-                VehicleService.Add(new VehicleService() { VehicleServiceStatus = item });
+                if (service.Capacity <= 0)
+                {
+                    return new NoAcess<Vehicle>()
+                    {
+                        Message = $"The capacity for '{service.VehicleServiceStatus.GetDescription().Replace("_", " ")}' must be greater than 0."
+                    };
+                }
+
+                vehicleServices.Add(new VehicleService()
+                {
+                    VehicleServiceStatus = service.VehicleServiceStatus,
+                    Capacity = service.Capacity
+                });
             }
 
             var entity = new Vehicle()
             {
                 ProviderId = request.ProviderId,
-                Cap = request.Capacity,
+                Capacity = request.Capacity,
                 VehicleRegistration= VehicleRegistration,
                 VehicleRegistrationExp = request.VehicleRegistrationExp,
 
@@ -65,9 +86,8 @@ namespace CMPNatural.Application
                 Weight = request.Weight,
 
                 VehicleCompartment = vehicleCompartments,
-                VehicleService = VehicleService,
+                VehicleService = vehicleServices,
                 Name = request.Name,
-                CapacityId = request.CapacityId,
                 CompartmentSize = request.VehicleCompartments.Count
             };
 

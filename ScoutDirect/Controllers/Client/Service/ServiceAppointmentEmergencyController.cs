@@ -22,23 +22,23 @@ namespace CMPNatural.Api.Controllers.ServiceAppointment
         }
 
 
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Post([FromBody] ServiceAppointmentEmergencyInput request)
-        {
-            var result = await _mediator.Send(new AddServiceAppointmentCommand()
-            {
-                CompanyId = rCompanyId,
-                FrequencyType = request.FrequencyType,
-                //LocationCompanyId = request.LocationCompanyId,
-                ServiceTypeId = request.ServiceTypeId,
-                OperationalAddressId = request.OperationalAddressId
+        //[HttpPost]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[EnableCors("AllowOrigin")]
+        //public async Task<ActionResult> Post([FromBody] ServiceAppointmentEmergencyInput request)
+        //{
+        //    var result = await _mediator.Send(new AddServiceAppointmentCommand()
+        //    {
+        //        CompanyId = rCompanyId,
+        //        FrequencyType = request.FrequencyType,
+        //        //LocationCompanyId = request.LocationCompanyId,
+        //        ServiceTypeId = request.ServiceTypeId,
+        //        OperationalAddressId = request.OperationalAddressId
 
-            });
+        //    });
 
-            return Ok(result);
-        }
+        //    return Ok(result);
+        //}
 
 
         [HttpGet("{Id}")]

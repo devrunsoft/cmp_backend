@@ -107,13 +107,13 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
         [HttpPost("{clientId}/Sent/{invoiceNumber}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Sent([FromRoute] string invoiceNumber, [FromRoute] int clientId)
+        public async Task<ActionResult> Sent([FromRoute] long invoiceNumber, [FromRoute] int clientId)
         {
             var rCompanyId = clientId;
             var resultdata = await _mediator.Send(new GetInvoiceByInvoiceNumberCommand()
             {
                 CompanyId = rCompanyId,
-                invoiceNumber = invoiceNumber
+                invoiceId = invoiceNumber
             });
 
             var result = await _mediator.Send(new AdminSentInvoiceCommand()

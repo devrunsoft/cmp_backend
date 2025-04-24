@@ -240,6 +240,9 @@
     <None Remove="Commands\Provider\Document\" />
     <None Remove="Commands\Admin\Invoice\Provider\" />
     <None Remove="Handlers\Admin\Invoice\Provider\" />
+    <None Remove="Commands\Client\Representation\" />
+    <None Remove="Responses\Client\" />
+    <None Remove="Handlers\Client\Representation\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -486,6 +489,9 @@
     <Folder Include="Commands\Provider\Document\" />
     <Folder Include="Commands\Admin\Invoice\Provider\" />
     <Folder Include="Handlers\Admin\Invoice\Provider\" />
+    <Folder Include="Commands\Client\Representation\" />
+    <Folder Include="Responses\Client\" />
+    <Folder Include="Handlers\Client\Representation\" />
   </ItemGroup> 
 
   <ItemGroup>

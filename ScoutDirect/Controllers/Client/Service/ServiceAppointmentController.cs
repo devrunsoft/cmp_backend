@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using ScoutDirect.Api.Controllers._Base;
 using ScoutDirect.Application.Responses;
+using Stripe;
 
 namespace CMPNatural.Api.Controllers.ServiceAppointment
 {
@@ -23,30 +24,21 @@ namespace CMPNatural.Api.Controllers.ServiceAppointment
         }
 
 
-        [HttpPost]
+        [HttpPost("Invoice/{invoiceId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Post([FromBody] ServiceAppointmentInput request)
+        public async Task<ActionResult> Post([FromRoute] long invoiceId, [FromBody] ServiceAppointmentInput request)
         {
-            var checkData = await _mediator.Send(new GetServiceAppointmentByOprAddressCommand()
-            {
-                CompanyId = rCompanyId,
-                OperationalAddressId = request.OperationalAddressId
-            });
+            var result = await _mediator.Send(new AddServiceAppointmentCommand(request, rCompanyId, invoiceId));
+            return Ok(result);
+        }
 
-            if ((checkData.Data.Any(p=>p.ProductPriceId==request.ProductPriceId)) || (!checkData.IsSucces()))
-            {
-                return Ok(new NoAcess() { Message="You have an active service at the current operational address"});
-            }
-            var result = await _mediator.Send(new AddServiceAppointmentCommand()
-            {
-                CompanyId = rCompanyId,
-                FrequencyType = request.FrequencyType,
-                ServiceTypeId = request.ServiceTypeId,
-                StartDate = request.StartDate,
-                OperationalAddressId = request.OperationalAddressId
-
-            });
+        [HttpPost("{ServiceId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Put([FromRoute] long ServiceId, [FromBody] ServiceAppointmentInput request)
+        {
+            var result = await _mediator.Send(new EditerviceAppointmentCommand(request, rCompanyId, ServiceId));
             return Ok(result);
         }
 

@@ -26,10 +26,13 @@ namespace CMPNatural.Application.Model
         public IFormFile PeriodicVehicleInspections { get; set; } = null!;
         public DateTime PeriodicVehicleInspectionsExp { get; set; }
 
-        public int CapacityId { get; set; }
-
         public List<int> VehicleCompartments { get; set; } = new List<int>();
-        public List<VehicleServiceStatus> VehicleService { get; set; } = new List<VehicleServiceStatus>();
+        public List<VehicleServiceInput> VehicleService { get; set; } = new List<VehicleServiceInput>();
+    }
+    public partial class VehicleServiceInput
+    {
+        public int Capacity { get; set; }
+        public VehicleServiceStatus VehicleServiceStatus { get; set; }
     }
 }
 

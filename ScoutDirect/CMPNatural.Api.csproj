@@ -58,6 +58,7 @@
     <None Remove="Controllers\Client\Capacity\" />
     <None Remove="Controllers\Provider\" />
     <None Remove="Controllers\Provider\Base\" />
+    <None Remove="Controllers\Client\ClientRepresentation\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="View\" />
@@ -93,6 +94,7 @@
     <Folder Include="Controllers\Client\Capacity\" />
     <Folder Include="Controllers\Provider\" />
     <Folder Include="Controllers\Provider\Base\" />
+    <Folder Include="Controllers\Client\ClientRepresentation\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\infrastructure\CMPNatural.infrastructure.csproj">

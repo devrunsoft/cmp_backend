@@ -59,6 +59,9 @@ namespace CMPNatural.Application
             entity.ProviderService = providerServices;
             entity.PhoneNumber = request.PhoneNumber;
             entity.Email = request.Email;
+            entity.ManagerFirstName = request.ManagerFirstName;
+            entity.ManagerLastName = request.ManagerLastName;
+            entity.ManagerPhoneNumber = request.ManagerPhoneNumber;
 
 
             #region file

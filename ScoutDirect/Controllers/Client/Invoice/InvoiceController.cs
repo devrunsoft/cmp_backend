@@ -53,6 +53,27 @@ namespace CMPNatural.Api.Controllers.Invoice
             return Ok(result);
         }
 
+        [HttpGet("{InvoiceId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Get([FromRoute] long InvoiceId)
+        {
+            var result = await _mediator.Send(new ClientGetInvoiceCommand() { InvoiceId = InvoiceId });
+            return Ok(result);
+        }
+
+        [HttpGet("Request")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> GetRequest()
+        {
+            var result = await _mediator.Send(new GetAllInvoiceRequestCommand()
+            {
+                CompanyId = rCompanyId
+            });
+            return Ok(result);
+        }
+
         [HttpGet("GetPayableCount")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]

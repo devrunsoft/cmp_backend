@@ -7,40 +7,96 @@ using ScoutDirect.Application.Responses;
 using System.Threading;
 using System.Threading.Tasks;
 using CMPNatural.Core.Enums;
+using System.Linq;
+using System.ComponentModel.Design;
 
 namespace CMPNatural.Application.Handlers
 {
 
-    public class AddServiceAppointmentHandler : IRequestHandler<AddServiceAppointmentCommand, CommandResponse<ServiceAppointment>>
+    public class AddServiceAppointmentHandler : IRequestHandler<AddServiceAppointmentCommand, CommandResponse<BaseServiceAppointment>>
     {
-        private readonly IServiceAppointmentRepository _serviceAppointmentRepository;
+        private readonly IBaseServiceAppointmentRepository _serviceAppointmentRepository;
+        private readonly IProductPriceRepository _productPriceRepository;
+        private readonly IinvoiceRepository _iinvoiceRepository;
 
-        public AddServiceAppointmentHandler(IServiceAppointmentRepository billingInformationRepository)
+        public AddServiceAppointmentHandler(IBaseServiceAppointmentRepository billingInformationRepository , IProductPriceRepository productPriceRepository,
+            IinvoiceRepository _iinvoiceRepository)
         {
             _serviceAppointmentRepository = billingInformationRepository;
+            _productPriceRepository = productPriceRepository;
+            this._iinvoiceRepository = _iinvoiceRepository;
         }
 
-        public async Task<CommandResponse<ServiceAppointment>> Handle(AddServiceAppointmentCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<BaseServiceAppointment>> Handle(AddServiceAppointmentCommand request, CancellationToken cancellationToken)
         {
-            var entity = new ServiceAppointment()
+            var invoice = await _iinvoiceRepository.GetByIdAsync(request.InvoiceId);
+
+            if(invoice.Status != InvoiceStatus.Draft)
             {
-                CompanyId = request.CompanyId,
-                FrequencyType=request.FrequencyType,
-                //LocationCompanyId=request.LocationCompanyId,
-                ServiceTypeId=(int) request.ServiceTypeId,
-                ServicePriceCrmId= "",
-                ServiceCrmId= "",
-                ProductId = request.ProductId,
-                ProductPriceId = request.ProductPriceId,
-                StartDate = request.StartDate ?? DateTime.Now,
-                OperationalAddressId =request.OperationalAddressId,
-                Status = ServiceStatus.Draft,
-                InvoiceId = request.InvoiceId
-            };
+              return new NoAcess<BaseServiceAppointment>() { Message = $"Cannot add a service for this Request'. Only Requests in 'Draft' status can be modified." };
+            }
+
+            BaseServiceAppointment entity;
+            var resultPrice = await _productPriceRepository.GetByIdAsync(request.ProductPriceId);
+
+            if (request.ServiceKind == ServiceKind.Custom)
+            {
+                 entity = new ServiceAppointment()
+                {
+                    CompanyId = request.CompanyId,
+                    FrequencyType = request.FrequencyType,
+                    ServiceTypeId = (int)request.ServiceTypeId,
+                    ServicePriceCrmId = "",
+                    ServiceCrmId = "",
+                    StartDate = request.StartDate ?? DateTime.Now,
+                    OperationalAddressId = request.OperationalAddressId,
+                    Status = ServiceStatus.Draft,
+                    Subsidy = request.Subsidy,
+                    IsEmegency = false,
+                    Qty = request.qty,
+                    Amount = request.Amount,
+                    ProductId = request.ProductId,
+                    ProductPrice = resultPrice,
+                    ProductPriceId = request.ProductPriceId,
+                    ServiceAppointmentLocations = request.LocationCompanyIds
+                               .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
+                               .ToList(),
+                    DayOfWeek = string.Join(",", request.DayOfWeek.Select(x => x.GetDescription())),
+                    FromHour = request.FromHour,
+                    ToHour = request.ToHour,
+                };
+            }
+            else
+            {
+                entity = new ServiceAppointmentEmergency()
+                {
+                    CompanyId = request.CompanyId,
+                    FrequencyType = request.FrequencyType,
+                    StartDate = DateTime.Now,
+                    ServiceTypeId = (int)request.ServiceTypeId,
+                    ServicePriceCrmId = "",
+                    ServiceCrmId = "",
+                    Amount = request.Amount,
+                    Subsidy = request.Subsidy,
+                    ProductId = request.ProductId,
+                    ProductPrice = resultPrice,
+                    ProductPriceId = request.ProductPriceId,
+                    OperationalAddressId = request.OperationalAddressId,
+                    Status = ServiceStatus.Draft,
+                    IsEmegency = true,
+                    Qty = request.qty,
+                    ServiceAppointmentLocations = request.LocationCompanyIds
+                    .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
+                    .ToList(),
+                    DayOfWeek = string.Join(",", request.DayOfWeek.Select(x => x.GetDescription())),
+                    FromHour = request.FromHour,
+                    ToHour = request.ToHour,
+                };
+            }
 
             var result = await _serviceAppointmentRepository.AddAsync(entity);
 
-            return new Success<ServiceAppointment>() { Data = result, Message = "Service Enrolled Successfully!" };
+            return new Success<BaseServiceAppointment>() { Data = result, Message = "Service Enrolled Successfully!" };
 
         }
 

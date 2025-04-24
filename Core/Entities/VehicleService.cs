@@ -10,7 +10,8 @@ namespace CMPNatural.Core.Entities
 		}
 		public long Id { get; set; }
 		public long VehicleId { get; set; }
-        public VehicleServiceStatus VehicleServiceStatus { get; set; }
+		public int  Capacity { get; set; }
+		public VehicleServiceStatus VehicleServiceStatus { get; set; }
     }
 }
 

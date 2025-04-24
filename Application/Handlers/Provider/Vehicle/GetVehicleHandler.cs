@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CMPNatural.Core.Entities;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace CMPNatural.Application
 {
@@ -20,7 +21,10 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<Vehicle>> Handle(GetVehicleCommand request, CancellationToken cancellationToken)
         {
-            var result = (await _repository.GetAsync(p => p.ProviderId == request.ProviderId)).FirstOrDefault();
+            var result = (await _repository.GetAsync(p => p.ProviderId == request.ProviderId,
+                query => query.Include(x=>x.VehicleService)
+                .Include(x => x.VehicleCompartment)
+            )).FirstOrDefault();
             return new Success<Vehicle>() { Data = result };
         }
     }

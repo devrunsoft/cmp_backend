@@ -163,9 +163,6 @@ namespace infrastructure.Data
             {
                 entity.ToTable("Vehicle");
 
-                //entity.HasOne(d => d.Capacity)
-                //.WithOne()
-                //.HasForeignKey<Vehicle>(d => d.CapacityId);
             });
 
             modelBuilder.Entity<VehicleCompartment>(entity =>
@@ -176,6 +173,11 @@ namespace infrastructure.Data
             modelBuilder.Entity<VehicleService>(entity =>
             {
                 entity.ToTable("VehicleService");
+                entity.Property(d => d.VehicleServiceStatus)
+                 .HasConversion(
+                 x => x.ToString(),
+                 x => (VehicleServiceStatus)Enum.Parse(typeof(VehicleServiceStatus), x)
+                 );
             });
 
             modelBuilder.Entity<InvoiceProduct>(entity =>

@@ -1,13 +1,13 @@
 ﻿using System;
 using CMPNatural.Core.Entities;
+using System.Collections.Generic;
 using MediatR;
 using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Application
 {
-    public class GetInvoiceByInvoiceNumberCommand : IRequest<CommandResponse<Invoice>>
+    public class GetAllInvoiceRequestCommand : IRequest<CommandResponse<List<InvoiceResponse>>>
     {
-        public long invoiceId { get; set; }
         public long CompanyId { get; set; }
     }
 }

@@ -1,0 +1,50 @@
+﻿using CMPNatural.Core.Entities;
+using MediatR;
+using ScoutDirect.Application.Responses;
+using System.Threading;
+using System.Threading.Tasks;
+using CMPNatural.Core.Repositories;
+using CMPNatural.Core.Base;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using CMPNatural.Application.Responses.AdminMenuRepresentation;
+using CMPNatural.Core.Enums;
+using CMPNatural.Application.Commands.Client.Representation;
+using CMPNatural.Application.Responses.Client;
+
+namespace CMPNatural.Application
+{
+
+    public class ClientMenuRepresentationHandler : IRequestHandler<ClientMenuRepresentationCommand, CommandResponse<ClientRepresentationResponse>>
+    {
+        private readonly IinvoiceRepository _invoiceRepository;
+        private readonly ICompanyContractRepository _companyContract;
+
+        public ClientMenuRepresentationHandler(IinvoiceRepository iinvoiceRepository, ICompanyContractRepository companyContract
+            )
+        {
+            _invoiceRepository = iinvoiceRepository;
+            _companyContract = companyContract;
+        }
+
+        public async Task<CommandResponse<ClientRepresentationResponse>> Handle(ClientMenuRepresentationCommand request, CancellationToken cancellationToken)
+        {
+            var invoices = (await _invoiceRepository.GetAsync(x =>
+                 x.Status == InvoiceStatus.Send_Payment
+                )).Count();
+
+            var requests = (await _invoiceRepository.GetAsync(x =>
+                 x.Status == InvoiceStatus.Draft || x.Status == InvoiceStatus.Processing_Provider
+                )).Count();
+
+            var ContractsCount = (await _companyContract.GetAsync(x =>
+              x.Status == (int)CompanyContractStatus.Created
+              )).Count();
+
+            var model = new ClientRepresentationResponse() { Contract = ContractsCount , Invoice = invoices , Requests = requests };
+            return new Success<ClientRepresentationResponse>() { Data = model };
+
+        }
+    }
+}
+
