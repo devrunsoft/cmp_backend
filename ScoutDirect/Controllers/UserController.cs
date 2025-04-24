@@ -70,12 +70,22 @@ namespace ScoutDirect.Api.Controllers
 
                 _updateContact.send(command.BusinessEmail, tokenvalue);
 
-                return Ok(new
+                //return Ok(new
+                //{
+                //    token = tokenvalue,
+                //    expiration = token.ValidTo,
+                //    registered = company.Registered,
+                //    accepted = company.Accepted,
+                //});
+                return Ok(new Success<object>()
                 {
-                    token = tokenvalue,
-                    expiration = token.ValidTo,
-                    registered = company.Registered,
-                    accepted = company.Accepted,
+                    Data = new
+                    {
+                        token = tokenvalue,
+                        expiration = token.ValidTo,
+                        registered = company.Registered,
+                        accepted = company.Accepted,
+                    }
                 });
 
             }

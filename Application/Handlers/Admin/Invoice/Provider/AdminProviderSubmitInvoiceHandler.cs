@@ -35,10 +35,23 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<Invoice>> Handle(AdminProviderSubmitInvoiceCommand requests, CancellationToken cancellationToken)
         {
-            var invoice = (await _invoiceRepository.GetAsync(p => p.Id == requests.InvoiceId && p.ProviderId == requests.ProviderId, query => query.Include(x => x.Company))).FirstOrDefault();
+            var invoice = (await _invoiceRepository.GetAsync(p => p.Id == requests.InvoiceId && p.ProviderId == requests.ProviderId,
+                query => query.Include(x => x.Company)
+                .Include(i => i.BaseServiceAppointment)
+                .ThenInclude(i => i.ProductPrice)
+                .ThenInclude(p => p.Product)
+                .Include(i => i.BaseServiceAppointment)
+                .ThenInclude(i => i.ServiceAppointmentLocations)
+                .ThenInclude(p => p.LocationCompany)
+                )).FirstOrDefault();
             var entity = (await _repository.GetAsync(x => x.InvoiceId == invoice.Id)).FirstOrDefault();
 
-            if (invoice.Status != InvoiceStatus.Submited_Provider && invoice.Status != InvoiceStatus.Updated_Provider)
+            if (invoice.Status != InvoiceStatus.Processing_Provider)
+            {
+                return new NoAcess<Invoice>() { Message = "No Access To Edit Paid Invoice" };
+            }
+
+            if (invoice.Status != InvoiceStatus.Submited_Provider && invoice.Status != InvoiceStatus.Updated_Provider && invoice.Status != InvoiceStatus.Processing_Provider)
             {
                 return new NoAcess<Invoice>
                 {

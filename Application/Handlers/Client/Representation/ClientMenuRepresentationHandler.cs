@@ -30,15 +30,15 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<ClientRepresentationResponse>> Handle(ClientMenuRepresentationCommand request, CancellationToken cancellationToken)
         {
             var invoices = (await _invoiceRepository.GetAsync(x =>
-                 x.Status == InvoiceStatus.Send_Payment
+                 x.Status == InvoiceStatus.Send_Payment && x.CompanyId == request.CompanyId
                 )).Count();
 
             var requests = (await _invoiceRepository.GetAsync(x =>
-                 x.Status == InvoiceStatus.Draft || x.Status == InvoiceStatus.Processing_Provider
+                ( x.Status == InvoiceStatus.Draft || x.Status == InvoiceStatus.Processing_Provider) && x.CompanyId == request.CompanyId
                 )).Count();
 
             var ContractsCount = (await _companyContract.GetAsync(x =>
-              x.Status == (int)CompanyContractStatus.Created
+              x.Status == (int)CompanyContractStatus.Created && x.CompanyId == request.CompanyId
               )).Count();
 
             var model = new ClientRepresentationResponse() { Contract = ContractsCount , Invoice = invoices , Requests = requests };

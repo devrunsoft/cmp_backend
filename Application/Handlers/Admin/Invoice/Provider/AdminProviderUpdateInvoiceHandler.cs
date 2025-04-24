@@ -42,10 +42,25 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<Invoice>> Handle(AdminProviderUpdateInvoiceCommand requests, CancellationToken cancellationToken)
         {
 
-            var invoice = (await _invoiceRepository.GetAsync(p => p.Id == requests.InvoiceId, query => query.Include(x => x.Company))).FirstOrDefault();
+            var invoice = (await _invoiceRepository.GetAsync(p => p.Id == requests.InvoiceId, query => query.Include(x => x.Company)
+                .Include(i => i.BaseServiceAppointment)
+                .ThenInclude(i => i.ProductPrice)
+                .ThenInclude(p => p.Product)
+                .Include(i => i.BaseServiceAppointment)
+                .ThenInclude(i => i.ServiceAppointmentLocations)
+                .ThenInclude(p => p.LocationCompany)
+            )).FirstOrDefault();
             if (invoice.Status != InvoiceStatus.Processing_Provider)
             {
                 return new NoAcess<Invoice>() { Message = "No Access To Edit Paid Invoice" };
+            }
+
+            if (invoice.Status != InvoiceStatus.Submited_Provider && invoice.Status != InvoiceStatus.Updated_Provider && invoice.Status != InvoiceStatus.Processing_Provider)
+            {
+                return new NoAcess<Invoice>
+                {
+                    Message = "You cannot edit this invoice because it has not been submitted by the provider."
+                };
             }
 
             var CompanyId = invoice.CompanyId;
@@ -54,9 +69,6 @@ namespace CMPNatural.Application
 
             List<BaseServiceAppointment> lstCustom = new List<BaseServiceAppointment>();
             List<ServiceAppointmentEmergency> lstCustomEmrgency = new List<ServiceAppointmentEmergency>();
-
-
-
 
             foreach (var request in requests.ServiceAppointment)
             {
