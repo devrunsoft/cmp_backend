@@ -10,8 +10,9 @@ namespace CMPNatural.Core.Entities
         public string? Description { get; set; } = "";
         public string ProductType { get; set; } = "";
 
+        //service, emergencyservice, product
         public int? Type { get; set; }
-        public int? ServiceType { get; set; }
+        public int ServiceType { get; set; }
 
         public bool IsEmergency { get {
                 return this.Type == (int)ProductCollection.ServiceEmergency;

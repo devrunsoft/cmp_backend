@@ -42,7 +42,7 @@ namespace CMPNatural.infrastructure.Repository
                     //local.Enable = true;
                     local.Name = matchingCrm.name;
                     local.Type = checkType(matchingCrm.collectionIds);
-                    local.ServiceType = checkServiceType(matchingCrm.collectionIds);
+                    local.ServiceType = checkServiceType(matchingCrm.collectionIds)?? (int)ServiceType.Other;
                     //local.IsEmergency = isEmergency(matchingCrm.collectionIds);
                     shouldUpdate.Add(local);
                 }
@@ -62,7 +62,7 @@ namespace CMPNatural.infrastructure.Repository
                             Name = crm.name,
                             ProductType = crm.productType,
                             Type= checkType(crm.collectionIds),
-                            ServiceType = checkServiceType(crm.collectionIds),
+                            ServiceType = checkServiceType(crm.collectionIds)?? (int)ServiceType.Other,
                             //IsEmergency = isEmergency(crm.collectionIds),
                         }
                         );

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using CMPNatural.Core.Enums;
 using System.Linq;
 using System.ComponentModel.Design;
+using Microsoft.EntityFrameworkCore;
 
 namespace CMPNatural.Application.Handlers
 {
@@ -37,7 +38,7 @@ namespace CMPNatural.Application.Handlers
             }
 
             BaseServiceAppointment entity;
-            var resultPrice = await _productPriceRepository.GetByIdAsync(request.ProductPriceId);
+            var resultPrice = (await _productPriceRepository.GetAsync(x => x.Id == request.ProductPriceId, query => query.Include(x => x.Product))).FirstOrDefault();
 
             if (request.ServiceKind == ServiceKind.Custom)
             {
@@ -45,7 +46,7 @@ namespace CMPNatural.Application.Handlers
                 {
                     CompanyId = request.CompanyId,
                     FrequencyType = request.FrequencyType,
-                    ServiceTypeId = (int)request.ServiceTypeId,
+                    ServiceTypeId = resultPrice.Product.ServiceType,
                     ServicePriceCrmId = "",
                     ServiceCrmId = "",
                     StartDate = request.StartDate ?? DateTime.Now,
@@ -73,7 +74,7 @@ namespace CMPNatural.Application.Handlers
                     CompanyId = request.CompanyId,
                     FrequencyType = request.FrequencyType,
                     StartDate = DateTime.Now,
-                    ServiceTypeId = (int)request.ServiceTypeId,
+                    ServiceTypeId = resultPrice.Product.ServiceType,
                     ServicePriceCrmId = "",
                     ServiceCrmId = "",
                     Amount = request.Amount,

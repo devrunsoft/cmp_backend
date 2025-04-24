@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using CMPNatural.Core.Enums;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace CMPNatural.Application.Handlers
 {
@@ -40,7 +41,7 @@ namespace CMPNatural.Application.Handlers
                     ProductPriceId = request.ProductPriceId,
                 });
 
-               var resultPrice =await _productPriceRepository.GetByIdAsync(request.ProductPriceId);
+               var resultPrice = (await _productPriceRepository.GetAsync(x=>x.Id == request.ProductPriceId , query => query.Include(x=>x.Product))).FirstOrDefault();
 
                 if (request.ServiceKind == Core.Enums.ServiceKind.Custom)
                 {
@@ -48,8 +49,8 @@ namespace CMPNatural.Application.Handlers
                     {
                         CompanyId = requests.CompanyId,
                         FrequencyType = request.FrequencyType,
-                        //LocationCompanyId=request.LocationCompanyId,
-                        ServiceTypeId = (int)request.ServiceTypeId,
+                     //LocationCompanyId=request.LocationCompanyId,
+                        ServiceTypeId = resultPrice.Product.ServiceType,
                         ServicePriceCrmId = "",
                         ServiceCrmId = "",
                         StartDate = request.StartDate??DateTime.Now,
@@ -78,7 +79,7 @@ namespace CMPNatural.Application.Handlers
                         FrequencyType = request.FrequencyType,
                         StartDate = DateTime.Now,
                         //LocationCompanyId=request.LocationCompanyId,
-                        ServiceTypeId = (int)request.ServiceTypeId,
+                        ServiceTypeId = resultPrice.Product.ServiceType,
                         ServicePriceCrmId = "",
                         ServiceCrmId ="",
                         Amount = resultPrice.Amount * request.qty,

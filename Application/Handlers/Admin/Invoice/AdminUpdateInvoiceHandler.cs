@@ -58,7 +58,7 @@ namespace CMPNatural.Application
                     ProductPriceId = request.ProductPriceId,
                 });
 
-                var resultPrice = await _productPriceRepository.GetByIdAsync(request.ProductPriceId);
+                var resultPrice = (await _productPriceRepository.GetAsync(x => x.Id == request.ProductPriceId, query => query.Include(x => x.Product))).FirstOrDefault();
 
                 if (request.ServiceKind == ServiceKind.Custom)
                 {
@@ -66,7 +66,7 @@ namespace CMPNatural.Application
                     {
                         CompanyId = CompanyId,
                         FrequencyType = request.FrequencyType,
-                        ServiceTypeId = (int)request.ServiceTypeId,
+                        ServiceTypeId = resultPrice.Product.ServiceType,
                         ServicePriceCrmId = "",
                         ServiceCrmId = "",
                         StartDate = request.StartDate ?? DateTime.Now,
@@ -95,7 +95,7 @@ namespace CMPNatural.Application
                         CompanyId = CompanyId,
                         FrequencyType = request.FrequencyType,
                         StartDate = DateTime.Now,
-                        ServiceTypeId = (int)request.ServiceTypeId,
+                        ServiceTypeId = resultPrice.Product.ServiceType,
                         ServicePriceCrmId = "",
                         ServiceCrmId = "",
                         Amount = request.Amount,

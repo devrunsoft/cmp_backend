@@ -59,7 +59,7 @@ namespace CMPNatural.Application.Handlers
                 Address = address.Address,
                 PriceName = price.Name,
                 ServiceKind = (int) request.ServiceKind,
-                ServiceId = price.Product.ServiceType?? (int)ServiceType.Other,
+                ServiceId = price.Product.ServiceType,
                 LocationCompanyIds = string.Join(",", request.LocationCompanyIds),
                 Qty = Qty,
                 ProductPriceId = request.ProductPriceId,
