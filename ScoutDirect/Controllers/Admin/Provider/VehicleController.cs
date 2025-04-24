@@ -47,7 +47,7 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
             return Ok(result);
         }
 
-
+        [RequestSizeLimit(100_000_000)]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
@@ -84,6 +84,7 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
             return Ok(result);
         }
 
+        [RequestSizeLimit(100_000_000)]
         [HttpPut("{Id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]

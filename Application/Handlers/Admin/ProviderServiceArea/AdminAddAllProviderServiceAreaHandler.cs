@@ -27,7 +27,7 @@ namespace CMPNatural.Application
                 lst.Add(new ServiceArea
                 {
                     Active = true,
-                    City = i.City,
+                    City = i.City??"",
                     CreateAt = DateTime.Now,
                     GeoJson = i.GeoJson,
                     Lat = i.Lat,
@@ -35,8 +35,8 @@ namespace CMPNatural.Application
                     ProviderId = request.ProviderId,
                     Radius = i.Radius,
                     ServiceAreaType = i.ServiceAreaType,
-                    State = i.State,
-                    Address = i.Address
+                    State = i.State??"",
+                    Address = i.Address??""
                 });
             }
 
