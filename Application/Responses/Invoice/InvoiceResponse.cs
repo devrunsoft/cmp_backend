@@ -46,7 +46,7 @@ namespace CMPNatural.Application
         {
             get
             {
-                return this.ContractId == null ? "---" : $"{this.CreatedAt.Year}-{this.CompanyId}-{(this.ContractId == null ? 0 : this.ContractId)}-{Id}";
+                return this.ContractId == null ? "---" : $"I{this.CreatedAt.Year}-{this.CompanyId}-{(this.ContractId == null ? 0 : this.ContractId)}-{Id}";
             }
         }
 
@@ -54,7 +54,7 @@ namespace CMPNatural.Application
         {
             get
             {
-                return $"{this.CreatedAt.Year}-{this.CompanyId}-{Id}";
+                return $"R{this.CreatedAt.Year}-{this.CompanyId}-{Id}";
             }
         }
 

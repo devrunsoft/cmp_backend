@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using CMPNatural.Application;
 using CMPNatural.Application.Commands.Company;
 using CMPNatural.Application.Commands.ShoppingCard;
@@ -45,6 +46,7 @@ namespace CMPNatural.Api.Service
 
             List<CommandResponse<Invoice>> invoices = new List<CommandResponse<Invoice>>();
 
+
             foreach (var i in groupedData)
             {
                 var request = i.item.Select((e) => new ServiceAppointmentInput()
@@ -60,7 +62,8 @@ namespace CMPNatural.Api.Service
                     ProductId = e.ProductId.Value,
                     LocationCompanyIds = e.LocationCompanyIds.IsNullOrEmpty() ? new List<long>() : e.LocationCompanyIds.Split(",").Select((e) => long.Parse(e)).ToList(),
                     qty = e.Qty,
-                    DayOfWeek = e.DayOfWeek.Split(",").Select(x => (DayOfWeekEnum)Enum.Parse(typeof(DayOfWeekEnum), x.Trim())).ToList(),
+                    DayOfWeek = e.DayOfWeek.IsNullOrEmpty()? Enum.GetValues(typeof(DayOfWeekEnum)).Cast<DayOfWeekEnum>().ToList() : e.DayOfWeek.Split(",").Select(x => (DayOfWeekEnum)Enum.Parse(typeof(DayOfWeekEnum), x.Trim())).ToList()
+                    ,
                     FromHour = e.FromHour,
                     ToHour = e.ToHour
                 }).ToList();

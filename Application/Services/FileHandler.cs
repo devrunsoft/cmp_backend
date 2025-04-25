@@ -22,6 +22,11 @@ namespace CMPNatural.Application.Services
             return AppfileHandler(BaseVirtualPath, file, key, $"Provider/{uniqueId}/{path}");
         }
 
+        public static string ClientfileHandler(string BaseVirtualPath, IFormFile file, string key, dynamic uniqueId, string path)
+        {
+            return AppfileHandler(BaseVirtualPath, file, key, $"Client/{uniqueId}/{path}");
+        }
+
         public static string AppfileHandler(string BaseVirtualPath, IFormFile file, string key, string folderName)
         {
             if (file == null)

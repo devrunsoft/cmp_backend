@@ -11,7 +11,8 @@ namespace CMPNatural.Application.Commands.Company
         {
         }
         public long CompanyId { get; set; }
-        public string BaseVirtualPath { get; set; }
+        public string Path { get; set; }
+
 
     }
 }

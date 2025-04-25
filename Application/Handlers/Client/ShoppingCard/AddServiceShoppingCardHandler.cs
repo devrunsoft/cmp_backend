@@ -45,6 +45,11 @@ namespace CMPNatural.Application.Handlers
                     p => p.Include(p => p.CapacityEntity))).ToList();
                 Qty = locations.Sum(x => x.CapacityEntity.Qty);
             }
+            else
+            {
+                Qty = request.qty;
+            }
+            var dof = request.DayOfWeek.Count == 0 ? request.DayOfWeek : Enum.GetValues(typeof(DayOfWeekEnum)).Cast<DayOfWeekEnum>().ToList();
 
             var entity = new ShoppingCard()
             {
@@ -64,7 +69,7 @@ namespace CMPNatural.Application.Handlers
                 Qty = Qty,
                 ProductPriceId = request.ProductPriceId,
                 ProductId = request.ProductId,
-                DayOfWeek = string.Join(",", request.DayOfWeek.Select(x => x.GetDescription())),
+                DayOfWeek = string.Join(",", dof.Select(x => x.GetDescription())),
                 FromHour = request.FromHour,
                 ToHour = request.ToHour,
                 

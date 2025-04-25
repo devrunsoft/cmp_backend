@@ -24,6 +24,9 @@ using CMPEmail;
 using CMPEmail.Email;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Http.Features;
+using System.Text.Json;
+using ScoutDirect.Application.Responses;
+using Hangfire.MemoryStorage.Database;
 
 namespace ScoutDirect.Api
 {
@@ -267,6 +270,36 @@ namespace ScoutDirect.Api
                 RequestPath = "/FileContent"
             });
 
+
+            app.UseExceptionHandler(errorApp =>
+            {
+                errorApp.Run(async context =>
+                {
+                    context.Response.StatusCode = 500;
+                    context.Response.ContentType = "application/json";
+
+                    var errorFeature = context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>();
+                    var exception = errorFeature?.Error;
+
+                    if (exception is BadHttpRequestException badRequestEx &&
+                        badRequestEx.Message.Contains("Request body too large"))
+                    {
+                        context.Response.StatusCode = 400;  // Payload Too Large
+
+                        await context.Response.WriteAsJsonAsync(new BadRequest
+                        {
+                            Success = false,
+                            Message = "The file you're trying to upload is too large. Please try a smaller file."
+                        });
+                    }
+                    else
+                    {
+                        await context.Response.WriteAsync("{\"error\": \"An unexpected error occurred.\"}");
+                    }
+                });
+            });
+
+
             app.UseRouting();
             app.UseCors("AllowOrigin");
 
@@ -290,6 +323,9 @@ namespace ScoutDirect.Api
             });
 
             GlobalConfiguration.Configuration.UseMemoryStorage();
+
+
+
 
             //if (!env.IsDevelopment())
             //{

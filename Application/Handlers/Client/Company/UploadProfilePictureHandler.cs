@@ -31,7 +31,7 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
 
             if (company != null)
             {
-                var ProfilePicture = FileHandler.fileHandler(request.BaseVirtualPath, request.ProfilePicture, "ProfilePic");
+                string ProfilePicture = FileHandler.ClientfileHandler(request.Path, request.ProfilePicture, "ProfilePicture", company.Id, request.ProfilePicture.Name);
                 company.ProfilePicture = ProfilePicture;
 
                 await _companyRepository.UpdateAsync(company);

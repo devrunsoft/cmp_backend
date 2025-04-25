@@ -23,7 +23,7 @@ namespace CMPNatural.Core.Entities
 
         public string ContractNumber {
 			get {
-				return $"{CreatedAt.Year}-{this.CompanyId}-{this.Id}";
+				return $"C{CreatedAt.Year}-{this.CompanyId}-{this.Id}";
 			}
 		} 
         public DateTime CreatedAt { get; set; }

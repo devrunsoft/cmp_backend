@@ -129,7 +129,6 @@ namespace CMPNatural.Api.Controllers.Invoice
 
             return Ok(result);
 
-
         }
 
     }

@@ -30,6 +30,7 @@ namespace CMPNatural.Api.Controllers.Admin.AppInformation
             return Ok(result);
         }
 
+        [RequestSizeLimit(100_000_000)]
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]

@@ -101,12 +101,10 @@ namespace infrastructure.Data
                 entity.ToTable("Manifest");
 
                 entity.Property(p => p.Status)
-             .HasConversion(
-              x => x.ToString(),
-              x => (ManifestStatus)Enum.Parse(typeof(ManifestStatus), x)
-              );
-
-
+                 .HasConversion(
+                  x => x.ToString(),
+                  x => (ManifestStatus)Enum.Parse(typeof(ManifestStatus), x)
+                  );
                 entity.HasOne(d => d.Invoice)
                 .WithOne()
                 .HasForeignKey<Manifest>(d => d.InvoiceId);
@@ -115,6 +113,11 @@ namespace infrastructure.Data
             modelBuilder.Entity<TermsConditions>(entity =>
             {
                 entity.ToTable("TermsConditions");
+                entity.Property(p => p.Type)
+                .HasConversion(
+                 x => x.ToString(),
+                 x => (TermsConditionsEnum)Enum.Parse(typeof(TermsConditionsEnum), x)
+                 );
             });
 
             modelBuilder.Entity<AppInformation>(entity =>

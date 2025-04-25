@@ -1,6 +1,7 @@
 ﻿using CMPNatural.Api.Service;
 using CMPNatural.Application;
 using CMPNatural.Application.Commands.Admin.Invoice;
+using CMPNatural.Application.Commands.Invoice;
 using CMPNatural.Core.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
@@ -31,6 +32,15 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> GetAll([FromQuery] AdminGetAllInvoiceCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpGet("Requests")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> GetAllRequest([FromQuery] AdminGetAllRequestCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);
@@ -192,6 +202,21 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
                 //sendEmailToClient(result.Data.CompanyId, emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern, emailDetails.ButtonText);
             }
             return Ok(result);
+        }
+
+        [HttpDelete("{InvoiceId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Delete([FromRoute] long InvoiceId)
+        {
+
+            var result = await _mediator.Send(new AdminCancelInvoiceCommand()
+            {
+                InvoiceId = InvoiceId,
+            });
+
+            return Ok(result);
+
         }
 
     }

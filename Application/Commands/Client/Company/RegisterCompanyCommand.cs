@@ -2,6 +2,7 @@
 using CMPNatural.Application.Responses;
 using CMPNatural.Core.Enums;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Application.Commands
@@ -22,6 +23,7 @@ namespace CMPNatural.Application.Commands
         public string Password { get; set; }
         public string RePassword { get; set; }
         public CompanyType Type { get; set; }
+        public IFormFile ProfilePicture { get; set; } = null;
 
     }
 }

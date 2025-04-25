@@ -40,6 +40,8 @@ namespace CMPNatural.Application.Handlers
             BaseServiceAppointment entity;
             var resultPrice = (await _productPriceRepository.GetAsync(x => x.Id == request.ProductPriceId, query => query.Include(x => x.Product))).FirstOrDefault();
 
+            var dof = request.DayOfWeek.Count == 0 ? request.DayOfWeek : Enum.GetValues(typeof(DayOfWeekEnum)).Cast<DayOfWeekEnum>().ToList();
+
             if (request.ServiceKind == ServiceKind.Custom)
             {
                  entity = new ServiceAppointment()
@@ -62,7 +64,7 @@ namespace CMPNatural.Application.Handlers
                     ServiceAppointmentLocations = request.LocationCompanyIds
                                .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
                                .ToList(),
-                    DayOfWeek = string.Join(",", request.DayOfWeek.Select(x => x.GetDescription())),
+                    DayOfWeek = string.Join(",", dof.Select(x => x.GetDescription())),
                     FromHour = request.FromHour,
                     ToHour = request.ToHour,
                 };
@@ -89,7 +91,7 @@ namespace CMPNatural.Application.Handlers
                     ServiceAppointmentLocations = request.LocationCompanyIds
                     .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
                     .ToList(),
-                    DayOfWeek = string.Join(",", request.DayOfWeek.Select(x => x.GetDescription())),
+                    DayOfWeek = string.Join(",", dof.Select(x => x.GetDescription())),
                     FromHour = request.FromHour,
                     ToHour = request.ToHour,
                 };

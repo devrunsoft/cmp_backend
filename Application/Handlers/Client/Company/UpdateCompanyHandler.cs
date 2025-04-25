@@ -11,6 +11,8 @@ using CMPNatural.Application.Responses;
 using CMPNatural.Core.Entities;
 using CMPNatural.Application.Mapper;
 using CMPNatural.Application.Commands;
+using CMPNatural.Application.Services;
+using System.IO;
 
 namespace CMPNatural.Application.Handlers.CommandHandlers
 {

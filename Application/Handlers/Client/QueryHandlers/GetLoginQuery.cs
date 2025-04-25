@@ -29,7 +29,7 @@ namespace CMPNatural.Application.Handlers.QueryHandlers
 
             if (person == null)
             {
-                return new CommandResponse<object>() { Success = false, Message="Please Register!" };
+                return new CommandResponse<object>() { Success = false, Message= "Account not found. Please check your username and password or register." };
             }
 
             if (person.Status == CompanyStatus.Blocked)
@@ -38,12 +38,12 @@ namespace CMPNatural.Application.Handlers.QueryHandlers
             }
 
             if (person.Password == request.Password) {
-                return new CommandResponse<object>() { Success = true, Message = "Login Successfull" , Data = person };
+                return new CommandResponse<object>() { Success = true, Message = "Login successful! Redirecting...", Data = person };
             }
 
             else
             {
-                return new CommandResponse<object>() { Success = false, Message = "Username or Password aren't correct!" };
+                return new CommandResponse<object>() { Success = false, Message = "Invalid email or password. Please try again." };
             }
 
 

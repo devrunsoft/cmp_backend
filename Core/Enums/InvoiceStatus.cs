@@ -37,6 +37,9 @@ namespace CMPNatural.Core.Enums
         [Description("Send_Payment")]
         Send_Payment = 10,
 
+        [Description("Deleted")]
+        Deleted = 11,
+
     }
 
     public static class InvoiceStatusExtensions

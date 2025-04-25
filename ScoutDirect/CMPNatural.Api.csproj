@@ -59,6 +59,8 @@
     <None Remove="Controllers\Provider\" />
     <None Remove="Controllers\Provider\Base\" />
     <None Remove="Controllers\Client\ClientRepresentation\" />
+    <None Remove="Controllers\Admin\TermsConditions\" />
+    <None Remove="Controllers\Client\TermsConditions\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="View\" />
@@ -95,6 +97,8 @@
     <Folder Include="Controllers\Provider\" />
     <Folder Include="Controllers\Provider\Base\" />
     <Folder Include="Controllers\Client\ClientRepresentation\" />
+    <Folder Include="Controllers\Admin\TermsConditions\" />
+    <Folder Include="Controllers\Client\TermsConditions\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\infrastructure\CMPNatural.infrastructure.csproj">

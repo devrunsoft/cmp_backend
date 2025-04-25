@@ -193,6 +193,7 @@ namespace CMPNatural.Api.Controllers
             return Ok(result);
         }
 
+
         [HttpPut("UploadProfilePicture")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
@@ -203,7 +204,7 @@ namespace CMPNatural.Api.Controllers
             {
                 CompanyId = rCompanyId,
                 ProfilePicture = input.ProfilePicture,
-                BaseVirtualPath = Path.Combine(wwwPath, $"FileContent/{rCompanyId}")
+                Path = wwwPath
             });
 
             return Ok(result);

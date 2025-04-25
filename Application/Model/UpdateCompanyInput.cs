@@ -1,5 +1,6 @@
 ﻿using System;
 using CMPNatural.Core.Enums;
+using Microsoft.AspNetCore.Http;
 
 namespace CMPNatural.Application.Model
 {
@@ -18,6 +19,7 @@ namespace CMPNatural.Application.Model
         public string ZIPCode { get; set; } = "";
         public string City { get; set; } = "";
         public string State { get; set; } = "";
+        public IFormFile ProfilePicture { get; set; } = null;
 
     }
     public class AddCompanyInput : UpdateCompanyInput

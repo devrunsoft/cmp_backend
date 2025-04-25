@@ -41,7 +41,7 @@ namespace CMPNatural.Api.Controllers.Admin.Client
                 CompanyId = rCompanyId,
                 BusinessLicense = input.BusinessLicense,
                 HealthDepartmentCertificate = input.HealthDepartmentCertificate,
-                BaseVirtualPath = Path.Combine(wwwPath, $"FileContent/{rCompanyId}")
+                BaseVirtualPath = Path.Combine(wwwPath, $"FileContent/Client/{rCompanyId}")
             });
 
             return Ok(result);
@@ -59,7 +59,7 @@ namespace CMPNatural.Api.Controllers.Admin.Client
                 CompanyId = rCompanyId,
                 BusinessLicense = input.BusinessLicense,
                 HealthDepartmentCertificate = input.HealthDepartmentCertificate,
-                BaseVirtualPath = Path.Combine(wwwPath, $"FileContent/{rCompanyId}")
+                BaseVirtualPath = Path.Combine(wwwPath, $"FileContent/Client/{rCompanyId}")
             });
 
 

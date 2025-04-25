@@ -243,6 +243,10 @@
     <None Remove="Commands\Client\Representation\" />
     <None Remove="Responses\Client\" />
     <None Remove="Handlers\Client\Representation\" />
+    <None Remove="Commands\Admin\TermsConditions\" />
+    <None Remove="Commands\Client\TermsConditions\" />
+    <None Remove="Handlers\Admin\TermsConditions\" />
+    <None Remove="Handlers\Client\TermsConditions\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -492,6 +496,10 @@
     <Folder Include="Commands\Client\Representation\" />
     <Folder Include="Responses\Client\" />
     <Folder Include="Handlers\Client\Representation\" />
+    <Folder Include="Commands\Admin\TermsConditions\" />
+    <Folder Include="Commands\Client\TermsConditions\" />
+    <Folder Include="Handlers\Admin\TermsConditions\" />
+    <Folder Include="Handlers\Client\TermsConditions\" />
   </ItemGroup> 
 
   <ItemGroup>
