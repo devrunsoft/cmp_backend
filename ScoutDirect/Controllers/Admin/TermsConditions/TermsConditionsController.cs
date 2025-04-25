@@ -38,7 +38,7 @@ namespace CMPNatural.Api.Controllers.Admin.TermsConditions
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Put([FromRoute] long Id, [FromBody] TermsConditionsInput request)
         {
-            var result = await _mediator.Send(new AdminTermsConditionsAddCommand(request));
+            var result = await _mediator.Send(new AdminTermsConditionsEditCommand(request, Id));
             return Ok(result);
         }
 
@@ -48,7 +48,7 @@ namespace CMPNatural.Api.Controllers.Admin.TermsConditions
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Delete([FromRoute] long Id)
         {
-            var result = await _mediator.Send(new AdminDeleteProductCommand()
+            var result = await _mediator.Send(new AdminTermsConditionsDeleteCommand()
             {
                 Id = Id
             });
