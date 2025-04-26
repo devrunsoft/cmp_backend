@@ -193,7 +193,7 @@ namespace CMPNatural.Api.Controllers
             return Ok(result);
         }
 
-
+        [RequestSizeLimit(100_000_000)]
         [HttpPut("UploadProfilePicture")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]

@@ -20,6 +20,7 @@ namespace CMPNatural.Api.Controllers.Provider
             Environment = _environment;
         }
 
+        [RequestSizeLimit(100_000_000)]
         [HttpPut("Document")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
