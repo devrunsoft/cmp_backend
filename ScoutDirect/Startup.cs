@@ -247,6 +247,13 @@ namespace ScoutDirect.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
+
+            app.Use(async (context, next) =>
+            {
+                context.Features.Get<IHttpMaxRequestBodySizeFeature>().MaxRequestBodySize = 30 * 1024 * 1024; // 30 MB
+                await next.Invoke();
+            });
+
             //if (env.IsDevelopment())
             //{
             app.UseDeveloperExceptionPage();
