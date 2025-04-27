@@ -320,10 +320,10 @@ namespace infrastructure.Data
               );
 
                 entity.Property(d => d.PaymentStatus)
-            .HasConversion(
-              x => x.ToString(),
-            x => (PaymentStatus)Enum.Parse(typeof(PaymentStatus), x)
-    );
+                .HasConversion(
+                 x => x.ToString(),
+                 x => (PaymentStatus)Enum.Parse(typeof(PaymentStatus), x)
+                 );
 
             });
 

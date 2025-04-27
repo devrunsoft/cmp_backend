@@ -8,21 +8,23 @@ namespace CMPNatural.Core.Enums
     public enum PaymentStatus
     {
         [Description("Draft")]
-        Draft = 1,
-
+        Draft,
         //force pay
         [Description("Sent_For_Pay")]
-        Sent_For_Pay = 2,
+        Sent_For_Pay,
 
         //optional pay
         [Description("Ready_For_Pay")]
-        Ready_For_Pay = 3,
+        Ready_For_Pay,
 
         [Description("Partially_paid")]
-        Partially_paid = 4,
+        Partially_paid,
 
         [Description("Paid")]
-        Paid = 5,
+        Paid,
+
+        [Description("Manual_Paid")]
+        Manual_Paid,
     }
 }
 
