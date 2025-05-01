@@ -38,7 +38,7 @@ namespace CMPNatural.Application
                 )).Count();
 
             var ContractsCount = (await _companyContract.GetAsync(x =>
-              x.Status == (int)CompanyContractStatus.Created && x.CompanyId == request.CompanyId
+              x.Status == CompanyContractStatus.Send && x.CompanyId == request.CompanyId
               )).Count();
 
             var model = new ClientRepresentationResponse() { Contract = ContractsCount , Invoice = invoices , Requests = requests };

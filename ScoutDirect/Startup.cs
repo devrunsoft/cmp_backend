@@ -27,6 +27,7 @@ using Microsoft.AspNetCore.Http.Features;
 using System.Text.Json;
 using ScoutDirect.Application.Responses;
 using Hangfire.MemoryStorage.Database;
+using CMPPayment;
 
 namespace ScoutDirect.Api
 {
@@ -204,6 +205,9 @@ namespace ScoutDirect.Api
             services.Configure<CacheConfiguration>(Configuration.GetSection("CacheConfiguration"));
             services.Configure<AppVersionModel>(Configuration.GetSection("AppVersion"));
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
+            services.Configure<ExpiresModel>(Configuration.GetSection("Expires"));
+
+            //services.AddTransient<IPaymentConfiguration, PaymentConfiguration>();
             services.AddTransient<IEmailSender, EmailSender>();
             //services.Configure<AppConfigModel>(Configuration.GetSection("AppConfig"));
 

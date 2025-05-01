@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using CMPNatural.Core.Entities;
+using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Application
 {
@@ -14,8 +15,8 @@ namespace CMPNatural.Application
         public long? ProviderId { get; set; }
         //public string ProductCrmId { get; set; }
         //public string ProductPriceCrmId { get; set; }
-        public string InvoiceCrmId { get; set; } = null!;
-        public int Status { get; set; }
+        //public string InvoiceCrmId { get; set; } = null!;
+        public InvoiceStatus Status { get; set; }
         public string? Link { get; set; }
         public double Amount { get; set; }
         //public Guid InvoiceNumber { get; set; }

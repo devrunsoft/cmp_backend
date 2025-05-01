@@ -40,7 +40,7 @@ namespace CMPNatural.Application
                   )).Count();
 
             var ContractsCount = (await _companyContract.GetAsync(x =>
-              x.Status == (int)CompanyContractStatus.Needs_Admin_Signature
+              x.Status == CompanyContractStatus.Needs_Admin_Signature
               )).Count();
 
             var ManifestCount = (await _manifestRepository.GetAsync(x =>

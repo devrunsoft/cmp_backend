@@ -11,7 +11,7 @@ namespace CMPNatural.Application
     public class CreateInvoiceCommand : IRequest<CommandResponse<Invoice>>
     {
         public long CompanyId { get; set; }
-        public string InvoiceCrmId { get; set; }
+        //public string InvoiceCrmId { get; set; }
         public Guid InvoiceNumber { get; set; }
         public string InvoiceId { get; set; }
         public List<ServiceAppointmentInput> Services { get; set; }

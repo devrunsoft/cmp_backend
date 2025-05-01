@@ -49,7 +49,6 @@ namespace CMPNatural.Application.Handlers
                     {
                         CompanyId = requests.CompanyId,
                         FrequencyType = request.FrequencyType,
-                     //LocationCompanyId=request.LocationCompanyId,
                         ServiceTypeId = resultPrice.Product.ServiceType,
                         ServicePriceCrmId = "",
                         ServiceCrmId = "",
@@ -58,6 +57,7 @@ namespace CMPNatural.Application.Handlers
                         Status = ServiceStatus.Draft,
                         IsEmegency =false,
                         Qty = request.qty,
+                        FactQty = request.qty,
                         Amount = resultPrice.Amount,
                         ProductPrice = resultPrice,
                         ProductId = request.ProductId,
@@ -78,18 +78,17 @@ namespace CMPNatural.Application.Handlers
                         CompanyId = requests.CompanyId,
                         FrequencyType = request.FrequencyType,
                         StartDate = DateTime.Now,
-                        //LocationCompanyId=request.LocationCompanyId,
                         ServiceTypeId = resultPrice.Product.ServiceType,
                         ServicePriceCrmId = "",
                         ServiceCrmId ="",
                         Amount = resultPrice.Amount * request.qty,
                         ProductId = request.ProductId,
                         ProductPriceId = request.ProductPriceId,
-                        //StartDate = request.StartDate,
                         OperationalAddressId = request.OperationalAddressId,
                         Status = ServiceStatus.Draft,
                         IsEmegency = true,
                         Qty = request.qty,
+                        FactQty = request.qty,
                         ServiceAppointmentLocations = request.LocationCompanyIds
                         .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
                         .ToList(),
@@ -108,7 +107,6 @@ namespace CMPNatural.Application.Handlers
             var entity = new Invoice()
             {
                 CompanyId = requests.CompanyId,
-                InvoiceCrmId= requests.InvoiceCrmId,
                 Status = InvoiceStatus.Draft,
                 InvoiceId = requests.InvoiceId,
                 BaseServiceAppointment = lstCustom,
@@ -117,7 +115,6 @@ namespace CMPNatural.Application.Handlers
                 Address = requests.Address,
                 OperationalAddressId = requests.OperationalAddressId,
                 CreatedAt = DateTime.Now,
-                //InvoiceNumber = request.InvoiceNumber
             };
             entity.CalculateAmount();
             var result = await _invoiceRepository.AddAsync(entity);

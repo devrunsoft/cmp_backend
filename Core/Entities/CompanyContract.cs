@@ -16,7 +16,7 @@ namespace CMPNatural.Core.Entities
         public string? Sign { get; set; }
         public string? AdminSign { get; set; }
         public DateTime? ClientSignDate { get; set; }
-        public int Status { get; set; }
+        public CompanyContractStatus Status { get; set; }
         //public CancelEnum? CancelBy { get; set; }
         public Company Company { get; set; }
         //public Invoice Invoice { get; set; }

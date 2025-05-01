@@ -9,6 +9,7 @@ using CMPNatural.Core.Entities;
 using CMPNatural.Application.Commands;
 using System.Linq;
 using System.Collections.Generic;
+using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Application
 {
@@ -22,7 +23,7 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<List<CompanyContract>>> Handle(GetAllCompanyContractCommand request, CancellationToken cancellationToken)
         {
-            var invoices = (await _repository.GetAsync(p =>  p.CompanyId == request.CompanyId)).OrderBy(x => x.Status)
+            var invoices = (await _repository.GetAsync(p =>  p.CompanyId == request.CompanyId && p.Status != CompanyContractStatus.Created)).OrderBy(x => x.Status)
                 .OrderByDescending(x=>x.Id).ToList();
             return new Success<List<CompanyContract>>() { Data = invoices };
         }

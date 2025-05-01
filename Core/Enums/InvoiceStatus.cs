@@ -8,37 +8,37 @@ namespace CMPNatural.Core.Enums
     public enum InvoiceStatus
     {
         [Description("Draft")]
-        Draft = 1,
+        Draft,
 
         [Description("Pending_Signature")]
-        Pending_Signature = 2,
+        Pending_Signature,
 
         [Description("Needs_Admin_Signature")]
-        Needs_Admin_Signature = 3,
+        Needs_Admin_Signature,
 
         [Description("Needs_Assignment")]
-        Needs_Assignment = 4,
+        Needs_Assignment,
 
         [Description("Processing_Provider")]
-        Processing_Provider = 5,
+        Processing_Provider,
 
         [Description("Complete")]
-        Complete = 6,
+        Complete,
 
         [Description("Canceled")]
-        Canceled = 7,
+        Canceled,
 
         [Description("Updated_Provider")]
-        Updated_Provider = 8,
+        Updated_Provider,
 
         [Description("Submited_Provider")]
-        Submited_Provider = 9,
+        Submited_Provider,
 
         [Description("Send_Payment")]
-        Send_Payment = 10,
+        Send_Payment,
 
         [Description("Deleted")]
-        Deleted = 11,
+        Deleted,
 
     }
 

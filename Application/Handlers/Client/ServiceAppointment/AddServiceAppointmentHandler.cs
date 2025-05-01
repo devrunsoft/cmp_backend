@@ -57,7 +57,8 @@ namespace CMPNatural.Application.Handlers
                     Subsidy = request.Subsidy,
                     IsEmegency = false,
                     Qty = request.qty,
-                    Amount = request.Amount,
+                     FactQty = request.qty,
+                     Amount = request.Amount,
                     ProductId = request.ProductId,
                     ProductPrice = resultPrice,
                     ProductPriceId = request.ProductPriceId,
@@ -88,6 +89,7 @@ namespace CMPNatural.Application.Handlers
                     Status = ServiceStatus.Draft,
                     IsEmegency = true,
                     Qty = request.qty,
+                    FactQty = request.qty,
                     ServiceAppointmentLocations = request.LocationCompanyIds
                     .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
                     .ToList(),

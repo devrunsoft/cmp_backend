@@ -18,6 +18,7 @@
     <None Remove="UOW\**" />
     <None Remove="Microsoft.AspNetCore.Http" />
     <None Remove="Helper\" />
+    <None Remove="Payment\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,9 +73,11 @@
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="NetTopologySuite" Version="2.6.0" />
     <PackageReference Include="NetTopologySuite.IO.GeoJSON" Version="4.0.0" />
+    <PackageReference Include="Stripe.net" Version="47.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Helper\" />
+    <Folder Include="Payment\" />
   </ItemGroup>
 </Project>

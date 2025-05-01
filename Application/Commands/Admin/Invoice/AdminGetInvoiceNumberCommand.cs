@@ -8,7 +8,7 @@ namespace CMPNatural.Application
 
     public class AdminGetInvoiceNumberCommand : IRequest<CommandResponse<Invoice>>
     {
-        public string invoiceNumber { get; set; }
+        public long invoiceNumber { get; set; }
     }
 }
 

@@ -41,7 +41,7 @@ namespace CMPNatural.Core.Entities
         {
 			get
 			{
-				return $"M{this.CreatedAt.Year}-{this.CompanyId}-{(this.ContractId)}-{this.InvoiceId}-{Id}";
+				return $"M{this.CreatedAt.Year}-{this.CompanyId}-{(this.ContractId)}-{Id}";
 			}
 		}
 

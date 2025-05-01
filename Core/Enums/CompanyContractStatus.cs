@@ -8,19 +8,22 @@ namespace CMPNatural.Core.Enums
     public enum CompanyContractStatus
     {
         [Description("Created")]
-        Created = 1,
+        Created,
+
+        [Description("Send")]
+        Send,
 
         [Description("Visit")]
-        Visit = 2,
+        Visit,
 
         [Description("Signed")]
-        Signed = 3,
+        Signed,
 
         [Description("Needs_Admin_Signature")]
-        Needs_Admin_Signature = 4,
+        Needs_Admin_Signature,
 
         [Description("Canceld")]
-        Canceld = 5,
+        Canceld
 
     }
 }

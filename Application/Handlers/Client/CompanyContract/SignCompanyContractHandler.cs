@@ -25,7 +25,7 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<CompanyContract>> Handle(SignCompanyContractCommand request, CancellationToken cancellationToken)
         {
             var entity = await _repository.GetByIdAsync(request.CompanyContractId);
-            entity.Status = (int)CompanyContractStatus.Needs_Admin_Signature;
+            entity.Status = CompanyContractStatus.Needs_Admin_Signature;
             entity.Sign = request.Sign;
             entity.ClientSignDate = DateTime.Now;
             var content = entity.Content;

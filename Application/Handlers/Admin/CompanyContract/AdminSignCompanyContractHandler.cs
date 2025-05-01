@@ -41,7 +41,7 @@ namespace CMPNatural.Application
             content = content.Replace(ContractKeysEnum.ManagmentCompanySign.GetDescription(), appinformation.Sign);
 
             entity.Content = content;
-            entity.Status = (int)CompanyContractStatus.Signed;
+            entity.Status = CompanyContractStatus.Signed;
             entity.AdminSign = appinformation.Sign;
             await _repository.UpdateAsync(entity);
 

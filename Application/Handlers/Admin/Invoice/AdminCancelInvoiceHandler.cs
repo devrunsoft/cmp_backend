@@ -6,25 +6,25 @@ using System.Threading.Tasks;
 using System.Linq;
 using CMPNatural.Core.Enums;
 using CMPNatural.Application.Mapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace CMPNatural.Application.Handlers
 {
     public class AdminCancelInvoiceHandler : IRequestHandler<AdminCancelInvoiceCommand, CommandResponse<InvoiceResponse>>
     {
         private readonly IinvoiceRepository _invoiceRepository;
-        private readonly ICompanyContractRepository _companyContractRepository;
+        private readonly IBaseServiceAppointmentRepository _baseServiceAppointmentRepository;
 
-        public AdminCancelInvoiceHandler(IinvoiceRepository invoiceRepository, ICompanyContractRepository companyContractRepository)
+        public AdminCancelInvoiceHandler(IinvoiceRepository invoiceRepository, IBaseServiceAppointmentRepository _baseServiceAppointmentRepository)
         {
             _invoiceRepository = invoiceRepository;
-            _companyContractRepository = companyContractRepository;
+            this._baseServiceAppointmentRepository = _baseServiceAppointmentRepository;
         }
 
         public async Task<CommandResponse<InvoiceResponse>> Handle(AdminCancelInvoiceCommand request, CancellationToken cancellationToken)
         {
-            var entity = (await _invoiceRepository.GetAsync(p => p.Id == request.InvoiceId)).FirstOrDefault();
+            var entity = (await _invoiceRepository.GetAsync(p => p.Id == request.InvoiceId, query => query.Include(x => x.BaseServiceAppointment))).FirstOrDefault();
 
-            //todo
             if (entity.Status != InvoiceStatus.Draft)
             {
                 return new NoAcess<InvoiceResponse>() { Data = InvoiceMapper.Mapper.Map<InvoiceResponse>(entity), Message = "Your service is currently being processed." };
@@ -33,13 +33,13 @@ namespace CMPNatural.Application.Handlers
             entity.Status = InvoiceStatus.Deleted;
             await _invoiceRepository.UpdateAsync(entity);
 
-            if (entity.ContractId != null)
+            foreach (var item in entity.BaseServiceAppointment)
             {
-                var contract = (await _companyContractRepository.GetAsync(p => p.CompanyId == entity.CompanyId && p.Id == entity.ContractId)).FirstOrDefault();
-                await _companyContractRepository.DeleteAsync(contract);
+                item.Status = ServiceStatus.Draft;
+                await _baseServiceAppointmentRepository.UpdateAsync(item);
             }
 
-            return new Success<InvoiceResponse>() { Data = InvoiceMapper.Mapper.Map<InvoiceResponse>(entity), Message = "Successfull!" };
+            return new Success<InvoiceResponse>() { Data = InvoiceMapper.Mapper.Map<InvoiceResponse>(entity) };
 
         }
 

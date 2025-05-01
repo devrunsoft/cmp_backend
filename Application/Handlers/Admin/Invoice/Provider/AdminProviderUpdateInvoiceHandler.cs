@@ -79,6 +79,7 @@ namespace CMPNatural.Application
                     srv = request.ToEntity(srv, CompanyId , invoice.Id);
                     srv.ProductPrice = resultPrice;
                     srv.Status = ServiceStatus.Complete;
+                    srv.FactQty = request.FactQty ?? request.qty;
                     lstCustom.Add(srv);
                 }
                 else
@@ -99,6 +100,7 @@ namespace CMPNatural.Application
                             Subsidy = request.Subsidy,
                             IsEmegency = false,
                             Qty = request.qty,
+                            FactQty = request.FactQty,
                             Amount = request.Amount,
                             ProductId = request.ProductId,
                             ProductPrice = resultPrice,
@@ -131,6 +133,7 @@ namespace CMPNatural.Application
                             Status = ServiceStatus.Complete,
                             IsEmegency = true,
                             Qty = request.qty,
+                            FactQty = request.FactQty,
                             ServiceAppointmentLocations = request.LocationCompanyIds
                             .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
                             .ToList(),
@@ -149,6 +152,7 @@ namespace CMPNatural.Application
             invoice.Address = requests.Address;
             invoice.Status = InvoiceStatus.Send_Payment;
             invoice.Amount = requests.Amount;
+            invoice.Comment = requests.Comment;
             invoice.CalculateAmountByamount();
 
             await _invoiceRepository.UpdateAsync(invoice);

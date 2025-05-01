@@ -8,28 +8,28 @@ namespace CMPNatural.Core.Enums
     public enum ServiceStatus
     {
         [Description("Draft")]
-        Draft = 1,
+        Draft,
 
         [Description("ShouldPay")]
-        ShouldPay = 2,
+        ShouldPay,
 
         [Description("Proccessing")]
-        Proccessing = 3,
+        Proccessing,
 
         [Description("Complete")]
-        Complete = 4,
+        Complete,
 
         [Description("Canceled")]
-        Canceled = 5,
+        Canceled,
 
         [Description("Scaduled")]
-        Scaduled = 6,
+        Scaduled,
 
         [Description("Updated_Provider")]
-        Updated_Provider = 7,
+        Updated_Provider,
 
         [Description("Submited_Provider")]
-        Submited_Provider = 8,
+        Submited_Provider,
 
     }
 }

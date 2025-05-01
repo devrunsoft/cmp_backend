@@ -28,6 +28,15 @@ namespace CMPNatural.Api.Controllers.Admin.Contract
             return Ok(result);
         }
 
+        [HttpGet("DropDown")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> GetList([FromQuery] AdminDropDownContractActiveCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]

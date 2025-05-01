@@ -9,7 +9,7 @@ namespace CMPNatural.Core.Entities
 
             foreach (var item in this.BaseServiceAppointment)
             {
-                var am =  Math.Round((item.ProductPrice.Amount * item.Qty) + double.Epsilon, 2);
+                var am =  Math.Round((item.ProductPrice.Amount * (item.FactQty ?? item.Qty)) + double.Epsilon, 2);
                 var seviceAmount = ((am < item.ProductPrice.MinimumAmount) ?
                     item.ProductPrice.MinimumAmount : am) - item.Subsidy;
 
@@ -27,7 +27,7 @@ namespace CMPNatural.Core.Entities
 
             foreach (var item in this.BaseServiceAppointment)
             {
-                var am = Math.Round((item.Amount * item.Qty) + double.Epsilon, 2);
+                var am = Math.Round((item.Amount * (item.FactQty ?? item.Qty)) + double.Epsilon, 2);
                 var seviceAmount = ((am < item.ProductPrice.MinimumAmount) ?
                     item.ProductPrice.MinimumAmount : am) - item.Subsidy;
 

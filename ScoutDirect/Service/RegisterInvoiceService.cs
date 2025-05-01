@@ -85,7 +85,7 @@ namespace CMPNatural.Api.Service
               var invoice = await _mediator.Send(new CreateInvoiceCommand()
                 {
                     CompanyId = rCompanyId,
-                    InvoiceCrmId = invoiceId.ToString(),
+                    //InvoiceCrmId = invoiceId.ToString(),
                     InvoiceNumber = invoiceId,
                     InvoiceId = invoiceId.ToString(),
                     Services = request,

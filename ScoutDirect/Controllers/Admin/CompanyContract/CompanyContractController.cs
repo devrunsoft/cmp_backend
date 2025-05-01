@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CMPNatural.Application;
+﻿using CMPNatural.Application;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CMPNatural.Api.Controllers.Admin.CompanyContract
 {
@@ -17,12 +12,21 @@ namespace CMPNatural.Api.Controllers.Admin.CompanyContract
         {
         }
 
-        [HttpGet()]
+        [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Get([FromQuery] AdminGetPaginateCompanyContractCommand command)
         {
             var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpGet("{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> GetById([FromRoute] long Id)
+        {
+            var result = await _mediator.Send(new AdminGetCompanyContractCommand() { Id = Id });
             return Ok(result);
         }
 
@@ -35,6 +39,23 @@ namespace CMPNatural.Api.Controllers.Admin.CompanyContract
             return Ok(result);
         }
 
+        [HttpPut("send/{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Send([FromRoute] long Id)
+        {
+            var result = await _mediator.Send(new AdminSendCompanyContractCommand() { Id = Id });
+            return Ok(result);
+        }
+
+        [HttpPut("{Id}/contract/{contractId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Put([FromRoute] long Id, [FromRoute] long contractId)
+        {
+            var result = await _mediator.Send(new AdminUpdateCompanyContractCommand() { ContractId = contractId, CompanyContractId = Id });
+            return Ok(result);
+        }
     }
 }
 

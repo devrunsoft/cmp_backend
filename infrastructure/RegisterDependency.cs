@@ -11,6 +11,7 @@ using CMPNatural.infrastructure.Repository;
 using Microsoft.Extensions.DependencyInjection;
 using ScoutDirect.Core.Repositories;
 using ScoutDirect.infrastructure.Repository;
+using CMPPayment;
 
 namespace ScoutDirect.infrastructure
 {
@@ -55,6 +56,8 @@ namespace ScoutDirect.infrastructure
             services.AddTransient<IBillingInformationProviderRepository, BillingInformationProviderRepository>();
             services.AddTransient<IServiceAreaRepository, ServiceAreaRepository>();
             services.AddTransient<IServiceAppointmentLocationRepository, ServiceAppointmentLocationRepository>();
+            services.AddTransient<IPaymentRepository, PaymentRepository>();
+
             //services.AddTransient<IinvoiceProviderRepository, InvoiceProviderRepository>();
 
             services.AddTransient<ProductListApi>();
@@ -64,6 +67,8 @@ namespace ScoutDirect.infrastructure
             services.AddTransient<UpdateContactTokenApi>();
             services.AddTransient<CustomValueApi>();
             services.AddTransient<SyncByCrm>();
+
+            services.AddTransient<IPaymentConfiguration, PaymentConfiguration>();
 
         }
 

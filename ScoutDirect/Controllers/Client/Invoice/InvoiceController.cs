@@ -86,6 +86,14 @@ namespace CMPNatural.Api.Controllers.Invoice
             return Ok(result);
         }
 
+        [HttpPost("Pay/{InvoiceId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Pay([FromRoute] long InvoiceId)
+        {
+            var result = await _mediator.Send(new ClientInvoicePayCommand() { InvoiceId = InvoiceId });
+            return Ok(result);
+        }
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]

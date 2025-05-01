@@ -219,16 +219,27 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Delete([FromRoute] long InvoiceId)
         {
-
             var result = await _mediator.Send(new AdminCancelInvoiceCommand()
             {
                 InvoiceId = InvoiceId,
             });
 
             return Ok(result);
-
         }
 
+
+        [HttpPut("Activate/{InvoiceId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Activate([FromRoute] long InvoiceId)
+        {
+            var result = await _mediator.Send(new AdminActivateInvoiceCommand()
+            {
+                InvoiceId = InvoiceId,
+            });
+
+            return Ok(result);
+        }
     }
 }
 

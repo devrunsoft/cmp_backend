@@ -41,6 +41,7 @@ namespace CMPNatural.Application
 
                 var part =
                     $"<strong>{x.Product?.Name}</strong> - <strong>{x.ProductPrice?.Name}</strong> " +
+                    $"<br> <strong>Start Date:</strong> {x.StartDate.ToDateString()}" +
                     $"- <strong>Preferred Days:</strong> {x.DayOfWeek} " +
                     $"({x.FromHour.ConvertTimeToString()} until {x.ToHour.ConvertTimeToString()})" +
                     $"<br/><em>{addressLines}</em>";
@@ -85,7 +86,7 @@ namespace CMPNatural.Application
             sb.AppendLine($"        <p><strong>{information.CompanyTitle}</strong>" +
                 $"<br>");
             sb.AppendLine($"        {information.CompanyAddress}</p>");
-            sb.AppendLine($"<p><strong>{information.CompanyPhoneNumber}</strong><p>");
+            sb.AppendLine($"<p><strong>{information.CompanyPhoneNumber.FormatPhoneNumber()}</strong><p>");
             sb.AppendLine("    </div>");
             sb.AppendLine("    <div class=\"title\">Receipt</div>");
             sb.AppendLine("    <table>");
@@ -117,7 +118,7 @@ namespace CMPNatural.Application
             sb.AppendLine("            <p><em></em></p>");
             sb.AppendLine("        </div>");
             sb.AppendLine("        <div>");
-            sb.AppendLine("            <p class=\"bold\">Generator Representative Signature:</p>");
+            sb.AppendLine("            <p class=\"bold\">Client Representative Signature:</p>");
             sb.AppendLine("            <p>Signature On-file</p>");
             sb.AppendLine("        </div>");
             sb.AppendLine("    </div>");

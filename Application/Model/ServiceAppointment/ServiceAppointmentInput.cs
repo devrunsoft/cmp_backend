@@ -28,6 +28,8 @@ namespace CMPNatural.Application.Model.ServiceAppointment
 
         public int qty { get; set; } = 1;
 
+        public int? FactQty { get; set; }
+
         public double Subsidy { get; set; } = 0;
 
         public double Amount { get; set; } = 0;

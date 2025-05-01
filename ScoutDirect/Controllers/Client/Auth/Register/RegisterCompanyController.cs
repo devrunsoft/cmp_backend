@@ -16,6 +16,7 @@ using CMPNatural.Application.Responses;
 using System.Net;
 using CmpNatural.CrmManagment.Webhook;
 using CMPNatural.Application.Commands.Billing;
+using CMPEmail;
 
 namespace CMPNatural.Api.Controllers
 {
@@ -23,15 +24,17 @@ namespace CMPNatural.Api.Controllers
     [Route("api/[controller]")]
     public class RegisterCompanyController : BaseClientApiController
     {
+        protected readonly ExpiresModel _expiresModel;
         protected readonly IMediator _mediator;
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _env ;
 
-        public RegisterCompanyController(IMediator mediator, IConfiguration configuration, IWebHostEnvironment env) : base(mediator)
+        public RegisterCompanyController(IMediator mediator, IConfiguration configuration, IWebHostEnvironment env, ExpiresModel _expiresModel) : base(mediator)
         {
             _mediator = mediator;
             _configuration = configuration;
             _env = env;
+            this._expiresModel = _expiresModel;
         }
 
 
@@ -150,7 +153,7 @@ namespace CMPNatural.Api.Controllers
             var token = new JwtSecurityToken(
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
-                expires: DateTime.Now.AddDays(30),
+                expires: DateTime.Now.AddMinutes(_expiresModel.Client),
                 claims: get_claims(data.Type.ToString(), data.BusinessEmail, data.Id.ToString(), data.ProfilePicture),
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );

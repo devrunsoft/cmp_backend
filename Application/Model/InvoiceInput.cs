@@ -11,6 +11,7 @@ namespace CMPNatural.Application.Model
         public string Address { get; set; } = "";
         public bool ForceToPay { get; set; } = false;
         public bool CreateContract { get; set; } = true;
+        public string? Comment { get; set; }
         public List<ServiceAppointmentInput> ServiceAppointment { get; set; } = new List<ServiceAppointmentInput>();
     }
 }

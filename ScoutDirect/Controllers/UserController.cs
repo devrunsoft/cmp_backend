@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Net;
 using CMPNatural.Application.Model;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using CMPEmail;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -31,17 +32,19 @@ namespace ScoutDirect.Api.Controllers
     [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
+        protected readonly ExpiresModel _expiresModel;
         protected readonly IMediator _mediator;
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _env;
         private readonly UpdateContactTokenApi _updateContact;
 
-        public UserController(IMediator mediator, IConfiguration configuration, IWebHostEnvironment env, UpdateContactTokenApi updateContact)
+        public UserController(IMediator mediator, IConfiguration configuration, IWebHostEnvironment env, UpdateContactTokenApi updateContact, ExpiresModel _expiresModel)
         {
             _mediator = mediator;
             _configuration = configuration;
             _env = env;
             _updateContact = updateContact;
+            this._expiresModel = _expiresModel;
         }
 
         [HttpPost]
@@ -61,7 +64,7 @@ namespace ScoutDirect.Api.Controllers
                 var token = new JwtSecurityToken(
                     issuer: _configuration["JWT:ValidIssuer"],
                     audience: _configuration["JWT:ValidAudience"],
-                    expires: DateTime.Now.AddDays(30),
+                    expires: DateTime.Now.AddMinutes(_expiresModel.Client),
                     claims: get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered,company.ProfilePicture),
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
@@ -160,7 +163,7 @@ namespace ScoutDirect.Api.Controllers
             var token = new JwtSecurityToken(
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
-                expires: DateTime.Now.AddDays(30),
+                expires: DateTime.Now.AddMinutes(_expiresModel.Client),
                 claims: get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered, company.ProfilePicture),
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );

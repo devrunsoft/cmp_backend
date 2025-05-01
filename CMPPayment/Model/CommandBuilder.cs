@@ -25,7 +25,7 @@ namespace CMPPayment.Model
                             Name = e.ProductPrice.Name,
                         }
                     },
-                    Quantity = 1,
+                    Quantity = e.FactQty,
                 }
                 );
             });

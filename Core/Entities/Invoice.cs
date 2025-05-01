@@ -10,7 +10,7 @@ namespace CMPNatural.Core.Entities
         public long? ProviderId { get; set; }
         //public string ProductCrmId { get; set; }
         //public string ProductPriceCrmId { get; set; }
-        public string InvoiceCrmId { get; set; } = null!;
+        //public string InvoiceCrmId { get; set; } = null!;
         public InvoiceStatus Status { get; set; }
         public PaymentStatus PaymentStatus { get; set; }
         public string? Link { get; set; }
@@ -22,6 +22,8 @@ namespace CMPNatural.Core.Entities
 
         public long OperationalAddressId { get; set; }
         public string Address { get; set; } = "";
+
+        public string? Comment { get; set; }
 
         public virtual Company Company { get; set; } = null!;
 

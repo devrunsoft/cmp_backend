@@ -21,7 +21,7 @@ namespace CMPNatural.Application.Handlers
 
         public async Task<CommandResponse<List<CompanyContract>>> Handle(GetAllSiganbleCompanyContractCommand request, CancellationToken cancellationToken)
         {
-            var invoices = (await _repository.GetAsync(p => p.CompanyId == request.CompanyId && p.Status == (int)CompanyContractStatus.Created)).ToList();
+            var invoices = (await _repository.GetAsync(p => p.CompanyId == request.CompanyId && p.Status == CompanyContractStatus.Send)).ToList();
             return new Success<List<CompanyContract>>() { Data = invoices };
         }
     }

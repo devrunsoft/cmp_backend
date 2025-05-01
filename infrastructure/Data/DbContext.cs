@@ -48,6 +48,7 @@ namespace infrastructure.Data
         public virtual DbSet<Manifest> Manifest { get; set; } = null!;
         public virtual DbSet<BillingInformationProvider> BillingInformationProvider { get; set; } = null!;
         public virtual DbSet<ServiceArea> ServiceArea { get; set; } = null!;
+        public virtual DbSet<Payment> Payment { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -60,26 +61,10 @@ namespace infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
-            //modelBuilder.Entity<InvoiceProvider>(entity =>
-            //{
-            //    entity.ToTable("InvoiceProvider");
-            //    entity.HasMany(d => d.BaseServiceAppointment)
-            //          .WithOne(p => p.Invoice)
-            //     .HasForeignKey(d => d.InvoiceId);
-
-            //    entity
-            //    .Property(p => p.Status)
-            //      .HasConversion(
-            //       x => (int)x,
-            //       x => (InvoiceStatus)x
-            //       );
-            //});
-
-            //modelBuilder.Entity<BaseServiceAppointmentProvider>(entity =>
-            //{
-            //    entity.ToTable("BaseServiceAppointmentProvider");
-            //});
+            modelBuilder.Entity<Payment>(entity =>
+            {
+                entity.ToTable("Payment");
+            });
 
             modelBuilder.Entity<ServiceArea>(entity =>
             {
@@ -137,6 +122,12 @@ namespace infrastructure.Data
                 entity.HasOne(d => d.Company)
                 .WithMany(x=>x.CompanyContract)
                 .HasForeignKey(d => d.CompanyId);
+
+                entity.Property(p => p.Status)
+                .HasConversion(
+                 x => x.ToString(),
+                 x => (CompanyContractStatus)Enum.Parse(typeof(CompanyContractStatus), x)
+                 );
             });
 
             modelBuilder.Entity<Contract>(entity =>
@@ -261,8 +252,12 @@ namespace infrastructure.Data
             {
                 entity.ToTable("BaseServiceAppointment");
 
-                entity.Property(p => p.Status)
-                .HasConversion<int>();
+
+                entity.Property(d => d.Status)
+                .HasConversion(
+                 x => x.ToString(),
+                 x => (ServiceStatus)Enum.Parse(typeof(ServiceStatus), x)
+                 );
 
                 entity.Property(p => p.CancelBy)
                 .HasConversion(
@@ -314,10 +309,10 @@ namespace infrastructure.Data
 
                 entity
                 .Property(p => p.Status)
-             .HasConversion(
-              x => (int)x,
-              x => (InvoiceStatus)x
-              );
+                .HasConversion(
+                x => x.ToString(),
+                x => (InvoiceStatus)Enum.Parse(typeof(InvoiceStatus), x)
+                );
 
                 entity.Property(d => d.PaymentStatus)
                 .HasConversion(

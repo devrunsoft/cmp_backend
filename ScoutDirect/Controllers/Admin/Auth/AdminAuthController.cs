@@ -11,6 +11,7 @@ using CMPNatural.Application.Commands.Admin;
 using CMPNatural.Core.Entities;
 using ScoutDirect.Api.Controllers._Base;
 using Hangfire.MemoryStorage.Database;
+using CMPEmail;
 
 namespace CMPNatural.Api.Controllers.Admin.Auth
 {
@@ -18,12 +19,14 @@ namespace CMPNatural.Api.Controllers.Admin.Auth
     [Route("api/admin/[controller]")]
     public class AdminAuthController : BaseApiController
     {
+        protected readonly ExpiresModel _expiresModel;
         protected readonly IMediator _mediator;
         private readonly IConfiguration _configuration;
-        public AdminAuthController(IMediator mediator, IConfiguration configuration):base(mediator)
+        public AdminAuthController(IMediator mediator, IConfiguration configuration , ExpiresModel _expiresModel):base(mediator)
 		{
             _mediator = mediator;
             _configuration = configuration;
+            this._expiresModel = _expiresModel;
         }
 
         [HttpPost("Code")]
@@ -107,7 +110,7 @@ namespace CMPNatural.Api.Controllers.Admin.Auth
             var token = new JwtSecurityToken(
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
-            expires: DateTime.Now.AddDays(30),
+            expires: DateTime.Now.AddMinutes(_expiresModel.Admin),
             claims: get_claims(data.PersonId, data.Email, data.Role, data.Id),
             signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
