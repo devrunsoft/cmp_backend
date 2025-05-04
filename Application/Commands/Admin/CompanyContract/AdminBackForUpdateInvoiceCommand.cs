@@ -9,7 +9,6 @@ namespace CMPNatural.Application
 	public class AdminBackForUpdateInvoiceCommand : IRequest<CommandResponse<InvoiceResponse>>
     {
         public long CompanyContractId { get; set; }
-        public long InvoiceId { get; set; }
     }
 }
 

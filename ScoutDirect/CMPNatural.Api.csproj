@@ -61,6 +61,7 @@
     <None Remove="Controllers\Client\ClientRepresentation\" />
     <None Remove="Controllers\Admin\TermsConditions\" />
     <None Remove="Controllers\Client\TermsConditions\" />
+    <None Remove="Controllers\Admin\Payment\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="View\" />
@@ -99,6 +100,7 @@
     <Folder Include="Controllers\Client\ClientRepresentation\" />
     <Folder Include="Controllers\Admin\TermsConditions\" />
     <Folder Include="Controllers\Client\TermsConditions\" />
+    <Folder Include="Controllers\Admin\Payment\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\infrastructure\CMPNatural.infrastructure.csproj">

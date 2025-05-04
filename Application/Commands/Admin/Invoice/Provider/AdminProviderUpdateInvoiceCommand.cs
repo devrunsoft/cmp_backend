@@ -1,6 +1,7 @@
 ﻿using System;
 using CMPNatural.Application.Model;
 using CMPNatural.Core.Entities;
+using CMPNatural.Core.Enums;
 using MediatR;
 using ScoutDirect.Application.Responses;
 

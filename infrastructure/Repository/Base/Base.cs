@@ -52,6 +52,11 @@ namespace ScoutDirect.infrastructure.Repository
             return await _dbContext.Set<T>().ToListAsync();
         }
 
+        public IReadOnlyList<T> GetAllsync()
+        {
+            return _dbContext.Set<T>().ToList();
+        }
+
         public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> expression)
         {
             return await _dbContext.Set<T>().Where(expression).ToListAsync();

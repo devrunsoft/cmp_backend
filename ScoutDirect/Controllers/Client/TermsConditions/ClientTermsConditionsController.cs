@@ -6,6 +6,7 @@ using CmpNatural.CrmManagment.Invoice;
 using CMPNatural.Application;
 using CMPNatural.Application.Commands;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using ScoutDirect.Api.Controllers._Base;
@@ -20,6 +21,7 @@ namespace CMPNatural.Api.Controllers.Client.TermsConditions
         {
         }
 
+        [AllowAnonymous]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]

@@ -39,9 +39,14 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<InvoiceResponse>> Handle(AdminBackForUpdateInvoiceCommand requests, CancellationToken cancellationToken)
         {
 
-            var invoice = (await _invoiceRepository.GetAsync(p => p.Id == requests.InvoiceId)).FirstOrDefault();
             var companyContract = (await _companyContractRepository.GetAsync(p => p.Id == requests.CompanyContractId)).FirstOrDefault();
+            var invoice = (await _invoiceRepository.GetAsync(p => p.InvoiceId == companyContract.InvoiceId)).LastOrDefault();
+
             if (invoice.Status != InvoiceStatus.Pending_Signature)
+            {
+                return new NoAcess<InvoiceResponse>() { Message = "No Access To Edit this Request" };
+            }
+            if (companyContract.Status != CompanyContractStatus.Created && companyContract.Status != CompanyContractStatus.Send)
             {
                 return new NoAcess<InvoiceResponse>() { Message = "No Access To Edit this Request" };
             }

@@ -249,6 +249,9 @@
     <None Remove="Handlers\Client\TermsConditions\" />
     <None Remove="Handlers\Client\Payment\" />
     <None Remove="Commands\Client\Payment\" />
+    <None Remove="Commands\Admin\Payment\" />
+    <None Remove="Handlers\Admin\Payment\" />
+    <None Remove="Handlers\Admin\ServiceAppointment\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -504,6 +507,9 @@
     <Folder Include="Handlers\Client\TermsConditions\" />
     <Folder Include="Handlers\Client\Payment\" />
     <Folder Include="Commands\Client\Payment\" />
+    <Folder Include="Commands\Admin\Payment\" />
+    <Folder Include="Handlers\Admin\Payment\" />
+    <Folder Include="Handlers\Admin\ServiceAppointment\" />
   </ItemGroup> 
 
   <ItemGroup>

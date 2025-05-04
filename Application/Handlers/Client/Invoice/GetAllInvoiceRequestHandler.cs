@@ -11,11 +11,13 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using CMPNatural.Application.Mapper;
 using CMPNatural.Core.Enums;
+using CMPNatural.Core.Base;
+using Stripe;
 
 namespace CMPNatural.Application.Handlers
 {
 
-    public class GetAllInvoiceRequestHandler : IRequestHandler<GetAllInvoiceRequestCommand, CommandResponse<List<InvoiceResponse>>>
+    public class GetAllInvoiceRequestHandler : IRequestHandler<GetAllInvoiceRequestCommand, CommandResponse<PagesQueryResponse<InvoiceResponse>>>
     {
         private readonly IinvoiceRepository _invoiceRepository;
 
@@ -24,13 +26,20 @@ namespace CMPNatural.Application.Handlers
             _invoiceRepository = invoiceRepository;
         }
 
-        public async Task<CommandResponse<List<InvoiceResponse>>> Handle(GetAllInvoiceRequestCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<PagesQueryResponse<InvoiceResponse>>> Handle(GetAllInvoiceRequestCommand request, CancellationToken cancellationToken)
         {
-            var entity = (await _invoiceRepository.GetAsync(p =>p.CompanyId == request.CompanyId && (p.Status != InvoiceStatus.Send_Payment), query => query
-            .Include(p=>p.BaseServiceAppointment)
-            )).OrderByDescending(x => x.Id).ToList();
+            var entity = (await _invoiceRepository.GetBasePagedAsync(request, p => p.CompanyId == request.CompanyId && (p.Status != InvoiceStatus.Send_Payment &&
+            p.Status != InvoiceStatus.Scaduled), query => query
+            .Include(p => p.BaseServiceAppointment)
+            ));
 
-            return new Success<List<InvoiceResponse>>() { Data = entity.Select((p)=> InvoiceMapper.Mapper.Map<InvoiceResponse>(p)).ToList(), Message = "Successfull!" };
+            var model = new PagesQueryResponse<InvoiceResponse>(
+              entity.elements.Select(p => InvoiceMapper.Mapper.Map<InvoiceResponse>(p)).ToList(),
+              entity.pageNumber,
+              entity.totalPages,
+              entity.totalElements);
+
+            return new Success<PagesQueryResponse<InvoiceResponse>>() { Data = model, Message = "Successfull!" };
 
         }
 

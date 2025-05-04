@@ -8,15 +8,18 @@ using CMPNatural.Core.Entities;
 using System.Linq;
 using CMPNatural.Application.Services;
 using System.IO;
+using ScoutDirect.Core.Caching;
 
 namespace CMPNatural.Application
 {
     public class AdminAppInformationPutHandler : IRequestHandler<AdminAppInformationPutCommand, CommandResponse<AppInformation>>
     {
         private readonly IAppInformationRepository _repository;
-        public AdminAppInformationPutHandler(IAppInformationRepository providerReposiotry)
+        private readonly ICacheService _cache;
+        public AdminAppInformationPutHandler(IAppInformationRepository providerReposiotry, Func<CacheTech, ICacheService> _cacheService)
         {
             _repository = providerReposiotry;
+            _cache = _cacheService(CacheTech.Memory);
         }
         public async Task<CommandResponse<AppInformation>> Handle(AdminAppInformationPutCommand request, CancellationToken cancellationToken)
         {
@@ -37,7 +40,9 @@ namespace CMPNatural.Application
                 CompanyCeoLastName = request.CompanyCeoLastName,
                 Sign = request.Sign,
                 CompanyIcon = CompanyIcon,
-                CompanyEmail = request.CompanyEmail
+                CompanyEmail = request.CompanyEmail,
+                StripeApikey = request.StripeApikey,
+                StripePaymentMethodConfiguration = request.StripePaymentMethodConfiguration
             };
                entity = await _repository.AddAsync(entity);
             }
@@ -52,9 +57,15 @@ namespace CMPNatural.Application
                 entity.Sign = request.Sign;
                 entity.CompanyIcon = CompanyIcon;
                 entity.CompanyEmail = request.CompanyEmail;
+                entity.StripeApikey = request.StripeApikey;
+                entity.StripePaymentMethodConfiguration = request.StripePaymentMethodConfiguration;
 
                 await _repository.UpdateAsync(entity);
             }
+
+            var cacheKey = $"AppInformation";
+            _cache.Set(cacheKey, entity);
+
             return new Success<AppInformation>() { Data = entity };
 
         }

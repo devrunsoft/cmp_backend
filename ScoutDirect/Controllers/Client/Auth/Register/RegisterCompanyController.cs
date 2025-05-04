@@ -17,6 +17,7 @@ using System.Net;
 using CmpNatural.CrmManagment.Webhook;
 using CMPNatural.Application.Commands.Billing;
 using CMPEmail;
+using Microsoft.Extensions.Options;
 
 namespace CMPNatural.Api.Controllers
 {
@@ -29,12 +30,12 @@ namespace CMPNatural.Api.Controllers
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _env ;
 
-        public RegisterCompanyController(IMediator mediator, IConfiguration configuration, IWebHostEnvironment env, ExpiresModel _expiresModel) : base(mediator)
+        public RegisterCompanyController(IMediator mediator, IConfiguration configuration, IWebHostEnvironment env, IOptions<ExpiresModel> _expiresModel) : base(mediator)
         {
             _mediator = mediator;
             _configuration = configuration;
             _env = env;
-            this._expiresModel = _expiresModel;
+            this._expiresModel = _expiresModel.Value;
         }
 
 

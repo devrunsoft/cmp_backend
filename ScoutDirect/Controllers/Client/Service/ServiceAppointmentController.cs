@@ -59,12 +59,10 @@ namespace CMPNatural.Api.Controllers.ServiceAppointment
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> GetAll()
+        public async Task<ActionResult> GetAll([FromQuery] GetAllBaseServiceAppointmentCommand command)
         {
-            var result = await _mediator.Send(new GetAllBaseServiceAppointmentCommand()
-            {
-                CompanyId = rCompanyId
-            });
+            command.CompanyId = rCompanyId;
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
 

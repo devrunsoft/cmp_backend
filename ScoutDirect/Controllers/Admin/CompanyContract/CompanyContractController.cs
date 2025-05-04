@@ -56,6 +56,15 @@ namespace CMPNatural.Api.Controllers.Admin.CompanyContract
             var result = await _mediator.Send(new AdminUpdateCompanyContractCommand() { ContractId = contractId, CompanyContractId = Id });
             return Ok(result);
         }
+
+        [HttpPut("ReturnRequest")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> ReturnRequest([FromBody] AdminBackForUpdateInvoiceCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
     }
 }
 

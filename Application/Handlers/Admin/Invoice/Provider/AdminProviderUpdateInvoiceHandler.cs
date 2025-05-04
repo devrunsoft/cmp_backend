@@ -72,19 +72,41 @@ namespace CMPNatural.Application
 
             foreach (var request in requests.ServiceAppointment)
             {
+
                 if (services.Any(x => x.Id == request.Id))
                 {
-                    var resultPrice = await _productPriceRepository.GetByIdAsync(request.ProductPriceId);
+                    var resultPrice = (await _productPriceRepository.GetAsync(x=>x.Id == request.ProductPriceId ,
+                        query=> query.Include(x=>x.Product))).FirstOrDefault();
+
+                    if ((resultPrice.Product.ServiceType == (int)ServiceType.Cooking_Oil_Collection || resultPrice.Product.ServiceType == (int)ServiceType.Grease_Trap_Management) && request.OilQuality == null)
+                    {
+                        return new NoAcess<Invoice>
+                        {
+                            Message = "You cannot edit this invoice because one or more services are missing oil quality information from the provider."
+                        };
+                    }
+
+
                     var srv = services.FirstOrDefault(x => x.Id == request.Id);
                     srv = request.ToEntity(srv, CompanyId , invoice.Id);
                     srv.ProductPrice = resultPrice;
                     srv.Status = ServiceStatus.Complete;
                     srv.FactQty = request.FactQty ?? request.qty;
+                    srv.OilQuality = request.OilQuality;
                     lstCustom.Add(srv);
                 }
                 else
                 {
                     var resultPrice = (await _productPriceRepository.GetAsync(x => x.Id == request.ProductPriceId, query => query.Include(x => x.Product))).FirstOrDefault();
+
+                    if ((resultPrice.Product.ServiceType == (int)ServiceType.Cooking_Oil_Collection || resultPrice.Product.ServiceType == (int)ServiceType.Grease_Trap_Management) && request.OilQuality == null)
+                    {
+                        return new NoAcess<Invoice>
+                        {
+                            Message = "You cannot edit this invoice because one or more services are missing oil quality information from the provider."
+                        };
+                    }
+
                     if (request.ServiceKind == ServiceKind.Custom)
                     {
                         var command = new ServiceAppointment()
@@ -111,6 +133,7 @@ namespace CMPNatural.Application
                             DayOfWeek = string.Join(",", request.DayOfWeek.Select(x => x.GetDescription())),
                             FromHour = request.FromHour,
                             ToHour = request.ToHour,
+                            OilQuality = request.OilQuality
                         };
                         lstCustom.Add(command);
                     }
@@ -140,6 +163,7 @@ namespace CMPNatural.Application
                             DayOfWeek = string.Join(",", request.DayOfWeek.Select(x => x.GetDescription())),
                             FromHour = request.FromHour,
                             ToHour = request.ToHour,
+                            OilQuality = request.OilQuality
                         };
                         lstCustom.Add(command);
                     }

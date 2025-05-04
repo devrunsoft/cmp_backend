@@ -12,6 +12,7 @@ using CMPNatural.Core.Entities;
 using ScoutDirect.Api.Controllers._Base;
 using Hangfire.MemoryStorage.Database;
 using CMPEmail;
+using Microsoft.Extensions.Options;
 
 namespace CMPNatural.Api.Controllers.Admin.Auth
 {
@@ -22,11 +23,11 @@ namespace CMPNatural.Api.Controllers.Admin.Auth
         protected readonly ExpiresModel _expiresModel;
         protected readonly IMediator _mediator;
         private readonly IConfiguration _configuration;
-        public AdminAuthController(IMediator mediator, IConfiguration configuration , ExpiresModel _expiresModel):base(mediator)
+        public AdminAuthController(IMediator mediator, IConfiguration configuration , IOptions<ExpiresModel> _expiresModel):base(mediator)
 		{
             _mediator = mediator;
             _configuration = configuration;
-            this._expiresModel = _expiresModel;
+            this._expiresModel = _expiresModel.Value;
         }
 
         [HttpPost("Code")]

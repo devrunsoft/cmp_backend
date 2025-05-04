@@ -22,6 +22,9 @@ namespace CMPNatural.Core.Enums
         [Description("Canceled")]
         Canceled,
 
+        [Description("UpComingScaduled")]
+        UpComingScaduled,
+
         [Description("Scaduled")]
         Scaduled,
 

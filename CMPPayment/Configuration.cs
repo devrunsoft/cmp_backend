@@ -1,5 +1,7 @@
 ﻿using CMPNatural.Core.Entities;
+using CMPNatural.Core.Repositories;
 using CMPPayment.Model;
+using ScoutDirect.Core.Caching;
 using Stripe;
 using Stripe.Checkout;
 
@@ -7,13 +9,20 @@ namespace CMPPayment;
 
 public class PaymentConfiguration : IPaymentConfiguration
 {
+    private readonly IAppInformationRepository _repository;
+    private readonly ICacheService _cache;
+    public PaymentConfiguration(IAppInformationRepository providerReposiotry, Func<CacheTech, ICacheService> _cacheService)
+    {
+        _repository = providerReposiotry;
+        _cache = _cacheService(CacheTech.Memory);
+    }
     public Session CreatePayment(List<BaseServiceAppointment> productPrices)
     {
-        StripeConfiguration.ApiKey = "sk_test_51R0pwFFpQyxnBeACsqotBRAHRw3CbHdA0RJbWtb5uqwapSC8YSYclGczjMgBGQ8SkqCufYxS5isoOSb3LfN1E8ZM00cfG0SQKh";
+        StripeConfiguration.ApiKey = information().StripeApikey;
 
         var options = new SessionCreateOptions
         {
-            PaymentMethodConfiguration = "pmc_1R0u24FpQyxnBeACNDCg51fA",
+            PaymentMethodConfiguration = information().StripePaymentMethodConfiguration,
             //PaymentMethodTypes = new List<string> { "card" },
             LineItems = CommandBuilder.Command(productPrices),
             Mode = "payment",
@@ -28,11 +37,30 @@ public class PaymentConfiguration : IPaymentConfiguration
 
     public async Task<Session> GetPayment(string CheckoutSessionId)
     {
-        StripeConfiguration.ApiKey = "sk_test_51R0pwFFpQyxnBeACsqotBRAHRw3CbHdA0RJbWtb5uqwapSC8YSYclGczjMgBGQ8SkqCufYxS5isoOSb3LfN1E8ZM00cfG0SQKh";
+        StripeConfiguration.ApiKey = information().StripeApikey;
         var service = new SessionService();
         Session session = await service.GetAsync(CheckoutSessionId);
         return session;
 
+    }
+
+
+    public AppInformation information()
+    {
+
+        var cacheKey = $"AppInformation";
+
+        // Check if the data is already cached
+        if (!_cache.TryGet(cacheKey, out AppInformation result))
+        {
+            // If not cached, fetch from the database
+
+             result = (_repository.GetAllsync()).FirstOrDefault()!;
+            // Cache the result for 10 minutes
+            _cache.Set(cacheKey, result);
+        }
+
+        return result;
     }
 }
 

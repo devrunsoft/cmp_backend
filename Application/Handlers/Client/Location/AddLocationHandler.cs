@@ -29,7 +29,11 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
 
         public async Task<CommandResponse<object>> Handle(AddLocationCompanyCommand request, CancellationToken cancellationToken)
         {
-            var cap =await _capacityRepository.GetByIdAsync(request.CapacityId);
+            var cap = await _capacityRepository.GetByIdAsync(request.CapacityId);
+            if (request.CapacityId == null || request.CapacityId==0)
+            {
+                return new NoAcess<object>() { Success = false, Message = "Please select a capacity." };
+            }
 
             var entity = new LocationCompany()
             {

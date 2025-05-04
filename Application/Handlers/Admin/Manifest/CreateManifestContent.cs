@@ -16,13 +16,8 @@ namespace CMPNatural.Application
 {
 	public class CreateManifestContent
 	{
-		public CreateManifestContent()
-		{
-		}
-
 		public static async Task CreateContent(Invoice services,AppInformation information, Manifest entity, IServiceAppointmentLocationRepository locationRepository)
 		{
-
 
             var serviceHtmlParts = new List<string>();
 

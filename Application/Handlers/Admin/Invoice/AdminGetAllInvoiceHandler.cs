@@ -28,7 +28,7 @@ namespace CMPNatural.Application.Handlers.Admin.Auth
         public async Task<CommandResponse<PagesQueryResponse<InvoiceResponse>>> Handle(AdminGetAllInvoiceCommand request, CancellationToken cancellationToken)
         {
             var invoices = (await _invoiceRepository.GetBasePagedAsync(request, x=> (request.Status == null || x.Status == request.Status) ,
-                query => query.Include(i => i.Company)));
+                query => query.Include(i => i.Company).Include(x=>x.Provider)));
 
             var model = new PagesQueryResponse<InvoiceResponse>(
                 invoices.elements.Select(p => InvoiceMapper.Mapper.Map<InvoiceResponse>(p)).ToList(),

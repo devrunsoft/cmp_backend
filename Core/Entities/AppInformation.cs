@@ -16,5 +16,8 @@ namespace CMPNatural.Core.Entities
         public string CompanyCeoLastName { get; set; }
         public string CompanyCeoFirstName { get; set; }
 		public string Sign { get; set; }
+		public string StripeApikey { get; set; }
+		public string StripePaymentMethodConfiguration { get; set; }
+
 	}
 }

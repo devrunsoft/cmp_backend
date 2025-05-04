@@ -21,8 +21,8 @@ using CmpNatural.CrmManagment.Webhook;
 using Microsoft.AspNetCore.Authorization;
 using System.Net;
 using CMPNatural.Application.Model;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using CMPEmail;
+using Microsoft.Extensions.Options;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -38,13 +38,13 @@ namespace ScoutDirect.Api.Controllers
         private readonly IWebHostEnvironment _env;
         private readonly UpdateContactTokenApi _updateContact;
 
-        public UserController(IMediator mediator, IConfiguration configuration, IWebHostEnvironment env, UpdateContactTokenApi updateContact, ExpiresModel _expiresModel)
+        public UserController(IMediator mediator, IConfiguration configuration, IWebHostEnvironment env, UpdateContactTokenApi updateContact, IOptions<ExpiresModel> _expiresModel)
         {
             _mediator = mediator;
             _configuration = configuration;
             _env = env;
             _updateContact = updateContact;
-            this._expiresModel = _expiresModel;
+            this._expiresModel = _expiresModel.Value;
         }
 
         [HttpPost]

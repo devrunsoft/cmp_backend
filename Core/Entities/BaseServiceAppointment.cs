@@ -37,6 +37,8 @@ namespace CMPNatural.Core.Entities
 
         public DateTime StartDate { get; set; }
 
+        public DateTime? ScaduleDate { get; set; }
+
         public double Amount { get; set; }
 
         public decimal? TotalAmount { get; set; }
@@ -48,6 +50,8 @@ namespace CMPNatural.Core.Entities
         public int ToHour { get; set; } = 1080; //6 PM
 
         public double Subsidy { get; set; }
+
+        public OilQualityEnum? OilQuality { get; set; }
 
         public virtual Invoice Invoice { get; set; }
 

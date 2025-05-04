@@ -40,6 +40,9 @@ namespace CMPNatural.Core.Enums
         [Description("Deleted")]
         Deleted,
 
+        [Description("Scaduled")]
+        Scaduled,
+
     }
 
     public static class InvoiceStatusExtensions

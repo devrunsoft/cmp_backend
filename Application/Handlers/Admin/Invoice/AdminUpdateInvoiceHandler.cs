@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using CMPNatural.Application.Commands.Admin.Invoice;
 using CMPNatural.Application.Handlers;
 using Microsoft.EntityFrameworkCore;
+using ScoutDirect.Core.Entities.Base;
 
 namespace CMPNatural.Application
 {
@@ -43,7 +44,10 @@ namespace CMPNatural.Application
             {
                 return new NoAcess<Invoice>() { Message = "No Access To Edit Paid Invoice" };
             }
-
+            if (invoice.ContractId != null)
+            {
+                return new NoAcess<Invoice>() { Message = "You cannot edit an invoice that is linked to a contract." };
+            }
             var CompanyId = invoice.CompanyId;
             var services = (await _baseServiceAppointmentRepository.GetAsync(p => p.InvoiceId == invoice.Id)).ToList();
              

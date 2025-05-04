@@ -55,6 +55,7 @@ namespace CMPNatural.Application
                 item.Status = InvoiceStatus.Needs_Assignment;
                 await _invoiceRepository.UpdateAsync(item);
                 await new AdminCreateManifestHandler(_manifestRepository, _invoiceRepository, _apprepository, _serviceAppointmentLocationRepository).Create(item);
+                await CreateScaduleServiceHandler.Create(item, _invoiceRepository);
             }
 
             return new Success<CompanyContract>() { Data = entity };

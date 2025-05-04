@@ -53,6 +53,7 @@ namespace CMPNatural.Application.Handlers
                         ServicePriceCrmId = "",
                         ServiceCrmId = "",
                         StartDate = request.StartDate??DateTime.Now,
+                        ScaduleDate = request.StartDate ?? DateTime.Now,
                         OperationalAddressId = request.OperationalAddressId,
                         Status = ServiceStatus.Draft,
                         IsEmegency =false,
@@ -95,6 +96,7 @@ namespace CMPNatural.Application.Handlers
                         DayOfWeek = string.Join(",", request.DayOfWeek.Select(x => x.GetDescription())),
                         FromHour = request.FromHour,
                         ToHour = request.ToHour,
+                        ScaduleDate = DateTime.Now
                     };
                     lstCustom.Add(command);
                 }

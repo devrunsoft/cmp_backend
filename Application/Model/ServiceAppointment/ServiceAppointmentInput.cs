@@ -41,6 +41,9 @@ namespace CMPNatural.Application.Model.ServiceAppointment
         public int FromHour { get; set; } = 480; //8 AM
 
         public int ToHour { get; set; } = 1080; //6 PM
+
+        public OilQualityEnum? OilQuality { get; set; }
+
     }
 
 

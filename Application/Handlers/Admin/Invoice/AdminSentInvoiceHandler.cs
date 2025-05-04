@@ -35,6 +35,10 @@ namespace CMPNatural.Application.Handlers
             var entity = (await _invoiceRepository.GetAsync(p => p.Id == request.InvoiceId,query=>query.Include(x=>x.Company))).FirstOrDefault();
             entity.Status = InvoiceStatus.Pending_Signature;
 
+            if (entity.ContractId != null)
+            {
+                return new NoAcess<Invoice>() { Message = "You cannot edit an invoice that is linked to a contract." };
+            }
             //if (requests.CreateContract)
             //{
                 var result = await new AdminCreateCompanyContractHandler(_companyContractRepository, _contractRepository , _invoiceRepository , _appRepository)

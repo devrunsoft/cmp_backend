@@ -64,6 +64,11 @@ namespace infrastructure.Data
             modelBuilder.Entity<Payment>(entity =>
             {
                 entity.ToTable("Payment");
+                entity.Property(d => d.Status)
+                 .HasConversion(
+                 x => x.ToString(),
+                 x => (PaymentHistoryStatus)Enum.Parse(typeof(PaymentHistoryStatus), x)
+                 );
             });
 
             modelBuilder.Entity<ServiceArea>(entity =>
@@ -93,6 +98,10 @@ namespace infrastructure.Data
                 entity.HasOne(d => d.Invoice)
                 .WithOne()
                 .HasForeignKey<Manifest>(d => d.InvoiceId);
+
+                entity.HasOne(d => d.Provider)
+                .WithOne()
+                .HasForeignKey<Manifest>(d => d.ProviderId);
             });
 
             modelBuilder.Entity<TermsConditions>(entity =>
@@ -258,6 +267,12 @@ namespace infrastructure.Data
                  x => x.ToString(),
                  x => (ServiceStatus)Enum.Parse(typeof(ServiceStatus), x)
                  );
+
+                entity.Property(d => d.OilQuality)
+                  .HasConversion(
+                    v => v != null ? v.ToString() : null,
+                    v => v != null ? (OilQualityEnum)Enum.Parse(typeof(OilQualityEnum), v) : (OilQualityEnum?)null
+                  );
 
                 entity.Property(p => p.CancelBy)
                 .HasConversion(

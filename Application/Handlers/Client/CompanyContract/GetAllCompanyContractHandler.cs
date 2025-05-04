@@ -13,7 +13,7 @@ using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Application
 {
-    public class GetAllCompanyContractHandler : IRequestHandler<GetAllCompanyContractCommand, CommandResponse<List<CompanyContract>>>
+    public class GetAllCompanyContractHandler : IRequestHandler<GetAllCompanyContractCommand, CommandResponse<PagesQueryResponse<CompanyContract>>>
     {
         private readonly ICompanyContractRepository _repository;
         public GetAllCompanyContractHandler(ICompanyContractRepository repository)
@@ -21,11 +21,10 @@ namespace CMPNatural.Application
             _repository = repository;
         }
 
-        public async Task<CommandResponse<List<CompanyContract>>> Handle(GetAllCompanyContractCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<PagesQueryResponse<CompanyContract>>> Handle(GetAllCompanyContractCommand request, CancellationToken cancellationToken)
         {
-            var invoices = (await _repository.GetAsync(p =>  p.CompanyId == request.CompanyId && p.Status != CompanyContractStatus.Created)).OrderBy(x => x.Status)
-                .OrderByDescending(x=>x.Id).ToList();
-            return new Success<List<CompanyContract>>() { Data = invoices };
+            var invoices = (await _repository.GetBasePagedAsync(request, p =>  p.CompanyId == request.CompanyId && p.Status != CompanyContractStatus.Created));
+            return new Success<PagesQueryResponse<CompanyContract>>() { Data = invoices };
         }
     }
 }

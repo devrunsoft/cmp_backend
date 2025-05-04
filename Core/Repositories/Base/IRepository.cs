@@ -20,6 +20,7 @@ namespace ScoutDirect.Core.Repositories.Base
     public interface IRepository<T,E> where T : class
     {
         Task<IReadOnlyList<T>> GetAllAsync();
+        IReadOnlyList<T> GetAllsync();
         Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> expression);
         Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> expression, Func<IQueryable<T>, IQueryable<T>> includeFunc = null);
         Task<IReadOnlyList<T>> GetPagedAsync(PagedQueryRequest pagingParam, Expression<Func<T, bool>> expression);
