@@ -32,10 +32,19 @@ namespace CMPNatural.Application
         {
             var entity = await _repository.GetByIdAsync(request.CompanyContractId);
             var appinformation = (await _apprepository.GetAllAsync()).FirstOrDefault();
-            if(appinformation==null || appinformation.Sign == null)
+            if(appinformation==null || appinformation.Sign == null || entity.Status == CompanyContractStatus.Needs_Admin_Signature)
             {
                 return new NoAcess<CompanyContract>() { Message = "Please add a sign in Company Information" };
             }
+
+            if (entity.Status != CompanyContractStatus.Needs_Admin_Signature)
+            {
+                return new NoAcess<CompanyContract>
+                {
+                    Message = "Contract cannot be signed at this stage. It must be in 'Needs Admin Signature' status."
+                };
+            }
+
             var content = entity.Content;
             content = CompanyContractHelper.ShowByKey(ContractKeysEnum.ManagmentCompanySign.GetDescription(), content, CompanyContractHelper.SignFont);
             content = content.Replace(ContractKeysEnum.ManagmentCompanySign.GetDescription(), appinformation.Sign);
@@ -54,8 +63,8 @@ namespace CMPNatural.Application
             {
                 item.Status = InvoiceStatus.Needs_Assignment;
                 await _invoiceRepository.UpdateAsync(item);
-                await new AdminCreateManifestHandler(_manifestRepository, _invoiceRepository, _apprepository, _serviceAppointmentLocationRepository).Create(item);
-                await CreateScaduleServiceHandler.Create(item, _invoiceRepository);
+                await new AdminCreateManifestHandler(_manifestRepository, _invoiceRepository, _apprepository, _serviceAppointmentLocationRepository).Create(item, ManifestStatus.Draft);
+                await CreateScaduleServiceHandler.Create(item, _manifestRepository, _invoiceRepository, _apprepository, _serviceAppointmentLocationRepository);
             }
 
             return new Success<CompanyContract>() { Data = entity };

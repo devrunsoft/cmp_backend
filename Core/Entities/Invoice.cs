@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Core.Entities
@@ -8,9 +9,6 @@ namespace CMPNatural.Core.Entities
 		public long Id { get; set; }
 		public long CompanyId { get; set; }
         public long? ProviderId { get; set; }
-        //public string ProductCrmId { get; set; }
-        //public string ProductPriceCrmId { get; set; }
-        //public string InvoiceCrmId { get; set; } = null!;
         public InvoiceStatus Status { get; set; }
         public PaymentStatus PaymentStatus { get; set; }
         public string? Link { get; set; }
@@ -30,6 +28,29 @@ namespace CMPNatural.Core.Entities
         public virtual Provider? Provider { get; set; }
 
         public long? ContractId { get; set; }
+
+        public string InvoiceNumber { get; set; }
+
+        public string RequestNumber { get; set; }
+
+        [NotMapped]
+        public string Number
+        {
+            get
+            {
+                return this.ContractId == null ? "---" : $"I{this.CreatedAt.Year}-{this.CompanyId}-{(this.ContractId == null ? 0 : this.ContractId)}-{Id}";
+            }
+        }
+
+        [NotMapped]
+        public string ReqNumber
+        {
+            get
+            {
+                return $"R{this.CreatedAt.Year}-{this.CompanyId}-{Id}";
+            }
+        }
+
 
 
         public virtual ICollection<InvoiceProduct> InvoiceProduct { get; set; } = new List<InvoiceProduct>();

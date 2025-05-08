@@ -252,6 +252,9 @@
     <None Remove="Commands\Admin\Payment\" />
     <None Remove="Handlers\Admin\Payment\" />
     <None Remove="Handlers\Admin\ServiceAppointment\" />
+    <None Remove="Logger\" />
+    <None Remove="Commands\Admin\AppLog\" />
+    <None Remove="Handlers\Admin\AppLog\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -391,7 +394,7 @@
     <PackageReference Include="AutoMapper" Version="11.0.1" />
     <PackageReference Include="FluentValidation" Version="10.4.0" />
     <PackageReference Include="LazyCache" Version="2.4.0" />
-    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="MediatR" Version="12.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.16" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="shortid" Version="3.0.1" />
@@ -510,6 +513,9 @@
     <Folder Include="Commands\Admin\Payment\" />
     <Folder Include="Handlers\Admin\Payment\" />
     <Folder Include="Handlers\Admin\ServiceAppointment\" />
+    <Folder Include="Logger\" />
+    <Folder Include="Commands\Admin\AppLog\" />
+    <Folder Include="Handlers\Admin\AppLog\" />
   </ItemGroup> 
 
   <ItemGroup>

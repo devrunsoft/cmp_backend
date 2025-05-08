@@ -25,7 +25,11 @@ namespace CMPNatural.Core.Enums
         [Description("Send_To_Admin")]
         Send_To_Admin,
 
+
         [Description("Completed")]
         Completed,
+
+        [Description("Scaduled")]
+        Scaduled,
     }
 }

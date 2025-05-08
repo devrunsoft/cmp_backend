@@ -12,6 +12,9 @@ using Microsoft.Extensions.DependencyInjection;
 using ScoutDirect.Core.Repositories;
 using ScoutDirect.infrastructure.Repository;
 using CMPPayment;
+using CMPNatural.Core.Logger;
+using CMPNatural.infrastructure.Logger;
+using MediatR;
 
 namespace ScoutDirect.infrastructure
 {
@@ -57,6 +60,7 @@ namespace ScoutDirect.infrastructure
             services.AddTransient<IServiceAreaRepository, ServiceAreaRepository>();
             services.AddTransient<IServiceAppointmentLocationRepository, ServiceAppointmentLocationRepository>();
             services.AddTransient<IPaymentRepository, PaymentRepository>();
+            services.AddTransient<IAppLogRepository, AppLogRepository>();
 
             //services.AddTransient<IinvoiceProviderRepository, InvoiceProviderRepository>();
 
@@ -69,6 +73,9 @@ namespace ScoutDirect.infrastructure
             services.AddTransient<SyncByCrm>();
 
             services.AddTransient<IPaymentConfiguration, PaymentConfiguration>();
+
+            services.AddScoped<ICustomDbLogger, CustomDbLogger>();
+
 
         }
 

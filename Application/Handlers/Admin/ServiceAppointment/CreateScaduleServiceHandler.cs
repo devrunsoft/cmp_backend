@@ -9,16 +9,18 @@ using MediatR;
 using System.Linq;
 using ScoutDirect.Core.Entities.Base;
 using Microsoft.EntityFrameworkCore;
+using NetTopologySuite.Index.HPRtree;
 
 namespace CMPNatural.Application
 {
     public class CreateScaduleServiceHandler
     {
         public static async Task Create(
-            Invoice invoiceTemplate,IinvoiceRepository iinvoiceRepository)
+            Invoice invoiceTemplate, IManifestRepository _manifestRepository, IinvoiceRepository _invoiceRepository, IAppInformationRepository _apprepository,
+             IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository)
         {
 
-            var invoice = (await iinvoiceRepository.GetAsync(x=> x.Id == invoiceTemplate.Id,
+            var invoice = (await _invoiceRepository.GetAsync(x=> x.Id == invoiceTemplate.Id,
                 query => query
                 .Include(i => i.BaseServiceAppointment)
                 .ThenInclude(i => i.ProductPrice)
@@ -88,11 +90,15 @@ namespace CMPNatural.Application
                     OperationalAddressId = invoice.OperationalAddressId,
                     ContractId = invoice.ContractId,
                     SendDate = group.FirstOrDefault().StartDate,
-                    CreatedAt = DateTime.Now
+                    CreatedAt = DateTime.Now,
+                    InvoiceNumber = ""
                 };
                 groupedInvoice.CalculateAmount();
 
-                await iinvoiceRepository.AddAsync(groupedInvoice);
+               var item = await _invoiceRepository.AddAsync(groupedInvoice);
+               item.InvoiceNumber = invoice.Number;
+               await _invoiceRepository.UpdateAsync(item);
+                await new AdminCreateManifestHandler(_manifestRepository, _invoiceRepository, _apprepository, _serviceAppointmentLocationRepository).Create(item, ManifestStatus.Scaduled);
             }
         }
 

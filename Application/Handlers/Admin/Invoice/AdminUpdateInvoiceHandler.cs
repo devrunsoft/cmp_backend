@@ -145,6 +145,7 @@ namespace CMPNatural.Application
                     return new NoAcess<Invoice>() { Data = invoice, Message = result.Message };
                 }
                 invoice.ContractId = result.Data.Id;
+                invoice.InvoiceNumber = invoice.Number;
             }
             await _invoiceRepository.UpdateAsync(invoice);
 

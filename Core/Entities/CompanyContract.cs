@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Core.Entities
@@ -21,7 +22,10 @@ namespace CMPNatural.Core.Entities
         public Company Company { get; set; }
         //public Invoice Invoice { get; set; }
 
-        public string ContractNumber {
+        public string ContractNumber { get; set; }
+
+        [NotMapped]
+        public string Number {
 			get {
 				return $"C{CreatedAt.Year}-{this.CompanyId}-{this.Id}";
 			}

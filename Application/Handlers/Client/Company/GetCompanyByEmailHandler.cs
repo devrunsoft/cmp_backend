@@ -22,7 +22,7 @@ namespace CMPNatural.Application.Handlers.CommandHandlers.Company
 
         public async Task<CommandResponse<object>> Handle(GetCompanyByEmailCommand request, CancellationToken cancellationToken)
         {
-            var company = (await _companyRepository.GetAsync(p=>p.BusinessEmail== request.Email)).FirstOrDefault();
+            var company = (await _companyRepository.GetAsync(p=>p.BusinessEmail== request.Email )).FirstOrDefault();
 
             if (company != null)
             {

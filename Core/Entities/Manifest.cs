@@ -37,7 +37,9 @@ namespace CMPNatural.Core.Entities
 
         public long CompanyId { get; set; }
 
-        public string ManifestNumber
+        public string ManifestNumber { get; set; }
+
+        public string Number
         {
 			get
 			{

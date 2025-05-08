@@ -57,7 +57,7 @@ namespace ScoutDirect.Api.Controllers
             var result = await _mediator.Send(command);
             if (result.Success)
             {
-                var company = (Company) result.Data;
+                var company = (CompanyResponse) result.Data;
 
                 var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
@@ -65,7 +65,7 @@ namespace ScoutDirect.Api.Controllers
                     issuer: _configuration["JWT:ValidIssuer"],
                     audience: _configuration["JWT:ValidAudience"],
                     expires: DateTime.Now.AddMinutes(_expiresModel.Client),
-                    claims: get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered,company.ProfilePicture),
+                    claims: get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered,company.ProfilePicture , company.FullName, company.PersonId),
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
 
@@ -164,7 +164,7 @@ namespace ScoutDirect.Api.Controllers
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
                 expires: DateTime.Now.AddMinutes(_expiresModel.Client),
-                claims: get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered, company.ProfilePicture),
+                claims: get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered, company.ProfilePicture, company.FullName, company.PersonId),
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );
 
@@ -203,13 +203,15 @@ namespace ScoutDirect.Api.Controllers
         }
 
 
-        private Claim[] get_claims(string adminStatus, string businessEmail, string companyId,bool registered, string? ProfilePicture)
+        private Claim[] get_claims(string adminStatus, string businessEmail, string companyId,bool registered, string? ProfilePicture, string fullname, Guid PersonId)
         {
             List<Claim> claims = new List<Claim>() { new Claim("businessEmail", businessEmail), new Claim("CompanyId", companyId) };
 
             claims.Add(new Claim("Registered", registered.ToString()));
             claims.Add(new Claim("Type", adminStatus));
             claims.Add(new Claim("ProfilePicture", ProfilePicture??""));
+            claims.Add(new Claim("FullName", fullname));
+            claims.Add(new Claim("PersonId", PersonId.ToString()));
 
             return claims.ToArray();
         }

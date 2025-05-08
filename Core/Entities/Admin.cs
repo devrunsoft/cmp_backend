@@ -25,6 +25,9 @@ namespace CMPNatural.Core.Entities
 
         public DateTime? CodeTime { get; set; }
 
+        public string FullName { get { return $"{Person.FirstName} {Person.LastName}"; } }
+
+
     }
 }
 

@@ -185,6 +185,7 @@ namespace CMPNatural.Application
             var information = (await _appRepository.GetAllAsync()).LastOrDefault();
             await CreateManifestContent.CreateContent(invoice, information, entity, _serviceAppointmentLocationRepository);
             entity.Status = ManifestStatus.Completed;
+            entity.ManifestNumber = entity.Number;
             await _repository.UpdateAsync(entity);
 
             return new Success<Invoice>() { Data = invoice, Message = "Successfull!" };

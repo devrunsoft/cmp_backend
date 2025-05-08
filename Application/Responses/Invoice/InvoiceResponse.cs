@@ -7,9 +7,6 @@ namespace CMPNatural.Application
 {
 	public class InvoiceResponse
 	{
-		public InvoiceResponse()
-		{
-		}
         public long Id { get; set; }
         public long CompanyId { get; set; }
         public long? ProviderId { get; set; }
@@ -23,6 +20,8 @@ namespace CMPNatural.Application
         public string InvoiceId { get; set; } = null!;
         public long OperationalAddressId { get; set; }
         public string Address { get; set; } = "";
+        public string InvoiceNumber { get; set; }
+        public string RequestNumber { get; set; }
         public virtual Provider Provider { get; set; } = null;
         public virtual Company Company { get; set; } = null;
         public virtual BillingInformation BillingInformation { get; set; } = null;
@@ -40,22 +39,6 @@ namespace CMPNatural.Application
             get {
 
                 return ((Core.Enums.InvoiceStatus)Status).GetDescription();
-            }
-        }
-
-        public string InvoiceNumber
-        {
-            get
-            {
-                return this.ContractId == null ? "---" : $"I{this.CreatedAt.Year}-{this.CompanyId}-{(this.ContractId == null ? 0 : this.ContractId)}-{Id}";
-            }
-        }
-
-        public string RequestNumber
-        {
-            get
-            {
-                return $"R{this.CreatedAt.Year}-{this.CompanyId}-{Id}";
             }
         }
 

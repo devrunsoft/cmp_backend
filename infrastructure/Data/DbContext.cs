@@ -49,6 +49,7 @@ namespace infrastructure.Data
         public virtual DbSet<BillingInformationProvider> BillingInformationProvider { get; set; } = null!;
         public virtual DbSet<ServiceArea> ServiceArea { get; set; } = null!;
         public virtual DbSet<Payment> Payment { get; set; } = null!;
+        public virtual DbSet<AppLog> AppLog { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -61,6 +62,16 @@ namespace infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<AppLog>(entity =>
+            {
+                entity.ToTable("AppLog");
+                entity.Property(p => p.LogType)
+                .HasConversion(
+                 x => x.ToString(),
+                 x => (LogTypeEnum)Enum.Parse(typeof(LogTypeEnum), x)
+                 );
+            });
             modelBuilder.Entity<Payment>(entity =>
             {
                 entity.ToTable("Payment");

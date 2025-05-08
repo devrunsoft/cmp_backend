@@ -68,6 +68,7 @@ namespace CMPNatural.Application.Handlers
             var dbContent = AdminContractCompanyContractHandler.Create(services, information, contract, company, result);
             //update
             entity.Content = dbContent.ToString();
+            entity.ContractNumber = entity.Number;
             await _repository.UpdateAsync(entity);
             return new Success<CompanyContract>() { Data = result, Message = "Successfull!" };
         }

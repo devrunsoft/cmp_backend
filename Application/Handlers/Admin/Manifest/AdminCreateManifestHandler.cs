@@ -26,10 +26,10 @@ namespace CMPNatural.Application
             this._repository = _repository;
             this._serviceAppointmentLocationRepository = _serviceAppointmentLocationRepository;
         }
-        public async Task<CommandResponse<Manifest>> Create(Invoice invoice)
+        public async Task<CommandResponse<Manifest>> Create(Invoice invoice , ManifestStatus status)
 		{
             var information = (await _apprepository.GetAllAsync()).LastOrDefault();
-            var services = (await _invoiceRepository.GetAsync(x => x.InvoiceId == invoice.InvoiceId, query => query
+            var services = (await _invoiceRepository.GetAsync(x => x.Id == invoice.Id, query => query
                 .Include(x => x.BaseServiceAppointment)
                 .ThenInclude(x => x.Product)
                 .Include(x => x.BaseServiceAppointment)
@@ -39,16 +39,18 @@ namespace CMPNatural.Application
             var entity = new Manifest()
             {
                 InvoiceId = invoice.Id,
-                Status = ManifestStatus.Draft,
+                Status = status,
                 Content = "",
                 ContractId = invoice.ContractId.Value,
                 CompanyId = invoice.CompanyId,
-                CreatedAt = invoice.CreatedAt
+                CreatedAt = invoice.CreatedAt,
+                ManifestNumber = ""
             };
 
             var result = await _repository.AddAsync(entity);
-             await CreateManifestContent.CreateContent(services, information, entity, _serviceAppointmentLocationRepository);
-             await _repository.UpdateAsync(entity);
+            await CreateManifestContent.CreateContent(services, information, entity, _serviceAppointmentLocationRepository);
+            entity.ManifestNumber = entity.Number;
+            await _repository.UpdateAsync(entity);
             return new Success<Manifest>() { Data = result, Message = "Successfull!" };
 
         }

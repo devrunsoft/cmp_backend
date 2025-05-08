@@ -119,7 +119,13 @@ namespace CMPNatural.Application.Handlers
                 CreatedAt = DateTime.Now,
             };
             entity.CalculateAmount();
+            entity.RequestNumber = "";
+            entity.InvoiceNumber = "";
             var result = await _invoiceRepository.AddAsync(entity);
+            entity.RequestNumber = entity.ReqNumber;
+            entity.InvoiceNumber = entity.Number;
+            await _invoiceRepository.UpdateAsync(entity);
+
             return new Success<Invoice>() { Data = result, Message = "Successfull!" };
 
         }

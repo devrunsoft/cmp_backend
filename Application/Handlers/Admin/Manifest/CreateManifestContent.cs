@@ -91,7 +91,7 @@ namespace CMPNatural.Application
             sb.AppendLine("            <td class=\"bold\">Time:</td>");
             sb.AppendLine($"            <td><p>{ManifestKeyEnum.Time.GetDescription()}</p></td>");
             sb.AppendLine("            <td class=\"bold\">Manifest Number:</td>");
-            sb.AppendLine($"            <td>{entity.ManifestNumber}</td>");
+            sb.AppendLine($"            <td>{entity.Number}</td>");
             sb.AppendLine("        </tr>");
             sb.AppendLine("        <tr>");
             sb.AppendLine("            <td class=\"bold\">Provider Name:</td>");

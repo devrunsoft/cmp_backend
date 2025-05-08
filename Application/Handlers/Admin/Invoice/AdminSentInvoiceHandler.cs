@@ -4,11 +4,8 @@ using MediatR;
 using ScoutDirect.Application.Responses;
 using System.Threading;
 using System.Threading.Tasks;
-using CMPNatural.Application.Commands.Invoice;
-using ScoutDirect.Core.Entities.Base;
 using System.Linq;
 using CMPNatural.Core.Enums;
-using CMPNatural.Application.Commands.Admin.Invoice;
 using CMPNatural.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -49,6 +46,7 @@ namespace CMPNatural.Application.Handlers
                     return new NoAcess<Invoice>() { Data = entity, Message = result.Message };
                 }
                 entity.ContractId = result.Data.Id;
+                entity.InvoiceNumber = entity.Number;
             //}
 
             entity.CalculateAmount();

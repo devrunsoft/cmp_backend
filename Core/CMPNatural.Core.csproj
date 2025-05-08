@@ -19,6 +19,7 @@
     <None Remove="Microsoft.AspNetCore.Http" />
     <None Remove="Helper\" />
     <None Remove="Payment\" />
+    <None Remove="Logger\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -79,5 +80,6 @@
   <ItemGroup>
     <Folder Include="Helper\" />
     <Folder Include="Payment\" />
+    <Folder Include="Logger\" />
   </ItemGroup>
 </Project>

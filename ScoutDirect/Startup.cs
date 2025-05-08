@@ -28,6 +28,8 @@ using System.Text.Json;
 using ScoutDirect.Application.Responses;
 using Hangfire.MemoryStorage.Database;
 using CMPPayment;
+using CMPNatural.Application.Logger;
+using MediatR;
 
 namespace ScoutDirect.Api
 {
@@ -126,6 +128,7 @@ namespace ScoutDirect.Api
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
               typeof(RegisterCompanyHandler).Assembly
               ));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
 
             services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));

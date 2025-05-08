@@ -12,6 +12,7 @@ using CMPNatural.Application.Commands.Admin;
 using CMPNatural.Core.Repositories;
 using System.Linq;
 using ScoutDirect.Core.Caching;
+using Microsoft.EntityFrameworkCore;
 
 namespace CMPNatural.Application.Handlers.Admin.Auth
 {
@@ -29,7 +30,7 @@ namespace CMPNatural.Application.Handlers.Admin.Auth
 
         public async Task<CommandResponse<AdminEntity>> Handle(AdminLoginCommand request, CancellationToken cancellationToken)
         {
-            var admin = (await _adminRepository.GetAsync(p => p.Email == request.Email)).FirstOrDefault();
+            var admin = (await _adminRepository.GetAsync(p => p.Email == request.Email,query=>query.Include(x=>x.Person))).FirstOrDefault();
 
             if (admin == null)
             {

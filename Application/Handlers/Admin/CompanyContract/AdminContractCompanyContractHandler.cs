@@ -56,7 +56,7 @@ namespace CMPNatural.Application
             dbContent = dbContent.Replace(ContractKeysEnum.ClientAddress.GetDescription(), invoice.Address);
             dbContent = dbContent.Replace(ContractKeysEnum.ClientCompanyName.GetDescription(), company.CompanyName);
             dbContent = dbContent.Replace(ContractKeysEnum.ServiceItems.GetDescription(), managementCompany.Services);
-            dbContent = dbContent.Replace(ContractKeysEnum.ContractNumber.GetDescription(), result.ContractNumber);
+            dbContent = dbContent.Replace(ContractKeysEnum.ContractNumber.GetDescription(), result.Number);
 
             dbContent = CompanyContractHelper.HideByKey(ContractKeysEnum.ClientSign.GetDescription(), dbContent);
             dbContent = CompanyContractHelper.HideByKey(ContractKeysEnum.ManagmentCompanySign.GetDescription(), dbContent);

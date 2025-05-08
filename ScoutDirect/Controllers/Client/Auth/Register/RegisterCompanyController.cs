@@ -155,7 +155,7 @@ namespace CMPNatural.Api.Controllers
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
                 expires: DateTime.Now.AddMinutes(_expiresModel.Client),
-                claims: get_claims(data.Type.ToString(), data.BusinessEmail, data.Id.ToString(), data.ProfilePicture),
+                claims: get_claims(data.Type.ToString(), data.BusinessEmail, data.Id.ToString(), data.ProfilePicture , data.FullName , data.PersonId),
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );
 
@@ -174,13 +174,15 @@ namespace CMPNatural.Api.Controllers
             });
         }
 
-        private Claim[] get_claims(string adminStatus, string businessEmail, string companyId, string? ProfilePicture)
+        private Claim[] get_claims(string adminStatus, string businessEmail, string companyId, string? ProfilePicture,string fullname , Guid PersonId)
         {
             List<Claim> claims = new List<Claim>() { new Claim("businessEmail", businessEmail), new Claim("CompanyId", companyId) };
 
             claims.Add(new Claim("Registered", "false"));
             claims.Add(new Claim("Type", adminStatus));
             claims.Add(new Claim("ProfilePicture", ProfilePicture ?? ""));
+            claims.Add(new Claim("FullName", fullname));
+            claims.Add(new Claim("PersonId", PersonId.ToString()));
 
             return claims.ToArray();
         }

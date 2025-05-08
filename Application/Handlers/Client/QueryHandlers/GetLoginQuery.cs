@@ -10,6 +10,9 @@ using ScoutDirect.Application.Responses.Base;
 using CMPNatural.Application.Commands;
 using System.Linq;
 using CMPNatural.Core.Enums;
+using CMPNatural.Application.Mapper;
+using CMPNatural.Application.Responses;
+using CMPNatural.Core.Entities;
 
 namespace CMPNatural.Application.Handlers.QueryHandlers
 {
@@ -38,7 +41,7 @@ namespace CMPNatural.Application.Handlers.QueryHandlers
             }
 
             if (person.Password == request.Password) {
-                return new CommandResponse<object>() { Success = true, Message = "Login successful! Redirecting...", Data = person };
+                return new CommandResponse<object>() { Success = true, Message = "Login successful! Redirecting...", Data = CompanyMapper.Mapper.Map<CompanyResponse>(person) };
             }
 
             else

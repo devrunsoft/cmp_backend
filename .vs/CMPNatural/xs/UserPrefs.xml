@@ -1,5 +1,5 @@
-﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{36794759-A62F-43C3-B7D2-DE0D42AA2780}|https">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Application/Responses/Invoice/InvoiceResponse.cs">
+﻿<Properties StartupConfiguration="{36794759-A62F-43C3-B7D2-DE0D42AA2780}|https" GitUserInfo="UsingMD">
+  <MonoDevelop.Ide.Workbench ActiveDocument="ScoutDirect/Controllers/Client/Service/ServiceAppointmentController.cs">
     <Files>
       <File FileName="ScoutDirect/Controllers/Admin/Provider/VehicleController.cs" />
       <File FileName="Application/Model/VehicleInput.cs" />
@@ -31,7 +31,7 @@
       <File FileName="ScoutDirect/Controllers/Client/Auth/Register/RegisterCompanyController.cs" />
       <File FileName="Application/Handlers/Client/Company/ActiveCompanyHandler.cs" />
       <File FileName="ScoutDirect/Controllers/UserController.cs" />
-      <File FileName="ScoutDirect/Controllers/Client/Service/ServiceAppointmentController.cs" />
+      <File FileName="ScoutDirect/Controllers/Client/Service/ServiceAppointmentController.cs" Line="70" Column="45" />
       <File FileName="Application/Handlers/Client/ServiceAppointment/GetServiceAppointmentByOprAddressHandler.cs" />
       <File FileName="Core/Enums/InvoiceStatus.cs" />
       <File FileName="Core/Enums/ServiceStatus.cs" />
@@ -44,7 +44,7 @@
       <File FileName="Application/Model/ServiceAppointment/ServiceAppointmentInput.cs" />
       <File FileName="Core/Enums/ServiceType.cs" />
       <File FileName="Core/Entities/Product.cs" />
-      <File FileName="Application/Handlers/Client/Invoice/CreateInvoiceHandler.cs" Line="38" Column="14" />
+      <File FileName="Application/Handlers/Client/Invoice/CreateInvoiceHandler.cs" />
       <File FileName="Application/Handlers/Client/ServiceAppointment/AddServiceAppointmentHandler.cs" />
       <File FileName="Application/Handlers/Client/ShoppingCard/AddServiceShoppingCardHandler.cs" />
       <File FileName="infrastructure/Repository/ProductRepository.cs" />
@@ -58,7 +58,7 @@
       <File FileName="ScoutDirect/Controllers/Admin/Provider/DriverController.cs" />
       <File FileName="Core/Entities/VehicleCompartment.cs" />
       <File FileName="Core/Entities/CompanyContract.cs" />
-      <File FileName="ScoutDirect/Startup.cs" Line="121" Column="14" />
+      <File FileName="ScoutDirect/Startup.cs" />
       <File FileName="Application/Commands/Provider/Vehicle/EditVehicleCommand.cs" />
       <File FileName="Application/Responses/Base/CommandResponse.cs" />
       <File FileName="ScoutDirect/Controllers/Admin/AppInformation/AppInformationController.cs" />
@@ -91,7 +91,7 @@
       <File FileName="Application/Handlers/Admin/Capacity/AdminGetAllCapacityHandler.cs" />
       <File FileName="Application/Handlers/Client/TermsConditions/ClientTermsConditionsGetHandler.cs" />
       <File FileName="ScoutDirect/Controllers/Client/Capacity/CapacityController.cs" />
-      <File FileName="ScoutDirect/Controllers/Client/Invoice/InvoiceController.cs" Line="49" Column="71" />
+      <File FileName="ScoutDirect/Controllers/Client/Invoice/InvoiceController.cs" />
       <File FileName="Core/Enums/ServiceProviderStatus.cs" />
       <File FileName="Core/Enums/ServicePriceType.cs" />
       <File FileName="Core/Enums/ServiceAreaTypeEnum.cs" />
@@ -126,13 +126,13 @@
       <File FileName="Application/Commands/Admin/Invoice/AdminCancelInvoiceCommand.cs" />
       <File FileName="Application/Commands/Client/Invoice/DeleteInvoiceCommand.cs" />
       <File FileName="Application/Handlers/Admin/Invoice/AdminCancelInvoiceHandler.cs" />
-      <File FileName="Application/Handlers/Admin/Invoice/AdminGetAllCreatedInvoiceHandler.cs" Line="42" Column="80" />
+      <File FileName="Application/Handlers/Admin/Invoice/AdminGetAllCreatedInvoiceHandler.cs" />
       <File FileName="Application/Commands/Admin/Invoice/AdminGetAllInvoiceCommand.cs" />
       <File FileName="Application/Commands/Admin/Invoice/AdminGetAllRequestCommand.cs" />
       <File FileName="Application/Handlers/Admin/Invoice/AdminGetAllRequestHandler.cs" />
-      <File FileName="Application/Handlers/Admin/Invoice/AdminGetAllInvoiceHandler.cs" Line="10" Column="40" />
+      <File FileName="Application/Handlers/Admin/Invoice/AdminGetAllInvoiceHandler.cs" />
       <File FileName="Core/Entities/Invoice.cs" />
-      <File FileName="Application/Responses/Invoice/InvoiceResponse.cs" Line="37" Column="34" />
+      <File FileName="Application/Responses/Invoice/InvoiceResponse.cs" Line="38" Column="1" />
       <File FileName="Core/Entities/Contract.cs" />
       <File FileName="Core/Entities/Manifest.cs" />
       <File FileName="Core/Entities/InvoiceProduct.cs" />
@@ -144,7 +144,7 @@
       <File FileName="Application/Commands/Admin/Representation/AdminMenuRepresentationCommand.cs" />
       <File FileName="Application/Handlers/Admin/Representation/AdminMenuRepresentationHandler.cs" />
       <File FileName="Application/Handlers/Admin/Invoice/AdminGetInvoiceNumberHandler.cs" />
-      <File FileName="Application/Handlers/Client/Location/AddLocationHandler.cs" Line="34" Column="1" />
+      <File FileName="Application/Handlers/Client/Location/AddLocationHandler.cs" />
       <File FileName="Application/Model/ProviderInput.cs" />
       <File FileName="Application/Handlers/Admin/Provider/AdminPutProviderHandler.cs" />
       <File FileName="Application/Handlers/Admin/Invoice/AdminInvoicePayHandler.cs" />
@@ -156,7 +156,7 @@
       <File FileName="Core/Repositories/Base/IRepository.cs" />
       <File FileName="infrastructure/Repository/Base/Base.cs" />
       <File FileName="Application/Handlers/Client/Invoice/ClientGetInvoiceHandler.cs" />
-      <File FileName="Application/Handlers/Client/Invoice/GetAllInvoiceHandler.cs" Line="33" Column="38" />
+      <File FileName="Application/Handlers/Client/Invoice/GetAllInvoiceHandler.cs" />
       <File FileName="ScoutDirect/Controllers/Admin/CommonController.cs" />
       <File FileName="ScoutDirect/Controllers/Admin/BaseAdminClientApiController.cs" />
       <File FileName="ScoutDirect/Controllers/Client/_Base/BaseApiController.cs" />
@@ -181,8 +181,8 @@
       <File FileName="Application/Handlers/Admin/Contract/AdminDropDownContractActiveHandler.cs" />
       <File FileName="Application/Handlers/Admin/Contract/AdminGetAllContractHandler.cs" />
       <File FileName="Application/Model/NameAndValue.cs" />
-      <File FileName="Application/Handlers/Admin/CompanyContract/AdminGetPaginateCompanyContractHandler.cs" Line="14" Column="149" />
-      <File FileName="Application/Handlers/Admin/CompanyContract/AdminContractCompanyContractHandler.cs" Line="1" Column="1" />
+      <File FileName="Application/Handlers/Admin/CompanyContract/AdminGetPaginateCompanyContractHandler.cs" />
+      <File FileName="Application/Handlers/Admin/CompanyContract/AdminContractCompanyContractHandler.cs" />
       <File FileName="Application/Handlers/Admin/CompanyContract/AdminUpdateCompanyContractHandler.cs" />
       <File FileName="Application/Handlers/Admin/CompanyContract/AdminSignCompanyContractHandler.cs" />
       <File FileName="Application/Handlers/Admin/Manifest/AdminGetManifestHandler.cs" />
@@ -190,7 +190,7 @@
       <File FileName="Application/Commands/Admin/CompanyContract/AdminCreateCompanyContractCommand.cs" />
       <File FileName="Application/Commands/Admin/CompanyContract/AdminSignCompanyContractCommand.cs" />
       <File FileName="Application/Commands/Admin/Contract/AdminEditContractCommand.cs" />
-      <File FileName="ScoutDirect/Controllers/Admin/CompanyContract/CompanyContractController.cs" Line="18" Column="72" />
+      <File FileName="ScoutDirect/Controllers/Admin/CompanyContract/CompanyContractController.cs" />
       <File FileName="Core/Enums/CompanyContractStatus.cs" />
       <File FileName="Application/Handlers/Client/CompanyContract/SignCompanyContractHandler.cs" />
       <File FileName="Application/Handlers/Client/CompanyContract/GetAllSiganbleCompanyContractHandler.cs" />
@@ -202,14 +202,14 @@
       <File FileName="Application/Handlers/Client/Invoice/GetAllInvoicePayableHandler.cs" />
       <File FileName="Core/Enums/ManifestStatus.cs" />
       <File FileName="Core/Entities/BaseServiceAppointment.cs" />
-      <File FileName="Application/Handlers/Client/CompanyContract/GetAllCompanyContractHandler.cs" Line="32" Column="1" />
+      <File FileName="Application/Handlers/Client/CompanyContract/GetAllCompanyContractHandler.cs" />
       <File FileName="Application/Handlers/Client/CompanyContract/GetCompanyContractHandler.cs" />
       <File FileName="Application/Commands/Admin/CompanyContract/AdminSendCompanyContractCommand.cs" />
       <File FileName="Application/Handlers/Client/CompanyContract/AdminSendCompanyContractHandler.cs" />
       <File FileName="Application/Commands/Admin/CompanyContract/AdminGetCompanyContractCommand.cs" />
-      <File FileName="Application/Commands/Admin/CompanyContract/AdminGetPaginateCompanyContractCommand.cs" Line="10" Column="118" />
+      <File FileName="Application/Commands/Admin/CompanyContract/AdminGetPaginateCompanyContractCommand.cs" />
       <File FileName="Application/Handlers/Admin/CompanyContract/AdminGetCompanyContractHandler.cs" />
-      <File FileName="ScoutDirect/Controllers/Admin/Auth/AdminAuthController.cs" Line="60" Column="1" />
+      <File FileName="ScoutDirect/Controllers/Admin/Auth/AdminAuthController.cs" />
       <File FileName="CMPEmail/Email/MailService.cs" />
       <File FileName="CMPEmail/MailSetting.cs" />
       <File FileName="Core/Models/ExpiresModel.cs" />
@@ -218,7 +218,7 @@
       <File FileName="Application/Model/InvoiceInput.cs" />
       <File FileName="Application/Commands/Client/Invoice/ClientGetInvoiceCommand.cs" />
       <File FileName="CMPPayment/Model/CommandBuilder.cs" />
-      <File FileName="ScoutDirect/Controllers/Client/Payment/PaymentController.cs" Line="55" Column="38" />
+      <File FileName="ScoutDirect/Controllers/Client/Payment/PaymentController.cs" />
       <File FileName="ScoutDirect/Controllers/Client/_Base/BaseClientApiController.cs" />
       <File FileName="infrastructure/RegisterDependency.cs" />
       <File FileName="Core/Payment/IPaymentConfiguration.cs" />
@@ -258,17 +258,17 @@
       <File FileName="infrastructure/Repository/InvoiceRepository.cs" />
       <File FileName="infrastructure/Repository/BaseServiceAppointmentRepository.cs" />
       <File FileName="Core/Entities/ServiceAppointmentLocation.cs" />
-      <File FileName="Application/Handlers/Client/Payment/ClientInvoiceUpdateHandler.cs" Line="50" Column="29" />
-      <File FileName="Application/Handlers/Client/Invoice/GetAllInvoiceRequestHandler.cs" Line="31" Column="69" />
+      <File FileName="Application/Handlers/Client/Payment/ClientInvoiceUpdateHandler.cs" />
+      <File FileName="Application/Handlers/Client/Invoice/GetAllInvoiceRequestHandler.cs" />
       <File FileName="Application/Handlers/Client/Invoice/DeleteInvoiceHANDLER.cs" />
-      <File FileName="Application/Commands/Client/Invoice/GetAllInvoiceCommand.cs" Line="11" Column="103" />
-      <File FileName="ScoutDirect/appsettings.json" Line="16" Column="11" />
-      <File FileName="ScoutDirect/Controllers/Client/TermsConditions/ClientTermsConditionsController.cs" Line="24" Column="25" />
-      <File FileName="ScoutDirect/Controllers/Client/CompanyContract/CompanyContractController.cs" Line="29" Column="65" />
-      <File FileName="Application/Commands/CompanyContract/GetAllCompanyContractCommand.cs" Line="12" Column="43" />
-      <File FileName="Application/Handlers/Client/Contract/GetActiveContractHandler.cs" Line="15" Column="41" />
-      <File FileName="Application/Commands/Client/Invoice/GetAllInvoiceRequestCommand.cs" Line="11" Column="65" />
-      <File FileName="Application/Commands/Admin/Invoice/AdminGetAllCreatedInvoiceCommand.cs" Line="10" Column="70" />
+      <File FileName="Application/Commands/Client/Invoice/GetAllInvoiceCommand.cs" />
+      <File FileName="ScoutDirect/appsettings.json" />
+      <File FileName="ScoutDirect/Controllers/Client/TermsConditions/ClientTermsConditionsController.cs" />
+      <File FileName="ScoutDirect/Controllers/Client/CompanyContract/CompanyContractController.cs" />
+      <File FileName="Application/Commands/CompanyContract/GetAllCompanyContractCommand.cs" />
+      <File FileName="Application/Handlers/Client/Contract/GetActiveContractHandler.cs" />
+      <File FileName="Application/Commands/Client/Invoice/GetAllInvoiceRequestCommand.cs" />
+      <File FileName="Application/Commands/Admin/Invoice/AdminGetAllCreatedInvoiceCommand.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -276,23 +276,17 @@
           <Node name="CMPNatural">
             <Node name="CMPNatural.Api">
               <Node name="Controllers" expanded="True">
+                <Node name="Admin" expanded="True">
+                  <Node name="Provider" expanded="True" />
+                </Node>
                 <Node name="Client" expanded="True">
-                  <Node name="Invoice" expanded="True" />
-                  <Node name="Payment" expanded="True" />
+                  <Node name="Service" expanded="True" />
                 </Node>
               </Node>
             </Node>
-            <Node name="CMPNatural.Application">
-              <Node name="Commands" expanded="True">
-                <Node name="Admin" expanded="True">
-                  <Node name="Invoice" expanded="True" />
-                </Node>
-                <Node name="Client" expanded="True" />
-              </Node>
+            <Node name="CMPNatural.Application" expanded="True">
               <Node name="Responses" expanded="True">
-                <Node name="Invoice" expanded="True">
-                  <Node name="InvoiceResponse.cs" selected="True" />
-                </Node>
+                <Node name="Invoice" expanded="True" />
               </Node>
             </Node>
             <Node name="CMPNatural.infrastructure" expanded="True">
@@ -304,8 +298,9 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.CMPNatural.Api PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Core/Enums/InvoiceStatus.cs" relfile="Core/Enums/InvoiceStatus.cs" line="63" column="1" />
@@ -326,8 +321,6 @@
       <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Client/CompanyContract/GetCompanyContractHandler.cs" relfile="Application/Handlers/Client/CompanyContract/GetCompanyContractHandler.cs" line="25" column="1" />
       <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Client/CompanyContract/GetCompanyContractHandler.cs" relfile="Application/Handlers/Client/CompanyContract/GetCompanyContractHandler.cs" line="26" column="1" />
       <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Client/Payment/PaymentController.cs" relfile="ScoutDirect/Controllers/Client/Payment/PaymentController.cs" line="81" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Client/Service/ServiceAppointmentController.cs" relfile="ScoutDirect/Controllers/Client/Service/ServiceAppointmentController.cs" line="64" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>
