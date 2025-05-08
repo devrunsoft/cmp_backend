@@ -91,12 +91,14 @@ namespace CMPNatural.Application
                     ContractId = invoice.ContractId,
                     SendDate = group.FirstOrDefault().StartDate,
                     CreatedAt = DateTime.Now,
-                    InvoiceNumber = ""
+                    InvoiceNumber = "",
+                    RequestNumber = ""
                 };
                 groupedInvoice.CalculateAmount();
 
                var item = await _invoiceRepository.AddAsync(groupedInvoice);
                item.InvoiceNumber = invoice.Number;
+               item.RequestNumber = invoice.ReqNumber;
                await _invoiceRepository.UpdateAsync(item);
                 await new AdminCreateManifestHandler(_manifestRepository, _invoiceRepository, _apprepository, _serviceAppointmentLocationRepository).Create(item, ManifestStatus.Scaduled);
             }

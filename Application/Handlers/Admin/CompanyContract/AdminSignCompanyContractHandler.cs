@@ -32,7 +32,7 @@ namespace CMPNatural.Application
         {
             var entity = await _repository.GetByIdAsync(request.CompanyContractId);
             var appinformation = (await _apprepository.GetAllAsync()).FirstOrDefault();
-            if(appinformation==null || appinformation.Sign == null || entity.Status == CompanyContractStatus.Needs_Admin_Signature)
+            if(appinformation==null || appinformation.Sign == null)
             {
                 return new NoAcess<CompanyContract>() { Message = "Please add a sign in Company Information" };
             }

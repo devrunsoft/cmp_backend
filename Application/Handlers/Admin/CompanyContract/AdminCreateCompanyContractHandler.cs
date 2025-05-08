@@ -61,6 +61,7 @@ namespace CMPNatural.Application.Handlers
                 Status = CompanyContractStatus.Created,
                 CreatedAt = DateTime.Now,
                 ContractId = contract.Id,
+                ContractNumber = ""
             };
 
             var result = await _repository.AddAsync(entity);
