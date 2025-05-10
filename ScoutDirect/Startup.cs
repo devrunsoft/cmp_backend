@@ -128,7 +128,6 @@ namespace ScoutDirect.Api
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(
               typeof(RegisterCompanyHandler).Assembly
               ));
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
 
 
             services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));

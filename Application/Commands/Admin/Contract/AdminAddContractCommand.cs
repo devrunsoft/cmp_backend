@@ -13,6 +13,7 @@ namespace CMPNatural.Application
 			Active = input.Active;
 			Content = input.Content;
             Title = input.Title;
+			IsDefault = input.IsDefault;
         }
 	}
 }

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -252,7 +252,6 @@
     <None Remove="Commands\Admin\Payment\" />
     <None Remove="Handlers\Admin\Payment\" />
     <None Remove="Handlers\Admin\ServiceAppointment\" />
-    <None Remove="Logger\" />
     <None Remove="Commands\Admin\AppLog\" />
     <None Remove="Handlers\Admin\AppLog\" />
   </ItemGroup>
@@ -513,15 +512,14 @@
     <Folder Include="Commands\Admin\Payment\" />
     <Folder Include="Handlers\Admin\Payment\" />
     <Folder Include="Handlers\Admin\ServiceAppointment\" />
-    <Folder Include="Logger\" />
     <Folder Include="Commands\Admin\AppLog\" />
     <Folder Include="Handlers\Admin\AppLog\" />
   </ItemGroup> 
 
   <ItemGroup>
-    <ProjectReference Include="..\Core\CMPNatural.Core.csproj" />
+    <Compile Include="Responses\Invoice\InvoiceResponse.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Responses\Invoice\InvoiceResponse.cs" />
+    <ProjectReference Include="..\Core\CMPNatural.Core.csproj" />
   </ItemGroup>
 </Project>

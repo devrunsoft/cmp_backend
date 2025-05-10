@@ -10,7 +10,7 @@ namespace CMPNatural.Application.Model
 		public string Content { get; set; }
         public string Title { get; set; }
         public bool Active { get; set; }
-
-	}
+        public bool IsDefault { get; set; }
+    }
 }
 

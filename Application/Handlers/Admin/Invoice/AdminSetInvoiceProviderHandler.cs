@@ -33,19 +33,33 @@ namespace CMPNatural.Application
             var invoice = (await _invoiceRepository.GetAsync(p => p.Id == request.InvoiceId, query=>
             query.Include(p=>p.BaseServiceAppointment))).FirstOrDefault();
 
-             if (invoice.Status != InvoiceStatus.Needs_Assignment)
+             if (invoice.Status != InvoiceStatus.Needs_Assignment && invoice.Status != InvoiceStatus.Scaduled)
             {
                 return new NoAcess<Invoice>() { Data = invoice };
             }
 
             foreach (var serviceAppointment in invoice.BaseServiceAppointment)
             {
-                  serviceAppointment.ProviderId = request.ProviderId;
-                  serviceAppointment.Status = ServiceStatus.Proccessing;
+                serviceAppointment.ProviderId = request.ProviderId;
+
+                if (invoice.Status != InvoiceStatus.Scaduled)
+                {
+                    serviceAppointment.Status = ServiceStatus.Proccessing;
+                }
+                else
+                {
+                    serviceAppointment.Status = ServiceStatus.Scaduled;
+                }
+
                 await _baseServiceAppointmentRepository.UpdateAsync(serviceAppointment);
             }
             invoice.ProviderId = request.ProviderId;
-            invoice.Status = InvoiceStatus.Processing_Provider;
+
+            if (invoice.Status != InvoiceStatus.Scaduled)
+            {
+                invoice.Status = InvoiceStatus.Processing_Provider;
+            }
+
             await _invoiceRepository.UpdateAsync(invoice);
 
             return new Success<Invoice>() { Data = invoice };

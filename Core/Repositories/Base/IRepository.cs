@@ -34,6 +34,7 @@ namespace ScoutDirect.Core.Repositories.Base
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
         Task DeleteRangeAsync(List<T> entity);
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 
     }   
 }

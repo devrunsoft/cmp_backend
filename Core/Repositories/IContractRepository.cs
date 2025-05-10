@@ -6,6 +6,7 @@ namespace CMPNatural
 {
     public interface IContractRepository : IRepository<Contract, long>
     {
+       public Task UnsetDefaultForOthersAsync(long excludeId);
     }
 }
 

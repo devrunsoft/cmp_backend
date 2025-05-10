@@ -1,5 +1,5 @@
-﻿<Properties StartupConfiguration="{36794759-A62F-43C3-B7D2-DE0D42AA2780}|https" GitUserInfo="UsingMD">
-  <MonoDevelop.Ide.Workbench ActiveDocument="ScoutDirect/Controllers/Client/Service/ServiceAppointmentController.cs">
+﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{36794759-A62F-43C3-B7D2-DE0D42AA2780}|https">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Application/Commands/TransactionBehavior.cs">
     <Files>
       <File FileName="ScoutDirect/Controllers/Admin/Provider/VehicleController.cs" />
       <File FileName="Application/Model/VehicleInput.cs" />
@@ -31,7 +31,7 @@
       <File FileName="ScoutDirect/Controllers/Client/Auth/Register/RegisterCompanyController.cs" />
       <File FileName="Application/Handlers/Client/Company/ActiveCompanyHandler.cs" />
       <File FileName="ScoutDirect/Controllers/UserController.cs" />
-      <File FileName="ScoutDirect/Controllers/Client/Service/ServiceAppointmentController.cs" Line="70" Column="45" />
+      <File FileName="ScoutDirect/Controllers/Client/Service/ServiceAppointmentController.cs" Line="61" Column="36" />
       <File FileName="Application/Handlers/Client/ServiceAppointment/GetServiceAppointmentByOprAddressHandler.cs" />
       <File FileName="Core/Enums/InvoiceStatus.cs" />
       <File FileName="Core/Enums/ServiceStatus.cs" />
@@ -132,7 +132,7 @@
       <File FileName="Application/Handlers/Admin/Invoice/AdminGetAllRequestHandler.cs" />
       <File FileName="Application/Handlers/Admin/Invoice/AdminGetAllInvoiceHandler.cs" />
       <File FileName="Core/Entities/Invoice.cs" />
-      <File FileName="Application/Responses/Invoice/InvoiceResponse.cs" Line="38" Column="1" />
+      <File FileName="Application/Responses/Invoice/InvoiceResponse.cs" />
       <File FileName="Core/Entities/Contract.cs" />
       <File FileName="Core/Entities/Manifest.cs" />
       <File FileName="Core/Entities/InvoiceProduct.cs" />
@@ -154,7 +154,7 @@
       <File FileName="Core/Enums/PaymentStatus.cs" />
       <File FileName="Application/Handlers/Admin/Invoice/AdminSetInvoiceProviderHandler.cs" />
       <File FileName="Core/Repositories/Base/IRepository.cs" />
-      <File FileName="infrastructure/Repository/Base/Base.cs" />
+      <File FileName="infrastructure/Repository/Base/Base.cs" Line="24" Column="36" />
       <File FileName="Application/Handlers/Client/Invoice/ClientGetInvoiceHandler.cs" />
       <File FileName="Application/Handlers/Client/Invoice/GetAllInvoiceHandler.cs" />
       <File FileName="ScoutDirect/Controllers/Admin/CommonController.cs" />
@@ -192,8 +192,8 @@
       <File FileName="Application/Commands/Admin/Contract/AdminEditContractCommand.cs" />
       <File FileName="ScoutDirect/Controllers/Admin/CompanyContract/CompanyContractController.cs" />
       <File FileName="Core/Enums/CompanyContractStatus.cs" />
-      <File FileName="Application/Handlers/Client/CompanyContract/SignCompanyContractHandler.cs" />
-      <File FileName="Application/Handlers/Client/CompanyContract/GetAllSiganbleCompanyContractHandler.cs" />
+      <File FileName="Application/Handlers/Client/CompanyContract/SignCompanyContractHandler.cs" Line="26" Column="10" />
+      <File FileName="Application/Handlers/Client/CompanyContract/GetAllSiganbleCompanyContractHandler.cs" Line="1" Column="1" />
       <File FileName="Core/Enums/CancelEnum.cs" />
       <File FileName="Core/Enums/CompanyStatus.cs" />
       <File FileName="Core/Enums/CompanyType.cs" />
@@ -202,10 +202,10 @@
       <File FileName="Application/Handlers/Client/Invoice/GetAllInvoicePayableHandler.cs" />
       <File FileName="Core/Enums/ManifestStatus.cs" />
       <File FileName="Core/Entities/BaseServiceAppointment.cs" />
-      <File FileName="Application/Handlers/Client/CompanyContract/GetAllCompanyContractHandler.cs" />
+      <File FileName="Application/Handlers/Client/CompanyContract/GetAllCompanyContractHandler.cs" Line="1" Column="1" />
       <File FileName="Application/Handlers/Client/CompanyContract/GetCompanyContractHandler.cs" />
       <File FileName="Application/Commands/Admin/CompanyContract/AdminSendCompanyContractCommand.cs" />
-      <File FileName="Application/Handlers/Client/CompanyContract/AdminSendCompanyContractHandler.cs" />
+      <File FileName="Application/Handlers/Client/CompanyContract/AdminSendCompanyContractHandler.cs" Line="13" Column="35" />
       <File FileName="Application/Commands/Admin/CompanyContract/AdminGetCompanyContractCommand.cs" />
       <File FileName="Application/Commands/Admin/CompanyContract/AdminGetPaginateCompanyContractCommand.cs" />
       <File FileName="Application/Handlers/Admin/CompanyContract/AdminGetCompanyContractHandler.cs" />
@@ -234,7 +234,7 @@
       <File FileName="Application/Commands/Admin/CompanyContract/AdminBackForUpdateInvoiceCommand.cs" />
       <File FileName="Application/Handlers/Admin/Invoice/AdminCheckLocationProviderHandler.cs" />
       <File FileName="CMPEmail/RegisterDependency.cs" />
-      <File FileName="Core/Repositories/ICompanyContractRepository.cs" />
+      <File FileName="Core/Repositories/ICompanyContractRepository.cs" Line="9" Column="6" />
       <File FileName="ScoutDirect/Controllers/Admin/Payment/PaymentController.cs" />
       <File FileName="Application/Commands/Admin/Payment/AdminGetAllPaymentCommand.cs" />
       <File FileName="Application/Commands/Admin/Capacity/AdminGetAllCapacityCommand.cs" />
@@ -256,7 +256,7 @@
       <File FileName="Core/Enums/MenuEnum.cs" />
       <File FileName="Core/Enums/EmailLinkEnum.cs" />
       <File FileName="infrastructure/Repository/InvoiceRepository.cs" />
-      <File FileName="infrastructure/Repository/BaseServiceAppointmentRepository.cs" />
+      <File FileName="infrastructure/Repository/BaseServiceAppointmentRepository.cs" Line="2" Column="1" />
       <File FileName="Core/Entities/ServiceAppointmentLocation.cs" />
       <File FileName="Application/Handlers/Client/Payment/ClientInvoiceUpdateHandler.cs" />
       <File FileName="Application/Handlers/Client/Invoice/GetAllInvoiceRequestHandler.cs" />
@@ -264,63 +264,77 @@
       <File FileName="Application/Commands/Client/Invoice/GetAllInvoiceCommand.cs" />
       <File FileName="ScoutDirect/appsettings.json" />
       <File FileName="ScoutDirect/Controllers/Client/TermsConditions/ClientTermsConditionsController.cs" />
-      <File FileName="ScoutDirect/Controllers/Client/CompanyContract/CompanyContractController.cs" />
-      <File FileName="Application/Commands/CompanyContract/GetAllCompanyContractCommand.cs" />
-      <File FileName="Application/Handlers/Client/Contract/GetActiveContractHandler.cs" />
-      <File FileName="Application/Commands/Client/Invoice/GetAllInvoiceRequestCommand.cs" />
-      <File FileName="Application/Commands/Admin/Invoice/AdminGetAllCreatedInvoiceCommand.cs" />
+      <File FileName="ScoutDirect/Controllers/Client/CompanyContract/CompanyContractController.cs" Line="17" Column="2" />
+      <File FileName="Application/Commands/CompanyContract/GetAllCompanyContractCommand.cs" Line="1" Column="1" />
+      <File FileName="Application/Handlers/Client/Contract/GetActiveContractHandler.cs" Line="1" Column="1" />
+      <File FileName="Application/Commands/Client/Invoice/GetAllInvoiceRequestCommand.cs" Line="1" Column="1" />
+      <File FileName="Application/Commands/Admin/Invoice/AdminGetAllCreatedInvoiceCommand.cs" Line="1" Column="1" />
+      <File FileName="infrastructure/Data/DbContext.cs" Line="13" Column="32" />
+      <File FileName="infrastructure/Logger/CustomDbLogger.cs" Line="15" Column="50" />
+      <File FileName="Core/Logger/ICustomDbLogger.cs" Line="13" Column="1" />
+      <File FileName="Application/Logger/LoggingBehavior.cs" Line="8" Column="30" />
+      <File FileName="Application/Commands/TransactionBehavior.cs" Line="20" Column="43" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="CMPNatural">
-            <Node name="CMPNatural.Api">
-              <Node name="Controllers" expanded="True">
-                <Node name="Admin" expanded="True">
-                  <Node name="Provider" expanded="True" />
-                </Node>
-                <Node name="Client" expanded="True">
-                  <Node name="Service" expanded="True" />
-                </Node>
+            <Node name="CMPEmail" expanded="True">
+              <Node name="Dependencies" expanded="True">
+                <Node name="FrameworkReferences" expanded="True" />
+              </Node>
+              <Node name="Email" expanded="True" />
+            </Node>
+            <Node name="CMPNatural.Api" expanded="True">
+              <Node name="Dependencies" expanded="True">
+                <Node name="FrameworkReferences" expanded="True" />
               </Node>
             </Node>
-            <Node name="CMPNatural.Application" expanded="True">
-              <Node name="Responses" expanded="True">
-                <Node name="Invoice" expanded="True" />
+            <Node name="CMPNatural.Application">
+              <Node name="Dependencies" selected="True" />
+            </Node>
+            <Node name="CMPNatural.Core" expanded="True">
+              <Node name="Dependencies" expanded="True">
+                <Node name="FrameworkReferences" expanded="True" />
               </Node>
             </Node>
-            <Node name="CMPNatural.infrastructure" expanded="True">
-              <Node name="Data" expanded="True" />
+            <Node name="CmpNatural.CrmManagment" expanded="True">
+              <Node name="Dependencies" expanded="True">
+                <Node name="FrameworkReferences" expanded="True" />
+              </Node>
+            </Node>
+            <Node name="CMPPayment" expanded="True">
+              <Node name="Dependencies" expanded="True">
+                <Node name="FrameworkReferences" expanded="True" />
+              </Node>
             </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.ItemProperties.CMPNatural.Api PreferredExecutionTarget="/Applications/Google Chrome.app" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Core/Enums/InvoiceStatus.cs" relfile="Core/Enums/InvoiceStatus.cs" line="63" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Admin/Invoice/AdminCheckLocationProviderHandler.cs" relfile="Application/Handlers/Admin/Invoice/AdminCheckLocationProviderHandler.cs" line="28" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Admin/Invoice/AdminCheckOprLocationProviderHandler.cs" relfile="Application/Handlers/Admin/Invoice/AdminCheckOprLocationProviderHandler.cs" line="28" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Provider/ProviderDocumentController.cs" relfile="ScoutDirect/Controllers/Provider/ProviderDocumentController.cs" line="34" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Provider/Invoice/ProviderUpdateInvoiceHandler.cs" relfile="Application/Handlers/Provider/Invoice/ProviderUpdateInvoiceHandler.cs" line="92" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Provider/Invoice/ProviderSubmitInvoiceHandler.cs" relfile="Application/Handlers/Provider/Invoice/ProviderSubmitInvoiceHandler.cs" line="72" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Admin/Client/ClientInformationController.cs" relfile="ScoutDirect/Controllers/Admin/Client/ClientInformationController.cs" line="63" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Admin/Client/ClientInformationController.cs" relfile="ScoutDirect/Controllers/Admin/Client/ClientInformationController.cs" line="75" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Admin/Client/ClientInformationController.cs" relfile="ScoutDirect/Controllers/Admin/Client/ClientInformationController.cs" line="86" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Client/Capacity/CapacityController.cs" relfile="ScoutDirect/Controllers/Client/Capacity/CapacityController.cs" line="37" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Admin/Invoice/Provider/AdminProviderSubmitInvoiceHandler.cs" relfile="Application/Handlers/Admin/Invoice/Provider/AdminProviderSubmitInvoiceHandler.cs" line="54" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Client/Auth/Register/RegisterCompanyController.cs" relfile="ScoutDirect/Controllers/Client/Auth/Register/RegisterCompanyController.cs" line="223" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Client/Auth/Register/RegisterCompanyController.cs" relfile="ScoutDirect/Controllers/Client/Auth/Register/RegisterCompanyController.cs" line="206" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Client/CompanyContract/GetAllSiganbleCompanyContractHandler.cs" relfile="Application/Handlers/Client/CompanyContract/GetAllSiganbleCompanyContractHandler.cs" line="24" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Client/CompanyContract/GetAllSiganbleCompanyContractHandler.cs" relfile="Application/Handlers/Client/CompanyContract/GetAllSiganbleCompanyContractHandler.cs" line="25" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Client/CompanyContract/GetCompanyContractHandler.cs" relfile="Application/Handlers/Client/CompanyContract/GetCompanyContractHandler.cs" line="25" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Client/CompanyContract/GetCompanyContractHandler.cs" relfile="Application/Handlers/Client/CompanyContract/GetCompanyContractHandler.cs" line="26" column="1" />
-      <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Client/Payment/PaymentController.cs" relfile="ScoutDirect/Controllers/Client/Payment/PaymentController.cs" line="81" column="1" />
-    </BreakpointStore>
+    <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Core/Enums/InvoiceStatus.cs" relfile="Core/Enums/InvoiceStatus.cs" line="63" column="1" />
+    <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Admin/Invoice/AdminCheckLocationProviderHandler.cs" relfile="Application/Handlers/Admin/Invoice/AdminCheckLocationProviderHandler.cs" line="28" column="1" />
+    <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Admin/Invoice/AdminCheckOprLocationProviderHandler.cs" relfile="Application/Handlers/Admin/Invoice/AdminCheckOprLocationProviderHandler.cs" line="28" column="1" />
+    <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Provider/ProviderDocumentController.cs" relfile="ScoutDirect/Controllers/Provider/ProviderDocumentController.cs" line="34" column="1" />
+    <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Provider/Invoice/ProviderUpdateInvoiceHandler.cs" relfile="Application/Handlers/Provider/Invoice/ProviderUpdateInvoiceHandler.cs" line="92" column="1" />
+    <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Provider/Invoice/ProviderSubmitInvoiceHandler.cs" relfile="Application/Handlers/Provider/Invoice/ProviderSubmitInvoiceHandler.cs" line="72" column="1" />
+    <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Admin/Client/ClientInformationController.cs" relfile="ScoutDirect/Controllers/Admin/Client/ClientInformationController.cs" line="63" column="1" />
+    <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Admin/Client/ClientInformationController.cs" relfile="ScoutDirect/Controllers/Admin/Client/ClientInformationController.cs" line="75" column="1" />
+    <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Admin/Client/ClientInformationController.cs" relfile="ScoutDirect/Controllers/Admin/Client/ClientInformationController.cs" line="86" column="1" />
+    <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Client/Capacity/CapacityController.cs" relfile="ScoutDirect/Controllers/Client/Capacity/CapacityController.cs" line="37" column="1" />
+    <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Admin/Invoice/Provider/AdminProviderSubmitInvoiceHandler.cs" relfile="Application/Handlers/Admin/Invoice/Provider/AdminProviderSubmitInvoiceHandler.cs" line="54" column="1" />
+    <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Client/Auth/Register/RegisterCompanyController.cs" relfile="ScoutDirect/Controllers/Client/Auth/Register/RegisterCompanyController.cs" line="223" column="1" />
+    <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Client/Auth/Register/RegisterCompanyController.cs" relfile="ScoutDirect/Controllers/Client/Auth/Register/RegisterCompanyController.cs" line="206" column="1" />
+    <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Client/CompanyContract/GetAllSiganbleCompanyContractHandler.cs" relfile="Application/Handlers/Client/CompanyContract/GetAllSiganbleCompanyContractHandler.cs" line="24" column="1" />
+    <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Client/CompanyContract/GetAllSiganbleCompanyContractHandler.cs" relfile="Application/Handlers/Client/CompanyContract/GetAllSiganbleCompanyContractHandler.cs" line="25" column="1" />
+    <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Client/CompanyContract/GetCompanyContractHandler.cs" relfile="Application/Handlers/Client/CompanyContract/GetCompanyContractHandler.cs" line="25" column="1" />
+    <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/Application/Handlers/Client/CompanyContract/GetCompanyContractHandler.cs" relfile="Application/Handlers/Client/CompanyContract/GetCompanyContractHandler.cs" line="26" column="1" />
+    <Breakpoint file="/Users/morteza/Desktop/Project/ethno-flutter/CMPNatural/copy/CMPNatural/ScoutDirect/Controllers/Client/Payment/PaymentController.cs" relfile="ScoutDirect/Controllers/Client/Payment/PaymentController.cs" line="81" column="1" />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

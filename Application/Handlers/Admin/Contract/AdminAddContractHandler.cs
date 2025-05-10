@@ -22,8 +22,14 @@ namespace CMPNatural.Application
               Active = request.Active,
               Content = request.Content,
               Title = request.Title,
-              CreatedAt = DateTime.Now
+              CreatedAt = DateTime.Now,
+              IsDefault = request.IsDefault
             };
+
+            if (request.IsDefault)
+            {
+                await _repository.UnsetDefaultForOthersAsync(0);
+            }
 
             var result = await _repository.AddAsync(entity);
             return new Success<Contract>() { Data = result };

@@ -40,7 +40,10 @@ namespace CMPNatural.Application.Handlers
             {
                 return new NoAcess<CompanyContract>() { Message = "Please complete the information" };
             }
-            var contract = (await _contractrepository.GetAsync(x => x.Active)).LastOrDefault();
+            var contracts = await _contractrepository.GetAsync(x => x.Active);
+            var contract = contracts.FirstOrDefault(c => c.IsDefault);
+            contract ??= contracts.LastOrDefault();
+
             var company = invoice.Company;
             if (contract == null)
             {

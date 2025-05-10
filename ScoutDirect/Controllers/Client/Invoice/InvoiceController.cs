@@ -18,7 +18,6 @@ using CMPNatural.Application.Model.ServiceAppointment;
 using CMPNatural.Application.Responses;
 using CMPNatural.Core.Entities;
 using CMPNatural.Core.Enums;
-using Google.Protobuf.WellKnownTypes;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;

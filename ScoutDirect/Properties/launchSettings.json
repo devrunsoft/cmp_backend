@@ -40,7 +40,7 @@
     "CMPNatural.Api": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:34591;http://localhost:57476",
+      "applicationUrl": "https://localhost:44202;http://localhost:16105",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

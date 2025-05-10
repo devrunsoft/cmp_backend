@@ -2,7 +2,6 @@
 using CmpNatural.CrmManagment.Product;
 using CMPNatural.Application;
 using CMPNatural.Application.Commands.Service;
-using Google.Protobuf.WellKnownTypes;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;

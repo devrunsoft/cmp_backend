@@ -117,7 +117,7 @@ namespace ScoutDirect.infrastructure.Repository
                 else
                 {
                     var toStringMethod = property.PropertyType.GetMethod("ToString", Type.EmptyTypes);
-                    if (toStringMethod == null) continue; 
+                    if (toStringMethod == null) continue;
 
                     convertedExpression = Expression.Call(propertyExpression, toStringMethod);
                 }
@@ -211,6 +211,11 @@ namespace ScoutDirect.infrastructure.Repository
         {
             _dbContext.Set<T>().Update(entity);
             await _dbContext.SaveChangesAsync();
+        }
+
+        public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            return _dbContext.SaveChangesAsync();
         }
     }
 }

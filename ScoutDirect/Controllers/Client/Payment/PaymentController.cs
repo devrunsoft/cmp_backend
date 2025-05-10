@@ -9,7 +9,6 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using MySqlX.XDevAPI.Common;
 using ScoutDirect.Api.Controllers._Base;
 using ScoutDirect.Application.Responses;
 

@@ -11,12 +11,14 @@
     <None Remove="Repository\" />
     <None Remove="Repository\Base\" />
     <None Remove="Logger\" />
+    <None Remove="Behaviors\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
     <Folder Include="Repository\" />
     <Folder Include="Repository\Base\" />
     <Folder Include="Logger\" />
+    <Folder Include="Behaviors\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />

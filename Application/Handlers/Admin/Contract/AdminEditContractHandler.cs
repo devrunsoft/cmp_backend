@@ -18,9 +18,15 @@ namespace CMPNatural.Application
         {
             var entity = await _repository.GetByIdAsync(request.Id);
 
+            if (request.IsDefault)
+            {
+                await _repository.UnsetDefaultForOthersAsync(request.Id);
+            }
+
             entity.Active = request.Active;
             entity.Content = request.Content;
             entity.Title = request.Title;
+            entity.IsDefault = request.IsDefault;
 
             await _repository.UpdateAsync(entity);
             return new Success<Contract>() { Data = entity };

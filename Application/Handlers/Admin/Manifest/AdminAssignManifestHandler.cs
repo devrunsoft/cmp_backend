@@ -33,7 +33,7 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<Manifest>> Handle(AdminAssignManifestCommand request, CancellationToken cancellationToken)
         {
-            var entity = (await _repository.GetAsync(p=> p.Id == request.Id && p.Status == ManifestStatus.Draft,query=>query.Include(x=>x.Invoice))).FirstOrDefault();
+            var entity = (await _repository.GetAsync(p=> p.Id == request.Id && (p.Status == ManifestStatus.Draft || p.Status == ManifestStatus.Scaduled),query=>query.Include(x=>x.Invoice))).FirstOrDefault();
             var provider = (await _providerRepository.GetAsync(p => p.Id == request.ProviderId && p.Status == ProviderStatus.Approved)).FirstOrDefault();
             var company = (await _companyrepository.GetAsync(p => p.Id == entity.Invoice.CompanyId)).FirstOrDefault();
 
@@ -44,7 +44,6 @@ namespace CMPNatural.Application
                     Message = "The manifest cannot be assigned because the associated company is currently pending"
                 };
             }
-
             if (company.Status == CompanyStatus.Blocked)
             {
                 return new NoAcess<Manifest>
@@ -52,10 +51,38 @@ namespace CMPNatural.Application
                     Message = "The manifest cannot be assigned because the associated company is currently blocked."
                 };
             }
+            if (provider.Status == ProviderStatus.Blocked)
+            {
+                return new NoAcess<Manifest>
+                {
+                    Message = "The manifest cannot be assigned because the associated provider is currently blocked."
+                };
+            }
+            if (entity.Status != ManifestStatus.Draft && entity.Status != ManifestStatus.Scaduled)
+            {
+                return new NoAcess<Manifest>
+                {
+                    Message = "The manifest cannot be assigned because the status must be Draft or Scaduled."
+                };
+            }
+            if (entity.ProviderId != null)
+            {
+                return new NoAcess<Manifest>
+                {
+                    Message = "This manifest has already been assigned to a provider and cannot be reassigned."
+                };
+            }
+
+
 
             entity.ServiceDateTime = request.ServiceDateTime.ToLocalTime();
             entity.ProviderId = provider.Id;
-            entity.Status = ManifestStatus.Assigned;
+
+            if (entity.Status != ManifestStatus.Scaduled)
+            {
+                entity.Status = ManifestStatus.Assigned;
+            }
+
             var content = entity.Content;
 
             content = CompanyContractHelper.ShowByKey(ManifestKeyEnum.Date.GetDescription(), content);
@@ -73,8 +100,10 @@ namespace CMPNatural.Application
             entity.Content = content;
             var result =await _mediator.Send(new AdminSetInvoiceProviderCommand() { ProviderId = provider.Id , InvoiceId = entity.InvoiceId});
 
-            if(result.IsSucces())
-            await _repository.UpdateAsync(entity);
+            if (result.IsSucces())
+            {
+                await _repository.UpdateAsync(entity);
+            }
 
             return new Success<Manifest>() { Data = entity };
         }

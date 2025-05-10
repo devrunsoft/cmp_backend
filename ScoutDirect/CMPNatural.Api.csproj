@@ -105,22 +105,22 @@
     <Folder Include="Controllers\Admin\AppLog\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\infrastructure\CMPNatural.infrastructure.csproj">
+    <ProjectReference Include="..\Core\CMPNatural.Core.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\CMPEmail\CMPEmail.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
     <ProjectReference Include="..\Application\CMPNatural.Application.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
-    <ProjectReference Include="..\Core\CMPNatural.Core.csproj">
-      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
-    </ProjectReference>
     <ProjectReference Include="..\CmpNatural.CrmManagment\CmpNatural.CrmManagment.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
-    <ProjectReference Include="..\CMPPayment\CMPPayment.csproj">
+    <ProjectReference Include="..\infrastructure\CMPNatural.infrastructure.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
-    <ProjectReference Include="..\CMPEmail\CMPEmail.csproj">
+    <ProjectReference Include="..\CMPPayment\CMPPayment.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
   </ItemGroup>

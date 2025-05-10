@@ -34,7 +34,7 @@ namespace CMPNatural.Application
                 )).Count();
 
             var requests = (await _invoiceRepository.GetAsync(x =>
-                ( x.Status == InvoiceStatus.Draft || x.Status == InvoiceStatus.Processing_Provider) && x.CompanyId == request.CompanyId
+                ( x.Status == InvoiceStatus.Draft) && x.CompanyId == request.CompanyId
                 )).Count();
 
             var ContractsCount = (await _companyContract.GetAsync(x =>
