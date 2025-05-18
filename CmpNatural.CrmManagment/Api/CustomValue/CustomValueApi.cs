@@ -4,16 +4,17 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 using ScoutDirect.Application.Responses;
 using System.Net;
+using CMPNatural.Core.Models;
 
 namespace CmpNatural.CrmManagment.Api.CustomValue
 {
     public class CustomValueApi
     {
-        public HighLevelSettings _highLevelSetting { get; set; }
+        private readonly HighLevelSettings _highLevelSetting;
 
-        public CustomValueApi(IOptions<HighLevelSettings> highLevelSetting)
+        public CustomValueApi(HighLevelSettings highLevelSetting)
         {
-            _highLevelSetting = highLevelSetting.Value;
+            _highLevelSetting = highLevelSetting;
         }
 
         public CommandResponse<List<CustomValueResponse>> getAll()

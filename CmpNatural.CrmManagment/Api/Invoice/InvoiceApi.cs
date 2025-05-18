@@ -8,16 +8,17 @@ using System.Net;
 using CmpNatural.CrmManagment.Command;
 using Newtonsoft.Json;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using CMPNatural.Core.Models;
 
 namespace CmpNatural.CrmManagment.Invoice
 {
     public class InvoiceApi
     {
-        public HighLevelSettings _highLevelSetting { get; set; }
+        private readonly HighLevelSettings _highLevelSetting;
 
-        public InvoiceApi(IOptions<HighLevelSettings> highLevelSetting)
+        public InvoiceApi(HighLevelSettings highLevelSetting)
         {
-            _highLevelSetting = highLevelSetting.Value;
+            _highLevelSetting = highLevelSetting;
         }
 
         public CommandResponse<InvoiceApiResponse> GetInvoice(string invoiceId)

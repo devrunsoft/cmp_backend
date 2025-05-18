@@ -40,4 +40,5 @@ namespace CMPNatural.Core.Entities
     public partial class ServiceArea : IIdentityObject<long> { }
     public partial class Payment : IIdentityObject<long> { }
     public partial class AppLog : IIdentityObject<long> { }
+    public partial class GoHighLevel : IIdentityObject<long> { }
 }

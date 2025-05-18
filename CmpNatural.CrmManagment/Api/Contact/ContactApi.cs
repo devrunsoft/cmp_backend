@@ -5,17 +5,18 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
 using ScoutDirect.Application.Responses;
 using System.Net;
+using CMPNatural.Core.Models;
 
 namespace CmpNatural.CrmManagment.Contact
 {
 
     public class ContactApi
     {
-        public HighLevelSettings _highLevelSetting { get; set; }
+        private readonly HighLevelSettings _highLevelSetting;
 
-        public ContactApi(IOptions<HighLevelSettings> highLevelSetting)
+        public ContactApi(HighLevelSettings highLevelSetting)
         {
-            _highLevelSetting = highLevelSetting.Value;
+            _highLevelSetting = highLevelSetting;
         }
 
         public CommandResponse<List<ContactResponse>> getAlllContact(string? query)

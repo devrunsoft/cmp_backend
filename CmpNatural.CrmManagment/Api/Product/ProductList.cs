@@ -9,16 +9,17 @@ using ScoutDirect.Application.Responses;
 using ScoutDirect.Core.Authentication;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json.Linq;
+using CMPNatural.Core.Models;
 
 namespace CmpNatural.CrmManagment.Product
 {
 	public class ProductListApi
 	{
-        public HighLevelSettings _highLevelSetting { get; set; }
+        private readonly HighLevelSettings _highLevelSetting;
 
-        public ProductListApi(IOptions<HighLevelSettings>  highLevelSetting)
+        public ProductListApi(HighLevelSettings  highLevelSetting)
         {
-            _highLevelSetting = highLevelSetting.Value;
+            _highLevelSetting = highLevelSetting;
         }
 
         public CommandResponse<List<ServiceResponse>> call()

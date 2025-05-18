@@ -62,6 +62,7 @@ namespace ScoutDirect.infrastructure
             services.AddTransient<IServiceAppointmentLocationRepository, ServiceAppointmentLocationRepository>();
             services.AddTransient<IPaymentRepository, PaymentRepository>();
             services.AddTransient<IAppLogRepository, AppLogRepository>();
+            services.AddTransient<IGoHighLevelRepository, GoHighLevelRepository>();
 
             //services.AddTransient<IinvoiceProviderRepository, InvoiceProviderRepository>();
 
