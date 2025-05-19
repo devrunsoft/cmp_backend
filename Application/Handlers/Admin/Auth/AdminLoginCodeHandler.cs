@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using CMPNatural.Application.Commands.Admin;
 using CMPNatural.Core.Repositories;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace CMPNatural.Application.Handlers.Admin.Auth
 {
@@ -26,7 +27,7 @@ namespace CMPNatural.Application.Handlers.Admin.Auth
 
         public async Task<CommandResponse<AdminEntity>> Handle(AdminLoginCodeCommand request, CancellationToken cancellationToken)
         {
-            var admin = (await _adminRepository.GetAsync(p => p.Email == request.Email)).FirstOrDefault();
+            var admin = (await _adminRepository.GetAsync(p => p.Email == request.Email, query => query.Include(x => x.Person))).FirstOrDefault();
 
             if (admin == null)
             {

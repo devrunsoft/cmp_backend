@@ -63,6 +63,7 @@
     <None Remove="Controllers\Client\TermsConditions\" />
     <None Remove="Controllers\Admin\Payment\" />
     <None Remove="Controllers\Admin\AppLog\" />
+    <None Remove="Properties\PublishProfiles\FolderProfile 114.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="View\" />
