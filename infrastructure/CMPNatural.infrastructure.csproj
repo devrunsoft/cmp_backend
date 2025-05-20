@@ -7,11 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="scripts/*.sql" />
     <None Remove="Data\" />
     <None Remove="Repository\" />
     <None Remove="Repository\Base\" />
     <None Remove="Logger\" />
     <None Remove="Behaviors\" />
+    <None Remove="DbQuery\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\" />
@@ -19,6 +21,7 @@
     <Folder Include="Repository\Base\" />
     <Folder Include="Logger\" />
     <Folder Include="Behaviors\" />
+    <Folder Include="DbQuery\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.7" />
@@ -30,6 +33,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="dbup-mysql" Version="6.0.4" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\CMPNatural.Core.csproj" />

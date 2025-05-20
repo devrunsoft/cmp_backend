@@ -162,7 +162,7 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
             command.InvoiceId = InvoiceId;
             var result = await _mediator.Send(command);
 
-            if (result.Data.ContractId != null)
+            if (result.IsSucces() && result.Data.ContractId != null)
             {
                 var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminHasCreateContract, result.Data.ContractId.Value);
                 sendEmailToClient(result.Data.CompanyId, emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern, emailDetails.ButtonText);

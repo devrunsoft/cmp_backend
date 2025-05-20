@@ -16,12 +16,16 @@ using CMPNatural.Core.Logger;
 using CMPNatural.infrastructure.Logger;
 using MediatR;
 using CMPNatural.Application.Logger;
+using infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using CMPNatural.infrastructure.DbQuery;
 
 namespace ScoutDirect.infrastructure
 {
     public static class RegisterDependencies
     {
-        public static void RegisterRepositories(this IServiceCollection services)
+        public static void RegisterRepositories(this IServiceCollection services, IConfiguration Configuration, bool isDevelopment)
         {
             services.AddTransient<ICompanyRepository, CompanyRepository>();
             services.AddTransient<ILocationCompanyRepository, LocationCompanyRepository>();
@@ -79,6 +83,15 @@ namespace ScoutDirect.infrastructure
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
 
+            if (isDevelopment)
+            {
+
+                DbQueryCreator.Init(Configuration.GetConnectionString("LocalConnection"));
+            }
+            else
+            {
+                DbQueryCreator.Init(Configuration.GetConnectionString("DefaultConnection"));
+            }
 
 
         }

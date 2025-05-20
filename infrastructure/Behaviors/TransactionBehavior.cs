@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using infrastructure.Data;
+using ScoutDirect.Application.Responses;
+using CMPNatural.Application.Responses;
 
 public class TransactionBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>
@@ -13,6 +15,14 @@ public class TransactionBehavior<TRequest, TResponse> : IPipelineBehavior<TReque
     {
         _dbContext = dbContext;
         _logger = logger;
+    }
+
+    bool IsDerivedFromCommandResponse(object obj)
+    {
+        var baseType = obj?.GetType().BaseType;
+        return baseType != null &&
+               baseType.IsGenericType &&
+               baseType.GetGenericTypeDefinition() == typeof(CommandResponse<>);
     }
 
     public async Task<TResponse> Handle(
@@ -31,6 +41,15 @@ public class TransactionBehavior<TRequest, TResponse> : IPipelineBehavior<TReque
             try
             {
                 var response = await next();
+                if (IsDerivedFromCommandResponse(response))
+                {
+                dynamic dynResponse = response;
+                    if (dynResponse.Success == false)
+                    {
+                        await transaction.RollbackAsync(cancellationToken);
+                        return response;
+                    }
+                }
                 //await _dbContext.SaveChangesAsync(cancellationToken);
                 await transaction.CommitAsync(cancellationToken);
 
