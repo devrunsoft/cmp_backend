@@ -56,3 +56,5 @@ next-env.d.ts
 /ScoutDirect/log/
 /CMPEmail/bin/
 /CMPEmail/obj/
+/.vs/
+/.idea/
