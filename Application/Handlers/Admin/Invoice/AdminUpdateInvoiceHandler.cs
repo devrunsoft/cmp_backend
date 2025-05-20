@@ -42,7 +42,7 @@ namespace CMPNatural.Application
             var invoice = (await _invoiceRepository.GetAsync(p => p.Id == requests.InvoiceId, query => query.Include(x => x.Company))).FirstOrDefault();
             if (invoice.Status != InvoiceStatus.Draft)
             {
-                return new NoAcess<Invoice>() { Message = "No Access To Edit Paid Invoice" };
+                return new NoAcess<Invoice>() { Message = "No Access To edit this Invoice" };
             }
             if (invoice.ContractId != null)
             {

@@ -20,7 +20,7 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<string>> Handle(LogoCommand request, CancellationToken cancellationToken)
         {
             var entity = (await _repository.GetAllAsync()).FirstOrDefault();
-            return new Success<string>() { Data = entity.CompanyIcon };
+            return new Success<string>() { Data = entity==null ? "" : entity.CompanyIcon };
         }
     }
 }
