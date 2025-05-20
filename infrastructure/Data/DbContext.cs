@@ -3,8 +3,7 @@ using Barbara.Core.Entities;
 using CMPNatural.Core.Entities;
 using CMPNatural.Core.Enums;
 using Microsoft.EntityFrameworkCore;
-using ScoutDirect.Core.Entities;
-using ScoutDirect.Core.Entities.Base;
+using Microsoft.Extensions.Configuration;
 
 namespace infrastructure.Data
 {
@@ -18,6 +17,7 @@ namespace infrastructure.Data
             : base(options)
         {
         }
+
         public virtual DbSet<Company> Company { get; set; } = null!;
         public virtual DbSet<LocationCompany> LocationCompany { get; set; } = null!;
         public virtual DbSet<DocumentSubmission> DocumentSubmission { get; set; } = null!;
@@ -54,11 +54,18 @@ namespace infrastructure.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-             //optionsBuilder.UseLazyLoadingProxies();
-            //if (!optionsBuilder.IsConfigured)
-            //{
-            //    optionsBuilder.UseMySQL("Server=188.245.68.131;Port=3306;Database=ScoutDirect;User Id=sammy;Password=Sdsw#2a1@=7632;");
-            //}
+            if (!optionsBuilder.IsConfigured)
+            {
+                //// Build config from appsettings.json
+                //var config = new ConfigurationBuilder()
+                //    .SetBasePath(Directory.GetCurrentDirectory()) // Important for locating the file
+                //    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                //    .Build();
+
+                //var connectionString = config.GetConnectionString("LocalConnection");
+
+                optionsBuilder.UseMySQL("Server=64.20.208.14;Port=3306;Database=CmpAppLocal;User Id=erfan;Password=5ssdf@hFghj227sdfjhFDdnsjgGgyR&;");
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

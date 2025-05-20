@@ -137,7 +137,7 @@ namespace ScoutDirect.Api
 
             //services.AddScoped<ICallDeferredOrders, CallDeferredOrders>();
 
-            services.RegisterRepositories();
+            services.RegisterRepositories(Configuration, _env.IsDevelopment());
 
             //// For Identity
             //services.AddIdentity<ApplicationUser, IdentityRole>()
