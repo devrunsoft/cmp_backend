@@ -7,6 +7,7 @@ namespace CMPNatural.Application.Model
     {
         public double Amount { get; set; }
         public string Address { get; set; } = "";
+        public string? Comment { get; set; }
         public List<ServiceAppointmentInput> ServiceAppointment { get; set; } = new List<ServiceAppointmentInput>();
     }
 }

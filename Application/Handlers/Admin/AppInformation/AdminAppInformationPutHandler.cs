@@ -28,10 +28,10 @@ namespace CMPNatural.Application
             if (request.CompanyIcon != null)
                 CompanyIcon = FileHandler.AppfileHandler(request.BaseVirtualPath, request.CompanyIcon, "CompanyIcon", "Admin/AppInfromation");
 
-            var entity = (await _repository.GetAllAsync()).FirstOrDefault();
-            if (entity == null)
-            {
-                entity = new AppInformation()
+            //var entity = (await _repository.GetAllAsync()).FirstOrDefault();
+            //if (entity == null)
+            //{
+               var entity = new AppInformation()
                 {
                 CompanyPhoneNumber = request.CompanyPhoneNumber,
                 CompanyTitle = request.CompanyTitle,
@@ -43,25 +43,26 @@ namespace CMPNatural.Application
                 CompanyEmail = request.CompanyEmail,
                 StripeApikey = request.StripeApikey,
                 StripePaymentMethodConfiguration = request.StripePaymentMethodConfiguration
-            };
-               entity = await _repository.AddAsync(entity);
-            }
-            else
-            {
+                };
 
-                entity.CompanyPhoneNumber = request.CompanyPhoneNumber;
-                entity.CompanyTitle = request.CompanyTitle;
-                entity.CompanyAddress = request.CompanyAddress;
-                entity.CompanyCeoFirstName = request.CompanyCeoFirstName;
-                entity.CompanyCeoLastName = request.CompanyCeoLastName;
-                entity.Sign = request.Sign;
-                entity.CompanyIcon = CompanyIcon;
-                entity.CompanyEmail = request.CompanyEmail;
-                entity.StripeApikey = request.StripeApikey;
-                entity.StripePaymentMethodConfiguration = request.StripePaymentMethodConfiguration;
+            entity = await _repository.AddAsync(entity);
+            //}
+            //else
+            //{
 
-                await _repository.UpdateAsync(entity);
-            }
+            //    entity.CompanyPhoneNumber = request.CompanyPhoneNumber;
+            //    entity.CompanyTitle = request.CompanyTitle;
+            //    entity.CompanyAddress = request.CompanyAddress;
+            //    entity.CompanyCeoFirstName = request.CompanyCeoFirstName;
+            //    entity.CompanyCeoLastName = request.CompanyCeoLastName;
+            //    entity.Sign = request.Sign;
+            //    entity.CompanyIcon = CompanyIcon;
+            //    entity.CompanyEmail = request.CompanyEmail;
+            //    entity.StripeApikey = request.StripeApikey;
+            //    entity.StripePaymentMethodConfiguration = request.StripePaymentMethodConfiguration;
+
+            //    await _repository.UpdateAsync(entity);
+            //}
 
             var cacheKey = $"AppInformation";
             _cache.Set(cacheKey, entity);

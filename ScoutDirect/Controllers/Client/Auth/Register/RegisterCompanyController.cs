@@ -18,6 +18,7 @@ using CmpNatural.CrmManagment.Webhook;
 using CMPNatural.Application.Commands.Billing;
 using CMPEmail;
 using Microsoft.Extensions.Options;
+using CMPNatural.Core.Models;
 
 namespace CMPNatural.Api.Controllers
 {
@@ -29,13 +30,15 @@ namespace CMPNatural.Api.Controllers
         protected readonly IMediator _mediator;
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _env ;
+        private readonly HighLevelSettings _highLevelSetting;
 
-        public RegisterCompanyController(IMediator mediator, IConfiguration configuration, IWebHostEnvironment env, IOptions<ExpiresModel> _expiresModel) : base(mediator)
+        public RegisterCompanyController(IMediator mediator, IConfiguration configuration, IWebHostEnvironment env, IOptions<ExpiresModel> _expiresModel, HighLevelSettings _highLevelSetting) : base(mediator)
         {
             _mediator = mediator;
             _configuration = configuration;
             _env = env;
             this._expiresModel = _expiresModel.Value;
+            this._highLevelSetting = _highLevelSetting;
         }
 
 
@@ -113,7 +116,7 @@ namespace CMPNatural.Api.Controllers
 
             if (_env.IsDevelopment())
             {
-                host = "https://localhost:7089";
+                host = "https://localhost:44202";
             }
             else
             {
@@ -122,7 +125,7 @@ namespace CMPNatural.Api.Controllers
 
             var link = host + "/api/RegisterCompany/Activate?activationLink=" + data.ActivationLink!.Value.ToString();
             data.ActivationLinkGo = link;
-            new ActivationLink().send(data);
+            new ActivationLink(_highLevelSetting).send(data);
         }
 
 

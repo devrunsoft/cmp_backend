@@ -106,7 +106,7 @@ namespace CMPNatural.Api
 
             if (Environment.IsDevelopment())
             {
-                host = "https://localhost:7089";
+                host = "https://localhost:44202";
             }
             else
             {

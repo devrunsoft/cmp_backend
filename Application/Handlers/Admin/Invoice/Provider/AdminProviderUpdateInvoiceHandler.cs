@@ -50,12 +50,13 @@ namespace CMPNatural.Application
                 .ThenInclude(i => i.ServiceAppointmentLocations)
                 .ThenInclude(p => p.LocationCompany)
             )).FirstOrDefault();
-            if (invoice.Status != InvoiceStatus.Processing_Provider)
+
+            if (invoice.Status == InvoiceStatus.Send_Payment)
             {
-                return new NoAcess<Invoice>() { Message = "No Access To Edit Paid Invoice" };
+                return new NoAcess<Invoice>() { Message = "No Access To Edit This Invoice" };
             }
 
-            if (invoice.Status != InvoiceStatus.Submited_Provider && invoice.Status != InvoiceStatus.Updated_Provider && invoice.Status != InvoiceStatus.Processing_Provider)
+            if (invoice.Status != InvoiceStatus.Submited_Provider && invoice.Status != InvoiceStatus.Updated_Provider && invoice.Status != InvoiceStatus.Processing_Provider && invoice.Status != InvoiceStatus.Send_To_Admin)
             {
                 return new NoAcess<Invoice>
                 {

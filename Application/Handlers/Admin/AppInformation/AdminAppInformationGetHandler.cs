@@ -22,7 +22,7 @@ namespace CMPNatural.Application
         }
         public async Task<CommandResponse<AppInformation>> Handle(AdminAppInformationGetCommand request, CancellationToken cancellationToken)
         {
-            var entity = (await _repository.GetAllAsync()).FirstOrDefault();
+            var entity = (await _repository.GetAllAsync()).LastOrDefault();
 
             var cacheKey = $"AppInformation";
             _cache.Set(cacheKey, entity);

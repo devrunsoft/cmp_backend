@@ -1,18 +1,25 @@
 ﻿using System;
 using System.Net;
 using CMPNatural.Application.Responses;
+using CMPNatural.Core.Models;
 using Newtonsoft.Json;
 
 namespace CmpNatural.CrmManagment.Webhook
 {
     public class ActivationLink
     {
+        private readonly HighLevelSettings _highLevelSetting;
+        public ActivationLink(HighLevelSettings _highLevelSetting)
+        {
+            this._highLevelSetting = _highLevelSetting;
+        }
         public ActivationLinkResponse? send(CompanyResponse email)
         {
             try
             {
                 var result = "-1";
-                var webAddr = "https://services.leadconnectorhq.com/hooks/porKMjTM2U71w2EOlVrb/webhook-trigger/RkTTg5uk6jadFqo1skjq";
+                //var webAddr = "https://services.leadconnectorhq.com/hooks/porKMjTM2U71w2EOlVrb/webhook-trigger/RkTTg5uk6jadFqo1skjq";
+                var webAddr = _highLevelSetting.ActivationLinkApi;
 
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;

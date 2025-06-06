@@ -50,6 +50,7 @@ namespace infrastructure.Data
         public virtual DbSet<ServiceArea> ServiceArea { get; set; } = null!;
         public virtual DbSet<Payment> Payment { get; set; } = null!;
         public virtual DbSet<AppLog> AppLog { get; set; } = null!;
+        public virtual DbSet<GoHighLevel> GoHighLevel { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -69,6 +70,10 @@ namespace infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<GoHighLevel>(entity =>
+            {
+                entity.ToTable("GoHighLevel");
+            });
 
             modelBuilder.Entity<AppLog>(entity =>
             {

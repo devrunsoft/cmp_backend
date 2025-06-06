@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Stripe.Forwarding;
 
 namespace CMPNatural.Application
 {
@@ -34,10 +35,18 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<Invoice>> Handle(ProviderSubmitInvoiceCommand requests, CancellationToken cancellationToken)
         {
-            var invoice = (await _invoiceRepository.GetAsync(p => p.Id == requests.InvoiceId && p.ProviderId == requests.ProviderId, query => query.Include(x => x.Company))).FirstOrDefault();
+            var invoice = (await _invoiceRepository.GetAsync(p => p.Id == requests.InvoiceId && p.ProviderId == requests.ProviderId, query => query.Include(x => x.Company)
+                .Include(i => i.BaseServiceAppointment)
+                .ThenInclude(i => i.ProductPrice)
+                .ThenInclude(p => p.Product)
+                .Include(i => i.BaseServiceAppointment)
+                .ThenInclude(i => i.ServiceAppointmentLocations)
+                .ThenInclude(p => p.LocationCompany)
+            )).FirstOrDefault();
+
             var entity = (await _repository.GetAsync(x => x.InvoiceId == invoice.Id)).FirstOrDefault();
 
-            if (invoice.Status != InvoiceStatus.Processing_Provider)
+            if (invoice.Status == InvoiceStatus.Send_Payment)
             {
                 return new NoAcess<Invoice>
                 {
@@ -59,9 +68,12 @@ namespace CMPNatural.Application
             foreach (var srv in services)
             {
                     srv.Status = ServiceStatus.Submited_Provider;
+                    srv.FactQty = srv.Qty;
+                    srv.OilQuality = requests.OilQuality;
                     await _baseServiceAppointmentRepository.UpdateAsync(srv);
             }
 
+            invoice.Comment = requests.Comment;
             invoice.Status = InvoiceStatus.Submited_Provider;
             invoice.CalculateAmountByamount();
             await _invoiceRepository.UpdateAsync(invoice);

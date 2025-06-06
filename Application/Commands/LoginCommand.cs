@@ -9,7 +9,6 @@ namespace CMPNatural.Application.Commands
     {
         public string BusinessEmail { get; set; } = null!;
         public string Password { get; set; } = null!;
-
     }
 }
 

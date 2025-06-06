@@ -16,7 +16,7 @@ namespace CMPNatural.Api.Controllers.Provider
         {
         }
 
-        [HttpGet]
+        [HttpGet("All")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Get([FromQuery] ProviderGetAllManifestCommand command)
@@ -32,6 +32,24 @@ namespace CMPNatural.Api.Controllers.Provider
         public async Task<ActionResult> GetId([FromRoute] long Id)
         {
             var result = await _mediator.Send(new ProviderGetManifestCommand() { Id = Id , ProviderId = rProviderId });
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Get()
+        {
+            var result = await _mediator.Send(new ProviderGetAllActiveManifestCommand() { ProviderId = rProviderId });
+            return Ok(result);
+        }
+
+        [HttpGet("Complete")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> GetComplete()
+        {
+            var result = await _mediator.Send(new ProviderGetAllCompleteManifestCommand() { ProviderId = rProviderId });
             return Ok(result);
         }
     }

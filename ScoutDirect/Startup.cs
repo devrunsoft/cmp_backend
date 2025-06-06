@@ -30,6 +30,7 @@ using Hangfire.MemoryStorage.Database;
 using CMPPayment;
 using CMPNatural.Application.Logger;
 using MediatR;
+using CMPNatural.Core.Models;
 
 namespace ScoutDirect.Api
 {
@@ -131,7 +132,8 @@ namespace ScoutDirect.Api
 
 
             services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
-            services.Configure<HighLevelSettings>(Configuration.GetSection("HighLevel"));
+            //services.Configure<HighLevelSettings>(Configuration.GetSection("HighLevel"));
+            services.AddSingleton(new HighLevelSettings());
 
             //services.AddScoped<ICallDeferredOrders, CallDeferredOrders>();
 
@@ -337,6 +339,13 @@ namespace ScoutDirect.Api
 
             GlobalConfiguration.Configuration.UseMemoryStorage();
 
+            var settings = serviceProvider.GetRequiredService<HighLevelSettings>();
+            var dbContext = serviceProvider.GetRequiredService<ScoutDBContext>();
+            var ghl = dbContext.GoHighLevel.OrderBy(x=>x.Id).LastOrDefault();
+            if (ghl != null)
+            {
+                settings.update(ghl);
+            }
 
 
 

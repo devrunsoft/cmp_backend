@@ -37,6 +37,9 @@ namespace CMPNatural.Core.Enums
         [Description("Send_Payment")]
         Send_Payment,
 
+        [Description("Send_To_Admin")]
+        Send_To_Admin,
+
         [Description("Deleted")]
         Deleted,
 
