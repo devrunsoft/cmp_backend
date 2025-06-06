@@ -1,55 +1,55 @@
-﻿using System;
-using GeoCoordinatePortable;
-using System.Runtime.InteropServices;
+﻿using GeoCoordinatePortable;
 using NetTopologySuite.Geometries;
 using NetTopologySuite.IO;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace CMPNatural.Core.Entities
 {
-	public partial class Provider
+    public partial class Provider
     {
-		public Provider()
-		{
-		}
+        private const double MetersPerMile = 1609.344;
 
-        const double MetersPerMile = 1609.344;
+        private static readonly GeoJsonReader _geoJsonReader = new();
 
-
-        private bool IsDistanceIn(double sLatitude, double sLongitude,ServiceArea model)
+        private bool IsDistanceIn(double sLatitude, double sLongitude, ServiceArea model)
         {
-            if (Lat == null || Long == null)
-                return false;
+            if (Lat == null || Long == null) return false;
 
             var sCoord = new GeoCoordinate(sLatitude, sLongitude);
-            var eCoord = new GeoCoordinate(model.Lat.Value, model.Lng.Value);
+            var eCoord = new GeoCoordinate(model.Lat!.Value, model.Lng!.Value);
             var dis = sCoord.GetDistanceTo(eCoord);
+
             return dis <= (model.Radius * MetersPerMile);
         }
+
         public bool IsPointInCity(double lat, double lng)
         {
             var point = new Point(lng, lat);
-            var reader = new GeoJsonReader();
 
             foreach (var item in ServiceArea)
             {
                 if (item.ServiceAreaType == Enums.ServiceAreaTypeEnum.Circle)
                 {
-                     if(IsDistanceIn(lat, lng, item))
-                    {
+                    if (IsDistanceIn(lat, lng, item))
                         return true;
-                    }
                 }
                 else
                 {
-                    var jObject = JObject.Parse(item.GeoJson);
-                    var geometryJson = jObject["features"]?[0]?["geometry"]?.ToString();
-                    if (geometryJson != null)
+                    try
                     {
-                        var geometry = reader.Read<Geometry>(geometryJson);
-                        if (geometry.Contains(point))
-                            return true;
+                        var geoJson = JObject.Parse(item.GeoJson);
+                        var geometryJson = geoJson["features"]?[0]?["geometry"]?.ToString();
+                        if (geometryJson != null)
+                        {
+                            var geometry = _geoJsonReader.Read<Geometry>(geometryJson);
+                            if (geometry.Contains(point))
+                                return true;
+                        }
+                    }
+                    catch
+                    {
+                        // Optional: log malformed GeoJSON
+                        continue;
                     }
                 }
             }
@@ -58,5 +58,3 @@ namespace CMPNatural.Core.Entities
         }
     }
 }
-
-

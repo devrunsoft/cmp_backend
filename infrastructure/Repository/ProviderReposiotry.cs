@@ -13,33 +13,58 @@ namespace CMPNatural.infrastructure.Repository
 {
     public class ProviderReposiotry : Repository<Provider, long>, IProviderReposiotry
     {
-        public ProviderReposiotry(ScoutDBContext context, Func<CacheTech, ICacheService> cacheService) : base(context, cacheService) { }
+        public ProviderReposiotry(ScoutDBContext context, Func<CacheTech, ICacheService> cacheService)
+            : base(context, cacheService) { }
 
-        private IQueryable<Provider> GeAllQuery() => _dbContext.Provider.Include(p=>p.ProviderService).Include(x=>x.ServiceArea);
+        // Only include ServiceArea unless ProviderService is needed
+        private IQueryable<Provider> GeBasicQuery() =>
+            _dbContext.Provider
+                .Include(p => p.ServiceArea)
+                .AsNoTracking(); // Disables change tracking for performance
 
-        public async Task<List<Provider>> GetAllSearchProviderAsync(double sLatitude, double sLongitude, Expression<Func<Provider, bool>> expression)
+        public async Task<List<Provider>> GetAllSearchProviderAsync(
+            double sLatitude,
+            double sLongitude,
+            Expression<Func<Provider, bool>> expression)
         {
-            var cachedList = await GeAllQuery().Where(expression)
-             .ToListAsync();
+            // Fetch only filtered providers from DB
+            var providerList = await GeBasicQuery()
+                .Where(expression)
+                .ToListAsync();
 
-            return cachedList.Where(p =>  p.IsPointInCity(sLatitude, sLongitude)
-             )
-                //.OrderBy(p => p.Distance(sLatitude, sLongitude))
-                .OrderBy(p => p.Id).ToList();
+            // Filter in-memory using optimized geo logic (with parallel)
+            var result = providerList
+                .AsParallel()
+                .WithDegreeOfParallelism(Environment.ProcessorCount)
+                .Where(p => p.IsPointInCity(sLatitude, sLongitude))
+                .OrderBy(p => p.Id)
+                .ToList();
+
+            return result;
         }
-
 
         public async Task<List<Provider>> GetAllSearchProviderAllInvoiceAsync(List<ServiceAppointmentLocation> locations)
         {
-            var cachedList = await GeAllQuery()
-            .ToListAsync();
-            return cachedList
-               .Where(p =>
-               p.Status != Core.Enums.ProviderStatus.Blocked &&
-                  locations.Any(s => p.IsPointInCity(s.LocationCompany.Lat, s.LocationCompany.Long)) &&
-                  locations.All(loc => p.ProviderService.Any(service => service.ProductId == loc.ServiceAppointment.ProductId)) // Ensure all exist
-             ).ToList();
+            // Include ProviderService only here
+            var providerList = await _dbContext.Provider
+                .Include(p => p.ServiceArea)
+                .Include(p => p.ProviderService)
+                .Where(p => p.Status != CMPNatural.Core.Enums.ProviderStatus.Blocked)
+                .AsNoTracking()
+                .ToListAsync();
+
+            var result = providerList
+                .AsParallel()
+                .WithDegreeOfParallelism(Environment.ProcessorCount)
+                .Where(p =>
+                    locations.Any(loc =>
+                        p.IsPointInCity(loc.LocationCompany.Lat, loc.LocationCompany.Long)) &&
+                    locations.All(loc =>
+                        p.ProviderService.Any(service => service.ProductId == loc.ServiceAppointment.ProductId))
+                )
+                .ToList();
+
+            return result;
         }
     }
 }
-
