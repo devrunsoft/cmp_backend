@@ -1,17 +1,25 @@
 ﻿using System;
 using System.Net;
+using CMPNatural.Core.Models;
 using Newtonsoft.Json;
 
 namespace CmpNatural.CrmManagment.Webhook
 {
     public class ForgotPassword
     {
+        private readonly HighLevelSettings _highLevelSetting;
+        public ForgotPassword(HighLevelSettings _highLevelSetting)
+        {
+            this._highLevelSetting = _highLevelSetting;
+        }
+
         public ActivationLinkResponse? send(string email, string forgotPasswordLink)
         {
             try
             {
                 var result = "-1";
-                var webAddr = "https://services.leadconnectorhq.com/hooks/porKMjTM2U71w2EOlVrb/webhook-trigger/30094ed0-dce8-4bb9-9c00-11cc5647dcee";
+                //var webAddr = "https://services.leadconnectorhq.com/hooks/porKMjTM2U71w2EOlVrb/webhook-trigger/30094ed0-dce8-4bb9-9c00-11cc5647dcee";
+                var webAddr = _highLevelSetting.ForgotPasswordApi;
 
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;

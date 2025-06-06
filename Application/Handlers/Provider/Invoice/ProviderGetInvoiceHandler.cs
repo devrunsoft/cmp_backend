@@ -24,7 +24,7 @@ namespace CMPNatural.Application.Handlers
 
         public async Task<CommandResponse<InvoiceResponse>> Handle(ProviderGetInvoiceCommand request, CancellationToken cancellationToken)
         {
-            var entity = (await _invoiceRepository.GetAsync(p => p.InvoiceId == request.InvoiceId && p.ProviderId == request.ProviderId,
+            var entity = (await _invoiceRepository.GetAsync(p => p.Id == request.InvoiceId && p.ProviderId == request.ProviderId,
                  query => query.Include(i => i.Company)
                 .ThenInclude(x => x.BillingInformation)
                 .Include(i => i.Provider)

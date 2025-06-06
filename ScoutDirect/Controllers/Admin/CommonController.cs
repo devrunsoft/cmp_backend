@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CMPNatural.Application;
 using CMPNatural.Application.Commands;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
@@ -44,6 +45,17 @@ namespace CMPNatural.Api.Controllers.Admin
 
             var fileBytes = await System.IO.File.ReadAllBytesAsync(filePath);
             return File(fileBytes, mimeType);
+        }
+
+
+        [HttpGet("Information")]
+        [Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Information()
+        {
+            var result = await _mediator.Send(new InformationCommand());
+            return Ok(result);
         }
 
     }

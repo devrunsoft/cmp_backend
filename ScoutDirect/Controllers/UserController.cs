@@ -23,6 +23,7 @@ using System.Net;
 using CMPNatural.Application.Model;
 using CMPEmail;
 using Microsoft.Extensions.Options;
+using CMPNatural.Core.Models;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -37,14 +38,16 @@ namespace ScoutDirect.Api.Controllers
         private readonly IConfiguration _configuration;
         private readonly IWebHostEnvironment _env;
         private readonly UpdateContactTokenApi _updateContact;
+        private readonly HighLevelSettings _highLevelSetting;
 
-        public UserController(IMediator mediator, IConfiguration configuration, IWebHostEnvironment env, UpdateContactTokenApi updateContact, IOptions<ExpiresModel> _expiresModel)
+        public UserController(IMediator mediator, IConfiguration configuration, IWebHostEnvironment env, UpdateContactTokenApi updateContact, IOptions<ExpiresModel> _expiresModel, HighLevelSettings _highLevelSetting)
         {
             _mediator = mediator;
             _configuration = configuration;
             _env = env;
             _updateContact = updateContact;
             this._expiresModel = _expiresModel.Value;
+            this._highLevelSetting = _highLevelSetting;
         }
 
         [HttpPost]
@@ -190,7 +193,7 @@ namespace ScoutDirect.Api.Controllers
 
             if (_env.IsDevelopment())
             {
-                host = "https://localhost:7089";
+                host = "https://localhost:44202";
             }
             else
             {
@@ -199,7 +202,7 @@ namespace ScoutDirect.Api.Controllers
 
             var link = host + "/api/User/CheckResetPassword?forgotPasswordLink=" + data.ActivationLink!.Value.ToString()+ "&&email=" + data.BusinessEmail.ToString();
 
-            new ForgotPassword().send(data.BusinessEmail, link);
+            new ForgotPassword(_highLevelSetting).send(data.BusinessEmail, link);
         }
 
 

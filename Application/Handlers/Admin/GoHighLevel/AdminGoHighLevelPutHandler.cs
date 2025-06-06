@@ -32,9 +32,12 @@ namespace CMPNatural.Application
             var entity = new GoHighLevel()
             {
                 Authorization = request.Authorization,
-                LocationId = request.locationId,
+                LocationId = request.LocationId,
                 RestApi = request.RestApi,
-                Version = request.Version
+                Version = request.Version,
+                ActivationLinkApi = request.ActivationLinkApi,
+                ForgotPasswordApi = request.ForgotPasswordApi,
+                UpdateContactApi = request.UpdateContactApi,
             };
 
             entity = await _repository.AddAsync(entity);

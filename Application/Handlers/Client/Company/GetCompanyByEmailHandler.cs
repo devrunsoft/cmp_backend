@@ -30,7 +30,7 @@ namespace CMPNatural.Application.Handlers.CommandHandlers.Company
             }
             else
             {
-                return new NoAcess() {};
+                return new NoAcess() { Message = $"No company found with the email address" };
             }
         }
     }

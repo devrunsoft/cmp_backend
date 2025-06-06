@@ -256,6 +256,7 @@
     <None Remove="Handlers\Admin\AppLog\" />
     <None Remove="Commands\Admin\GoHighLevel\" />
     <None Remove="Handlers\Admin\GoHighLevel\" />
+    <None Remove="Mapper\CommonAppInformation\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -518,6 +519,7 @@
     <Folder Include="Handlers\Admin\AppLog\" />
     <Folder Include="Commands\Admin\GoHighLevel\" />
     <Folder Include="Handlers\Admin\GoHighLevel\" />
+    <Folder Include="Mapper\CommonAppInformation\" />
   </ItemGroup> 
 
   <ItemGroup>

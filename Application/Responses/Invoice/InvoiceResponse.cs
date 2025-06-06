@@ -33,6 +33,8 @@ namespace CMPNatural.Application
         public virtual ICollection<BaseServiceAppointment> BaseServiceAppointment { get; set; } = new List<BaseServiceAppointment>();
 
 
+        public string? Comment { get; set; }
+
         public DateTime CreatedAt { get; set; }
 
         public string? InvoiceStatus {
