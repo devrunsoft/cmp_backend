@@ -13,7 +13,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using ScoutDirect.Application.Responses;
 using ScoutDirect.Api.Controllers._Base;
-
+using CMPNatural.Application.Command;
 
 namespace CMPNatural.Api.Controllers.Admin.Provider
 {
@@ -45,7 +45,16 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
         {
             string wwwPath = Environment.ContentRootPath;
             var result = await _mediator.Send(new AdminPutProviderCommand(input, rProviderId , wwwPath));
+            return Ok(result);
+        }
 
+        [HttpPut("UpdateServiceAndLocation")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> UpdateServiceAndLocation([FromBody] ProviderUpdateServiceAndLocationCommand command)
+        {
+            command.ProviderId = rProviderId;
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
 

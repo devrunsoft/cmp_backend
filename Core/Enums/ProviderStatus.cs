@@ -17,4 +17,4 @@ namespace CMPNatural.Core.Enums
         PendingEmail = 4,
     }
 
-}
+}   

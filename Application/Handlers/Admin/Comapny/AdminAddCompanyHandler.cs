@@ -33,7 +33,7 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
 
         public async Task<CommandResponse<object>> Handle(AdminAddCompanyCommand request, CancellationToken cancellationToken)
         {
-            var emailPattern = @"^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$";
+            var emailPattern = @"^[\w\.\+-]+@([\w-]+\.)+[a-zA-Z]{2,7}$";
             if (!Regex.IsMatch(request.BusinessEmail, emailPattern))
             {
                 return new NoAcess() { Message = "The email format is invalid. Please provide a valid email address." };
