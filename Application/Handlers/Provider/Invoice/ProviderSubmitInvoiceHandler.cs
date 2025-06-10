@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Stripe.Forwarding;
+using CMPNatural.Core.Models;
 
 namespace CMPNatural.Application
 {
@@ -20,10 +21,11 @@ namespace CMPNatural.Application
         private readonly IProductPriceRepository _productPriceRepository;
         private readonly IBaseServiceAppointmentRepository _baseServiceAppointmentRepository;
         private readonly IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository;
+        private readonly AppSetting _appSetting;
 
         public ProviderSubmitInvoiceHandler(IinvoiceRepository invoiceRepository, IProductPriceRepository productPriceRepository,
              IBaseServiceAppointmentRepository baseServiceAppointmentRepository, IManifestRepository _repository, IAppInformationRepository _apprepository,
-             IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository)
+             IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository, AppSetting appSetting)
         {
             _invoiceRepository = invoiceRepository;
             _productPriceRepository = productPriceRepository;
@@ -31,6 +33,7 @@ namespace CMPNatural.Application
             this._repository = _repository;
             this._apprepository = _apprepository;
             this._serviceAppointmentLocationRepository = _serviceAppointmentLocationRepository;
+            this._appSetting = appSetting;
         }
 
         public async Task<CommandResponse<Invoice>> Handle(ProviderSubmitInvoiceCommand requests, CancellationToken cancellationToken)
@@ -79,7 +82,7 @@ namespace CMPNatural.Application
             await _invoiceRepository.UpdateAsync(invoice);
 
             var information = (await _apprepository.GetAllAsync()).LastOrDefault();
-            await CreateManifestContent.CreateContent(invoice, information, entity, _serviceAppointmentLocationRepository);
+            await CreateManifestContent.CreateContent(invoice, information, entity, _serviceAppointmentLocationRepository, _appSetting);
             entity.Status = ManifestStatus.Send_To_Admin;
             entity.ManifestNumber = entity.Number;
             await _repository.UpdateAsync(entity);

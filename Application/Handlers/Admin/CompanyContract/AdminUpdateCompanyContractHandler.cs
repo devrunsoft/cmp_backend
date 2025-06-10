@@ -10,6 +10,7 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using ScoutDirect.Core.Entities.Base;
 using CMPNatural.Core.Enums;
+using CMPNatural.Core.Models;
 
 namespace CMPNatural.Application
 {
@@ -19,14 +20,16 @@ namespace CMPNatural.Application
         private readonly IContractRepository _contractrepository;
         private readonly IAppInformationRepository _apprepository;
         private readonly IinvoiceRepository _baseServicerepository;
+        private readonly AppSetting _appSetting;
 
         public AdminUpdateCompanyContractHandler(ICompanyContractRepository _repository, IContractRepository _contractrepository,
-            IinvoiceRepository baseServicerepository, IAppInformationRepository _apprepository)
+            IinvoiceRepository baseServicerepository, IAppInformationRepository _apprepository, AppSetting appSetting)
         {
             this._repository = _repository;
             this._contractrepository = _contractrepository;
             this._baseServicerepository = baseServicerepository;
             this._apprepository = _apprepository;
+            this._appSetting = appSetting;
         }
 
         public async Task<CommandResponse<CompanyContract>> Handle(AdminUpdateCompanyContractCommand request, CancellationToken cancellationToken)
@@ -59,7 +62,7 @@ namespace CMPNatural.Application
             var company = invoice.Company;
 
 
-            var dbContent = AdminContractCompanyContractHandler.Create(invoice, information, contract, company, entity);
+            var dbContent = AdminContractCompanyContractHandler.Create(invoice, information, contract, company, entity, _appSetting);
             entity.Content = dbContent.ToString();
             entity.ContractId = contract.Id;
             await _repository.UpdateAsync(entity);

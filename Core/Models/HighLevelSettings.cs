@@ -13,6 +13,7 @@ namespace CMPNatural.Core.Models
         public string UpdateContactApi { get; set; } = null!;
         public string ForgotPasswordApi { get; set; } = null!;
         public string ActivationLinkApi { get; set; } = null!;
+        public string SendEmailApi { get; set; } = null!;
 
         public void update(GoHighLevel model)
         {
@@ -24,6 +25,7 @@ namespace CMPNatural.Core.Models
             UpdateContactApi = model.UpdateContactApi;
             ForgotPasswordApi = model.ForgotPasswordApi;
             ActivationLinkApi = model.ActivationLinkApi;
+            SendEmailApi = model.SendEmailApi;
         }
     }
 }

@@ -39,8 +39,9 @@ namespace ScoutDirect.Api.Controllers
         private readonly IWebHostEnvironment _env;
         private readonly UpdateContactTokenApi _updateContact;
         private readonly HighLevelSettings _highLevelSetting;
+        private readonly AppSetting _appSetting;
 
-        public UserController(IMediator mediator, IConfiguration configuration, IWebHostEnvironment env, UpdateContactTokenApi updateContact, IOptions<ExpiresModel> _expiresModel, HighLevelSettings _highLevelSetting)
+        public UserController(IMediator mediator, IConfiguration configuration, IWebHostEnvironment env, UpdateContactTokenApi updateContact, IOptions<ExpiresModel> _expiresModel, HighLevelSettings _highLevelSetting, AppSetting appSetting)
         {
             _mediator = mediator;
             _configuration = configuration;
@@ -48,6 +49,7 @@ namespace ScoutDirect.Api.Controllers
             _updateContact = updateContact;
             this._expiresModel = _expiresModel.Value;
             this._highLevelSetting = _highLevelSetting;
+            _appSetting = appSetting;
         }
 
         [HttpPost]
@@ -197,7 +199,7 @@ namespace ScoutDirect.Api.Controllers
             }
             else
             {
-                host = "https://api.app-cmp.com";
+                host = _appSetting.host;
             }
 
             var link = host + "/api/User/CheckResetPassword?forgotPasswordLink=" + data.ActivationLink!.Value.ToString()+ "&&email=" + data.BusinessEmail.ToString();

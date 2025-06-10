@@ -1,4 +1,5 @@
 ﻿using CMPNatural.Core.Entities;
+using CMPNatural.Core.Models;
 using CMPNatural.Core.Repositories;
 using CMPPayment.Model;
 using ScoutDirect.Core.Caching;
@@ -11,6 +12,8 @@ public class PaymentConfiguration : IPaymentConfiguration
 {
     private readonly IAppInformationRepository _repository;
     private readonly ICacheService _cache;
+    private readonly AppSetting _appSetting;
+
     public PaymentConfiguration(IAppInformationRepository providerReposiotry, Func<CacheTech, ICacheService> _cacheService)
     {
         _repository = providerReposiotry;
@@ -26,8 +29,8 @@ public class PaymentConfiguration : IPaymentConfiguration
             //PaymentMethodTypes = new List<string> { "card" },
             LineItems = CommandBuilder.Command(productPrices),
             Mode = "payment",
-            SuccessUrl = "https://api.app-cmp.com/api/Payment/CheckStatus?session_id={CHECKOUT_SESSION_ID}",
-            CancelUrl = "https://api.app-cmp.com/api/Payment/Cancel?session_id={CHECKOUT_SESSION_ID}"
+            SuccessUrl = _appSetting.host+ "/api/Payment/CheckStatus?session_id={CHECKOUT_SESSION_ID}",
+            CancelUrl = _appSetting.host + "/api/Payment/Cancel?session_id={CHECKOUT_SESSION_ID}"
         };
 
         var service = new SessionService();

@@ -11,12 +11,13 @@ using CMPNatural.Core.Repositories;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using CMPNatural.Core.Models;
 
 namespace CMPNatural.Application
 {
 	public class CreateManifestContent
 	{
-		public static async Task CreateContent(Invoice services,AppInformation information, Manifest entity, IServiceAppointmentLocationRepository locationRepository)
+		public static async Task CreateContent(Invoice services,AppInformation information, Manifest entity, IServiceAppointmentLocationRepository locationRepository, AppSetting _appSetting)
 		{
 
             var serviceHtmlParts = new List<string>();
@@ -57,7 +58,7 @@ namespace CMPNatural.Application
 
             var managementCompany = new
             {
-                Logo = $"<img width={40} height={40}  src='https://api.app-cmp.com{information.CompanyIcon}' alt='Company Logo' />",
+                Logo = $"<img width={40} height={40}  src='{_appSetting.host}{information.CompanyIcon}' alt='Company Logo' />",
 
                 Services = finalHtmlRow
             };

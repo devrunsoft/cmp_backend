@@ -210,6 +210,8 @@ namespace ScoutDirect.Api
             services.Configure<AppVersionModel>(Configuration.GetSection("AppVersion"));
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.Configure<ExpiresModel>(Configuration.GetSection("Expires"));
+            var appSetting = Configuration.GetSection("AppSetting").Get<AppSetting>();
+            services.AddSingleton(appSetting);
 
             //services.AddTransient<IPaymentConfiguration, PaymentConfiguration>();
             services.AddTransient<IEmailSender, EmailSender>();

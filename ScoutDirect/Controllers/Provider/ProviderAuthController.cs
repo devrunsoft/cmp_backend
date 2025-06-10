@@ -7,6 +7,7 @@ using CMPNatural.Application;
 using CMPNatural.Application.Responses;
 using CMPNatural.Core.Entities;
 using CMPNatural.Core.Enums;
+using CMPNatural.Core.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -21,10 +22,12 @@ namespace CMPNatural.Api
     {
         private readonly IWebHostEnvironment Environment;
         private readonly IConfiguration _configuration;
-        public ProviderAuthController(IMediator mediator, IConfiguration configuration, IWebHostEnvironment _environment) : base(mediator)
+        private readonly AppSetting _appSetting;
+        public ProviderAuthController(IMediator mediator, IConfiguration configuration, IWebHostEnvironment _environment, AppSetting appSetting) : base(mediator)
         {
             _configuration = configuration;
             Environment = _environment;
+            _appSetting = appSetting;
         }
 
 
@@ -77,7 +80,13 @@ namespace CMPNatural.Api
             var result = await _mediator.Send(command);
 
             if (!result.IsSucces())
+            {
+                if (result.Data != null)
+                {
+                    EmailSender(result.Data);
+                }
                 return Ok(result);
+            }
 
             var data = result.Data;
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
@@ -110,7 +119,7 @@ namespace CMPNatural.Api
             }
             else
             {
-                host = "https://api.app-cmp.com";
+                host = _appSetting.host;
             }
 
             var link = host + "/api/Provider/Provider/Activate?activationLink=" + data.ActivationLink!.Value.ToString();

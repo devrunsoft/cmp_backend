@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Text;
 using CMPNatural.Core.Enums;
-
+using CMPNatural.Core.Models;
 
 namespace CMPNatural.Application
 {
@@ -17,14 +17,16 @@ namespace CMPNatural.Application
         private readonly IAppInformationRepository _apprepository;
         private readonly IManifestRepository _repository;
         private readonly IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository;
+        private readonly AppSetting _appSetting;
         public AdminCreateManifestHandler(IManifestRepository _repository, IinvoiceRepository _invoiceRepository, IAppInformationRepository _apprepository,
-             IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository)
+             IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository, AppSetting appSetting)
         {
 
             this._invoiceRepository = _invoiceRepository;
             this._apprepository = _apprepository;
             this._repository = _repository;
             this._serviceAppointmentLocationRepository = _serviceAppointmentLocationRepository;
+            this._appSetting = appSetting;
         }
         public async Task<CommandResponse<Manifest>> Create(Invoice invoice , ManifestStatus status)
 		{
@@ -48,7 +50,7 @@ namespace CMPNatural.Application
             };
 
             var result = await _repository.AddAsync(entity);
-            await CreateManifestContent.CreateContent(services, information, entity, _serviceAppointmentLocationRepository);
+            await CreateManifestContent.CreateContent(services, information, entity, _serviceAppointmentLocationRepository, _appSetting);
             entity.ManifestNumber = entity.Number;
             await _repository.UpdateAsync(entity);
             return new Success<Manifest>() { Data = result, Message = "Successfull!" };

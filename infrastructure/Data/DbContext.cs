@@ -64,7 +64,7 @@ namespace infrastructure.Data
 
                 //var connectionString = config.GetConnectionString("LocalConnection");
 
-                optionsBuilder.UseMySQL("Server=64.20.208.14;Port=3306;Database=CmpAppLocal;User Id=erfan;Password=5ssdf@hFghj227sdfjhFDdnsjgGgyR&;");
+                //optionsBuilder.UseMySQL("Server=64.20.208.14;Port=3306;Database=CmpAppLocal;User Id=erfan;Password=5ssdf@hFghj227sdfjhFDdnsjgGgyR&;");
             }
         }
 

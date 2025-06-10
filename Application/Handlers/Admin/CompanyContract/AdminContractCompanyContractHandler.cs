@@ -8,15 +8,14 @@ using Microsoft.VisualBasic;
 using CMPNatural.Core.Extentions;
 using CMPNatural.Core.Enums;
 using CMPNatural.Core.Helper;
-
-
+using CMPNatural.Core.Models;
 
 namespace CMPNatural.Application
 {
 	public class AdminContractCompanyContractHandler
 	{
 
-		public static  string Create(Invoice invoice, AppInformation information, Contract contract,Company company, CompanyContract result)
+		public static  string Create(Invoice invoice, AppInformation information, Contract contract,Company company, CompanyContract result, AppSetting _appSetting)
 		{
             List<string> serviceList = invoice.BaseServiceAppointment
              .Select(x => $"<strong>{x.Product.Name}</strong>  - <strong>{x.ProductPrice.Name} </strong> "
@@ -30,7 +29,7 @@ namespace CMPNatural.Application
 
             var managementCompany = new
             {
-                Logo = $"<img width={40} height={40}  src='https://api.app-cmp.com{information.CompanyIcon}' alt='Company Logo' />",
+                Logo = $"<img width={40} height={40}  src='{_appSetting.host}{information.CompanyIcon}' alt='Company Logo' />",
                 //Name = $"{information.CompanyCeoFirstName}",
                 //Address = $"{information.CompanyAddress}",
                 //Phone = $"{information.CompanyAddress}",

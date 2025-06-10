@@ -19,6 +19,7 @@ namespace CMPNatural.Application.Commands
         public string UpdateContactApi { get; set; }
         public string ForgotPasswordApi { get; set; }
         public string ActivationLinkApi { get; set; }
+        public string SendEmailApi { get; set; }
     }
 }
 

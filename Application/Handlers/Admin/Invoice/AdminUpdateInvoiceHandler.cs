@@ -12,6 +12,7 @@ using CMPNatural.Application.Commands.Admin.Invoice;
 using CMPNatural.Application.Handlers;
 using Microsoft.EntityFrameworkCore;
 using ScoutDirect.Core.Entities.Base;
+using CMPNatural.Core.Models;
 
 namespace CMPNatural.Application
 {
@@ -23,10 +24,11 @@ namespace CMPNatural.Application
         private readonly IContractRepository _contractRepository;
         private readonly ICompanyContractRepository _companyContractRepository;
         private readonly IAppInformationRepository _appRepository;
+        private readonly AppSetting _appSetting;
 
         public AdminUpdateInvoiceHandler(IinvoiceRepository invoiceRepository, IProductPriceRepository productPriceRepository ,
              IBaseServiceAppointmentRepository baseServiceAppointmentRepository, IContractRepository _contractRepository,
-             ICompanyContractRepository _companyContractRepository, IAppInformationRepository _appRepository)
+             ICompanyContractRepository _companyContractRepository, IAppInformationRepository _appRepository, AppSetting appSetting)
         {
             _invoiceRepository = invoiceRepository;
             _productPriceRepository = productPriceRepository;
@@ -34,6 +36,7 @@ namespace CMPNatural.Application
             this._contractRepository = _contractRepository;
             this._companyContractRepository = _companyContractRepository;
             this._appRepository = _appRepository;
+            this._appSetting = appSetting;
         }
 
         public async Task<CommandResponse<Invoice>> Handle(AdminUpdateInvoiceCommand requests, CancellationToken cancellationToken)
@@ -137,7 +140,7 @@ namespace CMPNatural.Application
 
             if (requests.CreateContract)
             {
-                var result = await new AdminCreateCompanyContractHandler(_companyContractRepository, _contractRepository, _invoiceRepository, _appRepository)
+                var result = await new AdminCreateCompanyContractHandler(_companyContractRepository, _contractRepository, _invoiceRepository, _appRepository, _appSetting)
                     .Create(invoice, invoice.CompanyId);
 
                 if (!result.IsSucces())

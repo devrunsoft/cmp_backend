@@ -9,7 +9,7 @@ namespace CmpNatural.CrmManagment.Command
         public bool liveMode { get; set; } = true;
         public string userId { get; set; } = "Ud6v3oprv0NOkURRQrmn";
         public AutoPayment autoPayment { get; set; } = new AutoPayment() { enable = true , type = "customer_card" };
-        public SentFrom sentFrom { get; set; } = new SentFrom() { fromName = "App-CMP office", fromEmail = "app@app-cmp.com" };
+        public SentFrom sentFrom { get; set; } = new SentFrom() { fromName = "App-CMP office", fromEmail = "" };
         public SentTo sentTo { get; set; }
     }
 

@@ -38,7 +38,8 @@ namespace CMPNatural.Application
             {
                 return new NoAcess<Provider>()
                 {
-                    Message = "Your account is pending email verification. Please check your inbox and click the activation link to continue."
+                    Message = "Your account is pending email verification. Please check your inbox and click the activation link to continue.",
+                    Data = admin
                 };
             }
             if (admin.Password != request.Password)

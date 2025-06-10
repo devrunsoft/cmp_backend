@@ -1,18 +1,25 @@
 ﻿using System;
 using System.Net;
 using CMPEmail.Email;
+using CMPNatural.Core.Models;
 using Newtonsoft.Json;
 
 namespace CmpNatural.CrmManagment.Webhook
 {
     public class EmailWebHook
     {
-        public static void send(MailModel model)
+        private readonly HighLevelSettings _highLevelSetting;
+        public EmailWebHook(HighLevelSettings _highLevelSetting)
+        {
+            this._highLevelSetting = _highLevelSetting;
+        }
+        public void send(MailModel model)
         {
             try
             {
                 var result = "-1";
-                var webAddr = "https://services.leadconnectorhq.com/hooks/porKMjTM2U71w2EOlVrb/webhook-trigger/4wKrrLJRp3RgBTOqHOrq";
+                //var webAddr = "https://services.leadconnectorhq.com/hooks/porKMjTM2U71w2EOlVrb/webhook-trigger/4wKrrLJRp3RgBTOqHOrq";
+                var webAddr = _highLevelSetting.SendEmailApi;
 
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(webAddr);
                 ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
@@ -47,7 +54,7 @@ namespace CmpNatural.CrmManagment.Webhook
             }
             catch (Exception ex)
             {
-                //return null;
+                Console.WriteLine(ex.Message);
             }
         }
     }

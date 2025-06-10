@@ -11,6 +11,7 @@ namespace CMPNatural.Core.Entities
         public string UpdateContactApi { get; set; } = null!;
         public string ForgotPasswordApi { get; set; } = null!;
         public string ActivationLinkApi { get; set; } = null!;
+        public string SendEmailApi { get; set; } = null!;
     }
 }
 

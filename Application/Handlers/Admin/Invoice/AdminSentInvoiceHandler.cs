@@ -8,6 +8,7 @@ using System.Linq;
 using CMPNatural.Core.Enums;
 using CMPNatural.Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using CMPNatural.Core.Models;
 
 namespace CMPNatural.Application.Handlers
 {
@@ -17,14 +18,16 @@ namespace CMPNatural.Application.Handlers
         private readonly IContractRepository _contractRepository;
         private readonly ICompanyContractRepository _companyContractRepository;
         private readonly IAppInformationRepository _appRepository;
+        private readonly AppSetting _appSetting;
         public AdminSentInvoiceHandler(IinvoiceRepository invoiceRepository,
              IContractRepository contractRepository,
-             ICompanyContractRepository companyContractRepository, IAppInformationRepository _appRepository)
+             ICompanyContractRepository companyContractRepository, IAppInformationRepository _appRepository, AppSetting appSetting)
         {
             _invoiceRepository = invoiceRepository;
             _contractRepository = contractRepository;
             _companyContractRepository = companyContractRepository;
             this._appRepository = _appRepository;
+            this._appSetting = appSetting;
         }
 
         public async Task<CommandResponse<Invoice>> Handle(AdminSentInvoiceCommand request, CancellationToken cancellationToken)
@@ -38,7 +41,7 @@ namespace CMPNatural.Application.Handlers
             }
             //if (requests.CreateContract)
             //{
-                var result = await new AdminCreateCompanyContractHandler(_companyContractRepository, _contractRepository , _invoiceRepository , _appRepository)
+                var result = await new AdminCreateCompanyContractHandler(_companyContractRepository, _contractRepository , _invoiceRepository , _appRepository, _appSetting)
                     .Create(entity, entity.CompanyId);
 
                 if (!result.IsSucces())

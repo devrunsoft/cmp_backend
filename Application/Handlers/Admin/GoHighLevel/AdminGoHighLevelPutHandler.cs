@@ -28,7 +28,6 @@ namespace CMPNatural.Application
         }
         public async Task<CommandResponse<GoHighLevel>> Handle(AdminGoHighLevelPutCommand request, CancellationToken cancellationToken)
         {
-
             var entity = new GoHighLevel()
             {
                 Authorization = request.Authorization,
@@ -38,13 +37,11 @@ namespace CMPNatural.Application
                 ActivationLinkApi = request.ActivationLinkApi,
                 ForgotPasswordApi = request.ForgotPasswordApi,
                 UpdateContactApi = request.UpdateContactApi,
+                SendEmailApi = request.SendEmailApi
             };
 
             entity = await _repository.AddAsync(entity);
-
             _highLevelSetting.update(entity);
-            //var cacheKey = $"GoHighLevel";
-            //_cache.Set(cacheKey, entity);
 
             return new Success<GoHighLevel>() { Data = entity };
 

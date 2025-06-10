@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CMPNatural.Application.Model.ServiceAppointment;
+using CMPNatural.Core.Models;
 
 namespace CMPNatural.Application
 {
@@ -23,11 +24,12 @@ namespace CMPNatural.Application
         private readonly IAppInformationRepository _appRepository;
         private readonly IManifestRepository _repository;
         private readonly IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository;
+        private readonly AppSetting _appSetting;
 
         public AdminProviderUpdateInvoiceHandler(IinvoiceRepository invoiceRepository, IProductPriceRepository productPriceRepository,
              IBaseServiceAppointmentRepository baseServiceAppointmentRepository, IContractRepository _contractRepository,
              ICompanyContractRepository _companyContractRepository, IAppInformationRepository _appRepository,IManifestRepository _repository,
-             IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository)
+             IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository, AppSetting appSetting)
         {
             _invoiceRepository = invoiceRepository;
             _productPriceRepository = productPriceRepository;
@@ -37,6 +39,7 @@ namespace CMPNatural.Application
             this._appRepository = _appRepository;
             this._repository = _repository;
             this._serviceAppointmentLocationRepository = _serviceAppointmentLocationRepository;
+            this._appSetting = appSetting;
         }
 
         public async Task<CommandResponse<Invoice>> Handle(AdminProviderUpdateInvoiceCommand requests, CancellationToken cancellationToken)
@@ -184,7 +187,7 @@ namespace CMPNatural.Application
             //await _baseServiceAppointmentRepository.DeleteRangeAsync(services);
 
             var information = (await _appRepository.GetAllAsync()).LastOrDefault();
-            await CreateManifestContent.CreateContent(invoice, information, entity, _serviceAppointmentLocationRepository);
+            await CreateManifestContent.CreateContent(invoice, information, entity, _serviceAppointmentLocationRepository,_appSetting);
             entity.Status = ManifestStatus.Completed;
             entity.ManifestNumber = entity.Number;
             await _repository.UpdateAsync(entity);

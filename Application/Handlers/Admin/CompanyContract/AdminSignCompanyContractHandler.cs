@@ -8,6 +8,7 @@ using ScoutDirect.Core.Repositories.Base;
 using CMPNatural.Core.Enums;
 using System.Linq;
 using CMPNatural.Core.Helper;
+using CMPNatural.Core.Models;
 
 namespace CMPNatural.Application
 {
@@ -18,15 +19,16 @@ namespace CMPNatural.Application
         private readonly IinvoiceRepository _invoiceRepository;
         private readonly IManifestRepository _manifestRepository;
         private readonly IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository;
+        private readonly AppSetting _appSetting;
         public AdminSignCompanyContractHandler(ICompanyContractRepository repository, IinvoiceRepository invoiceRepository, IAppInformationRepository apprepository,
-            IManifestRepository _manifestRepository, IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository
-            )
+            IManifestRepository _manifestRepository, IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository, AppSetting _appSetting)
         {
             _repository = repository;
             _invoiceRepository = invoiceRepository;
             _apprepository = apprepository;
             this._manifestRepository = _manifestRepository;
             this._serviceAppointmentLocationRepository = _serviceAppointmentLocationRepository;
+            this._appSetting = _appSetting;
         }
         public async Task<CommandResponse<CompanyContract>> Handle(AdminSignCompanyContractCommand request, CancellationToken cancellationToken)
         {
@@ -63,8 +65,8 @@ namespace CMPNatural.Application
             {
                 item.Status = InvoiceStatus.Needs_Assignment;
                 await _invoiceRepository.UpdateAsync(item);
-                await new AdminCreateManifestHandler(_manifestRepository, _invoiceRepository, _apprepository, _serviceAppointmentLocationRepository).Create(item, ManifestStatus.Draft);
-                await CreateScaduleServiceHandler.Create(item, _manifestRepository, _invoiceRepository, _apprepository, _serviceAppointmentLocationRepository);
+                await new AdminCreateManifestHandler(_manifestRepository, _invoiceRepository, _apprepository, _serviceAppointmentLocationRepository, _appSetting).Create(item, ManifestStatus.Draft);
+                await CreateScaduleServiceHandler.Create(item, _manifestRepository, _invoiceRepository, _apprepository, _serviceAppointmentLocationRepository, _appSetting);
             }
 
             return new Success<CompanyContract>() { Data = entity };

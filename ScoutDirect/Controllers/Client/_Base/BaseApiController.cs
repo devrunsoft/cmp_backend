@@ -1,6 +1,7 @@
 ﻿
 using CMPEmail.Email;
 using CMPNatural.Api.Controllers.Service;
+using CMPNatural.Core.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ScoutDirect.Core.Caching;
@@ -25,13 +26,13 @@ namespace ScoutDirect.Api.Controllers._Base
         [NonAction]
         public void SendToProvider(string subject, string body, string email, string buttonText)
         {
-            emailSender.SendToProvider(subject, body, email, buttonText);
+            emailSender.SendToProvider(_appSetting,subject, body, email, buttonText);
         }
 
         [NonAction]
         public void SendToClient(string subject, string body, string email, string buttonText)
         {
-            emailSender.SendToClient(subject, body, email, buttonText);
+            emailSender.SendToClient(_appSetting , subject, body, email, buttonText);
         }
 
         [NonAction]
@@ -43,31 +44,35 @@ namespace ScoutDirect.Api.Controllers._Base
         [NonAction]
         public void sendEmailToAdmin(string subject, string body)
         {
-           emailSender.SendAdmin(subject, body, serviceScopeFactory , null , null);
+           emailSender.SendAdmin(_appSetting, subject, body, serviceScopeFactory , null , null);
         }
 
         [NonAction]
         public void sendEmailToClient(long companyId ,string subject, string body)
         {
-             emailSender.SendClient(companyId, subject, body, serviceScopeFactory, null , null);
+             emailSender.SendClient(_appSetting,companyId, subject, body, serviceScopeFactory, null , null);
         }
 
         [NonAction]
         public void sendEmailToAdmin(string subject, string body,string Link, string buttonText)
         {
-             emailSender.SendAdmin(subject, body, serviceScopeFactory, Link , buttonText);
+             emailSender.SendAdmin(_appSetting, subject, body, serviceScopeFactory, Link , buttonText);
         }
 
         [NonAction]
         public void sendEmailToClient(long companyId, string subject, string body,string Link, string buttonText)
         {
-            emailSender.SendClient(companyId, subject, body, serviceScopeFactory, Link, buttonText);
+            emailSender.SendClient(_appSetting,companyId, subject, body, serviceScopeFactory, Link, buttonText);
         }
 
 
         private IEmailSender _emailSender;
         protected IEmailSender emailSender =>
             _emailSender ??= HttpContext.RequestServices.GetRequiredService<IEmailSender>();
+
+        public AppSetting _appSetting;
+        public AppSetting appSetting =>
+            _appSetting ??= HttpContext.RequestServices.GetRequiredService<AppSetting>();
 
         private IServiceScopeFactory _serviceScopeFactory;
         protected IServiceScopeFactory serviceScopeFactory =>

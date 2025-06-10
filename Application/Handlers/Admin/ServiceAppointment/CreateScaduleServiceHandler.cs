@@ -10,6 +10,7 @@ using System.Linq;
 using ScoutDirect.Core.Entities.Base;
 using Microsoft.EntityFrameworkCore;
 using NetTopologySuite.Index.HPRtree;
+using CMPNatural.Core.Models;
 
 namespace CMPNatural.Application
 {
@@ -17,7 +18,7 @@ namespace CMPNatural.Application
     {
         public static async Task Create(
             Invoice invoiceTemplate, IManifestRepository _manifestRepository, IinvoiceRepository _invoiceRepository, IAppInformationRepository _apprepository,
-             IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository)
+             IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository, AppSetting _appSetting)
         {
 
             var invoice = (await _invoiceRepository.GetAsync(x=> x.Id == invoiceTemplate.Id,
@@ -100,7 +101,7 @@ namespace CMPNatural.Application
                item.InvoiceNumber = invoice.Number;
                item.RequestNumber = invoice.ReqNumber;
                await _invoiceRepository.UpdateAsync(item);
-                await new AdminCreateManifestHandler(_manifestRepository, _invoiceRepository, _apprepository, _serviceAppointmentLocationRepository).Create(item, ManifestStatus.Scaduled);
+                await new AdminCreateManifestHandler(_manifestRepository, _invoiceRepository, _apprepository, _serviceAppointmentLocationRepository, _appSetting).Create(item, ManifestStatus.Scaduled);
             }
         }
 
