@@ -70,7 +70,7 @@ namespace ScoutDirect.Api.Controllers._Base
         protected IEmailSender emailSender =>
             _emailSender ??= HttpContext.RequestServices.GetRequiredService<IEmailSender>();
 
-        public AppSetting _appSetting;
+        private AppSetting _appSetting;
         public AppSetting appSetting =>
             _appSetting ??= HttpContext.RequestServices.GetRequiredService<AppSetting>();
 

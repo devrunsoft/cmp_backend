@@ -81,7 +81,7 @@ namespace CMPNatural.Api.Controllers.Admin.Auth
 
                 if (code != null)
                 {
-                    sendEmail("Login Code",$"Code <strong>{code}</strong>", data.Email, $"{_appSetting.adminHost}/", "Login");
+                    sendEmail("Login Code",$"Code <strong>{code}</strong>", data.Email, $"{appSetting.adminHost}/", "Login");
                     return Ok(new Success<object>()
                     {
                         Data = new

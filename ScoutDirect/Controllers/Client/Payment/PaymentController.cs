@@ -54,8 +54,8 @@ namespace CMPNatural.Api.Controllers.Payment
            var result = await _mediator.Send(new ClientInvoicePaidCommand() { CheckoutSessionId = session_id });
 
             var html = result.Data
-                ? GenerateHtmlMessage("Payment Successful", "Thank you! Your payment has been successfully processed.", "Back to Application", _appSetting.clientHost, "#28a745")
-                : GenerateHtmlMessage("Payment Failed", "Sorry, the payment could not be verified. Please contact support.", "Back to Application", _appSetting.clientHost, "#dc3545");
+                ? GenerateHtmlMessage("Payment Successful", "Thank you! Your payment has been successfully processed.", "Back to Application", appSetting.clientHost, "#28a745")
+                : GenerateHtmlMessage("Payment Failed", "Sorry, the payment could not be verified. Please contact support.", "Back to Application", appSetting.clientHost, "#dc3545");
 
             return Content(html, "text/html");
         }
@@ -71,7 +71,7 @@ namespace CMPNatural.Api.Controllers.Payment
                 "Payment Cancelled",
                 "Your payment process was cancelled. If this was a mistake, please try again.",
                 "Back to Application",
-                 _appSetting.clientHost,
+                 appSetting.clientHost,
                 "#d9534f"
             );
 

@@ -25,7 +25,7 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<Provider>> Handle(AdminPutProviderCommand request, CancellationToken cancellationToken)
         {
-            var emailPattern = @"^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$";
+            var emailPattern = @"^[\w\.\+-]+@([\w-]+\.)+[a-zA-Z]{2,7}$";
             if (!Regex.IsMatch(request.Email, emailPattern))
             {
                 return new NoAcess<Provider>() { Message = "The email format is invalid. Please provide a valid email address." };

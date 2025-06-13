@@ -134,7 +134,7 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
         <h1>Activation Successful!</h1>
         <p>Thank you for activating your account. Your account is now fully active, and you can start using our services.</p>
         <p>If you have any questions, feel free to contact our support team.</p>
-        <a href=""{appSetting.host}/logout"" class=""button"">Go to Login</a>
+        <a href=""{appSetting.providerHost}/logout"" class=""button"">Go to Login</a>
     </div>
 </body>
 </html>
@@ -191,7 +191,7 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
         <h1>Activation Failed</h1>
         <p>Unfortunately, we were unable to activate your account due to an error. Please try again or contact our support team for assistance.</p>
         <p>We apologize for the inconvenience.</p>
-        <a href=""{appSetting.host}/logout"" class=""button"">Back To Application</a>
+        <a href=""{appSetting.providerHost}/logout"" class=""button"">Back To Application</a>
     </div>
 </body>
 </html>
