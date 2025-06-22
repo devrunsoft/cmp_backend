@@ -35,7 +35,7 @@ namespace CMPNatural.Application.Handlers
 
             foreach (var item in entity.BaseServiceAppointment)
             {
-                item.Status = ServiceStatus.Draft;
+                item.Status = ServiceStatus.Canceled;
                 await _baseServiceAppointmentRepository.UpdateAsync(item);
             }
 

@@ -22,6 +22,7 @@ namespace CMPNatural.Core.Entities
         public Company Company { get; set; }
         //public Invoice Invoice { get; set; }
 
+        public long OperationalAddressId { get; set; }
         public string ContractNumber { get; set; }
 
         [NotMapped]

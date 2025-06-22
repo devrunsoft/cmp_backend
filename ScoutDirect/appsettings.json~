@@ -12,7 +12,7 @@
   "ConnectionStrings": {
     "DefaultConnection": "Server=64.20.208.27;Port=3306;Database=CmpAppDevelop;User Id=erfan;Password=5ssdf@hFghj227sdfjhFDdnsjgGgyR&;",
     //"LocalConnection": "Server=64.20.208.27;Port=3306;Database=CmpAppLocal;User Id=erfan;Password=5ssdf@hFghj227sdfjhFDdnsjgGgyR&;"
-    "LocalConnection": "Server=localhost;Port=3306;Database=testdb6;User=root;Password=66355366;AllowPublicKeyRetrieval=True;SslMode=none;"
+    "LocalConnection": "Server=localhost;Port=3306;Database=testdb6;User ID=root;Password=66355366;SslMode=None,AllowPublicKeyRetrieval=True;"
   },
   "JWT": {
     "ValidAudience": "http://localhost:4200",

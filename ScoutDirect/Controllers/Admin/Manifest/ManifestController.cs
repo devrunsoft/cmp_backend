@@ -34,6 +34,16 @@ namespace CMPNatural.Api.Controllers.Admin.Manifest
             return Ok(result);
         }
 
+        [HttpPut("ChangeAssign/{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> ChangeAssign([FromRoute] long Id, [FromBody] AdminChangeAssignManifestCommand command)
+        {
+            command.Id = Id;
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
@@ -58,6 +68,33 @@ namespace CMPNatural.Api.Controllers.Admin.Manifest
         public async Task<ActionResult> PutComplete([FromQuery] AdminGetAllManifestCommand command)
         {
             var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpPut("Cancel/{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> CancelManifest([FromRoute] long Id)
+        {
+            var result = await _mediator.Send(new AdminCancelManifestCommand() { Id = Id });
+            return Ok(result);
+        }
+
+        [HttpPut("ReActivate/{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> ReActivate([FromRoute] long Id)
+        {
+            var result = await _mediator.Send(new AdminReActivatelManifestCommand() { Id = Id });
+            return Ok(result);
+        }
+
+        [HttpPut("Processing/{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> PutProcessing([FromRoute] long Id)
+        {
+            var result = await _mediator.Send(new AdminProcessingManifestCommand() { Id = Id });
             return Ok(result);
         }
 

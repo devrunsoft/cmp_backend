@@ -46,7 +46,8 @@ namespace CMPNatural.Application
                 ContractId = invoice.ContractId.Value,
                 CompanyId = invoice.CompanyId,
                 CreatedAt = invoice.CreatedAt,
-                ManifestNumber = ""
+                ManifestNumber = "",
+                OperationalAddressId = invoice.OperationalAddressId
             };
 
             var result = await _repository.AddAsync(entity);

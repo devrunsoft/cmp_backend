@@ -8,6 +8,7 @@ namespace CMPNatural.Application.Commands.Client.Representation
 	public class ClientMenuRepresentationCommand : IRequest<CommandResponse<ClientRepresentationResponse>>
     {
 		public long CompanyId { get; set; }
+		public long OperationalAddressId { get; set; }
 	}
 }
 

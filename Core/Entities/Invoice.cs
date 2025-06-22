@@ -38,7 +38,7 @@ namespace CMPNatural.Core.Entities
         {
             get
             {
-                return this.ContractId == null ? "---" : $"I{this.CreatedAt.Year}-{this.CompanyId}-{(this.ContractId == null ? 0 : this.ContractId)}-{Id}";
+                return this.ContractId == null ? "---" : $"I{this.CreatedAt.Year}-{this.CompanyId}/{this.OperationalAddressId}-{(this.ContractId == null ? 0 : this.ContractId)}-{Id}";
             }
         }
 

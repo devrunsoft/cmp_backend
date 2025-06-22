@@ -76,6 +76,7 @@ namespace CMPNatural.Application.Handlers
             //update
             entity.Content = dbContent.ToString();
             entity.ContractNumber = entity.Number;
+            entity.OperationalAddressId = invoice.OperationalAddressId;
             await _repository.UpdateAsync(entity);
             return new Success<CompanyContract>() { Data = result, Message = "Successfull!" };
         }

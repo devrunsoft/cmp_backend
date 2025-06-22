@@ -13,7 +13,9 @@ namespace CMPNatural.Core.Entities
 
 		public long InvoiceId { get; set; }
 
-		public long? ProviderId { get; set; }
+        public long OperationalAddressId { get; set; }
+
+        public long? ProviderId { get; set; }
 
 		public string Content { get; set; } = "";
 
@@ -43,7 +45,7 @@ namespace CMPNatural.Core.Entities
         {
 			get
 			{
-				return $"M{this.CreatedAt.Year}-{this.CompanyId}-{(this.ContractId)}-{Id}";
+				return $"M{this.CreatedAt.Year}-{this.CompanyId}/{this.OperationalAddressId}-{(this.ContractId)}-{Id}";
 			}
 		}
 

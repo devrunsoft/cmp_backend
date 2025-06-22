@@ -33,7 +33,7 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<CompanyContract>> Handle(AdminSignCompanyContractCommand request, CancellationToken cancellationToken)
         {
             var entity = await _repository.GetByIdAsync(request.CompanyContractId);
-            var appinformation = (await _apprepository.GetAllAsync()).FirstOrDefault();
+            var appinformation = (await _apprepository.GetAllAsync()).LastOrDefault();
             if(appinformation==null || appinformation.Sign == null)
             {
                 return new NoAcess<CompanyContract>() { Message = "Please add a sign in Company Information" };

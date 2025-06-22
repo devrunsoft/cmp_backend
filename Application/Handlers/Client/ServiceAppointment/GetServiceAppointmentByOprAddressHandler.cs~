@@ -43,7 +43,7 @@ namespace CMPNatural.Application.Handlers
 
             var data = result.GroupBy(x => x.ProductPrice.Id);
             var dataset= data.Select(x => {
-            var invoiceNumber = x.FirstOrDefault().Invoice.InvoiceId;
+            var invoiceNumber = x.FirstOrDefault().Invoice.InvoiceNumber;
              return new ClientServiceAppointment()
                {
                    Draft = x.Where(p => p.Status == ServiceStatus.Draft).FirstOrDefault(),

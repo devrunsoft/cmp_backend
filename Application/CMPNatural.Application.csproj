@@ -257,6 +257,7 @@
     <None Remove="Commands\Admin\GoHighLevel\" />
     <None Remove="Handlers\Admin\GoHighLevel\" />
     <None Remove="Mapper\CommonAppInformation\" />
+    <None Remove="Responses\ClientServiceAppointment\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -520,6 +521,7 @@
     <Folder Include="Commands\Admin\GoHighLevel\" />
     <Folder Include="Handlers\Admin\GoHighLevel\" />
     <Folder Include="Mapper\CommonAppInformation\" />
+    <Folder Include="Responses\ClientServiceAppointment\" />
   </ItemGroup> 
 
   <ItemGroup>

@@ -12,18 +12,18 @@ using CMPNatural.Core.Enums;
 namespace CMPNatural.Application.Handlers
 {
 
-    public class GetServiceAppointmentHandler : IRequestHandler<GetServiceAppointmentCommand, CommandResponse<BaseServiceAppointment>>
+    public class GetServiceAppointmentHandler : IRequestHandler<GetServiceAppointmentCommand, CommandResponse<ServiceAppointment>>
     {
-        private readonly IBaseServiceAppointmentRepository _serviceAppointmentRepository;
+        private readonly IServiceAppointmentRepository _serviceAppointmentRepository;
 
-        public GetServiceAppointmentHandler(IBaseServiceAppointmentRepository billingInformationRepository)
+        public GetServiceAppointmentHandler(IServiceAppointmentRepository billingInformationRepository)
         {
             _serviceAppointmentRepository = billingInformationRepository;
         }
 
-        public async Task<CommandResponse<BaseServiceAppointment>> Handle(GetServiceAppointmentCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<ServiceAppointment>> Handle(GetServiceAppointmentCommand request, CancellationToken cancellationToken)
         {
-            var result = (await _serviceAppointmentRepository.GetAsync(
+            var result = (await _serviceAppointmentRepository.GetList(
                 (p) => p.Id == request.Id &&
                 p.CompanyId == request.CompanyId &&
                 (
@@ -37,10 +37,10 @@ namespace CMPNatural.Application.Handlers
 
             if (result == null)
             {
-                return new NoAcess<BaseServiceAppointment>();
+                return new NoAcess<ServiceAppointment>();
             }
 
-            return new Success<BaseServiceAppointment>() { Data = result };
+            return new Success<ServiceAppointment>() { Data = result };
 
         }
 

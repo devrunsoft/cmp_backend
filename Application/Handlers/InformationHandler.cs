@@ -23,7 +23,7 @@ namespace CMPNatural.Application
         }
         public async Task<CommandResponse<CommonInformationModel>> Handle(InformationCommand request, CancellationToken cancellationToken)
         {
-            var entity = (await _repository.GetAllAsync()).FirstOrDefault();
+            var entity = (await _repository.GetAllAsync()).LastOrDefault();
 
             return new Success<CommonInformationModel>() { Data = CommonAppInformationMapper.Mapper.Map<CommonInformationModel>(entity) };
         }

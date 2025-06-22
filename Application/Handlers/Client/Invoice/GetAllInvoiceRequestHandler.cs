@@ -28,7 +28,13 @@ namespace CMPNatural.Application.Handlers
 
         public async Task<CommandResponse<PagesQueryResponse<InvoiceResponse>>> Handle(GetAllInvoiceRequestCommand request, CancellationToken cancellationToken)
         {
-            var entity = (await _invoiceRepository.GetBasePagedAsync(request, p => p.CompanyId == request.CompanyId && (p.Status == InvoiceStatus.Draft), query => query
+            var entity = (await _invoiceRepository.GetBasePagedAsync(request, p => p.CompanyId == request.CompanyId && p.OperationalAddressId == request.OperationalAddressId &&
+            (p.Status == InvoiceStatus.Draft 
+            || p.Status == InvoiceStatus.Pending_Signature || p.Status == InvoiceStatus.Needs_Admin_Signature
+            || p.Status == InvoiceStatus.Needs_Admin_Signature || p.Status == InvoiceStatus.Processing_Provider
+            || p.Status == InvoiceStatus.Canceled
+            )
+            , query => query
             .Include(p => p.BaseServiceAppointment)
             ));
 

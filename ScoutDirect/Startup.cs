@@ -343,12 +343,15 @@ namespace ScoutDirect.Api
 
             var settings = serviceProvider.GetRequiredService<HighLevelSettings>();
             var dbContext = serviceProvider.GetRequiredService<ScoutDBContext>();
-            var ghl = dbContext.GoHighLevel.OrderBy(x=>x.Id).LastOrDefault();
-            if (ghl != null)
+            var data = dbContext.GoHighLevel.OrderBy(x => x.Id);
+            if (data.Count() > 0)
             {
-                settings.update(ghl);
+                var ghl = data.LastOrDefault();
+                if (ghl != null)
+                {
+                    settings.update(ghl);
+                }
             }
-
 
 
             //if (!env.IsDevelopment())

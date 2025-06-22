@@ -63,23 +63,12 @@ namespace CMPNatural.Api.Controllers.Invoice
             return Ok(result);
         }
 
-        [HttpPost("TerminateContacrt")]
+        [HttpGet("TerminateContacrt/{InvoiceId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> TerminateContract([FromBody] ClientTerminateContractCommand Command)
+        public async Task<ActionResult> TerminateContract([FromRoute] Guid InvoiceId)
         {
-            Command.CompanyId = rCompanyId;
-            var result = await _mediator.Send(Command);
-            return Ok(result);
-        }
-
-        [HttpPost("CancelRequest")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> CancelRequest([FromBody] ClientCancelRequestCommand Command)
-        {
-            Command.CompanyId = rCompanyId;
-            var result = await _mediator.Send(Command);
+            var result = await _mediator.Send(new ClientTerminateContractCommand() { InvoiceId = InvoiceId });
             return Ok(result);
         }
 

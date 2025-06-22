@@ -11,6 +11,7 @@ namespace CMPNatural.Application
     public class GetAllInvoiceCommand : PagedQueryRequest, IRequest<CommandResponse<PagesQueryResponse<InvoiceResponse>>>
     {
         public long CompanyId { get; set; }
+        public long OperationalAddressId { get; set; }
     }
 }
 
