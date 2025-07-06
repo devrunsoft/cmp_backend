@@ -18,6 +18,7 @@ namespace CMPNatural.Application
         public double Amount { get; set; }
         public List<long> LocationCompanyIds { get; set; }
         public long OperationalAddressId { get; set; }
+        public long BillingInformationId { get; set; }
         public string Address { get; set; } = "";
 
     }

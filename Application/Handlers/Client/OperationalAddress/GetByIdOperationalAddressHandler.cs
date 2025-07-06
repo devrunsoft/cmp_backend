@@ -22,7 +22,8 @@ namespace CMPNatural.Application.Handlers
         {
 
             OperationalAddress result = (await _operationalAddressRepository.GetAsync(p => p.CompanyId == request.CompanyId && p.Id==request.Id,
-                query=>query.Include(p=>p.LocationCompany))).FirstOrDefault();
+                query=> query.Include(p=>p.LocationCompany).Include(x=>x.LocationDateTimes)
+                )).FirstOrDefault();
 
             return new Success<OperationalAddress>() { Data = result };
         }

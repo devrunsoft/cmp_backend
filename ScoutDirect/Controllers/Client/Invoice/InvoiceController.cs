@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Threading.Tasks;
 using CmpNatural.CrmManagment.Api.CustomValue;
@@ -43,14 +44,11 @@ namespace CMPNatural.Api.Controllers.Invoice
         [HttpGet("OperationalAddress/{operationalAddressId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> AllByOperationalAddressId([FromRoute] long OperationalAddressId)
+        public async Task<ActionResult> AllByOperationalAddressId([FromRoute] long OperationalAddressId , [FromQuery] GetAllInvoiceCommand command)
         {
-            var result = await _mediator.Send(new GetAllInvoiceCommand()
-            {
-                CompanyId = rCompanyId,
-                OperationalAddressId = OperationalAddressId
-
-            });
+            command.CompanyId = rCompanyId;
+            command.OperationalAddressId = OperationalAddressId;
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
 
@@ -60,16 +58,6 @@ namespace CMPNatural.Api.Controllers.Invoice
         public async Task<ActionResult> Get([FromRoute] long InvoiceId)
         {
             var result = await _mediator.Send(new ClientGetInvoiceCommand() { InvoiceId = InvoiceId });
-            return Ok(result);
-        }
-
-        [HttpPost("TerminateContacrt")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> TerminateContract([FromBody] ClientTerminateContractCommand Command)
-        {
-            Command.CompanyId = rCompanyId;
-            var result = await _mediator.Send(Command);
             return Ok(result);
         }
 
@@ -86,13 +74,11 @@ namespace CMPNatural.Api.Controllers.Invoice
         [HttpGet("Request/{OperationalAddressId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> GetRequest([FromRoute] long OperationalAddressId)
+        public async Task<ActionResult> GetRequest([FromRoute] long OperationalAddressId, [FromQuery] GetAllInvoiceRequestCommand command)
         {
-            var result = await _mediator.Send(new GetAllInvoiceRequestCommand()
-            {
-                CompanyId = rCompanyId,
-                OperationalAddressId = OperationalAddressId
-            });
+            command.CompanyId = rCompanyId;
+            command.OperationalAddressId = OperationalAddressId;
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
 
@@ -117,13 +103,13 @@ namespace CMPNatural.Api.Controllers.Invoice
             return Ok(result);
         }
 
-        [HttpPost]
+        [HttpPost("{BillingInformationId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Post([FromBody] List<ServiceAppointmentInput> data)
+        public async Task<ActionResult> Post([FromRoute] long BillingInformationId)
         {
             RegisterInvoiceService service = new RegisterInvoiceService(_mediator, rCompanyId);
-            var result = await service.call();
+            var result = await service.call(BillingInformationId);
             foreach (var item in result)
             {
                 var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminInvoices, item.Data.InvoiceId);

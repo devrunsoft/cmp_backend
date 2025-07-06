@@ -23,7 +23,7 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<PagesQueryResponse<CompanyContract>>> Handle(GetAllCompanyContractCommand request, CancellationToken cancellationToken)
         {
-            var invoices = (await _repository.GetBasePagedAsync(request, p =>  p.CompanyId == request.CompanyId && p.OperationalAddressId == request.OperationalAddressId
+            var invoices = (await _repository.GetBasePagedAsync(request, p =>  p.CompanyId == request.CompanyId && (request.OperationalAddressId == 0 || p.OperationalAddressId == request.OperationalAddressId)
             && p.Status != CompanyContractStatus.Created));
             return new Success<PagesQueryResponse<CompanyContract>>() { Data = invoices };
         }

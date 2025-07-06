@@ -23,7 +23,7 @@ namespace CMPNatural.Api.Service
             this.rCompanyId = rCompanyId;
         }
 
-        public async Task<List<CommandResponse<Invoice>>> call()
+        public async Task<List<CommandResponse<Invoice>>> call(long BillingInformationId)
 		{
             var resultShopping = (await _mediator.Send(new GetAllShoppingCardCommand()
             {
@@ -36,20 +36,20 @@ namespace CMPNatural.Api.Service
             })).Data;
 
             var groupedData = resultShopping
-             .GroupBy(s => s.OperationalAddressId)
-                 .Select(g => new
-                 {
-                     oprId = g.Key,
-                     item = g
-                 })
-              .ToList();
+                .GroupBy(s => new { s.OperationalAddressId })
+                .Select(g => new
+                {
+                    OperationalAddressId = g.Key.OperationalAddressId,
+                    Items = g.ToList()
+                })
+                .ToList();
 
             List<CommandResponse<Invoice>> invoices = new List<CommandResponse<Invoice>>();
 
 
             foreach (var i in groupedData)
             {
-                var request = i.item.Select((e) => new ServiceAppointmentInput()
+                var request = i.Items.Select((e) => new ServiceAppointmentInput()
                 {
                     FrequencyType = e.FrequencyType,
                     OperationalAddressId = e.OperationalAddressId,
@@ -90,10 +90,11 @@ namespace CMPNatural.Api.Service
                     InvoiceId = invoiceId.ToString(),
                     Services = request,
                     Amount = 0,
-                    OperationalAddressId = i.oprId,
-                    Address = i.item.First().Address
+                    OperationalAddressId = i.OperationalAddressId,
+                    Address = i.Items.First().Address,
+                    BillingInformationId = BillingInformationId
 
-                });
+              });
                 invoices.Add(invoice);
 
             }

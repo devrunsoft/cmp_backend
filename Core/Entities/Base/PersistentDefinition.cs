@@ -41,4 +41,6 @@ namespace CMPNatural.Core.Entities
     public partial class Payment : IIdentityObject<long> { }
     public partial class AppLog : IIdentityObject<long> { }
     public partial class GoHighLevel : IIdentityObject<long> { }
+    public partial class RequestTerminate : IIdentityObject<long> { }
+    public partial class LocationDateTime : IIdentityObject<long> { }
 }

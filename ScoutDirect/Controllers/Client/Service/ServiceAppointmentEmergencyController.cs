@@ -1,6 +1,5 @@
 ﻿
 using CMPNatural.Application;
-using CMPNatural.Application.Commands.ServiceAppointment;
 using CMPNatural.Application.Commands.ServiceAppointmentEmergency;
 using CMPNatural.Application.Model.ServiceAppointment;
 using MediatR;

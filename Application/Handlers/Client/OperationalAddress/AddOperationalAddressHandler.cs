@@ -13,8 +13,8 @@ using CMPNatural.Core.Entities;
 using CMPNatural.Application.Mapper;
 using CMPNatural.Application.Commands;
 using CMPNatural.Core.Repositories;
-using CMPNatural.Application.Commands.OperationalAddress;
 using System.Linq;
+using CMPNatural.Application.Model;
 
 namespace CMPNatural.Application.Handlers.CommandHandlers
 {
@@ -46,6 +46,14 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                     Lat = request.Lat,
                     Long = request.Long,
                     Name = request.Name,
+                    LocationDateTimes = request.LocationDateTimeInputs.Select(x => new LocationDateTime()
+                    {
+                        CompanyId = request.CompanyId,
+                        DayName = x.DayName,
+                        FromTime = x.FromTime,
+                        ToTime = x.ToTime
+
+                    }).ToList()
 
                 };
                 var result = await _operationalAddressRepository.AddAsync(entity);

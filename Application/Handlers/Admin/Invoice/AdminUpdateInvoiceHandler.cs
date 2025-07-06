@@ -24,11 +24,14 @@ namespace CMPNatural.Application
         private readonly IContractRepository _contractRepository;
         private readonly ICompanyContractRepository _companyContractRepository;
         private readonly IAppInformationRepository _appRepository;
+        private readonly IRequestTerminateRepository requestTerminate;
+        private readonly IMediator mediator;
         private readonly AppSetting _appSetting;
 
         public AdminUpdateInvoiceHandler(IinvoiceRepository invoiceRepository, IProductPriceRepository productPriceRepository ,
              IBaseServiceAppointmentRepository baseServiceAppointmentRepository, IContractRepository _contractRepository,
-             ICompanyContractRepository _companyContractRepository, IAppInformationRepository _appRepository, AppSetting appSetting)
+             ICompanyContractRepository _companyContractRepository, IAppInformationRepository _appRepository, IRequestTerminateRepository requestTerminate, AppSetting appSetting,
+             IMediator mediator)
         {
             _invoiceRepository = invoiceRepository;
             _productPriceRepository = productPriceRepository;
@@ -37,17 +40,28 @@ namespace CMPNatural.Application
             this._companyContractRepository = _companyContractRepository;
             this._appRepository = _appRepository;
             this._appSetting = appSetting;
+            this.requestTerminate = requestTerminate;
+            this.mediator = mediator;
         }
 
         public async Task<CommandResponse<Invoice>> Handle(AdminUpdateInvoiceCommand requests, CancellationToken cancellationToken)
         {
 
             var invoice = (await _invoiceRepository.GetAsync(p => p.Id == requests.InvoiceId, query => query.Include(x => x.Company))).FirstOrDefault();
+            bool canEdit = false;
             if (invoice.Status != InvoiceStatus.Draft)
             {
-                return new NoAcess<Invoice>() { Message = "No Access To edit this Invoice" };
+                var terminateRequest = (await requestTerminate.GetAsync(p => p.InvoiceNumber == invoice.InvoiceId)).FirstOrDefault();
+                if (terminateRequest != null && terminateRequest.RequestTerminateStatus == null)
+                {
+                    canEdit = true;
+                }
+                else
+                {
+                    return new NoAcess<Invoice>() { Message = "No Access To edit this Invoice" };
+                }
             }
-            if (invoice.ContractId != null)
+            if (invoice.ContractId != null && !canEdit)
             {
                 return new NoAcess<Invoice>() { Message = "You cannot edit an invoice that is linked to a contract." };
             }
@@ -67,78 +81,114 @@ namespace CMPNatural.Application
 
                 var resultPrice = (await _productPriceRepository.GetAsync(x => x.Id == request.ProductPriceId, query => query.Include(x => x.Product))).FirstOrDefault();
 
-                if (request.ServiceKind == ServiceKind.Custom)
+                if (request.Id != null && request.Id != 0)
                 {
-                    var command = new ServiceAppointment()
-                    {
-                        CompanyId = CompanyId,
-                        FrequencyType = request.FrequencyType,
-                        ServiceTypeId = resultPrice.Product.ServiceType,
-                        ServicePriceCrmId = "",
-                        ServiceCrmId = "",
-                        StartDate = request.StartDate ?? DateTime.Now,
-                        OperationalAddressId = request.OperationalAddressId,
-                        Status = ServiceStatus.Draft,
-                        Subsidy = request.Subsidy,
-                        IsEmegency = false,
-                        Qty = request.qty,
-                        FactQty = request.qty,
-                        Amount = request.Amount,
-                        ProductId = request.ProductId,
-                        ProductPrice = resultPrice,
-                        ProductPriceId = request.ProductPriceId,
-                        ServiceAppointmentLocations = request.LocationCompanyIds
-                           .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
-                           .ToList(),
-                        DayOfWeek = string.Join(",", request.DayOfWeek.Select(x => x.GetDescription())),
-                        FromHour = request.FromHour,
-                        ToHour = request.ToHour,
-                    };
-                    lstCustom.Add(command);
+                    var serviceEntity = services.FirstOrDefault(x=>x.Id == request.Id);
+                    serviceEntity.ServiceTypeId = resultPrice.Product.ServiceType;
+                    serviceEntity.ServicePriceCrmId = "";
+                    serviceEntity.ServiceCrmId = "";
+                    serviceEntity.StartDate = request.StartDate ?? DateTime.Now;
+                    serviceEntity.OperationalAddressId = request.OperationalAddressId;
+                    serviceEntity.Subsidy = request.Subsidy;
+                    serviceEntity.IsEmegency = request.ServiceKind != ServiceKind.Custom;
+                    serviceEntity.Qty = request.qty;
+                    serviceEntity.FactQty = request.qty;
+                    serviceEntity.Amount = request.Amount;
+                    serviceEntity.ProductId = request.ProductId;
+                    serviceEntity.ProductPrice = resultPrice;
+                    serviceEntity.ProductPriceId = request.ProductPriceId;
+                    serviceEntity.DayOfWeek = string.Join(",", request.DayOfWeek.Select(x => x.GetDescription()));
+                    serviceEntity.FromHour = request.FromHour;
+                    serviceEntity.ToHour = request.ToHour;
+
+                    serviceEntity.ServiceAppointmentLocations = request.LocationCompanyIds
+                        .Select(id => new ServiceAppointmentLocation
+                        {
+                            LocationCompanyId = id
+                        }).ToList();
+
+                    lstCustom.Add(serviceEntity);
                 }
                 else
                 {
-                    var command = new ServiceAppointmentEmergency()
-                    {
-                        CompanyId = CompanyId,
-                        FrequencyType = request.FrequencyType,
-                        StartDate = DateTime.Now,
-                        ServiceTypeId = resultPrice.Product.ServiceType,
-                        ServicePriceCrmId = "",
-                        ServiceCrmId = "",
-                        Amount = request.Amount,
-                        Subsidy = request.Subsidy,
-                        ProductId = request.ProductId,
-                        ProductPrice = resultPrice,
-                        ProductPriceId = request.ProductPriceId,
-                        OperationalAddressId = request.OperationalAddressId,
-                        Status = ServiceStatus.Draft,
-                        IsEmegency = true,
-                        Qty = request.qty,
-                        FactQty = request.qty,
-                        ServiceAppointmentLocations = request.LocationCompanyIds
-                        .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
-                        .ToList(),
-                        DayOfWeek = string.Join(",", request.DayOfWeek.Select(x => x.GetDescription())),
-                        FromHour = request.FromHour,
-                        ToHour = request.ToHour,
-                    };
-                    lstCustom.Add(command);
-                }
-            }   
 
+
+                    if (request.ServiceKind == ServiceKind.Custom)
+                    {
+                        var command = new BaseServiceAppointment()
+                        {
+                            CompanyId = CompanyId,
+                            //FrequencyType = request.FrequencyType,
+                            ServiceTypeId = resultPrice.Product.ServiceType,
+                            ServicePriceCrmId = "",
+                            ServiceCrmId = "",
+                            StartDate = request.StartDate ?? DateTime.Now,
+                            OperationalAddressId = request.OperationalAddressId,
+                            Status = ServiceStatus.Draft,
+                            Subsidy = request.Subsidy,
+                            IsEmegency = false,
+                            Qty = request.qty,
+                            FactQty = request.qty,
+                            Amount = request.Amount,
+                            ProductId = request.ProductId,
+                            ProductPrice = resultPrice,
+                            ProductPriceId = request.ProductPriceId,
+                            ServiceAppointmentLocations = request.LocationCompanyIds
+                               .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
+                               .ToList(),
+                            DayOfWeek = string.Join(",", request.DayOfWeek.Select(x => x.GetDescription())),
+                            FromHour = request.FromHour,
+                            ToHour = request.ToHour,
+                        };
+                        lstCustom.Add(command);
+                    }
+                    else
+                    {
+                        var command = new BaseServiceAppointment()
+                        {
+                            CompanyId = CompanyId,
+                            //FrequencyType = request.FrequencyType,
+                            StartDate = DateTime.Now,
+                            ServiceTypeId = resultPrice.Product.ServiceType,
+                            ServicePriceCrmId = "",
+                            ServiceCrmId = "",
+                            Amount = request.Amount,
+                            Subsidy = request.Subsidy,
+                            ProductId = request.ProductId,
+                            ProductPrice = resultPrice,
+                            ProductPriceId = request.ProductPriceId,
+                            OperationalAddressId = request.OperationalAddressId,
+                            Status = ServiceStatus.Draft,
+                            IsEmegency = true,
+                            Qty = request.qty,
+                            FactQty = request.qty,
+                            ServiceAppointmentLocations = request.LocationCompanyIds
+                            .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
+                            .ToList(),
+                            DayOfWeek = string.Join(",", request.DayOfWeek.Select(x => x.GetDescription())),
+                            FromHour = request.FromHour,
+                            ToHour = request.ToHour,
+                        };
+                        lstCustom.Add(command);
+                    }
+                }
+            }
+
+            if (!canEdit)
+            {
+                invoice.SendDate = DateTime.Now;
+                invoice.Status = InvoiceStatus.Pending_Signature;
+            }
 
             invoice.BaseServiceAppointment = lstCustom;
             invoice.InvoiceProduct = invoiceProducts;
-            invoice.SendDate = DateTime.Now;
             invoice.Address = requests.Address;
-            invoice.Status = InvoiceStatus.Pending_Signature;
             invoice.Amount = requests.Amount;
             invoice.CalculateAmountByamount();
 
-            await _baseServiceAppointmentRepository.DeleteRangeAsync(services);
+            //await _baseServiceAppointmentRepository.DeleteRangeAsync(services);
 
-            if (requests.CreateContract)
+            if (requests.CreateContract && invoice.ContractId == null)
             {
                 var result = await new AdminCreateCompanyContractHandler(_companyContractRepository, _contractRepository, _invoiceRepository, _appRepository, _appSetting)
                     .Create(invoice, invoice.CompanyId);
@@ -150,6 +200,12 @@ namespace CMPNatural.Application
                 invoice.ContractId = result.Data.Id;
                 invoice.InvoiceNumber = invoice.Number;
             }
+            else if (canEdit)
+            {
+                var contract = (await _companyContractRepository.GetAsync(x=>x.Id == invoice.ContractId.Value)).FirstOrDefault();
+                await mediator.Send(new AdminUpdateCompanyContractCommand() { CompanyContractId = invoice.ContractId.Value  , ContractId = contract.ContractId});
+            }
+
             await _invoiceRepository.UpdateAsync(invoice);
 
             return new Success<Invoice>() { Data = invoice, Message = "Successfull!" };

@@ -142,14 +142,14 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
             return Ok(result);
         }
 
-        [HttpPost("{clientId}")]
+        [HttpPost("{clientId}/BillingInformation/{BillingInformationId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Post([FromRoute] long clientId)
+        public async Task<ActionResult> Post([FromRoute] long clientId, [FromRoute] long BillingInformationId)
         {
             var rCompanyId = clientId;
             RegisterInvoiceService service = new RegisterInvoiceService(_mediator, rCompanyId);
-             var result= await service.call();
+             var result= await service.call(BillingInformationId);
             return Ok(new Success<object>() { Data = result });
 
         }
@@ -169,6 +169,25 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
             }
             return Ok(result);
         }
+
+
+        //[HttpPut("RequestUpdate/{InvoiceId}")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[EnableCors("AllowOrigin")]
+        //public async Task<ActionResult> Put([FromRoute] long InvoiceId, [FromBody] AdminUpdateRequestInvoiceCommand command)
+        //{
+
+        //    command.InvoiceId = InvoiceId;
+        //    var result = await _mediator.Send(command);
+
+        //    if (result.IsSucces() && result.Data.ContractId != null)
+        //    {
+        //        var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminHasCreateContract, result.Data.ContractId.Value);
+        //        sendEmailToClient(result.Data.CompanyId, emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern, emailDetails.ButtonText);
+        //    }
+        //    return Ok(result);
+        //}
+
 
 
         [HttpPut("Pay/{InvoiceId}")]

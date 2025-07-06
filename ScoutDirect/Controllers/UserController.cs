@@ -24,6 +24,7 @@ using CMPNatural.Application.Model;
 using CMPEmail;
 using Microsoft.Extensions.Options;
 using CMPNatural.Core.Models;
+using CMPNatural.Api.Controllers.Client;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -70,7 +71,7 @@ namespace ScoutDirect.Api.Controllers
                     issuer: _configuration["JWT:ValidIssuer"],
                     audience: _configuration["JWT:ValidAudience"],
                     expires: DateTime.Now.AddMinutes(_expiresModel.Client),
-                    claims: get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered,company.ProfilePicture , company.FullName, company.PersonId),
+                    claims: new GenerateToken().get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered,company.ProfilePicture , company.FullName, company.PersonId),
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
 
@@ -169,7 +170,7 @@ namespace ScoutDirect.Api.Controllers
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
                 expires: DateTime.Now.AddMinutes(_expiresModel.Client),
-                claims: get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered, company.ProfilePicture, company.FullName, company.PersonId),
+                claims: new GenerateToken().get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered, company.ProfilePicture, company.FullName, company.PersonId),
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );
 
@@ -208,18 +209,18 @@ namespace ScoutDirect.Api.Controllers
         }
 
 
-        private Claim[] get_claims(string adminStatus, string businessEmail, string companyId,bool registered, string? ProfilePicture, string fullname, Guid PersonId)
-        {
-            List<Claim> claims = new List<Claim>() { new Claim("businessEmail", businessEmail), new Claim("CompanyId", companyId) };
+        //private Claim[] get_claims(string adminStatus, string businessEmail, string companyId,bool registered, string? ProfilePicture, string fullname, Guid PersonId)
+        //{
+        //    List<Claim> claims = new List<Claim>() { new Claim("businessEmail", businessEmail), new Claim("CompanyId", companyId) };
 
-            claims.Add(new Claim("Registered", registered.ToString()));
-            claims.Add(new Claim("Type", adminStatus));
-            claims.Add(new Claim("ProfilePicture", ProfilePicture??""));
-            claims.Add(new Claim("FullName", fullname));
-            claims.Add(new Claim("PersonId", PersonId.ToString()));
+        //    claims.Add(new Claim("Registered", registered.ToString()));
+        //    claims.Add(new Claim("Type", adminStatus));
+        //    claims.Add(new Claim("ProfilePicture", ProfilePicture??""));
+        //    claims.Add(new Claim("FullName", fullname));
+        //    claims.Add(new Claim("PersonId", PersonId.ToString()));
 
-            return claims.ToArray();
-        }
+        //    return claims.ToArray();
+        //}
 
 
 

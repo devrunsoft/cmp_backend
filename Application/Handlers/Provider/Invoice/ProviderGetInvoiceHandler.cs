@@ -26,7 +26,7 @@ namespace CMPNatural.Application.Handlers
         {
             var entity = (await _invoiceRepository.GetAsync(p => p.Id == request.InvoiceId && p.ProviderId == request.ProviderId,
                  query => query.Include(i => i.Company)
-                .ThenInclude(x => x.BillingInformation)
+                .ThenInclude(x => x.BillingInformations)
                 .Include(i => i.Provider)
                 .Include(i => i.BaseServiceAppointment)
                 .ThenInclude(i => i.ProductPrice)

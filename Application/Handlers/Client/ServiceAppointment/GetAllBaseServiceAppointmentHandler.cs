@@ -30,7 +30,7 @@ namespace CMPNatural.Application
             if (request.Status == LogOfServiceEnum.All_past_services)
             {
                 predicate = p =>
-                    p.CompanyId == request.CompanyId && p.OperationalAddressId == request.OperationalAddressId &&
+                    p.CompanyId == request.CompanyId && (request.OperationalAddressId == 0 || p.OperationalAddressId == request.OperationalAddressId) &&
                     (p.Status == ServiceStatus.Complete || p.Status == ServiceStatus.Canceled);
             }
             else if (request.Status == LogOfServiceEnum.Next_30_days)
@@ -38,7 +38,7 @@ namespace CMPNatural.Application
                 var now = DateTime.UtcNow;
                 var future = now.AddDays(30);
                 predicate = p =>
-                    p.CompanyId == request.CompanyId && p.OperationalAddressId == request.OperationalAddressId &&
+                    p.CompanyId == request.CompanyId && (request.OperationalAddressId == 0 || p.OperationalAddressId == request.OperationalAddressId) &&
                     //p.Status == ServiceStatus.Scaduled &&
                     p.ScaduleDate >= now && p.ScaduleDate <= future;
             }
@@ -47,14 +47,14 @@ namespace CMPNatural.Application
                 //var now = DateTime.UtcNow;
                 //var future = now.AddDays(30);
                 predicate = p =>
-                    p.CompanyId == request.CompanyId && p.OperationalAddressId == request.OperationalAddressId &&
+                    p.CompanyId == request.CompanyId && (request.OperationalAddressId == 0 || p.OperationalAddressId == request.OperationalAddressId) &&
                     p.Status == ServiceStatus.Scaduled;
                     //&&
                     //p.ScaduleDate >= now && p.ScaduleDate <= future;
             }
             else
             {
-                predicate = p => p.CompanyId == request.CompanyId && p.OperationalAddressId == request.OperationalAddressId;
+                predicate = p => p.CompanyId == request.CompanyId && (request.OperationalAddressId == 0 || p.OperationalAddressId == request.OperationalAddressId);
             }
 
             var result = await _serviceAppointmentRepository.GetBasePagedAsync(

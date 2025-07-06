@@ -20,6 +20,7 @@ namespace CMPNatural.Application.Model
         public string City { get; set; } = "";
         public string State { get; set; } = "";
         public IFormFile ProfilePicture { get; set; } = null;
+        public InformationInput InformationInput { get; set; }
 
     }
     public class AddCompanyInput : UpdateCompanyInput

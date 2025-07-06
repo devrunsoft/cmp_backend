@@ -6,7 +6,6 @@ using MediatR;
 using ScoutDirect.Application.Responses;
 using System.Threading;
 using System.Threading.Tasks;
-using CMPNatural.Application.Commands.ServiceAppointment;
 using System.Linq;
 using CMPNatural.Core.Enums;
 using CMPNatural.Application.Commands.ServiceAppointmentEmergency;

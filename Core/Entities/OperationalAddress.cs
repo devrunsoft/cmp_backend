@@ -20,6 +20,8 @@ namespace CMPNatural.Core.Entities
 		public string FirstName { get; set; }
         public string LastName { get; set; }
         public virtual ICollection<LocationCompany> LocationCompany { get; set; }
+        public virtual ICollection<LocationDateTime> LocationDateTimes { get; set; } = new List<LocationDateTime>();
+
     }
 }
 

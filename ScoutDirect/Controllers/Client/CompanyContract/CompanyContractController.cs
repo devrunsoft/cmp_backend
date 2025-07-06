@@ -24,9 +24,11 @@ namespace CMPNatural.Api.Controllers.CompanyContract
         [HttpGet("OperationalAddress/{OperationalAddressId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> GetOpr([FromRoute] long OperationalAddressId)
+        public async Task<ActionResult> GetOpr([FromRoute] long OperationalAddressId, [FromQuery] GetAllCompanyContractCommand command)
         {
-            var result = await _mediator.Send(new GetAllCompanyContractCommand() { CompanyId = rCompanyId , OperationalAddressId = OperationalAddressId });
+            command.CompanyId = rCompanyId;
+            command.OperationalAddressId = OperationalAddressId;
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
 

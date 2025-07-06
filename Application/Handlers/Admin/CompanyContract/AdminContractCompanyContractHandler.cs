@@ -15,17 +15,23 @@ namespace CMPNatural.Application
 	public class AdminContractCompanyContractHandler
 	{
 
-		public static  string Create(Invoice invoice, AppInformation information, Contract contract,Company company, CompanyContract result, AppSetting _appSetting)
+		public static  string Create(List<Invoice> invoice, AppInformation information, Contract contract,Company company, CompanyContract result, AppSetting _appSetting)
 		{
-            List<string> serviceList = invoice.BaseServiceAppointment
-             .Select(x => $"<strong>{x.Product.Name}</strong>  - <strong>{x.ProductPrice.Name} </strong> "
-               + $"- <strong>Number of Payments:</strong> {x.ProductPrice.NumberofPayments}, "
-               +
-               //$"<strong>Billing Period:</strong> {x.ProductPrice.BillingPeriod}" +
-               $"<br> <strong>Start Date:</strong> {x.StartDate.ToDateString()}" +
-               $" - <strong>Preferred Days:</strong> {x.DayOfWeek} ({(x.FromHour.ConvertTimeToString())} until {(x.ToHour.ConvertTimeToString())})" +
-               $"<br> <strong>Total:</strong> ${x.TotalAmount}"
-               ).ToList();
+            var serviceList = invoice.Select(inv =>
+            {
+                var services = inv.BaseServiceAppointment.Select(x =>
+                    $"<strong>{x.Product.Name}</strong> - <strong>{x.ProductPrice.Name}</strong> " +
+                    //$"- <strong>Number of Payments:</strong> {x.ProductPrice.NumberofPayments}, " +
+                    $"<br><strong>Start Date:</strong> {x.StartDate.ToDateString()}" +
+                    $" - <strong>Preferred Days:</strong> {x.DayOfWeek} ({x.FromHour.ConvertTimeToString()} until {x.ToHour.ConvertTimeToString()})" +
+                    $"<br><strong>Total:</strong> ${x.TotalAmount}"
+                );
+
+                return $"<div style='margin-bottom:20px'>" +
+                       //$"<strong>Invoice Number:</strong> {inv.Number}<br/>" +
+                       $"<ul>{string.Join("", services.Select(s => $"<li>{s}</li>"))}</ul>" +
+                       $"</div>";
+            }).ToList();
 
             var managementCompany = new
             {
@@ -52,7 +58,7 @@ namespace CMPNatural.Application
             ///////
             dbContent = dbContent.Replace(ContractKeysEnum.ClientFirstName.GetDescription(), company.PrimaryFirstName);
             dbContent = dbContent.Replace(ContractKeysEnum.ClientLastName.GetDescription(), company.PrimaryLastName);
-            dbContent = dbContent.Replace(ContractKeysEnum.ClientAddress.GetDescription(), invoice.Address);
+            dbContent = dbContent.Replace(ContractKeysEnum.ClientAddress.GetDescription(), invoice.FirstOrDefault().Address);
             dbContent = dbContent.Replace(ContractKeysEnum.ClientCompanyName.GetDescription(), company.CompanyName);
             dbContent = dbContent.Replace(ContractKeysEnum.ServiceItems.GetDescription(), managementCompany.Services);
             dbContent = dbContent.Replace(ContractKeysEnum.ContractNumber.GetDescription(), result.Number);

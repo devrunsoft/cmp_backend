@@ -64,6 +64,9 @@
     <None Remove="Controllers\Admin\Payment\" />
     <None Remove="Controllers\Admin\AppLog\" />
     <None Remove="Properties\PublishProfiles\FolderProfile 114.pubxml" />
+    <None Remove="Controllers\Admin\RequestTerminate\" />
+    <None Remove="Controllers\Client\RequestTerminate\" />
+    <None Remove="Controllers\Client\Manifest\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="View\" />
@@ -104,6 +107,9 @@
     <Folder Include="Controllers\Client\TermsConditions\" />
     <Folder Include="Controllers\Admin\Payment\" />
     <Folder Include="Controllers\Admin\AppLog\" />
+    <Folder Include="Controllers\Admin\RequestTerminate\" />
+    <Folder Include="Controllers\Client\RequestTerminate\" />
+    <Folder Include="Controllers\Client\Manifest\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\CMPNatural.Core.csproj">

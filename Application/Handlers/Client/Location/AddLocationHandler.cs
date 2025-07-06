@@ -13,6 +13,7 @@ using CMPNatural.Core.Entities;
 using CMPNatural.Application.Mapper;
 using CMPNatural.Application.Commands;
 using CMPNatural.Core.Repositories;
+using System.Linq;
 
 namespace CMPNatural.Application.Handlers.CommandHandlers
 {
@@ -49,7 +50,7 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                 Type= (int) request.Type,
                 OperationalAddressId = request.OperationalAddressId,
                 CapacityId = request.CapacityId,
-                Address = request.Address?? ""
+                Address = request.Address?? "",
 
             };
 

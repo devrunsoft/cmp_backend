@@ -1,8 +1,5 @@
 ﻿
 using CMPNatural.Application;
-using CMPNatural.Application.Commands.OperationalAddress;
-using CMPNatural.Application.Commands.ServiceAppointment;
-using CMPNatural.Application.Model;
 using CMPNatural.Application.Model.ServiceAppointment;
 using CMPNatural.Core.Enums;
 using MediatR;
@@ -99,18 +96,18 @@ namespace CMPNatural.Api.Controllers.ServiceAppointment
             return Ok(result);
         }
 
-        [HttpDelete("{Id}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Delete([FromRoute] long Id)
-        {
-            var result = await _mediator.Send(new DeleteServiceAppointmentCommand()
-            {
-                Id = Id,
-                CompanyId = rCompanyId
-            });
-            return Ok(result);
-        }
+        //[HttpDelete("{Id}")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[EnableCors("AllowOrigin")]
+        //public async Task<ActionResult> Delete([FromRoute] long Id)
+        //{
+        //    var result = await _mediator.Send(new DeleteServiceAppointmentCommand()
+        //    {
+        //        Id = Id,
+        //        CompanyId = rCompanyId
+        //    });
+        //    return Ok(result);
+        //}
     }
 }
 

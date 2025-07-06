@@ -39,6 +39,18 @@ namespace CMPNatural.Api.Controllers.Admin.Client
 
             return Ok(result);
         }
+
+        [HttpGet("OperationalAddressPaginate/{OperationalAddressId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> GetAll([FromRoute] long OperationalAddressId, [FromQuery] GetAllBaseServiceAppointmentCommand command)
+        {
+            command.CompanyId = rCompanyId;
+            command.OperationalAddressId = OperationalAddressId;
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
     }
 }
 

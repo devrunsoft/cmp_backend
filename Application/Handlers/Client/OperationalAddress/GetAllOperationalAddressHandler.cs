@@ -33,7 +33,7 @@ namespace CMPNatural.Application.Handlers
         public async Task<CommandResponse<List<OperationalAddress>>> Handle(GetAllOperationalAddressCommand request, CancellationToken cancellationToken)
         {
             List<OperationalAddress> result = (await _operationalAddressRepository.GetWithChild(p => p.CompanyId == request.CompanyId
-            && (request.OperationalAddressId == null ? true : p.Id == request.OperationalAddressId))).ToList();
+            && (request.OperationalAddressId == null || request.OperationalAddressId == 0 || p.Id == request.OperationalAddressId))).ToList();
             return new Success<List<OperationalAddress>>() { Data = result };
         }
 

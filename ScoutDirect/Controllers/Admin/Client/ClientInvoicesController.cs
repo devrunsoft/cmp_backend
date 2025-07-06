@@ -50,6 +50,39 @@ namespace CMPNatural.Api.Controllers.Admin.Client
             return Ok(result);
         }
 
+        [HttpGet("OperationalAddress/{operationalAddressId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> AllByOperationalAddressId([FromRoute] long OperationalAddressId, [FromQuery] GetAllInvoiceCommand command)
+        {
+            command.CompanyId = rCompanyId;
+            command.OperationalAddressId = OperationalAddressId;
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpGet("Request/{OperationalAddressId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> GetRequest([FromRoute] long OperationalAddressId, [FromQuery] GetAllInvoiceRequestCommand command)
+        {
+            command.CompanyId = rCompanyId;
+            command.OperationalAddressId = OperationalAddressId;
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpPost("CancelRequest")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> CancelRequest([FromBody] ClientCancelRequestCommand Command)
+        {
+            Command.CompanyId = rCompanyId;
+            var result = await _mediator.Send(Command);
+            return Ok(result);
+        }
+
+
         [HttpGet("GetPayableCount")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
@@ -62,30 +95,6 @@ namespace CMPNatural.Api.Controllers.Admin.Client
             return Ok(result);
         }
 
-
-        //[HttpGet("CheckPayment/{Id}")]
-        //[ProducesResponseType(StatusCodes.Status200OK)]
-        //[EnableCors("AllowOrigin")]
-        //public async Task<ActionResult> CheckPayment([FromRoute] long Id)
-        //{
-
-        //    var resultdata = await _mediator.Send(new GetInvoiceByIdCommand()
-        //    {
-        //        CompanyId = rCompanyId,
-        //        Id = Id
-        //    });
-
-        //    var invoice = _invoiceApi.GetInvoice(resultdata.Data.InvoiceId);
-        //    System.Enum.TryParse(invoice.Data.status, out InvoiceStatus invoiceStatus);
-        //    var result = await _mediator.Send(new SentInvoiceCommand()
-        //    {
-        //        CompanyId = rCompanyId,
-        //        InvoiceId = resultdata.Data.Id,
-        //        Status = invoiceStatus
-        //    });
-
-        //    return Ok(result);
-        //}
 
         [HttpPost("Pay")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -133,31 +142,31 @@ namespace CMPNatural.Api.Controllers.Admin.Client
         }
 
 
-        [NonAction]
-        double getMinimumPrice(bool isGreas, List<CustomValueResponse> lst)
-        {
-            double amount = 0;
-            string fieldKey = "";
+        //[NonAction]
+        //double getMinimumPrice(bool isGreas, List<CustomValueResponse> lst)
+        //{
+        //    double amount = 0;
+        //    string fieldKey = "";
 
-            if (isGreas)
-            {
-                fieldKey = "{{ custom_values.minimum_cost_for_grease_trap_management }}";
-            }
-            else
-            {
-                fieldKey = "{{ custom_values.minimum_cost_of_cooking_oil_pick_up }}";
-            }
+        //    if (isGreas)
+        //    {
+        //        fieldKey = "{{ custom_values.minimum_cost_for_grease_trap_management }}";
+        //    }
+        //    else
+        //    {
+        //        fieldKey = "{{ custom_values.minimum_cost_of_cooking_oil_pick_up }}";
+        //    }
 
-            var greasCustomValue = lst.Where(p => p.fieldKey == fieldKey).FirstOrDefault();
+        //    var greasCustomValue = lst.Where(p => p.fieldKey == fieldKey).FirstOrDefault();
 
-            if (greasCustomValue == null)
-            {
-                return amount;
-            }
+        //    if (greasCustomValue == null)
+        //    {
+        //        return amount;
+        //    }
 
-            return double.Parse(greasCustomValue.value);
+        //    return double.Parse(greasCustomValue.value);
 
-        }
+        //}
 
 
         [HttpDelete("{InvoiceId}")]

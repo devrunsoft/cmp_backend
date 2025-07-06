@@ -36,10 +36,10 @@ namespace CMPNatural.Application
         {
             var entity = (await _repository.GetAsync(x => x.Id == request.CompanyContractId)).FirstOrDefault();
 
-            if(entity.Status != CompanyContractStatus.Created)
-            {
-                return new NoAcess<CompanyContract>() { Message = "This Contract is Already sent" };
-            }
+            //if(entity.Status != CompanyContractStatus.Created)
+            //{
+            //    return new NoAcess<CompanyContract>() { Message = "This Contract is Already sent" };
+            //}
 
             var information = (await _apprepository.GetAllAsync()).LastOrDefault();
             if (information == null)
@@ -58,8 +58,8 @@ namespace CMPNatural.Application
             .Include(x => x.BaseServiceAppointment)
             .ThenInclude(x => x.ProductPrice)
             .Include(x => x.Company)
-            )).FirstOrDefault();
-            var company = invoice.Company;
+            )).ToList();
+            var company = invoice.FirstOrDefault().Company;
 
 
             var dbContent = AdminContractCompanyContractHandler.Create(invoice, information, contract, company, entity, _appSetting);

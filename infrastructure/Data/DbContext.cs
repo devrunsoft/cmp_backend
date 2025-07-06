@@ -51,6 +51,8 @@ namespace infrastructure.Data
         public virtual DbSet<Payment> Payment { get; set; } = null!;
         public virtual DbSet<AppLog> AppLog { get; set; } = null!;
         public virtual DbSet<GoHighLevel> GoHighLevel { get; set; } = null!;
+        public virtual DbSet<RequestTerminate> RequestTerminate { get; set; } = null!;
+        public virtual DbSet<LocationDateTime> LocationDateTime { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -70,6 +72,38 @@ namespace infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<LocationDateTime>(entity =>
+            {
+                entity.ToTable("LocationDateTime");
+            });
+
+            modelBuilder.Entity<RequestTerminate>(entity =>
+            {
+                entity.ToTable("RequestTerminate");
+
+                entity.Property(p => p.Status)
+                .HasConversion(
+                 x => x.ToString(),
+                 x => (RequestTerminateEnum)Enum.Parse(typeof(RequestTerminateEnum), x)
+                 );
+
+                entity.Property(p => p.RequestTerminateStatus)
+                .HasConversion(
+                 x => x.ToString(),
+                 x => (RequestTerminateProcessEnum)Enum.Parse(typeof(RequestTerminateProcessEnum), x)
+                 );
+
+                modelBuilder.Entity<RequestTerminate>()
+                    .HasMany(rt => rt.Invoice)
+                    .WithOne() // or .WithOne() if truly one-to-one
+                    .HasForeignKey(rt => rt.InvoiceId)
+                    .HasPrincipalKey(i => i.InvoiceNumber); // explicitly specify the key
+
+                entity.HasOne(d => d.Company)
+                .WithOne()
+                .HasForeignKey<RequestTerminate>(d => d.CompanyId);
+            });
+
             modelBuilder.Entity<GoHighLevel>(entity =>
             {
                 entity.ToTable("GoHighLevel");
@@ -244,9 +278,9 @@ namespace infrastructure.Data
                 x => (CompanyStatus)Enum.Parse(typeof(CompanyStatus), x)
                 );
 
-                entity.HasOne(d => d.BillingInformation)
+                entity.HasMany(d => d.BillingInformations)
                 .WithOne(p => p.Company)
-                .HasForeignKey<BillingInformation>(d => d.CompanyId);
+                .HasForeignKey(d => d.CompanyId);
             });
 
             modelBuilder.Entity<LocationCompany>(entity =>
@@ -270,8 +304,13 @@ namespace infrastructure.Data
             modelBuilder.Entity<OperationalAddress>(entity =>
             {
                 entity.ToTable("OperationalAddress");
+
                 entity.HasMany(d => d.LocationCompany)
                 .WithOne(p => p.OperationalAddress)
+                .HasForeignKey(d => d.OperationalAddressId);
+
+                entity.HasMany(d => d.LocationDateTimes)
+                .WithOne(x=>x.OperationalAddress)
                 .HasForeignKey(d => d.OperationalAddressId);
             });
 
@@ -344,6 +383,10 @@ namespace infrastructure.Data
                 entity.HasMany(d => d.InvoiceProduct)
                 .WithOne(p => p.Invoice)
                 .HasForeignKey(d => d.InvoiceId);
+
+                entity.HasOne(d => d.BillingInformation)
+                .WithOne()
+                .HasForeignKey<Invoice>(d => d.BillingInformationId);
 
                 entity
                 .Property(p => p.Status)

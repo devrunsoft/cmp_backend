@@ -20,6 +20,7 @@ namespace CMPNatural.infrastructure.Repository
         {
             return await _dbContext.OperationalAddress.Where(expression)
                 .Include(p=>p.LocationCompany)
+                .Include(p => p.LocationDateTimes)
                 .ToListAsync();
         }
 

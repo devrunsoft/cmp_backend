@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using CMPNatural.Core.Enums;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Stripe.Forwarding;
 
 namespace CMPNatural.Application.Handlers
 {
@@ -85,6 +86,7 @@ namespace CMPNatural.Application.Handlers
                         Amount = resultPrice.Amount * request.qty,
                         ProductId = request.ProductId,
                         ProductPriceId = request.ProductPriceId,
+                        ProductPrice = resultPrice,
                         OperationalAddressId = request.OperationalAddressId,
                         Status = ServiceStatus.Draft,
                         IsEmegency = true,
@@ -104,6 +106,8 @@ namespace CMPNatural.Application.Handlers
             await _invoiceSourceRepository.AddAsync(new InvoiceSource(){
                 CreatedAt = DateTime.Now,
                 InvoiceId = requests.InvoiceId,
+                OperationalAddressId = requests.OperationalAddressId,
+                BillingInformationId = requests.BillingInformationId
             });
 
             var entity = new Invoice()
@@ -117,6 +121,7 @@ namespace CMPNatural.Application.Handlers
                 Address = requests.Address,
                 OperationalAddressId = requests.OperationalAddressId,
                 CreatedAt = DateTime.Now,
+                BillingInformationId = requests.BillingInformationId
             };
             entity.CalculateAmount();
             entity.RequestNumber = "";

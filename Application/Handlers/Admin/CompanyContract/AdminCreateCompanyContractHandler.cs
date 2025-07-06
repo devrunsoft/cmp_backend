@@ -53,12 +53,12 @@ namespace CMPNatural.Application.Handlers
                 return new NoAcess<CompanyContract>() {  Message = "No active contract found!" };
             }
 
-            var services = (await _baseServicerepository.GetAsync(x => x.InvoiceId == invoice.InvoiceId, query => query
+            var mainInvoice = (await _baseServicerepository.GetAsync(x => x.InvoiceId == invoice.InvoiceId, query => query
             .Include(x=>x.BaseServiceAppointment)
             .ThenInclude(x=>x.Product)
             .Include(x => x.BaseServiceAppointment)
             .ThenInclude(x => x.ProductPrice)
-            )).FirstOrDefault();
+            )).ToList();
 
             var entity = new CompanyContract()
             {
@@ -72,7 +72,7 @@ namespace CMPNatural.Application.Handlers
 
             var result = await _repository.AddAsync(entity);
 
-            var dbContent = AdminContractCompanyContractHandler.Create(services, information, contract, company, result, _appSetting);
+            var dbContent = AdminContractCompanyContractHandler.Create(mainInvoice, information, contract, company, result, _appSetting);
             //update
             entity.Content = dbContent.ToString();
             entity.ContractNumber = entity.Number;

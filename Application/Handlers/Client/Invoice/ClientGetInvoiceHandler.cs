@@ -24,7 +24,7 @@ namespace CMPNatural.Application.Handlers.Admin.Invoice
         {
             var invoices = (await _invoiceRepository.GetAsync(p => p.Id == request.InvoiceId,
                 query => query.Include(i => i.Company)
-                .ThenInclude(x => x.BillingInformation)
+                .ThenInclude(x => x.BillingInformations)
                 .Include(i => i.Provider)
                 .Include(i => i.BaseServiceAppointment)
                 .ThenInclude(i => i.ProductPrice)
@@ -32,6 +32,7 @@ namespace CMPNatural.Application.Handlers.Admin.Invoice
                 .Include(i => i.BaseServiceAppointment)
                 .ThenInclude(i => i.ServiceAppointmentLocations)
                 .ThenInclude(p => p.LocationCompany)
+                .Include(i => i.BillingInformation)
                 )).FirstOrDefault();
 
             var model = InvoiceMapper.Mapper.Map<InvoiceResponse>(invoices);

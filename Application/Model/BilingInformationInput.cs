@@ -1,8 +1,16 @@
-﻿using System;
+﻿using System.Collections.Generic;
+
 namespace CMPNatural.Application.Model
 {
-	public class BilingInformationInput
+    public class InformationInput
+    {
+        public string CorporateAddress { get; set; }
+        public List<BilingInformationInput> BilingInformationInputs { get; set; } = new List<BilingInformationInput>();
+    }
+
+    public class BilingInformationInput
 	{
+        public long? Id { get; set; }
         public string? CardholderName { get; set; } = null;
         public string? CardNumber { get; set; } = null;
         public int Expiry { get; set; } = 0;
@@ -15,4 +23,3 @@ namespace CMPNatural.Application.Model
 
     }
 }
-

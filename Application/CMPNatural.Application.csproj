@@ -258,6 +258,13 @@
     <None Remove="Handlers\Admin\GoHighLevel\" />
     <None Remove="Mapper\CommonAppInformation\" />
     <None Remove="Responses\ClientServiceAppointment\" />
+    <None Remove="Handlers\Admin\RequestTerminate\" />
+    <None Remove="Commands\Admin\RequestTerminate\" />
+    <None Remove="Commands\Client\RequestTerminate\" />
+    <None Remove="Handlers\Client\RequestTerminate\" />
+    <None Remove="Responses\Information\" />
+    <None Remove="Commands\Client\Manifest\" />
+    <None Remove="Handlers\Client\Manifest\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -522,6 +529,13 @@
     <Folder Include="Handlers\Admin\GoHighLevel\" />
     <Folder Include="Mapper\CommonAppInformation\" />
     <Folder Include="Responses\ClientServiceAppointment\" />
+    <Folder Include="Handlers\Admin\RequestTerminate\" />
+    <Folder Include="Commands\Admin\RequestTerminate\" />
+    <Folder Include="Commands\Client\RequestTerminate\" />
+    <Folder Include="Handlers\Client\RequestTerminate\" />
+    <Folder Include="Responses\Information\" />
+    <Folder Include="Commands\Client\Manifest\" />
+    <Folder Include="Handlers\Client\Manifest\" />
   </ItemGroup> 
 
   <ItemGroup>

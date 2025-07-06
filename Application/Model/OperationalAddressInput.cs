@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace CMPNatural.Application.Model
 {
 	public class OperationalAddressInput
@@ -15,6 +17,8 @@ namespace CMPNatural.Application.Model
         public string LastName { get; set; }
         public double Lat { get; set; }
         public double Long { get; set; }
+        public List<LocationDateTimeInput> LocationDateTimeInputs { get; set; } = new List<LocationDateTimeInput>();
+
     }
 }
 

@@ -13,6 +13,7 @@ namespace CMPNatural.Application
 		{
 		}
 		public CompanyContractStatus? Status { get; set; }
+		public long? CompanyId { get; set; }
 	}
 }
 

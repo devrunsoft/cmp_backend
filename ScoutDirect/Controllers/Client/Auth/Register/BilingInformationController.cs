@@ -30,26 +30,32 @@ namespace CMPNatural.Api.Controllers
             return Ok(result);
         }
 
+        [HttpGet("Information")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> GetInformation()
+        {
+
+            var result = await _mediator.Send(new GetInformationCommand()
+            {
+                CompanyId = rCompanyId,
+            });
+            return Ok(result);
+        }
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Post([FromBody] BilingInformationInput input)
+        public async Task<ActionResult> Post([FromBody] InformationInput input)
         {
             
             var result = await _mediator.Send(new AddBilingInformationCommand()
             {
-                Address=input.Address,
-                CardholderName=input.CardholderName,
-                CardNumber=input.CardNumber,
-                City=input.City,
-                CompanyId=rCompanyId,
-                CVC=input.CVC,
-                Expiry=input.Expiry,
-                IsPaypal=input.IsPaypal,
-                State=input.State,
-                ZIPCode=input.ZIPCode
-
+            BilingInformationInputs = input.BilingInformationInputs,
+            CorporateAddress= input.CorporateAddress,
+            CompanyId = rCompanyId
             });
+
             return Ok(result);
         }
 
@@ -79,17 +85,14 @@ namespace CMPNatural.Api.Controllers
         }
 
 
-        [HttpDelete("{Id}")]
+        [HttpDelete()]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Delete([FromRoute] long Id)
+        public async Task<ActionResult> Delete([FromBody] DeleteBilingInformationCommand command)
         {
+            command.CompanyId = rCompanyId;
 
-            var result = await _mediator.Send(new DeleteBilingInformationCommand()
-            {
-                Id = Id,
-                CompanyId = rCompanyId
-            });
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
     }

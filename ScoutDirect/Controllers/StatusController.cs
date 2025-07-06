@@ -89,6 +89,18 @@ namespace CMPNatural.Api.Controllers
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> RegistartionStatusLogin()
         {
+
+            var resultbiling = await _mediator.Send(new GetBilingInformationCommand()
+            {
+                CompanyId = rCompanyId,
+            })!;
+
+            if (resultbiling.Data == null)
+            {
+                return Ok(new Success<String>() { Data = RegisterType.BillingDetails.ToString() });
+
+            }
+
             var resultlocation = await _mediator.Send(new GetLocationCompanyCommand()
             {
                 CompanyId = rCompanyId,
@@ -111,16 +123,7 @@ namespace CMPNatural.Api.Controllers
 
             //}
 
-            //var resultbiling = await _mediator.Send(new GetBilingInformationCommand()
-            //{
-            //    CompanyId = rCompanyId,
-            //})!;
 
-            //if (resultbiling.Data == null)
-            //{
-            //    return Ok(new Success<String>() { Data = RegisterType.BillingDetails.ToString() });
-
-            //}
             var resultCompany = await _mediator.Send(new GetCompanyCommand()
             {
                 CompanyId = rCompanyId,

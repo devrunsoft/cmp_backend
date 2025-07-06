@@ -23,15 +23,22 @@ namespace CMPNatural.Core.Entities
 
         public string? Comment { get; set; }
 
-        public virtual Company Company { get; set; } = null!;
-
-        public virtual Provider? Provider { get; set; }
-
         public long? ContractId { get; set; }
 
         public string InvoiceNumber { get; set; }
 
         public string RequestNumber { get; set; }
+
+        public long BillingInformationId { get; set; }
+
+
+        public virtual Company Company { get; set; } = null!;
+
+        public virtual Provider? Provider { get; set; }
+
+        public virtual BillingInformation BillingInformation { get; set; } = null!;
+
+
 
         [NotMapped]
         public string Number
@@ -47,7 +54,7 @@ namespace CMPNatural.Core.Entities
         {
             get
             {
-                return $"R{this.CreatedAt.Year}-{this.CompanyId}-{Id}";
+                return $"R{this.CreatedAt.Year}-{this.CompanyId}/{this.OperationalAddressId}-{Id}";
             }
         }
 

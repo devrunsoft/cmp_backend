@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using CMPNatural.Application.Model;
 using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Application.Commands
 {
     public class LocationCompanyInput
     {
-        public LocationCompanyInput()
-        { }
+        public LocationCompanyInput(){ }
 
         public string Name { get; set; }
         public string Address { get; set; }

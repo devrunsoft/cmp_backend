@@ -19,6 +19,9 @@ using System.Diagnostics.Metrics;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Xml.Linq;
+using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace CMPNatural.Application.Handlers.CommandHandlers
 {
@@ -34,12 +37,42 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
         public async Task<CommandResponse<object>> Handle(EditOperationalAddressCommand request, CancellationToken cancellationToken)
         {
 
-            var entity = await _operationalAddressRepository.GetByIdAsync(request.Id);
+            var entity = (await _operationalAddressRepository.GetAsync(x=>x.Id ==request.Id, query => query.Include(x => x.LocationDateTimes))).FirstOrDefault();
 
             if (entity.CompanyId != request.CompanyId)
             {
                 return new NoAcess() { Message = "No Access to edit!" };
             }
+            List<LocationDateTime> LocationDateTimes = new List<LocationDateTime>();
+
+            foreach (var x in request.LocationDateTimeInputs)
+            {
+                if (x.Id == null)
+                {
+                    // Add new
+                    LocationDateTimes.Add(new LocationDateTime
+                    {
+                        CompanyId = request.CompanyId,
+                        DayName = x.DayName,
+                        FromTime = x.FromTime,
+                        ToTime = x.ToTime,
+                        OperationalAddressId = request.Id
+                    });
+                }
+                else
+                {
+                    // Update existing
+                    var existing = entity.LocationDateTimes.FirstOrDefault(ldt => ldt.Id == x.Id.Value);
+                    if (existing != null)
+                    {
+                        existing.DayName = x.DayName;
+                        existing.FromTime = x.FromTime;
+                        existing.ToTime = x.ToTime;
+                    }
+                    LocationDateTimes.Add(existing);
+                }
+            }
+
 
             entity.Address = request.Address;
             entity.BusinessId = request.BusinessId;
@@ -52,6 +85,8 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
             entity.Lat = request.Lat;
             entity.Long = request.Long;
             entity.Name = request.Name;
+            entity.LocationDateTimes = LocationDateTimes;
+
 
             await _operationalAddressRepository.UpdateAsync(entity);
 

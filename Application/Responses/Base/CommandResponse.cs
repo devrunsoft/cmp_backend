@@ -26,7 +26,7 @@ namespace ScoutDirect.Application.Responses
         public Success()
         {
             Success = true;
-            Message = "Successfull";
+            Message = "Operation completed successfully.";
             StatusCode = "200";
         }
     }

@@ -19,6 +19,8 @@ using CMPNatural.Application.Commands.Billing;
 using CMPEmail;
 using Microsoft.Extensions.Options;
 using CMPNatural.Core.Models;
+using CMPNatural.Api.Controllers.Client;
+using CMPNatural.Core.Entities;
 
 namespace CMPNatural.Api.Controllers
 {
@@ -56,16 +58,32 @@ namespace CMPNatural.Api.Controllers
                 activationLink = activationLink,
             })!;
 
+            string tokenvalue="";
+
+            if (resultCompany.IsSucces())
+            {
+                var company = resultCompany.Data;
+
+                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+
+                var token = new JwtSecurityToken(
+                    issuer: _configuration["JWT:ValidIssuer"],
+                    audience: _configuration["JWT:ValidAudience"],
+                    expires: DateTime.Now.AddMinutes(_expiresModel.Client),
+                    claims: new GenerateToken().get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered, company.ProfilePicture, company.FullName, company.PersonId),
+                    signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+                    );
+
+                 tokenvalue = new JwtSecurityTokenHandler().WriteToken(token);
+            }
             return new ContentResult
             {
                 ContentType = "text/html",
                 StatusCode = (int)HttpStatusCode.OK,
-                Content = viewCheck(resultCompany.IsSucces())
-              };
-
+                Content = viewCheck(resultCompany.IsSucces(), tokenvalue)
+            };
         }
-
-        private string viewCheck(bool isSuccess)
+        private string viewCheck(bool isSuccess, string token)
         {
 
             if (isSuccess)
@@ -119,7 +137,7 @@ namespace CMPNatural.Api.Controllers
         <h1>Activation Successful!</h1>
         <p>Thank you for activating your account. Your account is now fully active, and you can start using our services.</p>
         <p>If you have any questions, feel free to contact our support team.</p>
-        <a href=""{_appSetting.clientHost}/logout"" class=""button"">Go to Login</a>
+        <a href=""{_appSetting.clientHost}/activationToken/{token}"" class=""button"">Go to Login</a>
     </div>
 </body>
 </html>";
@@ -317,13 +335,11 @@ namespace CMPNatural.Api.Controllers
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Put([FromBody] UpdateCompanyInput request)
         {
-            var resultBillingAddress = await _mediator.Send(new AddOrUpdateBillingAddressCommand()
+            var resultBillingAddress = await _mediator.Send(new AddBilingInformationCommand()
             {
-                CompanyId = rCompanyId,
-                Address = request.BillingAddress,
-                City = request.City,
-                ZIPCode = request.ZIPCode,
-                State = request.State
+                BilingInformationInputs = request.InformationInput.BilingInformationInputs,
+                CorporateAddress = request.InformationInput.CorporateAddress,
+                CompanyId = rCompanyId
             });
 
             var result = await _mediator.Send(new UpdateCompanyCommand()

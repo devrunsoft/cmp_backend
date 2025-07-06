@@ -6,6 +6,7 @@ using CMPNatural.Api.Controllers.Admin;
 using CMPNatural.Application.Commands;
 using CMPNatural.Application.Commands.Admin.Company;
 using CMPNatural.Application.Commands.Billing;
+using CMPNatural.Application.Commands.Client.Representation;
 using CMPNatural.Application.Model;
 using CMPNatural.Application.Responses;
 using CMPNatural.Core.Entities;
@@ -23,6 +24,19 @@ namespace CMPNatural.Api.Controllers
         {
         }
 
+
+        [HttpGet("{clientId}/Representation/{OperationalAddressId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Get([FromRoute] long clientId, [FromRoute] long OperationalAddressId)
+        {
+            var result = await _mediator.Send(new ClientMenuRepresentationCommand()
+            {
+                CompanyId = clientId,
+                OperationalAddressId = OperationalAddressId
+            });
+            return Ok(result);
+        }
 
         [HttpPut("{clientId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]

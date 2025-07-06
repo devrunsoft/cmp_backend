@@ -37,6 +37,7 @@ namespace CMPNatural.Application
             foreach (var item in baseAppointments)
             {
                 var numberOfPayments = item.ProductPrice.NumberofPayments;
+                numberOfPayments = numberOfPayments == 0 ? 1 : numberOfPayments;
                 var intervalDays = 365 / numberOfPayments;
                 var baseStartDate = item.StartDate;
 
@@ -66,7 +67,7 @@ namespace CMPNatural.Application
                         DayOfWeek = item.DayOfWeek,
                         FromHour = item.FromHour,
                         ToHour = item.ToHour,
-                        ScaduleDate = appointmentDate
+                        ScaduleDate = appointmentDate,
                     };
 
                     allAppointments.Add(appointment);
@@ -93,7 +94,8 @@ namespace CMPNatural.Application
                     SendDate = group.FirstOrDefault().StartDate,
                     CreatedAt = DateTime.Now,
                     InvoiceNumber = "",
-                    RequestNumber = ""
+                    RequestNumber = "",
+                    BillingInformationId = invoiceTemplate.BillingInformationId
                 };
                 groupedInvoice.CalculateAmount();
 
