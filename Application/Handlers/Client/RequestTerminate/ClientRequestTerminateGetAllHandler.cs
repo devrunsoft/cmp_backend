@@ -22,7 +22,9 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<PagesQueryResponse<RequestTerminate>>> Handle(ClientRequestTerminateGetAllCommand request, CancellationToken cancellationToken)
         {
-            var result = (await _repository.GetBasePagedAsync(request, x=>x.CompanyId == request.CompanyId, query => query
+            var result = (await _repository.GetBasePagedAsync(request, x=>x.CompanyId == request.CompanyId &&
+            (request.OperationalAddressId == 0 || x.OperationalAddressId == request.OperationalAddressId),
+            query => query
             .Include(x => x.Invoice)
             .ThenInclude(x => x.Company)
              .Include(x => x.Invoice)

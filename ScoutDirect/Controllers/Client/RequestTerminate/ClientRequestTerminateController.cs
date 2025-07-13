@@ -13,11 +13,12 @@ namespace CMPNatural.Api.Controllers.Admin.RequestTerminate
         {
         }
 
-        [HttpGet]
+        [HttpGet("{operationalAddressId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> GetAll([FromQuery] ClientRequestTerminateGetAllCommand command)
+        public async Task<ActionResult> GetAll([FromQuery] ClientRequestTerminateGetAllCommand command, [FromRoute] long OperationalAddressId)
         {
+            command.OperationalAddressId = OperationalAddressId;
             command.CompanyId = rCompanyId;
             var result = await _mediator.Send(command);
             return Ok(result);

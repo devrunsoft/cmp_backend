@@ -43,4 +43,5 @@ namespace CMPNatural.Core.Entities
     public partial class GoHighLevel : IIdentityObject<long> { }
     public partial class RequestTerminate : IIdentityObject<long> { }
     public partial class LocationDateTime : IIdentityObject<long> { }
+    public partial class AmendmentCompanyContract : IIdentityObject<long> { }
 }

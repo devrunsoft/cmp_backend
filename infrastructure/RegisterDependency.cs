@@ -68,6 +68,7 @@ namespace ScoutDirect.infrastructure
             services.AddTransient<IAppLogRepository, AppLogRepository>();
             services.AddTransient<IGoHighLevelRepository, GoHighLevelRepository>();
             services.AddTransient<IRequestTerminateRepository, RequestTerminateRepository>();
+            services.AddTransient<IAmendmentCompanyContractRepository, AmendmentCompanyContractRepository>();
 
             //services.AddTransient<IinvoiceProviderRepository, InvoiceProviderRepository>();
 

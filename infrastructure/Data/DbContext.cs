@@ -53,6 +53,7 @@ namespace infrastructure.Data
         public virtual DbSet<GoHighLevel> GoHighLevel { get; set; } = null!;
         public virtual DbSet<RequestTerminate> RequestTerminate { get; set; } = null!;
         public virtual DbSet<LocationDateTime> LocationDateTime { get; set; } = null!;
+        public virtual DbSet<AmendmentCompanyContract> AmendmentCompanyContract { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -72,6 +73,11 @@ namespace infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AmendmentCompanyContract>(entity =>
+            {
+                entity.ToTable("AmendmentCompanyContract");
+            });
+
             modelBuilder.Entity<LocationDateTime>(entity =>
             {
                 entity.ToTable("LocationDateTime");
@@ -279,6 +285,10 @@ namespace infrastructure.Data
                 );
 
                 entity.HasMany(d => d.BillingInformations)
+                .WithOne(p => p.Company)
+                .HasForeignKey(d => d.CompanyId);
+
+                entity.HasMany(d => d.OperationalAddress)
                 .WithOne(p => p.Company)
                 .HasForeignKey(d => d.CompanyId);
             });

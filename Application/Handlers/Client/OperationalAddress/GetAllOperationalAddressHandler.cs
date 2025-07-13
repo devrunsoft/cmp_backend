@@ -18,6 +18,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
 using System.Security.Cryptography;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace CMPNatural.Application.Handlers
 {
@@ -32,8 +33,16 @@ namespace CMPNatural.Application.Handlers
 
         public async Task<CommandResponse<List<OperationalAddress>>> Handle(GetAllOperationalAddressCommand request, CancellationToken cancellationToken)
         {
-            List<OperationalAddress> result = (await _operationalAddressRepository.GetWithChild(p => p.CompanyId == request.CompanyId
-            && (request.OperationalAddressId == null || request.OperationalAddressId == 0 || p.Id == request.OperationalAddressId))).ToList();
+            var addressFilter = QueryExtensions.FilterByQuery(request.Query);
+            var query = (await _operationalAddressRepository.GetWithChild(p => p.CompanyId == request.CompanyId
+            && (request.OperationalAddressId == null || request.OperationalAddressId == 0 || p.Id == request.OperationalAddressId)
+            ));
+
+            var result = query
+             .AsQueryable()
+             .Where(addressFilter)
+             .ToList();
+
             return new Success<List<OperationalAddress>>() { Data = result };
         }
 

@@ -31,7 +31,7 @@ namespace CMPNatural.Application
             var terminaterequest = (await terminateRepository.GetAsync(x=>x.Id == request.Id)).FirstOrDefault();
 
             var invoices = (await _invoiceRepository.GetAsync(p => p.InvoiceId == terminaterequest.InvoiceNumber && p.CompanyId == terminaterequest.CompanyId &&
-            (p.Status == InvoiceStatus.Draft || p.Status == InvoiceStatus.Scaduled),
+            (p.Status != InvoiceStatus.Complete && p.Status != InvoiceStatus.Deleted),
                 query => query
                 .Include(i => i.BaseServiceAppointment)
                 )).ToList();

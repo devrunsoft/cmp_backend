@@ -13,4 +13,3 @@ namespace CMPNatural.Application
         public long ContractId { get; set; }
     }
 }
-

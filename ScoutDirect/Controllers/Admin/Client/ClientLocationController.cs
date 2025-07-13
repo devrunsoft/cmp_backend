@@ -36,12 +36,10 @@ namespace CMPNatural.Api.Controllers.Admin.Client
         [Route("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> GetAll()
+        public async Task<ActionResult> GetAll([FromQuery] GetAllOperationalAddressCommand command)
         {
-            var result = await _mediator.Send(new GetAllOperationalAddressCommand()
-            {
-                CompanyId = rCompanyId,
-            });
+            command.CompanyId = rCompanyId;
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
 

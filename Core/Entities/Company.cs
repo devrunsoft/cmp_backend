@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq.Expressions;
 using CMPNatural.Core.Enums;
 using ScoutDirect.Core.Entities;
+using Stripe.Forwarding;
 
 namespace CMPNatural.Core.Entities
 {
@@ -32,10 +34,41 @@ namespace CMPNatural.Core.Entities
         public string? ProfilePicture { get; set; }
 		public string CorporateAddress { get; set; }
 
-		public virtual ICollection<BillingInformation> BillingInformations { get; set; }
+        public virtual ICollection<OperationalAddress> OperationalAddress { get; set; }
+        public virtual ICollection<BillingInformation> BillingInformations { get; set; }
         public virtual ICollection<Invoice> Invoices { get; set; }
         public virtual ICollection<CompanyContract> CompanyContract { get; set; }
 
     }
+
+
+    public static class QueryCompanyExtensions
+    {
+        public static Expression<Func<Company, bool>> FilterByQuery(string? search, CompanyStatus? Status)
+        {
+            if (string.IsNullOrWhiteSpace(search))
+                return _ => true;
+
+            var loweredSearch = search.Trim().ToLower();
+            var addressFilter = QueryExtensions.FilterByQuery(search);
+            return p =>
+                  (Status == null || p.Status == Status) &&
+                (p.CompanyName != null && p.CompanyName.ToLower().Contains(loweredSearch)) ||
+                (p.PrimaryFirstName != null && p.PrimaryFirstName.ToLower().Contains(loweredSearch)) ||
+                (p.PrimaryLastName != null && p.PrimaryLastName.ToLower().Contains(loweredSearch)) ||
+                (p.PrimaryPhonNumber != null && p.PrimaryPhonNumber.ToLower().Contains(loweredSearch)) ||
+                (p.BusinessEmail != null && p.BusinessEmail.ToLower().Contains(loweredSearch)) ||
+                (p.Position != null && p.Position.ToLower().Contains(loweredSearch)) ||
+                (p.SecondaryFirstName != null && p.SecondaryFirstName.ToLower().Contains(loweredSearch)) ||
+                (p.SecondaryLastName != null && p.SecondaryLastName.ToLower().Contains(loweredSearch)) ||
+                (p.SecondaryPhoneNumber != null && p.SecondaryPhoneNumber.ToLower().Contains(loweredSearch)) ||
+                (p.ReferredBy != null && p.ReferredBy.ToLower().Contains(loweredSearch)) ||
+                (p.AccountNumber != null && p.AccountNumber.ToLower().Contains(loweredSearch)) ||
+                (p.CorporateAddress != null && p.CorporateAddress.ToLower().Contains(loweredSearch)) ||
+                (p.AccountNumber != null && p.AccountNumber.ToLower().Contains(loweredSearch)) ||
+                p.OperationalAddress.AsQueryable().Any(addressFilter);
+        }
+    }
+
 }
 

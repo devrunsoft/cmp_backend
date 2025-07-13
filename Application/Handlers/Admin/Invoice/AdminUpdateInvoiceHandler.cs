@@ -18,6 +18,7 @@ namespace CMPNatural.Application
 {
     public class AdminUpdateInvoiceHandler : IRequestHandler<AdminUpdateInvoiceCommand, CommandResponse<Invoice>>
     {
+        private readonly IAmendmentCompanyContractRepository _amendmentCompanyContractRepository;
         private readonly IinvoiceRepository _invoiceRepository;
         private readonly IProductPriceRepository _productPriceRepository;
         private readonly IBaseServiceAppointmentRepository _baseServiceAppointmentRepository;
@@ -31,7 +32,7 @@ namespace CMPNatural.Application
         public AdminUpdateInvoiceHandler(IinvoiceRepository invoiceRepository, IProductPriceRepository productPriceRepository ,
              IBaseServiceAppointmentRepository baseServiceAppointmentRepository, IContractRepository _contractRepository,
              ICompanyContractRepository _companyContractRepository, IAppInformationRepository _appRepository, IRequestTerminateRepository requestTerminate, AppSetting appSetting,
-             IMediator mediator)
+             IMediator mediator, IAmendmentCompanyContractRepository _amendmentCompanyContractRepository)
         {
             _invoiceRepository = invoiceRepository;
             _productPriceRepository = productPriceRepository;
@@ -42,6 +43,7 @@ namespace CMPNatural.Application
             this._appSetting = appSetting;
             this.requestTerminate = requestTerminate;
             this.mediator = mediator;
+            this._amendmentCompanyContractRepository = _amendmentCompanyContractRepository;
         }
 
         public async Task<CommandResponse<Invoice>> Handle(AdminUpdateInvoiceCommand requests, CancellationToken cancellationToken)
@@ -51,7 +53,7 @@ namespace CMPNatural.Application
             bool canEdit = false;
             if (invoice.Status != InvoiceStatus.Draft)
             {
-                var terminateRequest = (await requestTerminate.GetAsync(p => p.InvoiceNumber == invoice.InvoiceId)).FirstOrDefault();
+                var terminateRequest = (await requestTerminate.GetAsync(p => p.InvoiceNumber == invoice.InvoiceId)).LastOrDefault();
                 if (terminateRequest != null && terminateRequest.RequestTerminateStatus == null)
                 {
                     canEdit = true;
@@ -203,6 +205,13 @@ namespace CMPNatural.Application
             else if (canEdit)
             {
                 var contract = (await _companyContractRepository.GetAsync(x=>x.Id == invoice.ContractId.Value)).FirstOrDefault();
+                var lastContract = _amendmentCompanyContractRepository.AddAsync(new AmendmentCompanyContract()
+                {
+                    Content = contract.Content,
+                    ContractId = contract.ContractId,
+                    ContractNumber = contract.ContractNumber,
+                });
+
                 await mediator.Send(new AdminUpdateCompanyContractCommand() { CompanyContractId = invoice.ContractId.Value  , ContractId = contract.ContractId});
             }
 

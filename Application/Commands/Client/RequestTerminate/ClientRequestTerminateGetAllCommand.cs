@@ -9,6 +9,7 @@ namespace CMPNatural.Application.Command
     public class ClientRequestTerminateGetAllCommand : PagedQueryRequest, IRequest<CommandResponse<PagesQueryResponse<RequestTerminate>>>
     {
         public long CompanyId { get; set; }
+        public long OperationalAddressId { get; set; }
     }
 }
 

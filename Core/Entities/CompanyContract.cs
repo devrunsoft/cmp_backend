@@ -6,9 +6,6 @@ namespace CMPNatural.Core.Entities
 {
 	public partial class CompanyContract
 	{
-		public CompanyContract()
-		{
-		}
 		public long Id { get; set; }
         public string Content { get; set; } = "";
 		public long ContractId { get; set; }
@@ -18,12 +15,10 @@ namespace CMPNatural.Core.Entities
         public string? AdminSign { get; set; }
         public DateTime? ClientSignDate { get; set; }
         public CompanyContractStatus Status { get; set; }
-        //public CancelEnum? CancelBy { get; set; }
-        public Company Company { get; set; }
-        //public Invoice Invoice { get; set; }
-
         public long OperationalAddressId { get; set; }
         public string ContractNumber { get; set; }
+
+        public Company Company { get; set; }
 
         [NotMapped]
         public string Number {
