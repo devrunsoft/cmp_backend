@@ -33,9 +33,9 @@ namespace CMPNatural.Application.Handlers.Admin.Auth
             var addressFilter = QueryCompanyExtensions.FilterByQuery(request.allField, request.CompanyStatus);
             var command = new PagedQueryRequest() { Page = request.Page , Size = request.Size };
 
-            var invoices = (await _invoiceRepository.GetBasePagedAsync(command, addressFilter
-            ,
-                query => query.Include(x=>x.OperationalAddress)));
+            var invoices = (await _invoiceRepository.GetBasePagedAsync(command, addressFilter,
+                query => query.Include(x=>x.OperationalAddress).Include(x=>x.CompanyContract)
+                ));
 
             var model = new PagesQueryResponse<CompanyResponse>(
                 invoices.elements.Select(p => CompanyMapper.Mapper.Map<CompanyResponse>(p)).ToList(),

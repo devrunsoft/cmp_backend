@@ -51,6 +51,7 @@ namespace CMPNatural.Core.Entities
 
             var loweredSearch = search.Trim().ToLower();
             var addressFilter = QueryExtensions.FilterByQuery(search);
+            var companyExt = CompanyContractExtensions.FilterByQuery(search);
             return p =>
                   (Status == null || p.Status == Status) &&
                 (p.CompanyName != null && p.CompanyName.ToLower().Contains(loweredSearch)) ||
@@ -66,9 +67,9 @@ namespace CMPNatural.Core.Entities
                 (p.AccountNumber != null && p.AccountNumber.ToLower().Contains(loweredSearch)) ||
                 (p.CorporateAddress != null && p.CorporateAddress.ToLower().Contains(loweredSearch)) ||
                 (p.AccountNumber != null && p.AccountNumber.ToLower().Contains(loweredSearch)) ||
-                p.OperationalAddress.AsQueryable().Any(addressFilter);
+                p.OperationalAddress.AsQueryable().Any(addressFilter) ||
+                p.CompanyContract.AsQueryable().Any(companyExt);
         }
     }
-
 }
 

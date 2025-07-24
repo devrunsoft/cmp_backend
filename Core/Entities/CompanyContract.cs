@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq.Expressions;
 using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Core.Entities
@@ -28,6 +29,23 @@ namespace CMPNatural.Core.Entities
 		} 
         public DateTime CreatedAt { get; set; }
 
+    }
+
+    public static class CompanyContractExtensions
+    {
+        public static Expression<Func<CompanyContract, bool>> FilterByQuery(string? search)
+        {
+            if (string.IsNullOrWhiteSpace(search))
+                return _ => true;
+
+            var loweredSearch = search.Trim().ToLower();
+            var addressFilter = QueryExtensions.FilterByQuery(search);
+            return p =>
+             (p.Content != null && p.Content.ToLower().Contains(loweredSearch)) ||
+             (p.ContractNumber != null && p.ContractNumber.ToLower().Contains(loweredSearch)) ||
+             (p.InvoiceId != null && p.InvoiceId.ToLower().Contains(loweredSearch)) ||
+             (p.InvoiceId != null && p.InvoiceId.ToLower().Contains(loweredSearch));
+        }
     }
 }
 
