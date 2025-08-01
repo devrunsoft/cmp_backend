@@ -27,43 +27,43 @@ namespace ScoutDirect.Api.Controllers._Base
         [NonAction]
         public void SendToProvider(string subject, string body, string email, string buttonText)
         {
-            emailSender.SendToProvider(_appSetting,subject, body, email, buttonText);
+            emailSender.SendToProvider(serviceScopeFactory , appSetting, subject, body, email, buttonText);
         }
 
         [NonAction]
         public void SendToClient(string subject, string body, string email, string buttonText)
         {
-            emailSender.SendToClient(_appSetting , subject, body, email, buttonText);
+            emailSender.SendToClient(serviceScopeFactory , appSetting, subject, body, email, buttonText);
         }
 
         [NonAction]
         public void sendEmail(string subject, string body, string email, string link="", string buttonText="")
         {
-            emailSender.Send(subject, body, email, link , buttonText);
+            emailSender.Send(serviceScopeFactory ,subject, body, email, link , buttonText);
         }
 
         [NonAction]
         public void sendEmailToAdmin(string subject, string body)
         {
-           emailSender.SendAdmin(_appSetting, subject, body, serviceScopeFactory , null , null);
+           emailSender.SendAdmin(appSetting, subject, body, serviceScopeFactory , null , null);
         }
 
         [NonAction]
         public void sendEmailToClient(long companyId ,string subject, string body)
         {
-             emailSender.SendClient(_appSetting,companyId, subject, body, serviceScopeFactory, null , null);
+             emailSender.SendClient(appSetting, companyId, subject, body, serviceScopeFactory, null , null);
         }
 
         [NonAction]
         public void sendEmailToAdmin(string subject, string body,string Link, string buttonText)
         {
-             emailSender.SendAdmin(_appSetting, subject, body, serviceScopeFactory, Link , buttonText);
+             emailSender.SendAdmin(appSetting, subject, body, serviceScopeFactory, Link , buttonText);
         }
 
         [NonAction]
         public void sendEmailToClient(long companyId, string subject, string body,string Link, string buttonText)
         {
-            emailSender.SendClient(_appSetting,companyId, subject, body, serviceScopeFactory, Link, buttonText);
+            emailSender.SendClient(appSetting, companyId, subject, body, serviceScopeFactory, Link, buttonText);
         }
 
 

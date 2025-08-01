@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.Design;
 using CMPEmail.Email;
 using CMPNatural.Application;
 using CMPNatural.Application.Commands.Company;
@@ -66,19 +67,24 @@ namespace CMPNatural.Api.Controllers.Service
             });
         }
 
-        public static void SendToProvider(this IEmailSender emailSender, AppSetting appSetting, string subject, string body, string email, string buttonText = "")
+        public static void SendToProvider(this IEmailSender emailSender, IServiceScopeFactory serviceScopeFactory, AppSetting appSetting, string subject, string body, string email, string buttonText = "")
         {
-            Send(emailSender, subject, body, email, appSetting.providerHost, buttonText);
+            Send(emailSender, serviceScopeFactory, subject, body, email, appSetting.providerHost, buttonText);
         }
-        public static void SendToClient(this IEmailSender emailSender, AppSetting appSetting, string subject, string body, string email, string buttonText = "")
+        public static void SendToClient(this IEmailSender emailSender, IServiceScopeFactory serviceScopeFactory, AppSetting appSetting, string subject, string body, string email, string buttonText = "")
         {
-            Send(emailSender, subject, body, email, appSetting.clientHost, buttonText);
+            Send(emailSender, serviceScopeFactory, subject, body, email, appSetting.clientHost, buttonText);
         }
 
-        public static void Send(this IEmailSender emailSender, string subject, string body, string email, string link = "", string buttonText = "")
+        public static void Send(this IEmailSender emailSender, IServiceScopeFactory serviceScopeFactory, string subject, string body, string email, string link = "", string buttonText = "")
         {
             Task.Run(async () =>
             {
+                using (var scope = serviceScopeFactory.CreateScope()) // Create a new DI scope
+                {
+                    var cache = scope.ServiceProvider.GetRequiredService<Func<CacheTech, ICacheService>>();
+                    var _cache = cache(CacheTech.Memory);
+                    var _mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
                     MailModel model = new MailModel()
                     {
                         toEmail = email,
@@ -86,11 +92,13 @@ namespace CMPNatural.Api.Controllers.Service
                         Subject = subject,
                         Name = $"",
                         CompanyName = "",
-                        buttonText= buttonText,
+                        buttonText = buttonText,
                         Link = link
                     };
                     emailSender.SendEmail(model);
+                }
             });
+
         }
 
 

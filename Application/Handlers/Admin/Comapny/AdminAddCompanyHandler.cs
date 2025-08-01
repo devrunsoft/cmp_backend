@@ -24,11 +24,13 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
     {
         private readonly ICompanyRepository _companyRepository;
         private readonly IPersonRepository _personRepository;
+        private readonly IMediator _mediator;
 
-        public AdminAddCompanyHandler(ICompanyRepository companyRepository, IPersonRepository personRepository)
+        public AdminAddCompanyHandler(ICompanyRepository companyRepository, IPersonRepository personRepository, IMediator _mediator)
         {
             _companyRepository = companyRepository;
             _personRepository = personRepository;
+            this._mediator = _mediator;
         }
 
         public async Task<CommandResponse<object>> Handle(AdminAddCompanyCommand request, CancellationToken cancellationToken)
@@ -67,11 +69,13 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
               ReferredBy = "",
               Registered=true,
               Accepted = true,
+              CorporateAddress = "",
               Password = PasswordGenerator.GenerateSecurePassword()
              };
 
-                await _companyRepository.UpdateAsync(company);
-                return new Success<object>() { Data = company };
+             await _companyRepository.AddAsync(company);
+            await _mediator.Send(new CreateChatSessionCommand() { ClientId = company.Id });
+            return new Success<object>() { Data = company };
 
         }
 

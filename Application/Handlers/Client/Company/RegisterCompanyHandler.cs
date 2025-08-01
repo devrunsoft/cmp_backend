@@ -20,11 +20,13 @@ namespace CMPNatural.Application.Handlers
     {
         private readonly ICompanyRepository _companyRepository;
         private readonly IPersonRepository _personRepository;
+        private readonly IMediator _mediator;
 
-        public RegisterCompanyHandler(ICompanyRepository companyRepository, IPersonRepository personRepository)
+        public RegisterCompanyHandler(ICompanyRepository companyRepository, IPersonRepository personRepository, IMediator _mediator)
         {
             _companyRepository = companyRepository;
             _personRepository = personRepository;
+            this._mediator = _mediator;
         }
 
         public async Task<CommandResponse<object>> Handle(RegisterCompanyCommand request, CancellationToken cancellationToken)
@@ -64,7 +66,10 @@ namespace CMPNatural.Application.Handlers
                 };
 
                 await _companyRepository.AddAsync(company);
-                return new Success<object>() { Data = CompanyMapper.Mapper.Map<CompanyResponse>(company) };
+
+                await _mediator.Send(new CreateChatSessionCommand() { ClientId = company.Id });
+
+            return new Success<object>() { Data = CompanyMapper.Mapper.Map<CompanyResponse>(company) };
 
         }
 
