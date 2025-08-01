@@ -265,6 +265,17 @@
     <None Remove="Responses\Information\" />
     <None Remove="Commands\Client\Manifest\" />
     <None Remove="Handlers\Client\Manifest\" />
+    <None Remove="Handlers\Admin\ChatMessage\" />
+    <None Remove="Commands\Admin\ChatMessage\" />
+    <None Remove="Hub\" />
+    <None Remove="Handlers\Client\ChatMessage\" />
+    <None Remove="Commands\Client\ChatMessage\" />
+    <None Remove="Commands\Admin\ChatSession\" />
+    <None Remove="Handlers\Admin\ChatSession\" />
+    <None Remove="Commands\Admin\ChatMessageNote\" />
+    <None Remove="Handlers\Admin\ChatMessageNote\" />
+    <None Remove="Handlers\Client\ChatMessageNote\" />
+    <None Remove="Commands\Client\ChatMessageNote\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -406,6 +417,7 @@
     <PackageReference Include="LazyCache" Version="2.4.0" />
     <PackageReference Include="MediatR" Version="12.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.16" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="shortid" Version="3.0.1" />
     <PackageReference Include="System.ServiceModel.Duplex" Version="4.8.*" />
@@ -536,6 +548,17 @@
     <Folder Include="Responses\Information\" />
     <Folder Include="Commands\Client\Manifest\" />
     <Folder Include="Handlers\Client\Manifest\" />
+    <Folder Include="Handlers\Admin\ChatMessage\" />
+    <Folder Include="Commands\Admin\ChatMessage\" />
+    <Folder Include="Hub\" />
+    <Folder Include="Handlers\Client\ChatMessage\" />
+    <Folder Include="Commands\Client\ChatMessage\" />
+    <Folder Include="Commands\Admin\ChatSession\" />
+    <Folder Include="Handlers\Admin\ChatSession\" />
+    <Folder Include="Commands\Admin\ChatMessageNote\" />
+    <Folder Include="Handlers\Admin\ChatMessageNote\" />
+    <Folder Include="Handlers\Client\ChatMessageNote\" />
+    <Folder Include="Commands\Client\ChatMessageNote\" />
   </ItemGroup> 
 
   <ItemGroup>

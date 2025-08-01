@@ -58,6 +58,15 @@ namespace CMPNatural.Core.Entities
             }
         }
 
+        [NotMapped]
+        public string NoteTitle
+        {
+            get
+            {
+                var number = !string.IsNullOrWhiteSpace(InvoiceNumber) ? InvoiceNumber : ReqNumber;
+                return $"{number}";
+            }
+        }
 
 
         public virtual ICollection<InvoiceProduct> InvoiceProduct { get; set; } = new List<InvoiceProduct>();

@@ -67,6 +67,8 @@
     <None Remove="Controllers\Admin\RequestTerminate\" />
     <None Remove="Controllers\Client\RequestTerminate\" />
     <None Remove="Controllers\Client\Manifest\" />
+    <None Remove="Controllers\Client\Chat\" />
+    <None Remove="Controllers\Admin\Chat\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="View\" />
@@ -110,6 +112,8 @@
     <Folder Include="Controllers\Admin\RequestTerminate\" />
     <Folder Include="Controllers\Client\RequestTerminate\" />
     <Folder Include="Controllers\Client\Manifest\" />
+    <Folder Include="Controllers\Client\Chat\" />
+    <Folder Include="Controllers\Admin\Chat\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\CMPNatural.Core.csproj">

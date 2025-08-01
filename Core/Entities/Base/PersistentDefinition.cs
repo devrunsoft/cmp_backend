@@ -44,4 +44,11 @@ namespace CMPNatural.Core.Entities
     public partial class RequestTerminate : IIdentityObject<long> { }
     public partial class LocationDateTime : IIdentityObject<long> { }
     public partial class AmendmentCompanyContract : IIdentityObject<long> { }
+
+    public partial class ChatParticipant : IIdentityObject<long> { }
+    public partial class ChatMention : IIdentityObject<long> { }
+    public partial class ChatMessage : IIdentityObject<long> { }
+    public partial class ChatMessageNote : IIdentityObject<long> { }
+    public partial class ChatNotification : IIdentityObject<long> { }
+    public partial class ChatSession : IIdentityObject<long> { }   
 }

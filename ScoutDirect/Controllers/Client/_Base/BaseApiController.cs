@@ -1,6 +1,7 @@
 ﻿
 using CMPEmail.Email;
 using CMPNatural.Api.Controllers.Service;
+using CMPNatural.Core.Enums;
 using CMPNatural.Core.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

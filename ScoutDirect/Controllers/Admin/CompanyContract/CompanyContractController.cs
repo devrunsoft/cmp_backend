@@ -1,8 +1,9 @@
 ﻿using CMPNatural.Application;
+using CMPNatural.Core.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-
+using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Api.Controllers.Admin.CompanyContract
 {
@@ -36,6 +37,10 @@ namespace CMPNatural.Api.Controllers.Admin.CompanyContract
         public async Task<ActionResult> Sign([FromRoute] long Id, [FromRoute] long clientId)
         {
             var result = await _mediator.Send(new AdminSignCompanyContractCommand() { CompanyId = clientId, CompanyContractId = Id });
+            if (result.IsSucces())
+            {
+                sendNote(MessageNoteType.ContractSignedByAdmin, result.Data.CompanyId, result.Data.NoteTitle);
+            }
             return Ok(result);
         }
 
@@ -45,6 +50,10 @@ namespace CMPNatural.Api.Controllers.Admin.CompanyContract
         public async Task<ActionResult> Send([FromRoute] long Id)
         {
             var result = await _mediator.Send(new AdminSendCompanyContractCommand() { Id = Id });
+            if (result.IsSucces())
+            {
+                sendNote(MessageNoteType.ContractSend, result.Data.CompanyId , result.Data.NoteTitle);
+            }
             return Ok(result);
         }
 

@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace CMPNatural.Application.Handlers
 {
-    public class DeleteShoppingCardHandler : IRequestHandler<DeleteShoppingCardCommand, CommandResponse<object>>
+    public class DeleteShoppingCardHandler : IRequestHandler<DeleteShoppingCardCommand, CommandResponse<ShoppingCard>>
     {
         private readonly IShoppingCardRepository _shoppingCardRepository;
 
@@ -19,18 +19,18 @@ namespace CMPNatural.Application.Handlers
             _shoppingCardRepository = shoppingCardRepository;
         }
 
-        public async Task<CommandResponse<object>> Handle(DeleteShoppingCardCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<ShoppingCard>> Handle(DeleteShoppingCardCommand request, CancellationToken cancellationToken)
         {
 
             ShoppingCard entity = (await _shoppingCardRepository.GetAsync(p => p.CompanyId == request.CompanyId && p.Id == request.Id)).FirstOrDefault();
 
             if (entity == null)
             {
-                return new NoAcess<object>() {  };
+                return new NoAcess<ShoppingCard>() {  };
             }
             await _shoppingCardRepository.DeleteAsync(entity);
 
-            return new Success<object>() {};
+            return new Success<ShoppingCard>() { Data = entity };
         }
     }
 }

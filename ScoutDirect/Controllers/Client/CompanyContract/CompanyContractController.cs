@@ -9,7 +9,9 @@ using Elmah.ContentSyndication;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using MySqlX.XDevAPI;
 using ScoutDirect.Api.Controllers._Base;
+using ScoutDirect.Application.Responses;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -56,8 +58,14 @@ namespace CMPNatural.Api.Controllers.CompanyContract
         public async Task<ActionResult> Sign([FromRoute] long Id , [FromBody] SignCompanyContractCommand command)
         {
             var result = await _mediator.Send(new SignCompanyContractCommand() { CompanyId = rCompanyId , CompanyContractId = Id  , Sign = command .Sign});
-            var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.ClientHasSigned, result.Data.Id);
-            sendEmailToAdmin(emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern, emailDetails.ButtonText);
+
+            if (result.IsSucces())
+            {
+                var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.ClientHasSigned, result.Data.Id);
+                sendEmailToAdmin(emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern, emailDetails.ButtonText);
+                sendNote(MessageNoteType.ContractSignedByClient, result.Data.NoteTitle);
+            }
+
             return Ok(result);
         }
     }

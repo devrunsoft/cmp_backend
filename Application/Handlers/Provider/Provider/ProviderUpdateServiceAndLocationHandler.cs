@@ -8,6 +8,7 @@ using CMPNatural.Core.Enums;
 using System.Linq;
 using System.Collections.Generic;
 using CMPNatural.Application.Command;
+using System;
 
 namespace CMPNatural.Application
 {
@@ -15,11 +16,13 @@ namespace CMPNatural.Application
     {
         private readonly IProviderReposiotry _repository;
         private readonly IProviderServiceRepository _providerServiceRepository;
+        private readonly IPersonRepository _personRepository;
 
-        public ProviderUpdateServiceAndLocationHandler(IProviderReposiotry repository, IProviderServiceRepository providerServiceRepository)
+        public ProviderUpdateServiceAndLocationHandler(IProviderReposiotry repository, IProviderServiceRepository providerServiceRepository, IPersonRepository _personRepository)
         {
             _repository = repository;
             _providerServiceRepository = providerServiceRepository;
+            this._personRepository = _personRepository;
         }
 
         public async Task<CommandResponse<Provider>> Handle(ProviderUpdateServiceAndLocationCommand request, CancellationToken cancellationToken)
@@ -35,6 +38,17 @@ namespace CMPNatural.Application
             {
                 providerServices.Add(new ProviderService() { ProductId = item });
             }
+
+
+            #region addperson
+            if (entity.PersonId == null)
+            {
+                var personId = Guid.NewGuid();
+                var person = new Person() { FirstName = request.ManagerFirstName, LastName = request.ManagerLastName, Id = personId };
+                await _personRepository.AddAsync(person);
+                entity.PersonId = personId;
+            }
+            #endregion
 
             entity.Lat = request.Lat;
             entity.Long = request.Long;

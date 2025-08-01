@@ -35,6 +35,8 @@ namespace CMPNatural.Application
 
         public string? Comment { get; set; }
 
+        public string? NoteTitle { get; set; }
+
         public DateTime CreatedAt { get; set; }
 
         public string? InvoiceStatus {

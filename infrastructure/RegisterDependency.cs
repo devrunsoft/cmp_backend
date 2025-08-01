@@ -20,6 +20,8 @@ using infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using CMPNatural.infrastructure.DbQuery;
+using CMPNatural.Core.Repositories.Chat;
+using CMPNatural.infrastructure.Repository.Chat;
 
 namespace ScoutDirect.infrastructure
 {
@@ -69,6 +71,13 @@ namespace ScoutDirect.infrastructure
             services.AddTransient<IGoHighLevelRepository, GoHighLevelRepository>();
             services.AddTransient<IRequestTerminateRepository, RequestTerminateRepository>();
             services.AddTransient<IAmendmentCompanyContractRepository, AmendmentCompanyContractRepository>();
+
+            services.AddTransient<IChatSessionRepository, ChatSessionRepository>();
+            services.AddTransient<IChatParticipantRepository, ChatParticipantRepository>();
+            services.AddTransient<IChatMessageRepository, ChatMessageRepository>();
+            services.AddTransient<IChatMentionRepository, ChatMentionRepository>();
+            services.AddTransient<IChatNotificationRepository, ChatNotificationRepository>();
+            services.AddTransient<IChatMessageNoteRepository, ChatMessageNoteRepository>();
 
             //services.AddTransient<IinvoiceProviderRepository, InvoiceProviderRepository>();
 

@@ -3,11 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using CMPNatural.Api.Controllers.Service;
+using CMPNatural.Application.Commands;
+using CMPNatural.Core.Entities;
+using CMPNatural.Core.Enums;
+using CMPNatural.Core.Models;
+using CMPNatural.Core.Repositories.Chat;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using ScoutDirect.Api.Controllers._Base;
+using ScoutDirect.Core.Caching;
 
 namespace CMPNatural.Api.Controllers.Admin
 {
@@ -40,6 +47,25 @@ namespace CMPNatural.Api.Controllers.Admin
 
             base.OnActionExecuting(context);
         }
+
+        [NonAction]
+        public void sendNote(MessageNoteType Type, long ClientId, string Content = "")
+        {
+            Task.Run(async () =>
+            {
+                using (var scope = serviceScopeFactory.CreateScope())
+                {
+                    var cache = scope.ServiceProvider.GetRequiredService<Func<CacheTech, ICacheService>>();
+                    var _cache = cache(CacheTech.Memory);
+                    var _mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+                    await _mediator.Send(new AdminSendMessageNoteCommand() { ClientId = ClientId, Type = Type, AdminId = AdminId , Content = Content });
+                }
+            });
+        }
+
+        private IChatMessageNoteRepository _chatMessageNoteRepository;
+        protected IChatMessageNoteRepository chatMessageNoteRepository =>
+            _chatMessageNoteRepository ??= HttpContext.RequestServices.GetRequiredService<IChatMessageNoteRepository>();
 
         protected Guid PersonId => Guid.Parse(Request.HttpContext.User.FindFirstValue("PersonId"));
         protected long AdminId => long.Parse(Request.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value);

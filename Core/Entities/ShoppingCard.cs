@@ -1,5 +1,7 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using CMPNatural.Core.Enums;
+using Newtonsoft.Json;
 
 namespace CMPNatural.Core.Entities
 {
@@ -45,6 +47,9 @@ namespace CMPNatural.Core.Entities
 
         public int ToHour { get; set; } = 1080; //6 PM
 
+        [JsonIgnore]
+        [NotMapped]
+        public string NoteTitle => $"{PriceName ?? "Service"} - {AddressName ?? "Location"}";
     }
 }
 

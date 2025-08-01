@@ -66,6 +66,12 @@ namespace CMPNatural.Api.Controllers.shoppingcard
                 FromHour = request.FromHour,
                 DayOfWeek = request.DayOfWeek
             });
+
+            if (result.IsSucces())
+            {
+                sendNote(MessageNoteType.AddToShoppingCardByClient , result.Data.NoteTitle);
+            }
+
             return Ok(result);
         }
 
@@ -79,6 +85,12 @@ namespace CMPNatural.Api.Controllers.shoppingcard
                 CompanyId = rCompanyId,
                 Id = Id
             });
+
+            if (result.IsSucces())
+            {
+                sendNote(MessageNoteType.DeleteFromShoppingCardByClient, result.Data.NoteTitle);
+            }
+
             return Ok(result);
         }
     }

@@ -24,6 +24,7 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MySqlX.XDevAPI;
 using ScoutDirect.Api.Controllers._Base;
 using ScoutDirect.Application.Responses;
 
@@ -112,8 +113,9 @@ namespace CMPNatural.Api.Controllers.Invoice
             var result = await service.call(BillingInformationId);
             foreach (var item in result)
             {
-                var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminInvoices, item.Data.InvoiceId);
+                 var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminInvoices, item.Data.InvoiceId);
                  sendEmailToAdmin(emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern, emailDetails.ButtonText);
+                 sendNote(MessageNoteType.RequestCreateByClient, item.Data.ReqNumber);
             }
 
             return Ok(new Success<object>());
@@ -134,6 +136,7 @@ namespace CMPNatural.Api.Controllers.Invoice
 
             if (!resultInvoie.IsSucces())
             {
+                sendNote(MessageNoteType.RequestCanceledByClient , resultInvoie.Data.ReqNumber);
                 return Ok(resultInvoie);
             }
 

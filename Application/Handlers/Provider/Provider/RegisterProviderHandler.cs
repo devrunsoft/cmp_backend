@@ -14,10 +14,12 @@ namespace CMPNatural.Application
     public class RegisterProviderHandler : IRequestHandler<RegisterProviderCommand, CommandResponse<Provider>>
     {
         private readonly IProviderReposiotry _repository;
+        private readonly IPersonRepository _personRepository;
 
-        public RegisterProviderHandler(IProviderReposiotry repository)
+        public RegisterProviderHandler(IProviderReposiotry repository , IPersonRepository _personRepository)
         {
             _repository = repository;
+            this._personRepository = _personRepository;
         }
 
         public async Task<CommandResponse<Provider>> Handle(RegisterProviderCommand request, CancellationToken cancellationToken)
@@ -33,6 +35,10 @@ namespace CMPNatural.Application
             {
                 return new NoAcess<Provider>() { Message = "This email is already registered. Please use a different email." };
             }
+            var personId = Guid.NewGuid();
+            var person = new Person() { FirstName = request.Name, LastName = request.Name, Id = personId };
+            await _personRepository.AddAsync(person);
+
             var entity = new Provider()
             {
                 Name = request.Name,
@@ -45,6 +51,7 @@ namespace CMPNatural.Application
                 Status = ProviderStatus.PendingEmail,
                 RegistrationStatus = ProviderRegistrationStatus.Basic_Information,
                 ActivationLink = Guid.NewGuid(),
+                PersonId = personId
             };
 
             var result = await _repository.AddAsync(entity);

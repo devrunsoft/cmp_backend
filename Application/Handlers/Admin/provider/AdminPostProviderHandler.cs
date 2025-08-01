@@ -10,6 +10,7 @@ using CMPNatural.Application.Services;
 using System.Collections.Generic;
 using CMPNatural.Core.Helper;
 using System.Text.RegularExpressions;
+using Stripe;
 
 namespace CMPNatural.Application
 {
@@ -17,10 +18,12 @@ namespace CMPNatural.Application
     public class AdminPostProviderHandler : IRequestHandler<AdminPostProviderCommand, CommandResponse<Provider>>
     {
         private readonly IProviderReposiotry _providerReposiotry;
+        private readonly IPersonRepository _personRepository;
 
-        public AdminPostProviderHandler(IProviderReposiotry providerReposiotry)
+        public AdminPostProviderHandler(IProviderReposiotry providerReposiotry, IPersonRepository _personRepository)
         {
             _providerReposiotry = providerReposiotry;
+           this._personRepository = _personRepository;
         }
 
         public async Task<CommandResponse<Provider>> Handle(AdminPostProviderCommand request, CancellationToken cancellationToken)
@@ -36,6 +39,10 @@ namespace CMPNatural.Application
             {
                 providerServices.Add(new ProviderService() { ProductId = item });
             }
+
+            var personId = Guid.NewGuid();
+            var person = new Core.Entities.Person() { FirstName = request.ManagerFirstName, LastName = request.ManagerLastName, Id = personId };
+            await _personRepository.AddAsync(person);
 
             var entity = new Provider()
             {
@@ -58,6 +65,7 @@ namespace CMPNatural.Application
                 ManagerFirstName = request.ManagerFirstName,
                 ManagerLastName = request.ManagerLastName,
                 ManagerPhoneNumber = request.ManagerPhoneNumber,
+                PersonId = personId
 
             };
             var result = await _providerReposiotry.AddAsync(entity);

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CMPNatural.Application;
+using CMPNatural.Core.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Api.Controllers.Admin.Manifest
 {
@@ -31,6 +33,12 @@ namespace CMPNatural.Api.Controllers.Admin.Manifest
         {
             command.Id = Id;
             var result = await _mediator.Send(command);
+
+            if (result.IsSucces())
+            {
+                sendNote(MessageNoteType.ManifestAssigned, result.Data.CompanyId , result.Data.NoteTitle);
+            }
+
             return Ok(result);
         }
 
@@ -41,6 +49,11 @@ namespace CMPNatural.Api.Controllers.Admin.Manifest
         {
             command.Id = Id;
             var result = await _mediator.Send(command);
+
+            if (result.IsSucces())
+            {
+                sendNote(MessageNoteType.ManifestAssigned, result.Data.CompanyId, result.Data.NoteTitle);
+            }
             return Ok(result);
         }
 

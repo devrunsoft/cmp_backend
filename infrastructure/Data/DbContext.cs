@@ -54,6 +54,11 @@ namespace infrastructure.Data
         public virtual DbSet<RequestTerminate> RequestTerminate { get; set; } = null!;
         public virtual DbSet<LocationDateTime> LocationDateTime { get; set; } = null!;
         public virtual DbSet<AmendmentCompanyContract> AmendmentCompanyContract { get; set; } = null!;
+        public virtual DbSet<ChatParticipant> ChatParticipant { get; set; } = null!;
+        public virtual DbSet<ChatMention> ChatMention { get; set; } = null!;
+        public virtual DbSet<ChatMessage> ChatMessage { get; set; } = null!;
+        public virtual DbSet<ChatNotification> ChatNotification { get; set; } = null!;
+        public virtual DbSet<ChatSession> ChatSession { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -73,6 +78,69 @@ namespace infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            //modelBuilder.Entity<ChatParticipant>()
+            // .HasIndex(x => new { x.ChatSessionId, x.ParticipantType, x.ParticipantId })
+            // .IsUnique();
+
+            modelBuilder.Entity<ChatMention>()
+                .HasOne(m => m.Notification)
+                .WithOne(n => n.ChatMention)
+                .HasForeignKey<ChatNotification>(n => n.ChatMentionId);
+
+            // Optional: configure enums to strings
+            modelBuilder.Entity<ChatParticipant>()
+                .Property(p => p.ParticipantType)
+                 .HasConversion(
+                 x => x.ToString(),
+                 x => (ParticipantType)Enum.Parse(typeof(ParticipantType), x)
+                 );
+
+            modelBuilder.Entity<ChatMessage>(entity =>
+            {
+                entity.ToTable("ChatMessage");
+
+                entity.Property(m => m.SenderType)
+                .HasConversion(
+                 x => x.ToString(),
+                 x => (SenderType)Enum.Parse(typeof(SenderType), x)
+                 );
+
+                entity.Property(m => m.Type)
+                .HasConversion(
+                 x => x.ToString(),
+                 x => (MessageType)Enum.Parse(typeof(MessageType), x)
+                 );
+
+                entity.HasOne(d => d.ChatSession)
+                .WithMany(x => x.Messages)
+                .HasForeignKey(d => d.ChatSessionId);
+            });
+
+            modelBuilder.Entity<ChatMessageNote>(entity =>
+            {
+                entity.ToTable("ChatMessageNote").HasBaseType<ChatMessage>();
+
+                entity.Property(m => m.MessageNoteType)
+                .HasConversion(
+                 x => x.ToString(),
+                 x => (MessageNoteType)Enum.Parse(typeof(MessageNoteType), x)
+                 );
+            });
+
+
+            modelBuilder.Entity<ChatNotification>();
+
+            modelBuilder.Entity<ChatSession>(entity =>
+            {
+                entity.ToTable("ChatSession");
+
+                entity.HasOne(d => d.Company)
+                .WithMany()
+                .HasForeignKey(d => d.ClientId);
+            });
+
+
             modelBuilder.Entity<AmendmentCompanyContract>(entity =>
             {
                 entity.ToTable("AmendmentCompanyContract");
@@ -371,8 +439,8 @@ namespace infrastructure.Data
                 entity.Property(e => e.ServiceCrmId)
                   .HasColumnType("varchar(255)") 
                   .IsRequired(false);
-
             });
+
             modelBuilder.Entity<ServiceAppointmentEmergency>(entity =>
             {
                 entity.ToTable("ServiceAppointmentEmergency").HasBaseType<BaseServiceAppointment>();

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using CMPNatural.Core.Enums;
 
@@ -40,6 +41,16 @@ namespace CMPNatural.Core.Entities
         public long CompanyId { get; set; }
 
         public string ManifestNumber { get; set; }
+
+        [NotMapped]
+        public string NoteTitle
+        {
+            get
+            {
+                return $"{ManifestNumber}";
+            }
+        }
+
 
         public string Number
         {

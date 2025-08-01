@@ -29,6 +29,14 @@ namespace CMPNatural.Core.Entities
 		} 
         public DateTime CreatedAt { get; set; }
 
+        [NotMapped]
+        public string NoteTitle
+        {
+            get
+            {
+                return $"{Number}";
+            }
+        }
     }
 
     public static class CompanyContractExtensions

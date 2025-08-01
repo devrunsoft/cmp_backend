@@ -31,6 +31,10 @@ using CMPPayment;
 using CMPNatural.Application.Logger;
 using MediatR;
 using CMPNatural.Core.Models;
+using CMPNatural.Api;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.AspNetCore.Http.Connections;
+using CMPNatural.Application.Hub;
 
 namespace ScoutDirect.Api
 {
@@ -165,6 +169,22 @@ namespace ScoutDirect.Api
                     ValidIssuer = Configuration["JWT:ValidIssuer"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
                 };
+
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var path = context.HttpContext.Request.Path;
+                        var token = context.Request.Query["access_token"];
+
+                        if (!string.IsNullOrEmpty(token) && path.StartsWithSegments("/Chat")) // match your hub path
+                        {
+                            context.Token = token;
+                        }
+
+                        return Task.CompletedTask;
+                    }
+                };
             });
 
             services.AddSwaggerGen(swagger =>
@@ -250,6 +270,8 @@ namespace ScoutDirect.Api
             });
 
             services.AddHangfireServer();
+            services.AddSignalR();
+            services.AddScoped<IChatService, ChatService>();
 
         }
 
@@ -328,16 +350,19 @@ namespace ScoutDirect.Api
             app.UseEndpoints(endpoints =>
             {
                 //endpoints.MapControllers();
-                //endpoints.MapHub<ChatHub>("/chatHub", options =>
-                //{
-                //    options.Transports = HttpTransportType.WebSockets;
-                //    // HttpTransportType.LongPolling;
-                //});
+                endpoints.MapHub<ChatHub>("/Chat", options =>
+                {
+                    options.Transports = HttpTransportType.WebSockets;
+                    // HttpTransportType.LongPolling;
+                });
+
                 endpoints.MapHangfireDashboard();
                 endpoints.MapControllerRoute(
                   name: "default",
                   pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+
 
             GlobalConfiguration.Configuration.UseMemoryStorage();
 
