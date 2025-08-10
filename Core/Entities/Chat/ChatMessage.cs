@@ -8,6 +8,8 @@ namespace CMPNatural.Core.Entities
     {
         public long Id { get; set; }
         public long ChatSessionId { get; set; }
+        public long ClientId { get; set; }
+        public long OperationalAddressId { get; set; }
         public SenderType SenderType { get; set; }
         public long SenderId { get; set; }
         public string Content { get; set; } = string.Empty;

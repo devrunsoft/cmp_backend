@@ -276,6 +276,8 @@
     <None Remove="Handlers\Admin\ChatMessageNote\" />
     <None Remove="Handlers\Client\ChatMessageNote\" />
     <None Remove="Commands\Client\ChatMessageNote\" />
+    <None Remove="Commands\Admin\ChatMessageManualNote\" />
+    <None Remove="Handlers\Admin\ChatMessageManualNote\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -559,6 +561,8 @@
     <Folder Include="Handlers\Admin\ChatMessageNote\" />
     <Folder Include="Handlers\Client\ChatMessageNote\" />
     <Folder Include="Commands\Client\ChatMessageNote\" />
+    <Folder Include="Commands\Admin\ChatMessageManualNote\" />
+    <Folder Include="Handlers\Admin\ChatMessageManualNote\" />
   </ItemGroup> 
 
   <ItemGroup>

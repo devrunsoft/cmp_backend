@@ -74,7 +74,7 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
              };
 
              await _companyRepository.AddAsync(company);
-            await _mediator.Send(new CreateChatSessionCommand() { ClientId = company.Id });
+            await _mediator.Send(new CreateChatClientSessionCommand() { ClientId = company.Id });
             return new Success<object>() { Data = company };
 
         }

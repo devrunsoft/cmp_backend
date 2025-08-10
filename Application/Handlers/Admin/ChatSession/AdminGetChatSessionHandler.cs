@@ -13,23 +13,23 @@ using System.Linq;
 
 namespace CMPNatural.Application
 {
-    public class AdminGetPaginateSessionsHandler : IRequestHandler<AdminGetPaginateSessionsCommand, CommandResponse<List<ChatSession>>>
+    public class AdminGetChatSessionHandler : IRequestHandler<AdminGetChatSessionCommand, CommandResponse<ChatSession>>
     {
         private readonly IChatSessionRepository _repository;
 
-        public AdminGetPaginateSessionsHandler(IChatSessionRepository _repository)
+        public AdminGetChatSessionHandler(IChatSessionRepository _repository)
         {
             this._repository = _repository;
         }
 
-        public async Task<CommandResponse<List<ChatSession>>> Handle(AdminGetPaginateSessionsCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<ChatSession>> Handle(AdminGetChatSessionCommand request, CancellationToken cancellationToken)
         {
-            var result = (await _repository.GetAsync(p => p.ClientId == request.ClientId,
-                query => query
+            var result = (await _repository.GetAsync(p => p.OperationalAddressId == request.OperationalAddressId,
+                 query => query
                 .Include(x => x.Company)
                 .Include(x => x.OperationalAddress)
-                )).ToList();
-            return new Success<List<ChatSession>>() { Data = result };
+                )).FirstOrDefault();
+            return new Success<ChatSession>() { Data = result };
         }
     }
 }

@@ -13,6 +13,7 @@ namespace CMPNatural.Application.Commands
         public long ClientId { get; set; }
         public MessageNoteType Type { get; set; }
         public string Content { get; set; }
+        public long OperationalAddressId { get; set; }
     }
 }
 

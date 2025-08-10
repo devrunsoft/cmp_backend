@@ -8,6 +8,7 @@ namespace CMPNatural.Application
     {
         public long ClientId { get; set; }
         public string Message { get; set; }
+        public long OperationalAddressId { get; set; }
     }
 }
 

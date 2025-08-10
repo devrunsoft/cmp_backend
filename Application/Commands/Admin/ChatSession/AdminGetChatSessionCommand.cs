@@ -8,13 +8,12 @@ using ScoutDirect.Core.Base;
 
 namespace CMPNatural.Application
 {
-    public class AdminGetPaginateSessionsCommand : PagedQueryRequest, IRequest<CommandResponse<List<ChatSession>>>
+    public class AdminGetChatSessionCommand :IRequest<CommandResponse<ChatSession>>
     {
-        public AdminGetPaginateSessionsCommand()
+        public AdminGetChatSessionCommand()
         {
         }
-        public long AdminId { get; set; }
-        public long ClientId { get; set; }
+        public long OperationalAddressId { get; set; }
     }
 }
 

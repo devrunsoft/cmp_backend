@@ -7,12 +7,11 @@ using ScoutDirect.Core.Base;
 
 namespace CMPNatural.Application
 {
-    public class ClientGetPaginateMessageCommand : PagedQueryRequest, IRequest<CommandResponse<PagesQueryResponse<ChatMessage>>>
+    public class AdminGetPaginateMessageManualNoteCommand : PagedQueryRequest, IRequest<CommandResponse<PagesQueryResponse<ChatMessageManualNote>>>
     {
-        public ClientGetPaginateMessageCommand()
-		{
-		}
-        public long CompanyId { get; set; }
+        public AdminGetPaginateMessageManualNoteCommand()
+        {
+        }
         public long OperationalAddressId { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace CMPNatural.Application.Handlers.Admin
         }
         public async Task<CommandResponse<ChatMessageNote>> Handle(ClientSendMessageNoteCommand request, CancellationToken cancellationToken)
         {
-            var chatsession = (await _mediator.Send(new CreateChatSessionCommand() { ClientId = request.ClientId})).Data;
+            var chatsession = (await _mediator.Send(new CreateChatSessionCommand() { ClientId = request.ClientId, OperationalAddressId = request.OperationalAddressId})).Data;
 
             var content = $"<b>{request.Type.Description()}</b><br>{request.Content}";
 
@@ -38,7 +38,8 @@ namespace CMPNatural.Application.Handlers.Admin
                 Content = content,
                 SenderId = request.ClientId,
                 SenderType = SenderType.Client,
-                SentAt = DateTime.Now
+                SentAt = DateTime.Now,
+                ClientId = request.ClientId
             };
             var result = await _repository.AddAsync(entity);
 

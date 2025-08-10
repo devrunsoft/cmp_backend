@@ -19,22 +19,24 @@ namespace CMPNatural.Api.Controllers.Client.Chat
         {
         }
 
-        [HttpPost("Send")]
+        [HttpPost("Send/{OperationalAddressId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Post([FromBody] ClientSendMessageCommand command)
+        public async Task<ActionResult> Post([FromRoute] long OperationalAddressId, [FromBody] ClientSendMessageCommand command)
         {
             command.ClientId = rCompanyId;
+            command.OperationalAddressId = OperationalAddressId;
             var result = await _mediator.Send(command);
             return Ok(result);
         }
 
-        [HttpGet("Messages")]
+        [HttpGet("Messages/{OperationalAddressId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Get([FromQuery] ClientGetPaginateMessageCommand command)
+        public async Task<ActionResult> Get([FromRoute] long OperationalAddressId, [FromQuery] ClientGetPaginateMessageCommand command)
         {
             command.CompanyId = rCompanyId;
+            command.OperationalAddressId = OperationalAddressId;
             var result = await _mediator.Send(command);
             return Ok(result);
         }

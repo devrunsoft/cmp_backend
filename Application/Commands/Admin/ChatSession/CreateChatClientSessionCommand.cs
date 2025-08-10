@@ -1,14 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using CMPNatural.Core.Entities;
 using MediatR;
 using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Application
 {
-    public class CreateChatSessionCommand : IRequest<CommandResponse<ChatSession>>
+    public class CreateChatClientSessionCommand : IRequest<CommandResponse<ChatClientSession>>
     {
-        public long OperationalAddressId { get; set; }
         public long ClientId { get; set; }
+        public List<long> OperationalAddressId { get; set; }
     }
 }
 

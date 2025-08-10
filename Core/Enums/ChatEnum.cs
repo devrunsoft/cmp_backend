@@ -32,6 +32,7 @@ namespace CMPNatural.Core.Enums
     public enum MessageType
     {
         Note,
+        ManualNote,
         Message
     }
 

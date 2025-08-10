@@ -12,7 +12,8 @@ namespace CMPNatural.Application
         public AdminGetPaginateMessageCommand()
         {
         }
-        public long CompanyId { get; set; }
+        public long OperationalAddressId { get; set; }
+        public long ClientId { get; set; }
     }
 }
 

@@ -22,7 +22,9 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<PagesQueryResponse<ChatMessage>>> Handle(AdminGetPaginateMessageCommand request, CancellationToken cancellationToken)
         {
-            var result = (await _repository.GetBasePagedAsync(request, p => p.ChatSession.ClientId == request.CompanyId ,
+            var result = (await _repository.GetBasePagedAsync(request, p =>
+                request.OperationalAddressId==0 ? (p.ChatSession.ClientId == request.ClientId) :
+                (p.ChatSession.OperationalAddressId == request.OperationalAddressId),
                 query => query.Include(x=>x.ChatSession)
                 ));
             return new Success<PagesQueryResponse<ChatMessage>>() { Data = result };

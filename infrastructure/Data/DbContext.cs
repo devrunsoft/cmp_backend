@@ -59,6 +59,7 @@ namespace infrastructure.Data
         public virtual DbSet<ChatMessage> ChatMessage { get; set; } = null!;
         public virtual DbSet<ChatNotification> ChatNotification { get; set; } = null!;
         public virtual DbSet<ChatSession> ChatSession { get; set; } = null!;
+        public virtual DbSet<ChatMessageManualNote> ChatMessageManualNote { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -78,17 +79,26 @@ namespace infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ChatClientSession>(entity =>
+            {
+                entity.ToTable("ChatClientSession");
 
-            //modelBuilder.Entity<ChatParticipant>()
-            // .HasIndex(x => new { x.ChatSessionId, x.ParticipantType, x.ParticipantId })
-            // .IsUnique();
+                entity.HasMany(m => m.ChatSession)
+                .WithOne(n => n.ChatClientSession)
+                .HasForeignKey(n => n.ChatClientSessionId);
+
+                entity.HasOne(d => d.Company)
+                .WithMany()
+                .HasForeignKey(d => d.ClientId);
+            });
+
 
             modelBuilder.Entity<ChatMention>()
                 .HasOne(m => m.Notification)
                 .WithOne(n => n.ChatMention)
                 .HasForeignKey<ChatNotification>(n => n.ChatMentionId);
 
-            // Optional: configure enums to strings
+
             modelBuilder.Entity<ChatParticipant>()
                 .Property(p => p.ParticipantType)
                  .HasConversion(
@@ -127,7 +137,14 @@ namespace infrastructure.Data
                  x => (MessageNoteType)Enum.Parse(typeof(MessageNoteType), x)
                  );
             });
+            modelBuilder.Entity<ChatMessageManualNote>(entity =>
+            {
+                entity.ToTable("ChatMessageManualNote");
 
+                entity.HasOne(d => d.ChatSession)
+                .WithMany()
+                .HasForeignKey(d => d.ChatSessionId);
+            });
 
             modelBuilder.Entity<ChatNotification>();
 
@@ -138,6 +155,10 @@ namespace infrastructure.Data
                 entity.HasOne(d => d.Company)
                 .WithMany()
                 .HasForeignKey(d => d.ClientId);
+
+                entity.HasOne(d => d.OperationalAddress)
+                .WithOne()
+                .HasForeignKey<ChatSession>(d => d.OperationalAddressId);
             });
 
 

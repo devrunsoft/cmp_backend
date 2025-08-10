@@ -14,46 +14,37 @@ using Microsoft.AspNetCore.SignalR;
 using CMPNatural.Application.Hub;
 using CMPNatural.Application.Commands;
 
-namespace CMPNatural.Application.Handlers.Admin
+namespace CMPNatural.Application
 {
-    public class AdminSendMessageNoteHandler : IRequestHandler<AdminSendMessageNoteCommand, CommandResponse<ChatMessageNote>>
+    public class AdminSendMessageManualNoteHandler : IRequestHandler<AdminSendMessageManualNoteCommand, CommandResponse<ChatMessageManualNote>>
     {
-        private readonly IChatMessageNoteRepository _repository;
+        private readonly IChatMessageManualNoteRepository _repository;
         private readonly IChatSessionRepository _chatSessionRepository;
         private readonly IChatService _chatService;
         private readonly IMediator _mediator;
-        public AdminSendMessageNoteHandler(IChatMessageNoteRepository _repository, IChatSessionRepository _chatSessionRepository , IChatService _chatService, IMediator _mediator)
+        public AdminSendMessageManualNoteHandler(IChatMessageManualNoteRepository _repository, IChatSessionRepository _chatSessionRepository , IChatService _chatService, IMediator _mediator)
         {
             this._repository = _repository;
             this._chatSessionRepository = _chatSessionRepository;
             this._chatService = _chatService;
             this._mediator = _mediator;
         }
-        public async Task<CommandResponse<ChatMessageNote>> Handle(AdminSendMessageNoteCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<ChatMessageManualNote>> Handle(AdminSendMessageManualNoteCommand request, CancellationToken cancellationToken)
         {
             var chatsession = (await _mediator.Send(new CreateChatSessionCommand() { ClientId = request.ClientId, OperationalAddressId = request.OperationalAddressId})).Data;
 
-            var content = $"<b>{request.Type.Description()}</b><br>{request.Content}";
+            var content = request.Message;
 
-            var entity = new ChatMessageNote
+            var entity = new ChatMessageManualNote
             {
                 ChatSessionId = chatsession.Id,
-                IsInternalNote = false,
-                Type = MessageType.Note,
-                MessageNoteType = request.Type,
                 Content = content,
                 SenderId = request.AdminId,
-                SenderType = SenderType.Admin,
                 SentAt = DateTime.Now,
-                OperationalAddressId = request.OperationalAddressId,
-                ClientId = request.ClientId
             };
             var result = await _repository.AddAsync(entity);
 
-            await _chatService.SendMessageToClient(request.ClientId, entity);
-            await _chatService.SendToAllAdmins(entity);
-
-            return new Success<ChatMessageNote>() { Data = result };
+            return new Success<ChatMessageManualNote>() { Data = result };
         }
     }
 }
