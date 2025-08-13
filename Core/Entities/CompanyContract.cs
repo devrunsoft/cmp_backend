@@ -24,7 +24,7 @@ namespace CMPNatural.Core.Entities
         [NotMapped]
         public string Number {
 			get {
-				return $"C{CreatedAt.Year}-{this.CompanyId}-{this.Id}";
+				return $"C{CreatedAt.Year}-{this.CompanyId}/{this.OperationalAddressId}-{this.Id}";
 			}
 		} 
         public DateTime CreatedAt { get; set; }

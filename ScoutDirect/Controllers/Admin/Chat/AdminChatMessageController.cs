@@ -64,6 +64,16 @@ namespace CMPNatural.Api.Controllers.Admin.Message
             var result = await _mediator.Send(new AdminGetChatSessionCommand() { OperationalAddressId = OperationalAddressId });
             return Ok(result);
         }
+
+        [HttpPost("Seen")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> seen([FromBody] AdminSeenMessageCommand command)
+        {
+            command.AdminId = AdminId;
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
     }
 }
 

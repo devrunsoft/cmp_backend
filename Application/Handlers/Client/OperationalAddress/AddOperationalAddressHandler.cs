@@ -21,10 +21,11 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
     public class AddOperationalAddressHandler : IRequestHandler<AddOperationalAddressCommand, CommandResponse<object>>
     {
         private readonly IOperationalAddressRepository _operationalAddressRepository;
-
-        public AddOperationalAddressHandler(IOperationalAddressRepository operationalAddressRepository)
+        private readonly IMediator _mediator;
+        public AddOperationalAddressHandler(IOperationalAddressRepository operationalAddressRepository, IMediator _mediator)
         {
             _operationalAddressRepository = operationalAddressRepository;
+            this._mediator = _mediator;
         }
 
         public async Task<CommandResponse<object>> Handle(AddOperationalAddressCommand request, CancellationToken cancellationToken)
@@ -57,7 +58,11 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
 
                 };
                 var result = await _operationalAddressRepository.AddAsync(entity);
-                return new Success<object>() { Data = result, Message = "OperationalAddres Added Successfully!" };
+
+                var chatsession = (await _mediator.Send(new CreateChatSessionCommand() { ClientId = request.CompanyId,
+                    OperationalAddressId = result.Id })).Data;
+
+              return new Success<object>() { Data = result, Message = "OperationalAddres Added Successfully!" };
             //}
             //else
             //{

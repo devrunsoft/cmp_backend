@@ -6,6 +6,7 @@ namespace CMPNatural.Core.Repositories
 {
     public interface IAdminRepository : IRepository<AdminEntity, long>
     {
+        public Task<AdminEntity> GetCachedByIdAsync(long id);
     }
 }
 

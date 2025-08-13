@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.ServiceModel.Channels;
 using System.Threading.Tasks;
+using CMPNatural.Application.Hub;
 using CMPNatural.Core.Entities;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
@@ -12,10 +13,13 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace CMPNatural.Api
 {
-    public class UserTypingPayload : ChatSession
+    public class UserTypingPayload
     {
         public bool IsTyping { get; set; }
         public string Name { get; set; }
+        public string PersonId { get; set; }
+        public long ClientId { get; set; }
+        public long OperationalAddressId { get; set; }
     }
 
     public class ConnectedUserInfo
@@ -24,16 +28,28 @@ namespace CMPNatural.Api
         public bool IsAdmin { get; set; }
     }
 
+    //public static class ChatGroups
+    //{
+    //    public static string Channel(string channelId) => $"channel:{channelId}";
+    //}
 
     public interface IChatClient
     {
         Task SendMessage(string type, string message);
         Task SendAsync(string method, string arg1, string arg2);
         Task SendAsync(string method, string arg1);
+        Task ClientUserTyping(UserTypingPayload payload);
+        Task AdminUserTyping(UserTypingPayload payload);
     }
 
     public class ChatHub : Hub<IChatClient>
     {
+        private readonly IChatService chatService;
+        public ChatHub(IChatService chatService)
+        {
+            this.chatService = chatService;
+
+        }
         public static ConcurrentDictionary<string, ConnectedUserInfo> ConnectedUsers = new();
 
 
@@ -74,9 +90,25 @@ namespace CMPNatural.Api
                 await Clients.Client(connectionId.ConnectionId).SendMessage(type, m);
             }
         }
-        public async Task UserTyping(UserTypingPayload payload)
+
+        //public async Task JoinChannel(string channelId)
+        //{
+        //    await Groups.AddToGroupAsync(Context.ConnectionId, ChatGroups.Channel(channelId));
+        //}
+
+        //public async Task LeaveChannel(string channelId)
+        //{
+        //    await Groups.RemoveFromGroupAsync(Context.ConnectionId, ChatGroups.Channel(channelId));
+        //}
+
+        public async Task ClientUserTyping(UserTypingPayload payload)
         {
-            await Clients.All.SendMessage("IsTyping" + payload.Id, payload.IsTyping.ToString());
+            await chatService.ClientUserTyping(payload);
+        }
+
+        public async Task AdminUserTyping(UserTypingPayload payload)
+        {
+            await chatService.AdminUserTyping(Context.User?.FindFirstValue("PersonId"), payload);
         }
     }
 }

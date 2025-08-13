@@ -18,12 +18,34 @@ namespace ScoutDirect.infrastructure.Repository
 
         protected readonly Func<CacheTech, ICacheService> _cacheService;
         protected readonly string cacheKey = $"{typeof(T)}";
+
+        protected ICacheService Cache => _cacheService(cacheTech);
+
+        protected string Key(params object[] parts)
+            => $"{cacheKey}:{string.Join(":", parts)}";
+
+        private static readonly TimeSpan DefaultTtl = TimeSpan.FromMinutes(5);
+
         public Repository(ScoutDBContext dbContext
             , Func<CacheTech, ICacheService> cacheService)
         {
             _dbContext = dbContext;
             _cacheService = cacheService;
         }
+
+        public async Task<TValue> GetOrCreateAsync<TValue>(
+         string key, Func<Task<TValue>> factory, TimeSpan? ttl = null)
+        {
+            Cache.TryGet<TValue>(key , out TValue cached);
+            if (cached is not null) return cached;
+
+            var value = await factory();
+            if (value is not null)
+               Cache.Set<TValue>(key, value);
+
+            return value;
+        }
+
         public async Task<T> AddAsync(T entity)
         {
             await _dbContext.Set<T>().AddAsync(entity);
