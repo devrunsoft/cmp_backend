@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CMPNatural.Application;
+using CMPNatural.Application.Commands;
 using CMPNatural.Application.Commands.Admin.Company;
+using CMPNatural.Application.Model;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -47,6 +49,35 @@ namespace CMPNatural.Api.Controllers.Admin.Company
             var result = await _mediator.Send(command);
             return Ok(result);
         }
+
+        [HttpPut("{CompanyId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Put([FromRoute] long CompanyId, [FromBody] UpdateCompanyInput request)
+        {
+            var resultBillingAddress = await _mediator.Send(new AddBilingInformationCommand()
+            {
+                BilingInformationInputs = request.InformationInput.BilingInformationInputs,
+                CorporateAddress = request.InformationInput.CorporateAddress,
+                CompanyId = CompanyId
+            });
+
+            var result = await _mediator.Send(new UpdateCompanyCommand()
+            {
+                CompanyId = CompanyId,
+                CompanyName = request.CompanyName,
+                Position = request.Position,
+                PrimaryFirstName = request.PrimaryFirstName,
+                PrimaryLastName = request.PrimaryLastName,
+                PrimaryPhonNumber = request.PrimaryPhonNumber,
+                SecondaryFirstName = request.SecondaryFirstName,
+                SecondaryLastName = request.SecondaryLastName,
+                SecondaryPhoneNumber = request.SecondaryPhoneNumber,
+            });
+            return Ok(result);
+        }
+
+
 
     }
 }

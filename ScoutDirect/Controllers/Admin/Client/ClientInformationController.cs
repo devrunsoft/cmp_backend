@@ -43,14 +43,14 @@ namespace CMPNatural.Api.Controllers
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Put([FromRoute] long clientId, [FromBody] UpdateCompanyInput request)
         {
-            var resultBillingAddress = await _mediator.Send(new AddOrUpdateBillingAddressCommand()
-            {
-                CompanyId = clientId,
-                Address = request.BillingAddress,
-                City = request.City,
-                ZIPCode = request.ZIPCode,
-                State = request.State
-            });
+            //var resultBillingAddress = await _mediator.Send(new AddOrUpdateBillingAddressCommand()
+            //{
+            //    CompanyId = clientId,
+            //    Address = request.BillingAddress,
+            //    City = request.City,
+            //    ZIPCode = request.ZIPCode,
+            //    State = request.State
+            //});
 
             var result = await _mediator.Send(new UpdateCompanyCommand()
             {
