@@ -24,7 +24,7 @@ namespace ScoutDirect.Api.Controllers._Base
         }
 
         [NonAction]
-        public void sendNote(MessageNoteType Type , string Content = "")
+        public void sendNote(MessageNoteType Type, long OperationalAddressId, string Content = "")
         {
             Task.Run(async () =>
             {
@@ -33,7 +33,8 @@ namespace ScoutDirect.Api.Controllers._Base
                     var cache = scope.ServiceProvider.GetRequiredService<Func<CacheTech, ICacheService>>();
                     var _cache = cache(CacheTech.Memory);
                     var _mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-                   await _mediator.Send(new ClientSendMessageNoteCommand() { ClientId = rCompanyId, Type = Type, Content = Content });
+                    await _mediator.Send(new ClientSendMessageNoteCommand() { ClientId = rCompanyId, Type = Type,
+                       Content = Content  , OperationalAddressId = OperationalAddressId });
                 }
             });
         }

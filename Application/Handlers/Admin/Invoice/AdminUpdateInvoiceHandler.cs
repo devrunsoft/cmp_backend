@@ -80,7 +80,7 @@ namespace CMPNatural.Application
                 {
                     ProductPriceId = request.ProductPriceId,
                 });
-
+                
                 var resultPrice = (await _productPriceRepository.GetAsync(x => x.Id == request.ProductPriceId, query => query.Include(x => x.Product))).FirstOrDefault();
 
                 if (request.Id != null && request.Id != 0)

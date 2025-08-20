@@ -39,7 +39,8 @@ namespace CMPNatural.Application.Handlers.Admin
                 SenderId = request.ClientId,
                 SenderType = SenderType.Client,
                 SentAt = DateTime.Now,
-                ClientId = request.ClientId
+                ClientId = request.ClientId,
+                OperationalAddressId = request.OperationalAddressId
             };
             var result = await _repository.AddAsync(entity);
 

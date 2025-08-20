@@ -4,18 +4,10 @@ using MediatR;
 using ScoutDirect.Application.Responses;
 using System.Threading;
 using System.Threading.Tasks;
-using CMPNatural.Application.Commands.Admin;
-using CMPNatural.Core.Repositories.Chat;
 using System.Linq;
-using CMPNatural.Core.Enums;
-using CMPNatural.Api;
-using ScoutDirect.Core.Repositories;
-using Microsoft.AspNetCore.SignalR;
-using CMPNatural.Application.Hub;
 using CMPNatural.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using ScoutDirect.Core.Entities.Base;
 
 namespace CMPNatural.Application
 {

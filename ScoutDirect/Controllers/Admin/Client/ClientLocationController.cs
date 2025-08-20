@@ -63,6 +63,7 @@ namespace CMPNatural.Api.Controllers.Admin.Client
                 Long = request.Long,
                 Lat = request.Lat,
                 Name = request.Name,
+                LocationDateTimeInputs = request.LocationDateTimeInputs
 
             });
             return Ok(result);
@@ -86,7 +87,8 @@ namespace CMPNatural.Api.Controllers.Admin.Client
                 Long = request.Long,
                 Lat = request.Lat,
                 Name = request.Name,
-                Id = Id
+                Id = Id,
+                LocationDateTimeInputs = request.LocationDateTimeInputs
 
             });
 

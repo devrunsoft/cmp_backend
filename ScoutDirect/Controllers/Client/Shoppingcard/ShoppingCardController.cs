@@ -69,7 +69,7 @@ namespace CMPNatural.Api.Controllers.shoppingcard
 
             if (result.IsSucces())
             {
-                sendNote(MessageNoteType.AddToShoppingCardByClient , result.Data.NoteTitle);
+                sendNote(MessageNoteType.AddToShoppingCardByClient , result.Data.OperationalAddressId, result.Data.NoteTitle);
             }
 
             return Ok(result);
@@ -88,7 +88,7 @@ namespace CMPNatural.Api.Controllers.shoppingcard
 
             if (result.IsSucces())
             {
-                sendNote(MessageNoteType.DeleteFromShoppingCardByClient, result.Data.NoteTitle);
+                sendNote(MessageNoteType.DeleteFromShoppingCardByClient, result.Data.OperationalAddressId, result.Data.NoteTitle);
             }
 
             return Ok(result);

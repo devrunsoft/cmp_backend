@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Threading.Tasks;
 using CMPNatural.Api.Controllers.Admin;
@@ -7,12 +8,14 @@ using CMPNatural.Application.Commands;
 using CMPNatural.Application.Commands.Admin.Company;
 using CMPNatural.Application.Commands.Billing;
 using CMPNatural.Application.Commands.Client.Representation;
+using CMPNatural.Application.Commands.Company;
 using CMPNatural.Application.Model;
 using CMPNatural.Application.Responses;
 using CMPNatural.Core.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using MySqlX.XDevAPI;
 using ScoutDirect.Application.Responses;
 
 
@@ -20,8 +23,10 @@ namespace CMPNatural.Api.Controllers
 {
     public class ClientInformationController : BaseAdminApiController
     {
-        public ClientInformationController(IMediator mediator, IHttpContextAccessor httpContextAccessor) : base(mediator)
+        private readonly IWebHostEnvironment _env;
+        public ClientInformationController(IMediator mediator, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment env) : base(mediator)
         {
+            _env = env;
         }
 
 
@@ -43,14 +48,12 @@ namespace CMPNatural.Api.Controllers
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Put([FromRoute] long clientId, [FromBody] UpdateCompanyInput request)
         {
-            //var resultBillingAddress = await _mediator.Send(new AddOrUpdateBillingAddressCommand()
-            //{
-            //    CompanyId = clientId,
-            //    Address = request.BillingAddress,
-            //    City = request.City,
-            //    ZIPCode = request.ZIPCode,
-            //    State = request.State
-            //});
+            var resultBillingAddress = await _mediator.Send(new AddBilingInformationCommand()
+            {
+                BilingInformationInputs = request.InformationInput.BilingInformationInputs,
+                CorporateAddress = request.InformationInput.CorporateAddress,
+                CompanyId = clientId
+            });
 
             var result = await _mediator.Send(new UpdateCompanyCommand()
             {
@@ -67,12 +70,31 @@ namespace CMPNatural.Api.Controllers
             return Ok(result);
         }
 
+        [RequestSizeLimit(100_000_000)]
+        [HttpPut("UploadProfilePicture/{clientId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> UploadProfilePicture([FromRoute] long clientId, [FromForm] ProfilePictureInput input)
+        {
+            string wwwPath = _env.ContentRootPath;
+            var result = await _mediator.Send(new UploadProfilePictureCommand()
+            {
+                CompanyId = clientId,
+                ProfilePicture = input.ProfilePicture,
+                Path = wwwPath
+            });
+
+            return Ok(result);
+        }
+
+
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Post([FromBody] AddCompanyInput request)
         {
+
 
             var result = await _mediator.Send(new AdminAddCompanyCommand()
             {
@@ -89,14 +111,12 @@ namespace CMPNatural.Api.Controllers
             if (result.IsSucces())
             {
                 var data = (result.Data as Company);
-                var resultBillingAddress = await _mediator.Send(new AddOrUpdateBillingAddressCommand()
-                {
-                    CompanyId = data.Id,
-                    Address = request.BillingAddress,
-                    City = request.City,
-                    ZIPCode = request.ZIPCode,
-                    State = request.State
-                });
+                 var resultBillingAddress = await _mediator.Send(new AddBilingInformationCommand()
+                 {
+                     BilingInformationInputs = request.InformationInput.BilingInformationInputs,
+                     CorporateAddress = request.InformationInput.CorporateAddress,
+                     CompanyId = data.Id,
+                 });
                 if (result.IsSucces())
                 {
                     SendToClient("Your Account Credentials", $"<p style=\"margin: 5px 0;\"> <strong>Username/Email:</strong> <span style=\"color: #16a085; font-family: monospace;\">{data.BusinessEmail}</span> </p> <p style=\"margin: 5px 0;\"> <strong>Password:</strong> <span style=\"color: #c0392b; font-family: monospace;\">{data.Password}</span> </p>", data.BusinessEmail, "Login");

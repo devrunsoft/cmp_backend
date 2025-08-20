@@ -16,14 +16,17 @@ namespace CMPNatural.Application
     public class AdminRequestTerminatePostHandler : IRequestHandler<AdminRequestTerminatePostCommand, CommandResponse<RequestTerminate>>
     {
         private readonly IRequestTerminateRepository terminateRepository;
+        private readonly ICompanyContractRepository companyContractRepository;
         private readonly IinvoiceRepository _invoiceRepository;
         private readonly IManifestRepository _manifestRepository;
 
-        public AdminRequestTerminatePostHandler(IinvoiceRepository invoiceRepository, IManifestRepository _manifestRepository, IRequestTerminateRepository terminateRepository)
+        public AdminRequestTerminatePostHandler(IinvoiceRepository invoiceRepository, IManifestRepository _manifestRepository, IRequestTerminateRepository terminateRepository,
+           ICompanyContractRepository companyContractRepository )
         {
             _invoiceRepository = invoiceRepository;
             this._manifestRepository = _manifestRepository;
             this.terminateRepository = terminateRepository;
+            this.companyContractRepository = companyContractRepository;
         }
 
         public async Task<CommandResponse<RequestTerminate>> Handle(AdminRequestTerminatePostCommand request, CancellationToken cancellationToken)
@@ -46,8 +49,18 @@ namespace CMPNatural.Application
                 item.Status = InvoiceStatus.Canceled;
                 //////
                 var manifest = (await _manifestRepository.GetAsync(x => x.InvoiceId == item.Id)).FirstOrDefault();
-                manifest.Status = ManifestStatus.Canceled;
-                await _manifestRepository.UpdateAsync(manifest);
+                if (manifest != null)
+                {
+                    manifest.Status = ManifestStatus.Canceled;
+                    await _manifestRepository.UpdateAsync(manifest);
+                }
+                var contract = (await companyContractRepository.GetAsync(x => x.InvoiceId == item.InvoiceId)).FirstOrDefault();
+                if (manifest != null)
+                {
+                    contract.Status = CompanyContractStatus.Canceld;
+                    await companyContractRepository.UpdateAsync(contract);
+                }
+
                 await _invoiceRepository.UpdateAsync(item);
             }
 

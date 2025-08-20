@@ -13,7 +13,7 @@ namespace CMPNatural.Core.Helper
             const string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             const string lower = "abcdefghijklmnopqrstuvwxyz";
             const string numbers = "0123456789";
-            const string special = "!@#$%^&*()-_=+[]{}|;:,.<>?";
+            const string special = "!@#$%&*?";
 
             // Create a single character set with all allowed characters
             string validChars = upper + lower + numbers + special;

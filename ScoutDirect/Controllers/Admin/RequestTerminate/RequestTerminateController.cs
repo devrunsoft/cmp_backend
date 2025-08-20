@@ -1,4 +1,5 @@
 ﻿using CMPNatural.Application.Command;
+using CMPNatural.Application.Commands.Client;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,35 @@ namespace CMPNatural.Api.Controllers.Admin.RequestTerminate
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> GetAll([FromQuery] AdminRequestTerminateGetAllCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpGet("{clientId}/OperationalAddress/{operationalAddressId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> GetAllByOpr([FromQuery] ClientRequestTerminateGetAllCommand command, [FromRoute] long clientId, [FromRoute] long OperationalAddressId)
+        {
+            command.OperationalAddressId = OperationalAddressId;
+            command.CompanyId = clientId;
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpPost("Client")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> PostClient([FromBody] ClientRequestTerminateAddCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Post([FromBody] ClientRequestTerminateAddCommand command)
         {
             var result = await _mediator.Send(command);
             return Ok(result);

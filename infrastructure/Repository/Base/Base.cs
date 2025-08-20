@@ -122,11 +122,10 @@ namespace ScoutDirect.infrastructure.Repository
             var parameter = Expression.Parameter(typeof(T), "x");
             var properties = typeof(T).GetProperties()
                 .Where(p =>
-          (p.PropertyType == typeof(string) ||
-          (p.PropertyType.IsValueType &&
-           (!p.PropertyType.IsEnum && !(Nullable.GetUnderlyingType(p.PropertyType)?.IsEnum ?? false))))
-          &&
-                    p.CanRead && p.CanWrite // Exclude read-only computed properties
+                (p.PropertyType == typeof(string) ||
+                (p.PropertyType.IsValueType &&
+                (!p.PropertyType.IsEnum && !(Nullable.GetUnderlyingType(p.PropertyType)?.IsEnum ?? false)))) &&
+                p.CanRead && p.CanWrite // Exclude read-only computed properties
                 );
 
             Expression? finalExpression = null;

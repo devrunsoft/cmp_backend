@@ -115,7 +115,7 @@ namespace CMPNatural.Api.Controllers.Invoice
             {
                  var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminInvoices, item.Data.InvoiceId);
                  sendEmailToAdmin(emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern, emailDetails.ButtonText);
-                 sendNote(MessageNoteType.RequestCreateByClient, item.Data.ReqNumber);
+                 sendNote(MessageNoteType.RequestCreateByClient, item.Data.OperationalAddressId, item.Data.ReqNumber);
             }
 
             return Ok(new Success<object>());
@@ -136,7 +136,7 @@ namespace CMPNatural.Api.Controllers.Invoice
 
             if (!resultInvoie.IsSucces())
             {
-                sendNote(MessageNoteType.RequestCanceledByClient , resultInvoie.Data.ReqNumber);
+                sendNote(MessageNoteType.RequestCanceledByClient , resultInvoie.Data.OperationalAddressId, resultInvoie.Data.ReqNumber);
                 return Ok(resultInvoie);
             }
 

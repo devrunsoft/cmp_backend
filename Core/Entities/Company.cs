@@ -47,7 +47,8 @@ namespace CMPNatural.Core.Entities
         public static Expression<Func<Company, bool>> FilterByQuery(string? search, CompanyStatus? Status)
         {
             if (string.IsNullOrWhiteSpace(search))
-                return _ => true;
+                return p =>
+                  (Status == null || p.Status == Status);
 
             var loweredSearch = search.Trim().ToLower();
             var addressFilter = QueryExtensions.FilterByQuery(search);
