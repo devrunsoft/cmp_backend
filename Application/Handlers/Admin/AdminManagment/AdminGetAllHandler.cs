@@ -20,7 +20,12 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<PagesQueryResponse<AdminEntity>>> Handle(AdminGetAllCommand request, CancellationToken cancellationToken)
         {
-            var result = (await _reposiotry.GetBasePagedAsync(request,x=>x.Role != "SuperAdmin", query =>query.Include(x=>x.Person)));
+            var result = (await _reposiotry.GetBasePagedAsync(request,x=>
+            x.Role != "SuperAdmin" &&
+            x.Email.Contains(request.allField) ||
+            (x.Person.FirstName.Contains(request.allField) || x.Person.LastName.Contains(request.allField))
+
+            , query =>query.Include(x=>x.Person),false));
             return new Success<PagesQueryResponse<AdminEntity>>() { Data = result };
         }
     }

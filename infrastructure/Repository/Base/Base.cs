@@ -161,7 +161,7 @@ namespace ScoutDirect.infrastructure.Repository
         }
 
 
-        public async Task<PagesQueryResponse<T>> GetBasePagedAsync(PagedQueryRequest pagingParam, Expression<Func<T, bool>> expression, Func<IQueryable<T>, IQueryable<T>> includeFunc = null)
+        public async Task<PagesQueryResponse<T>> GetBasePagedAsync(PagedQueryRequest pagingParam, Expression<Func<T, bool>> expression, Func<IQueryable<T>, IQueryable<T>> includeFunc = null, bool filterAll=true)
         {
             IQueryable<T> query = _dbContext.Set<T>();
 
@@ -175,7 +175,7 @@ namespace ScoutDirect.infrastructure.Repository
                 query = includeFunc(query);
             }
 
-            if (!string.IsNullOrWhiteSpace(pagingParam.allField))
+            if (!string.IsNullOrWhiteSpace(pagingParam.allField) && filterAll)
             {
                 query = ApplySearchFilter(query, pagingParam.allField);
             }
@@ -194,7 +194,7 @@ namespace ScoutDirect.infrastructure.Repository
             return new PagesQueryResponse<T>(elements, pagingParam.Page, totalPages, totalElements);
         }
 
-        public async Task<PagesQueryResponse<T>> GetBasePagedAsync(PagedQueryRequest pagingParam, Func<IQueryable<T>, IQueryable<T>> includeFunc = null)
+        public async Task<PagesQueryResponse<T>> GetBasePagedAsync(PagedQueryRequest pagingParam, Func<IQueryable<T>, IQueryable<T>> includeFunc = null, bool filterAll = true)
         {
             var query = _dbContext.Set<T>().AsQueryable();
 
@@ -205,7 +205,7 @@ namespace ScoutDirect.infrastructure.Repository
 
 
             // Apply search filter if `allField` is provided
-            if (!string.IsNullOrWhiteSpace(pagingParam.allField))
+            if (!string.IsNullOrWhiteSpace(pagingParam.allField) && filterAll)
             {
                 query = ApplySearchFilter(query, pagingParam.allField);
             }

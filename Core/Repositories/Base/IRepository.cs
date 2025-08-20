@@ -25,8 +25,8 @@ namespace ScoutDirect.Core.Repositories.Base
         Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> expression, Func<IQueryable<T>, IQueryable<T>> includeFunc = null);
         Task<IReadOnlyList<T>> GetPagedAsync(PagedQueryRequest pagingParam, Expression<Func<T, bool>> expression);
         Task<IReadOnlyList<T>> GetPagedAsync(PagedQueryRequest pagingParam);
-        Task<PagesQueryResponse<T>> GetBasePagedAsync(PagedQueryRequest pagingParam, Expression<Func<T, bool>> expression, Func<IQueryable<T>, IQueryable<T>> includeFunc = null);
-        Task<PagesQueryResponse<T>> GetBasePagedAsync(PagedQueryRequest pagingParam, Func<IQueryable<T>, IQueryable<T>> includeFunc = null);
+        Task<PagesQueryResponse<T>> GetBasePagedAsync(PagedQueryRequest pagingParam, Expression<Func<T, bool>> expression, Func<IQueryable<T>, IQueryable<T>> includeFunc = null, bool filterAll = true);
+        Task<PagesQueryResponse<T>> GetBasePagedAsync(PagedQueryRequest pagingParam, Func<IQueryable<T>, IQueryable<T>> includeFunc = null, bool filterAll = true);
 
         Task<TValue> GetOrCreateAsync<TValue>(
          string key, Func<Task<TValue>> factory, TimeSpan? ttl = null);
