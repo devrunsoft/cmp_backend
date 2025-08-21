@@ -93,10 +93,20 @@ namespace infrastructure.Data
             });
 
 
-            modelBuilder.Entity<ChatMention>()
-                .HasOne(m => m.Notification)
+            modelBuilder.Entity<ChatMention>(entity =>
+            {
+                entity.ToTable("ChatMention");
+
+                entity.HasOne(m => m.Notification)
                 .WithOne(n => n.ChatMention)
                 .HasForeignKey<ChatNotification>(n => n.ChatMentionId);
+
+                entity.Property(p => p.MentionedType)
+                 .HasConversion(
+                 x => x.ToString(),
+                 x => (MentionedType)Enum.Parse(typeof(MentionedType), x)
+                 );
+            });
 
 
             modelBuilder.Entity<ChatParticipant>()
@@ -125,6 +135,10 @@ namespace infrastructure.Data
                 entity.HasOne(d => d.ChatSession)
                 .WithMany(x => x.Messages)
                 .HasForeignKey(d => d.ChatSessionId);
+
+                entity.HasMany(d => d.Mentions)
+                .WithOne(x => x.ChatMessage)
+                .HasForeignKey(d => d.ChatMessageId);
             });
 
             modelBuilder.Entity<ChatMessageNote>(entity =>

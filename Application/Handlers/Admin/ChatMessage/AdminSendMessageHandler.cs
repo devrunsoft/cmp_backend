@@ -4,15 +4,14 @@ using MediatR;
 using ScoutDirect.Application.Responses;
 using System.Threading;
 using System.Threading.Tasks;
-using CMPNatural.Application.Commands.Admin;
 using CMPNatural.Core.Repositories.Chat;
 using System.Linq;
 using CMPNatural.Core.Enums;
-using CMPNatural.Api;
-using ScoutDirect.Core.Repositories;
-using Microsoft.AspNetCore.SignalR;
 using CMPNatural.Application.Hub;
 using CMPNatural.Core.Repositories;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace CMPNatural.Application.Handlers.Admin
 {
@@ -37,14 +36,34 @@ namespace CMPNatural.Application.Handlers.Admin
         {
             var chatsession = (await _mediator.Send(new CreateChatSessionCommand() { ClientId = request.ClientId , OperationalAddressId = request.OperationalAddressId})).Data;
 
-            var admin = await _adminRepository.GetOrCreateAsync(
-                key: $"AdminEntity:id:{request.AdminId}",
-                factory: async () =>
+            //var admin = await _adminRepository.GetOrCreateAsync(
+            //    key: $"AdminEntity:id:{request.AdminId}",
+            //    factory: async () =>
+            //    {
+            //        var list = await _adminRepository.GetAsync(x => x.Id == request.AdminId);
+            //        return list.FirstOrDefault();
+            //    }
+            //);
+
+            List<ChatMention> ChatMention = new List<ChatMention>();
+
+            if (request.ChatMentionIds.Count > 0)
+            {
+                foreach (var item in request.ChatMentionIds)
                 {
-                    var list = await _adminRepository.GetAsync(x => x.Id == request.AdminId);
-                    return list.FirstOrDefault();
+                    ChatMention.Add(
+                        new ChatMention()
+                        {
+                            MentionedType= MentionedType.Admin,
+                            MentionedId = item.Id,
+                            OperationalAddressId = request.OperationalAddressId,
+                            ClientId = request.ClientId,
+                        }
+                        );
+                    var m = JsonConvert.SerializeObject(item, new StringEnumConverter());
+                    await _chatService.SendToPerson(item.PersonId.ToString(), m, ChatEnum.mention);
                 }
-            );
+            }
 
             var entity = new ChatMessage
             {
@@ -56,7 +75,8 @@ namespace CMPNatural.Application.Handlers.Admin
                 SenderType = SenderType.Admin,
                 SentAt = DateTime.Now,
                 OperationalAddressId = request.OperationalAddressId,
-                ClientId = request.ClientId
+                ClientId = request.ClientId,
+                Mentions = ChatMention
             };
             var result = await _repository.AddAsync(entity);
 

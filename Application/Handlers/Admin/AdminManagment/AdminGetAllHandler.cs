@@ -22,9 +22,11 @@ namespace CMPNatural.Application
         {
             var result = (await _reposiotry.GetBasePagedAsync(request,x=>
             x.Role != "SuperAdmin" &&
+            (string.IsNullOrWhiteSpace(request.allField) ||
             x.Email.Contains(request.allField) ||
-            (x.Person.FirstName.Contains(request.allField) || x.Person.LastName.Contains(request.allField))
-
+            (x.Person.FirstName.Contains(request.allField) || x.Person.LastName.Contains(request.allField)) ||
+            (x.Person.FirstName + " " + x.Person.LastName).Contains(request.allField)
+            )
             , query =>query.Include(x=>x.Person),false));
             return new Success<PagesQueryResponse<AdminEntity>>() { Data = result };
         }

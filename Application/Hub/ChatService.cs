@@ -27,6 +27,9 @@ namespace CMPNatural.Application.Hub
 
         [Description("isTyping")]
         isTyping,
+
+        [Description("mention")]
+        mention,
     }
 
     public interface IChatService
@@ -85,7 +88,7 @@ namespace CMPNatural.Application.Hub
 
         private async Task SendMessageToPerson(string personId, ChatMessage message, ChatEnum type = ChatEnum.message)
         {
-            await SendToPerson(personId, JsonConvert.SerializeObject(message, new StringEnumConverter()), ChatEnum.message);
+            await SendToPerson(personId, JsonConvert.SerializeObject(message, new StringEnumConverter()), type);
         }
 
         public async Task SendMessageToClient(long clientId, ChatMessage message, ChatEnum type = ChatEnum.message)

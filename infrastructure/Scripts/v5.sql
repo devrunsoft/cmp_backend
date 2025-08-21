@@ -56,6 +56,8 @@ CREATE TABLE ChatMessageNote (
 CREATE TABLE ChatMention (
     Id BIGINT AUTO_INCREMENT PRIMARY KEY,
     ChatMessageId BIGINT NOT NULL,
+    ClientId BIGINT NOT NULL,
+    OperationalAddressId BIGINT NOT NULL,
     MentionedType VARCHAR(100) NOT NULL,
     MentionedId BIGINT NOT NULL
 );

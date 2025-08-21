@@ -1,4 +1,5 @@
-﻿using CMPNatural.Core.Entities;
+﻿using System.Collections.Generic;
+using CMPNatural.Core.Entities;
 using MediatR;
 using ScoutDirect.Application.Responses;
 
@@ -10,5 +11,6 @@ namespace CMPNatural.Application
         public long ClientId { get; set; }
         public string Message { get; set; }
         public long OperationalAddressId { get; set; }
+        public List<AdminEntity> ChatMentionIds { get; set; } = new List<AdminEntity>();
     }
 }
