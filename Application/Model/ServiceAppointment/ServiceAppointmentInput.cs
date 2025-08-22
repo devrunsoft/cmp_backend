@@ -10,6 +10,8 @@ namespace CMPNatural.Application.Model.ServiceAppointment
     {
         public long? Id { get; set; }
 
+        public long? tempId { get; set; }
+
         public ServiceType ServiceTypeId { get; set; } = ServiceType.Cooking_Oil_Collection;
 
         public long ProductPriceId { get; set; }

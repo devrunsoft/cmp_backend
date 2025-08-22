@@ -43,6 +43,11 @@ namespace CMPNatural.Application.Handlers
             if (price.Product.ServiceType == (int)ServiceType.Cooking_Oil_Collection || price.Product.ServiceType == (int)ServiceType.Grease_Trap_Management) {
                 var locations = (await _locationCompanyRepository.GetAsync(p => request.LocationCompanyIds.Any(e => e == p.Id),
                     p => p.Include(p => p.CapacityEntity))).ToList();
+                if(locations.Count == 0)
+                {
+                    return new NoAcess<ShoppingCard>() { Message = "Please at least select a location" };
+                }
+
                 Qty = locations.Sum(x => x.CapacityEntity.Qty);
             }
             else

@@ -41,6 +41,8 @@ namespace CMPNatural.Application
                 Content = content,
                 SenderId = request.AdminId,
                 SentAt = DateTime.Now,
+                OperationalAddressId = chatsession.OperationalAddressId,
+                ClientId = chatsession.ClientId
             };
             var result = await _repository.AddAsync(entity);
 

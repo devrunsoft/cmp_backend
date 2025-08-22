@@ -83,7 +83,7 @@ namespace CMPNatural.Application
                 
                 var resultPrice = (await _productPriceRepository.GetAsync(x => x.Id == request.ProductPriceId, query => query.Include(x => x.Product))).FirstOrDefault();
 
-                if (request.Id != null && request.Id != 0)
+                if (request.Id != null && request.Id != 0 && (request.tempId == null || request.tempId == 0))
                 {
                     var serviceEntity = services.FirstOrDefault(x=>x.Id == request.Id);
                     serviceEntity.ServiceTypeId = resultPrice.Product.ServiceType;
