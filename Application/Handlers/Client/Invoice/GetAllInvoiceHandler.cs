@@ -13,7 +13,7 @@ using CMPNatural.Application.Mapper;
 using CMPNatural.Core.Enums;
 using CMPNatural.Core.Base;
 
-namespace CMPNatural.Application.Handlers
+namespace CMPNatural.Application
 {
 
     public class GetAllInvoiceHandler : IRequestHandler<GetAllInvoiceCommand, CommandResponse<PagesQueryResponse<InvoiceResponse>>>

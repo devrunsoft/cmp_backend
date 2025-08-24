@@ -38,6 +38,7 @@ namespace CMPNatural.Api.Controllers.Admin.Client
             _customValueApi = customValueApi;
         }
 
+        //TODO remove
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]

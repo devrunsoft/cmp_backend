@@ -43,7 +43,7 @@ namespace CMPNatural.infrastructure.Repository
             return result;
         }
 
-        public async Task<List<Provider>> GetAllSearchProviderAllInvoiceAsync(List<ServiceAppointmentLocation> locations)
+        public async Task<List<Provider>> GetAllSearchProviderAllInvoiceAsync(List<ServiceAppointmentLocation> services, bool checkLocation = true)
         {
             // Include ProviderService only here
             var providerList = await _dbContext.Provider
@@ -57,9 +57,9 @@ namespace CMPNatural.infrastructure.Repository
                 .AsParallel()
                 .WithDegreeOfParallelism(Environment.ProcessorCount)
                 .Where(p =>
-                    locations.Any(loc =>
-                        p.IsPointInCity(loc.LocationCompany.Lat, loc.LocationCompany.Long)) &&
-                    locations.All(loc =>
+                    (!checkLocation || services.Any(loc =>
+                        p.IsPointInCity(loc.LocationCompany.Lat, loc.LocationCompany.Long))) &&
+                    services.All(loc =>
                         p.ProviderService.Any(service => service.ProductId == loc.ServiceAppointment.ProductId))
                 )
                 .ToList();

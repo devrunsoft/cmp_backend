@@ -9,10 +9,11 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using CMPNatural.Application.Mapper;
 using CMPNatural.Core.Enums;
+using CMPNatural.Core.Entities;
 
-namespace CMPNatural.Application.Handlers.Admin.Invoice
+namespace CMPNatural.Application.Handlers
 {
-    public class ClientCancelRequestHandler : IRequestHandler<ClientCancelRequestCommand, CommandResponse<bool>>
+    public class ClientCancelRequestHandler : IRequestHandler<ClientCancelRequestCommand, CommandResponse<Invoice>>
     {
         private readonly IinvoiceRepository _invoiceRepository;
         private readonly IManifestRepository _manifestRepository;
@@ -23,13 +24,14 @@ namespace CMPNatural.Application.Handlers.Admin.Invoice
             this._manifestRepository = _manifestRepository;
         }
 
-        public async Task<CommandResponse<bool>> Handle(ClientCancelRequestCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<Invoice>> Handle(ClientCancelRequestCommand request, CancellationToken cancellationToken)
         {
             var invoices = (await _invoiceRepository.GetAsync(p => p.RequestNumber == request.RequestNumber && p.CompanyId == request.CompanyId &&
               (p.Status == InvoiceStatus.Draft),
                 query => query
                 .Include(i => i.BaseServiceAppointment)
                 )).ToList();
+
             foreach (var item in invoices)
             {
                 
@@ -46,7 +48,7 @@ namespace CMPNatural.Application.Handlers.Admin.Invoice
             }
             
 
-            return new Success<bool>() { Data = true };
+            return new Success<Invoice>() { Data = invoices.FirstOrDefault() };
         }
     }
 }

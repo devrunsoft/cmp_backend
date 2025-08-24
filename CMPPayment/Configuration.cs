@@ -14,10 +14,11 @@ public class PaymentConfiguration : IPaymentConfiguration
     private readonly ICacheService _cache;
     private readonly AppSetting _appSetting;
 
-    public PaymentConfiguration(IAppInformationRepository providerReposiotry, Func<CacheTech, ICacheService> _cacheService)
+    public PaymentConfiguration(IAppInformationRepository providerReposiotry, Func<CacheTech, ICacheService> _cacheService , AppSetting appSetting)
     {
         _repository = providerReposiotry;
         _cache = _cacheService(CacheTech.Memory);
+        this._appSetting = appSetting;
     }
     public Session CreatePayment(List<BaseServiceAppointment> productPrices)
     {

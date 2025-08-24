@@ -9,7 +9,7 @@ namespace CMPNatural.Core.Repositories
     public interface IProviderReposiotry : IRepository<Provider, long>
     {
         Task<List<Provider>> GetAllSearchProviderAsync(double sLatitude, double sLongitude, Expression<Func<Provider, bool>> expression);
-        Task<List<Provider>> GetAllSearchProviderAllInvoiceAsync(List<ServiceAppointmentLocation> locations);
+        Task<List<Provider>> GetAllSearchProviderAllInvoiceAsync(List<ServiceAppointmentLocation> services, bool checkLocation = true);
     }
 }
 

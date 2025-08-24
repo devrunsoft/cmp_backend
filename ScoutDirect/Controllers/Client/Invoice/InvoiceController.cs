@@ -69,6 +69,13 @@ namespace CMPNatural.Api.Controllers.Invoice
         {
             Command.CompanyId = rCompanyId;
             var result = await _mediator.Send(Command);
+
+            if (result.IsSucces())
+            {
+                sendNote(MessageNoteType.RequestCanceledByClient, result.Data.OperationalAddressId, result.Data.ReqNumber);
+                return Ok(result);
+            }
+
             return Ok(result);
         }
 
