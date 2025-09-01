@@ -37,6 +37,7 @@ namespace infrastructure.Data
         public virtual DbSet<ProductPrice> ProductPrice { get; set; } = null!;
         public virtual DbSet<InvoiceProduct> InvoiceProduct { get; set; } = null!;
         public virtual DbSet<Driver> Driver { get; set; } = null!;
+        public virtual DbSet<DriverManifest> DriverManifest { get; set; } = null!;
         public virtual DbSet<Vehicle> Vehicle { get; set; } = null!;
         public virtual DbSet<VehicleCompartment> VehicleCompartment { get; set; } = null!;
         public virtual DbSet<VehicleService> VehicleService { get; set; } = null!;
@@ -79,6 +80,11 @@ namespace infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<DriverManifest>(entity =>
+            {
+                entity.ToTable("DriverManifest");
+            });
+
             modelBuilder.Entity<ChatClientSession>(entity =>
             {
                 entity.ToTable("ChatClientSession");
@@ -268,6 +274,10 @@ namespace infrastructure.Data
                 entity.HasOne(d => d.Provider)
                 .WithOne()
                 .HasForeignKey<Manifest>(d => d.ProviderId);
+
+                entity.HasOne(d => d.DriverManifest)
+                .WithOne(x=>x.Manifest)
+                .HasPrincipalKey<Manifest>(d => d.Id);
             });
 
             modelBuilder.Entity<TermsConditions>(entity =>
@@ -326,6 +336,15 @@ namespace infrastructure.Data
             modelBuilder.Entity<Driver>(entity =>
             {
                 entity.ToTable("Driver");
+                entity.HasOne(d => d.Person)
+                .WithOne()
+                .HasForeignKey<Driver>(d => d.PersonId);
+
+                entity.Property(d => d.Status)
+                 .HasConversion(
+                 x => x.ToString(),
+                 x => (DriverStatus)Enum.Parse(typeof(DriverStatus), x)
+                 );
             });
 
             modelBuilder.Entity<Vehicle>(entity =>
@@ -342,6 +361,7 @@ namespace infrastructure.Data
             modelBuilder.Entity<VehicleService>(entity =>
             {
                 entity.ToTable("VehicleService");
+
                 entity.Property(d => d.VehicleServiceStatus)
                  .HasConversion(
                  x => x.ToString(),

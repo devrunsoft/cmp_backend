@@ -61,7 +61,8 @@ namespace CMPNatural.Application.Handlers
                     Password = request.Password,
                     ActivationLink = Guid.NewGuid(),
                     PersonId = personId,
-                    Status = CompanyStatus.Approved
+                    Status = CompanyStatus.Approved,
+                    CorporateAddress = ""
 
                 };
 

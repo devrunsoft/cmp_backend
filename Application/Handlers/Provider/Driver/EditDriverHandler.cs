@@ -6,10 +6,13 @@ using ScoutDirect.Application.Responses;
 using System.Threading;
 using System.Threading.Tasks;
 using CMPNatural.Core.Entities;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using CMPNatural.Application.Mapper;
 
 namespace CMPNatural.Application
 {
-    public class EditDriverHandler : IRequestHandler<EditDriverCommand, CommandResponse<Driver>>
+    public class EditDriverHandler : IRequestHandler<EditDriverCommand, CommandResponse<DriverResponse>>
     {
         private readonly IDriverRepository _repository;
 
@@ -18,13 +21,13 @@ namespace CMPNatural.Application
             _repository = repository;
         }
 
-        public async Task<CommandResponse<Driver>> Handle(EditDriverCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<DriverResponse>> Handle(EditDriverCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _repository.GetByIdAsync(request.Id);
+            var entity = (await _repository.GetAsync(x=>x.Id == request.Id, query => query.Include(x=>x.Person))).FirstOrDefault();
 
             if(entity.ProviderId != request.ProviderId)
             {
-                return new NoAcess<Driver>() { Message = "No Access to Edit!" };
+                return new NoAcess<DriverResponse>() { Message = "No Access to Edit!" };
             }
             string License=null;
             string BackgroundCheck = null;
@@ -53,13 +56,14 @@ namespace CMPNatural.Application
             if(ProfilePhoto!=null)
             entity.ProfilePhoto = ProfilePhoto;
 
-            entity.FirstName = request.FirstName;
-            entity.LastName = request.LastName;
-            //entity.ProviderId = request.ProviderId;
+            entity.Person.FirstName = request.FirstName;
+            entity.Person.LastName = request.LastName;
+            entity.Email = request.Email;
+            entity.IsDefault = request.IsDefault;
 
             await _repository.UpdateAsync(entity);
 
-            return new Success<Driver>() { Data = entity };
+            return new Success<DriverResponse>() { Data = DriverMapper.Mapper.Map<DriverResponse>(entity) };
         }
     }
 }

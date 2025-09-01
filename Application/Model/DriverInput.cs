@@ -10,6 +10,8 @@ namespace CMPNatural.Application.Model
 		}
         public string FirstName { get; set; } = "";
         public string LastName { get; set; } = "";
+        public string Email { get; set; }
+        public bool IsDefault { get; set; }
         public IFormFile License { get; set; }
         public DateTime LicenseExp { get; set; }
         public IFormFile BackgroundCheck { get; set; }

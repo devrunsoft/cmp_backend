@@ -19,16 +19,21 @@ namespace CMPNatural.Application
     public class AdminAssignManifestHandler : IRequestHandler<AdminAssignManifestCommand, CommandResponse<Manifest>>
     {
         private readonly IManifestRepository _repository;
+        private readonly IDriverManifestRepository _driverManifestRepository;
+        private readonly IDriverRepository _driverRepository;
         private readonly ICompanyRepository _companyrepository;
         private readonly IProviderReposiotry _providerRepository;
         private readonly IMediator _mediator;
 
-        public AdminAssignManifestHandler(IManifestRepository _repository, IProviderReposiotry _providerRepository, IMediator _mediator, ICompanyRepository _companyrepository)
+        public AdminAssignManifestHandler(IManifestRepository _repository, IProviderReposiotry _providerRepository, IMediator _mediator, ICompanyRepository _companyrepository,
+             IDriverManifestRepository _driverManifestRepository, IDriverRepository _driverRepository)
         {
             this._repository = _repository;
             this._providerRepository = _providerRepository;
             this._mediator = _mediator;
             this._companyrepository = _companyrepository;
+            this._driverManifestRepository = _driverManifestRepository;
+            this._driverRepository = _driverRepository;
         }
 
         public async Task<CommandResponse<Manifest>> Handle(AdminAssignManifestCommand request, CancellationToken cancellationToken)
@@ -36,6 +41,15 @@ namespace CMPNatural.Application
             var entity = (await _repository.GetAsync(p=> p.Id == request.Id && (p.Status == ManifestStatus.Draft || p.Status == ManifestStatus.Scaduled),query=>query.Include(x=>x.Invoice))).FirstOrDefault();
             var provider = (await _providerRepository.GetAsync(p => p.Id == request.ProviderId && p.Status == ProviderStatus.Approved)).FirstOrDefault();
             var company = (await _companyrepository.GetAsync(p => p.Id == entity.Invoice.CompanyId)).FirstOrDefault();
+            var drivers = (await _driverRepository.GetAsync(p => p.ProviderId == request.ProviderId)).ToList();
+
+            if (!drivers.Any())
+            {
+                return new NoAcess<Manifest>
+                {
+                    Message = "The manifest cannot be assigned because no drivers are available for this provider."
+                };
+            }
 
             if (company.Status == CompanyStatus.Pending)
             {
@@ -103,6 +117,21 @@ namespace CMPNatural.Application
             if (result.IsSucces())
             {
                 await _repository.UpdateAsync(entity);
+                #region assignToDriver
+                var dirver = drivers.FirstOrDefault(x => x.IsDefault);
+                if (dirver == null)
+                {
+                    dirver = drivers.FirstOrDefault();
+                }
+                var driverManifest = new DriverManifest()
+                {
+                    ProviderId = request.ProviderId,
+                    ManifestId = entity.Id,
+                    DriverId = dirver.Id,
+                    CreateAt = DateTime.Now,
+                };
+                await _driverManifestRepository.AddAsync(driverManifest);
+                #endregion
             }
 
             return new Success<Manifest>() { Data = entity };

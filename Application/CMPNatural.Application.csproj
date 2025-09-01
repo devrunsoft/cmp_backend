@@ -278,6 +278,16 @@
     <None Remove="Commands\Client\ChatMessageNote\" />
     <None Remove="Commands\Admin\ChatMessageManualNote\" />
     <None Remove="Handlers\Admin\ChatMessageManualNote\" />
+    <None Remove="Mapper\Driver\" />
+    <None Remove="Commands\Driver\" />
+    <None Remove="Handlers\Driver\" />
+    <None Remove="Commands\Driver\Profile\" />
+    <None Remove="Handlers\Driver\Profile\" />
+    <None Remove="Commands\Driver\Home\" />
+    <None Remove="Responses\Driver\" />
+    <None Remove="Handlers\Driver\Home\" />
+    <None Remove="Handlers\Driver\Manifest\" />
+    <None Remove="Commands\Driver\Manifest\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -563,6 +573,16 @@
     <Folder Include="Commands\Client\ChatMessageNote\" />
     <Folder Include="Commands\Admin\ChatMessageManualNote\" />
     <Folder Include="Handlers\Admin\ChatMessageManualNote\" />
+    <Folder Include="Mapper\Driver\" />
+    <Folder Include="Commands\Driver\" />
+    <Folder Include="Handlers\Driver\" />
+    <Folder Include="Commands\Driver\Profile\" />
+    <Folder Include="Handlers\Driver\Profile\" />
+    <Folder Include="Commands\Driver\Home\" />
+    <Folder Include="Responses\Driver\" />
+    <Folder Include="Handlers\Driver\Home\" />
+    <Folder Include="Handlers\Driver\Manifest\" />
+    <Folder Include="Commands\Driver\Manifest\" />
   </ItemGroup> 
 
   <ItemGroup>

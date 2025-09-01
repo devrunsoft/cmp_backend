@@ -80,6 +80,7 @@ namespace ScoutDirect.infrastructure
             services.AddTransient<IChatMessageNoteRepository, ChatMessageNoteRepository>();
             services.AddTransient<IChatClientSessionRepository, ChatClientSessionRepository>();
             services.AddTransient<IChatMessageManualNoteRepository, ChatMessageManualNoteRepository>();
+            services.AddTransient<IDriverManifestRepository, DriverManifestRepository>();
 
             //services.AddTransient<IinvoiceProviderRepository, InvoiceProviderRepository>();
 

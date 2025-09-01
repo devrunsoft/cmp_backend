@@ -297,7 +297,10 @@ namespace ScoutDirect.Api
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CMPNatural Web API v1"));
             //}
 
-            app.UseHttpsRedirection();
+            if (!env.IsDevelopment())
+            {
+                app.UseHttpsRedirection();
+            }
 
             //remove
             app.UseStaticFiles();

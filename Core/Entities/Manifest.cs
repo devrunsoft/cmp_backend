@@ -62,6 +62,7 @@ namespace CMPNatural.Core.Entities
 
 		public virtual Invoice Invoice { get; set; }
         public virtual Provider? Provider { get; set; }
+        public virtual DriverManifest DriverManifest { get; set; }
 
     }
 }

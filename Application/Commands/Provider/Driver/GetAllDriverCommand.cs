@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace CMPNatural.Application
 {
-	public class GetAllDriverCommand : IRequest<CommandResponse<List<Driver>>>
+	public class GetAllDriverCommand : IRequest<CommandResponse<List<DriverResponse>>>
     {
 		public GetAllDriverCommand()
 		{

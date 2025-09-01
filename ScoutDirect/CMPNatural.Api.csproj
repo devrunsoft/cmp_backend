@@ -69,6 +69,11 @@
     <None Remove="Controllers\Client\Manifest\" />
     <None Remove="Controllers\Client\Chat\" />
     <None Remove="Controllers\Admin\Chat\" />
+    <None Remove="Controllers\Driver\" />
+    <None Remove="Controllers\Driver\Base\" />
+    <None Remove="Controllers\Driver\User\" />
+    <None Remove="Controllers\Driver\Home\" />
+    <None Remove="Controllers\Driver\Manifest\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="View\" />
@@ -114,6 +119,11 @@
     <Folder Include="Controllers\Client\Manifest\" />
     <Folder Include="Controllers\Client\Chat\" />
     <Folder Include="Controllers\Admin\Chat\" />
+    <Folder Include="Controllers\Driver\" />
+    <Folder Include="Controllers\Driver\Base\" />
+    <Folder Include="Controllers\Driver\User\" />
+    <Folder Include="Controllers\Driver\Home\" />
+    <Folder Include="Controllers\Driver\Manifest\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\CMPNatural.Core.csproj">

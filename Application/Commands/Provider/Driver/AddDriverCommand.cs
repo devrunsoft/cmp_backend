@@ -7,7 +7,7 @@ using CMPNatural.Core.Entities;
 
 namespace CMPNatural.Application
 {
-	public class AddDriverCommand : DriverInput, IRequest<CommandResponse<Driver>>
+	public class AddDriverCommand : DriverInput, IRequest<CommandResponse<DriverResponse>>
     {
 		public AddDriverCommand()
 		{

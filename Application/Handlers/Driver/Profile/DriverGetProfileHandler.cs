@@ -13,17 +13,17 @@ using ScoutDirect.Core.Entities.Base;
 
 namespace CMPNatural.Application
 {
-    public class GetDriverHandler : IRequestHandler<GetDriverCommand, CommandResponse<DriverResponse>>
+    public class DriverGetProfileHandler : IRequestHandler<DriverGetProfileCommand, CommandResponse<DriverResponse>>
     {
         private readonly IDriverRepository _repository;
-        public GetDriverHandler(IDriverRepository repository)
+        public DriverGetProfileHandler(IDriverRepository repository)
         {
             _repository = repository;
         }
 
-        public async Task<CommandResponse<DriverResponse>> Handle(GetDriverCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<DriverResponse>> Handle(DriverGetProfileCommand request, CancellationToken cancellationToken)
         {
-            var result = (await _repository.GetAsync(p => p.ProviderId == request.ProviderId && p.Id == request.Id , 
+            var result = (await _repository.GetAsync(p => p.Id == request.DriverId , 
             query => query.Include(x => x.Person))).FirstOrDefault();
             return new Success<DriverResponse>() { Data = DriverMapper.Mapper.Map<DriverResponse>(result) };
         }

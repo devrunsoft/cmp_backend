@@ -6,7 +6,7 @@ using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Application
 {
-    public class EditDriverCommand : DriverInput, IRequest<CommandResponse<Driver>>
+    public class EditDriverCommand : DriverInput, IRequest<CommandResponse<DriverResponse>>
     {
         public EditDriverCommand()
         {
