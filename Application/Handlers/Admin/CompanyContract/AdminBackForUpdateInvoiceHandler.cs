@@ -56,7 +56,7 @@ namespace CMPNatural.Application
             await _invoiceRepository.UpdateAsync(invoice);
             await _companyContractRepository.DeleteAsync(companyContract);
 
-            return new Success<InvoiceResponse>() { Data = InvoiceMapper.Mapper.Map<InvoiceResponse>(invoice), Message = "Successfull!" };
+            return new Success<InvoiceResponse>() { Data = InvoiceMapper.Mapper.Map<InvoiceResponse>(invoice)};
 
         }
 

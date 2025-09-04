@@ -13,18 +13,19 @@ using ScoutDirect.Core.Entities.Base;
 
 namespace CMPNatural.Application
 {
-    public class DriverGetManifestHandler : IRequestHandler<DriverGetManifestCommand, CommandResponse<Manifest>>
+    public class DriverUpComingManifestHandler : IRequestHandler<DriverUpComingManifestCommand, CommandResponse<Manifest>>
     {
         private readonly IDriverManifestRepository _repository;
 
-        public DriverGetManifestHandler(IDriverManifestRepository _repository)
+        public DriverUpComingManifestHandler(IDriverManifestRepository _repository)
         {
             this._repository = _repository;
         }
 
-        public async Task<CommandResponse<Manifest>> Handle(DriverGetManifestCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<Manifest>> Handle(DriverUpComingManifestCommand request, CancellationToken cancellationToken)
         {
-            var result = (await _repository.GetAsync(p => p.ManifestId == request.Id, query => query
+
+            var result = (await _repository.GetAsync(p => p.ManifestId == 165, query => query
             .Include(x => x.Manifest)
             .ThenInclude(x => x.Invoice)
             .ThenInclude(x => x.BaseServiceAppointment)

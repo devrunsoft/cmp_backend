@@ -40,7 +40,7 @@ namespace CMPNatural.Application
             entity.totalPages,
             entity.totalElements);
 
-            return new Success<PagesQueryResponse<InvoiceResponse>>() { Data = model, Message = "Successfull!" };
+            return new Success<PagesQueryResponse<InvoiceResponse>>() { Data = model };
 
         }
 

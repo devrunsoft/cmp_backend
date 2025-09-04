@@ -131,7 +131,7 @@ namespace CMPNatural.Application.Handlers
             entity.InvoiceNumber = entity.Number;
             await _invoiceRepository.UpdateAsync(entity);
 
-            return new Success<Invoice>() { Data = result, Message = "Successfull!" };
+            return new Success<Invoice>() { Data = result };
 
         }
 

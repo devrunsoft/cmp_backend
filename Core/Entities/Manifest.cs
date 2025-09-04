@@ -30,7 +30,9 @@ namespace CMPNatural.Core.Entities
 
 		public DateTime? StartTime { get; set; }
 
-		public DateTime? FinishTime { get; set; }
+        public DateTime? DoingStartTime { get; set; }
+
+        public DateTime? FinishTime { get; set; }
 
 		public bool? IsEdited { get; set; }
 

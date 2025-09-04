@@ -28,7 +28,7 @@ namespace CMPNatural.Application
             //&& p.Status == (int)InvoiceStatus.SentForPay
             )).ToList();
 
-            return new Success<List<Invoice>>() { Data = entity, Message = "Successfull!" };
+            return new Success<List<Invoice>>() { Data = entity };
 
         }
 

@@ -36,7 +36,7 @@ namespace CMPNatural.Application.Handlers
                 .ThenInclude(p => p.LocationCompany)
 
             )).FirstOrDefault();
-            return new Success<InvoiceResponse>() { Data = InvoiceMapper.Mapper.Map<InvoiceResponse>(entity), Message = "Successfull!" };
+            return new Success<InvoiceResponse>() { Data = InvoiceMapper.Mapper.Map<InvoiceResponse>(entity) };
 
         }
 

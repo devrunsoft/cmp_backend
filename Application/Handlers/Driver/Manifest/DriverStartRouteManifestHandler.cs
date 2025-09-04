@@ -10,21 +10,24 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using CMPNatural.Application.Mapper;
 using ScoutDirect.Core.Entities.Base;
+using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Application
 {
-    public class DriverGetManifestHandler : IRequestHandler<DriverGetManifestCommand, CommandResponse<Manifest>>
+    public class DriverStartRouteManifestHandler : IRequestHandler<DriverStartRouteManifestCommand, CommandResponse<Manifest>>
     {
         private readonly IDriverManifestRepository _repository;
+        private readonly IManifestRepository _manifestRepository;
 
-        public DriverGetManifestHandler(IDriverManifestRepository _repository)
+        public DriverStartRouteManifestHandler(IDriverManifestRepository _repository , IManifestRepository _manifestRepository)
         {
             this._repository = _repository;
+            this._manifestRepository = _manifestRepository;
         }
 
-        public async Task<CommandResponse<Manifest>> Handle(DriverGetManifestCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<Manifest>> Handle(DriverStartRouteManifestCommand request, CancellationToken cancellationToken)
         {
-            var result = (await _repository.GetAsync(p => p.ManifestId == request.Id, query => query
+            var result = (await _repository.GetAsync(p => p.ManifestId == request.ManifestId, query => query
             .Include(x => x.Manifest)
             .ThenInclude(x => x.Invoice)
             .ThenInclude(x => x.BaseServiceAppointment)
@@ -48,6 +51,9 @@ namespace CMPNatural.Application
             .ThenInclude(x => x.Provider)
             )).FirstOrDefault().Manifest;
 
+            result.Status = ManifestStatus.Start_Driver;
+            result.DoingStartTime = DateTime.Now;
+            await _manifestRepository.UpdateAsync(result);
 
             return new Success<Manifest>() { Data = result };
         }

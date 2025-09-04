@@ -34,6 +34,14 @@ namespace CMPNatural.Application
                 };
             }
 
+            if (result.ProviderId == null)
+            {
+                return new NoAcess<Manifest>
+                {
+                    Message = "The manifest cannot be processed because no provider has been assigned. Please assign a provider first."
+                };
+            }
+
             //var invoices = await _iinvoiceRepository.GetAsync(x=>x.InvoiceId == result.Invoice.InvoiceId && (x.Status == InvoiceStatus.Processing_Provider));
             result.Status = ManifestStatus.Assigned;
             result.Invoice.Status = InvoiceStatus.Processing_Provider;

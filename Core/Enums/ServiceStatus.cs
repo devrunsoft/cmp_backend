@@ -34,6 +34,9 @@ namespace CMPNatural.Core.Enums
         [Description("Submited_Provider")]
         Submited_Provider,
 
+        [Description("Done_Driver")]
+        Done_Driver,
+
     }
 }
 

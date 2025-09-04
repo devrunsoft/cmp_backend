@@ -61,7 +61,7 @@ namespace CMPNatural.Application.Handlers
                 } 
               };
 
-            return new Success<ReportResponse>() { Data = data, Message = "Successfull!" };
+            return new Success<ReportResponse>() { Data = data };
 
         }
 

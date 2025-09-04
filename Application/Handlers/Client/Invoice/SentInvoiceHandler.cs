@@ -34,7 +34,7 @@ namespace CMPNatural.Application.Handlers
 
             await _invoiceRepository.UpdateAsync(entity);
 
-            return new Success<object>() { Data = entity, Message = "Successfull!" };
+            return new Success<object>() { Data = entity };
 
         }
 

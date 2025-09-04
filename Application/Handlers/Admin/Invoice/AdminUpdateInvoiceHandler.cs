@@ -217,7 +217,7 @@ namespace CMPNatural.Application
 
             await _invoiceRepository.UpdateAsync(invoice);
 
-            return new Success<Invoice>() { Data = invoice, Message = "Successfull!" };
+            return new Success<Invoice>() { Data = invoice};
 
         }
 

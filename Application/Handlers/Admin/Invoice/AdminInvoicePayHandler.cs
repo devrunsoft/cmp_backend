@@ -56,7 +56,7 @@ namespace CMPNatural.Application.Handlers
             manifest.Status = ManifestStatus.Canceled;
             await _manifestRepository.UpdateAsync(manifest);
 
-            return new Success<InvoiceResponse>() { Data = InvoiceMapper.Mapper.Map<InvoiceResponse>(entity), Message = "Successfull!" };
+            return new Success<InvoiceResponse>() { Data = InvoiceMapper.Mapper.Map<InvoiceResponse>(entity) };
 
         }
     }

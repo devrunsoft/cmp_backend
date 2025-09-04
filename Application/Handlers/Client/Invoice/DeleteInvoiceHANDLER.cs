@@ -41,7 +41,7 @@ namespace CMPNatural.Application.Handlers
                 await _companyContractRepository.DeleteAsync(contract);
             }
 
-            return new Success<object>() { Data = entity, Message = "Successfull!" };
+            return new Success<object>() { Data = entity };
 
         }
 

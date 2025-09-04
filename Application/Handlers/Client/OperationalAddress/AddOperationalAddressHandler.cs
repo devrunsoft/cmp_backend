@@ -1,20 +1,10 @@
-﻿using Barbara.Core.Entities;
-using Barbara.Application.Responses;
-using MediatR;
-using System;
+﻿using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using ScoutDirect.Core.Repositories;
-using ScoutDirect.Core.Entities;
 using ScoutDirect.Application.Responses;
-
-using CMPNatural.Application.Responses;
 using CMPNatural.Core.Entities;
-using CMPNatural.Application.Mapper;
-using CMPNatural.Application.Commands;
 using CMPNatural.Core.Repositories;
 using System.Linq;
-using CMPNatural.Application.Model;
 
 namespace CMPNatural.Application.Handlers.CommandHandlers
 {

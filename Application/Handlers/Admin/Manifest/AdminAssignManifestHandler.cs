@@ -35,7 +35,7 @@ namespace CMPNatural.Application
             this._driverManifestRepository = _driverManifestRepository;
             this._driverRepository = _driverRepository;
         }
-
+        
         public async Task<CommandResponse<Manifest>> Handle(AdminAssignManifestCommand request, CancellationToken cancellationToken)
         {
             var entity = (await _repository.GetAsync(p=> p.Id == request.Id && (p.Status == ManifestStatus.Draft || p.Status == ManifestStatus.Scaduled),query=>query.Include(x=>x.Invoice))).FirstOrDefault();
@@ -87,7 +87,7 @@ namespace CMPNatural.Application
                 };
             }
 
-
+            
 
             entity.ServiceDateTime = request.ServiceDateTime.ToLocalTime();
             entity.ProviderId = provider.Id;

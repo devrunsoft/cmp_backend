@@ -25,7 +25,7 @@ namespace CMPNatural.Application.Handlers
             //TODO
             var entity = (await _invoiceRepository.GetAsync(p =>p.CompanyId == request.CompanyId)).FirstOrDefault();
 
-            return new Success<Invoice>() { Data = entity, Message = "Successfull!" };
+            return new Success<Invoice>() { Data = entity };
 
         }
 

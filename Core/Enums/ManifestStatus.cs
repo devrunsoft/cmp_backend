@@ -25,6 +25,8 @@ namespace CMPNatural.Core.Enums
         [Description("Send_To_Admin")]
         Send_To_Admin,
 
+        [Description("Start_Driver")]
+        Start_Driver,
 
         [Description("Completed")]
         Completed,
