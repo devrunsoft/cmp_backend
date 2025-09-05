@@ -25,7 +25,7 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<Manifest>> Handle(DriverUpComingManifestCommand request, CancellationToken cancellationToken)
         {
 
-            var result = (await _repository.GetAsync(p => p.ManifestId == 165, query => query
+            var result = (await _repository.GetAsync(p => p.ManifestId == 140, query => query
             .Include(x => x.Manifest)
             .ThenInclude(x => x.Invoice)
             .ThenInclude(x => x.BaseServiceAppointment)
