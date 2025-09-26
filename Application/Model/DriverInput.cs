@@ -12,11 +12,11 @@ namespace CMPNatural.Application.Model
         public string LastName { get; set; } = "";
         public string Email { get; set; }
         public bool IsDefault { get; set; }
-        public IFormFile License { get; set; }
+        public string License { get; set; }
         public DateTime LicenseExp { get; set; }
-        public IFormFile BackgroundCheck { get; set; }
+        public string BackgroundCheck { get; set; }
         public DateTime BackgroundCheckExp { get; set; }
-        public IFormFile ProfilePhoto { get; set; }
+        public string ProfilePhoto { get; set; }
 
     }
 }

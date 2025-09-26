@@ -550,6 +550,18 @@ namespace infrastructure.Data
                 .WithMany(p => p.ServiceAppointmentLocations)
                 .HasForeignKey(d => d.LocationCompanyId);
 
+                entity.Property(d => d.Status)
+                .HasConversion(
+                 x => x.ToString(),
+                 x => (ServiceStatus)Enum.Parse(typeof(ServiceStatus), x)
+                 );
+
+                entity.Property(d => d.OilQuality)
+                .HasConversion(
+                 x => x.ToString(),
+                 x => (OilQualityEnum)Enum.Parse(typeof(OilQualityEnum), x)
+                 );
+
             });
 
 

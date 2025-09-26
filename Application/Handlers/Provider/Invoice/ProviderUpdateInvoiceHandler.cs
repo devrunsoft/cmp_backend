@@ -77,6 +77,7 @@ namespace CMPNatural.Application
             {
                 if (services.Any(x => x.Id == request.Id))
                 {
+
                     var srv = services.FirstOrDefault(x => x.Id == request.Id);
                     if (srv.Qty != request.FactQty)
                     {
@@ -86,6 +87,14 @@ namespace CMPNatural.Application
                     else
                     {
                         srv.Status = ServiceStatus.Submited_Provider;
+                    }
+
+
+                    foreach (var item in srv.ServiceAppointmentLocations)
+                    {
+                        var loc = request.ServiceAppointmentLocations.FirstOrDefault(x => x.LocationCompanyId == item.LocationCompanyId);
+                        item.FactQty = loc.FactQty;
+                        item.OilQuality = loc.OilQuality;
                     }
 
                     srv.OilQuality = request.OilQuality;

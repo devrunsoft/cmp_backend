@@ -16,16 +16,19 @@ using CMPNatural.Core.Repositories;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using CMPNatural.Application.Services;
+using CMPFile;
 
 namespace CMPNatural.Application.Handlers.CommandHandlers
 {
     public class AddDcoumentHanlder : IRequestHandler<AddDocumentCommand, CommandResponse<DocumentSubmission>>
     {
         private readonly IDocumentRepository _documentRepository;
+        private readonly IFileStorage fileStorage;
 
-        public AddDcoumentHanlder(IDocumentRepository documentRepository)
+        public AddDcoumentHanlder(IDocumentRepository documentRepository, IFileStorage fileStorage)
         {
             _documentRepository = documentRepository;
+            this.fileStorage = fileStorage;
         }
 
         public async Task<CommandResponse<DocumentSubmission>> Handle(AddDocumentCommand request, CancellationToken cancellationToken)
@@ -37,10 +40,10 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                 string HealthDepartmentCertificate = "";
 
                 if (request.BusinessLicense!=null)
-                 BusinessLicense = FileHandler.fileHandler(request.BaseVirtualPath, request.BusinessLicense, "BusinessLicense");
+                 BusinessLicense = await fileStorage.AppfileHandler(request.BusinessLicense);
 
                 if (request.HealthDepartmentCertificate != null)
-                    HealthDepartmentCertificate = FileHandler.fileHandler(request.BaseVirtualPath, request.HealthDepartmentCertificate, "HealthDepartmentCertificate");
+                    HealthDepartmentCertificate = await fileStorage.AppfileHandler(request.HealthDepartmentCertificate);
 
                 var entity = new DocumentSubmission()
                 {

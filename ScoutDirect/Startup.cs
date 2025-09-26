@@ -35,6 +35,7 @@ using CMPNatural.Api;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.Http.Connections;
 using CMPNatural.Application.Hub;
+using CMPFile;
 
 namespace ScoutDirect.Api
 {
@@ -230,6 +231,8 @@ namespace ScoutDirect.Api
             services.Configure<AppVersionModel>(Configuration.GetSection("AppVersion"));
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.Configure<ExpiresModel>(Configuration.GetSection("Expires"));
+            services.Configure<MinioOptions>(Configuration.GetSection("Minio"));
+
             var appSetting = Configuration.GetSection("AppSetting").Get<AppSetting>();
             services.AddSingleton(appSetting);
 

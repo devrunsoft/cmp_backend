@@ -9,16 +9,19 @@ using System.Linq;
 using System.Collections.Generic;
 using CMPNatural.Application.Services;
 using System;
+using CMPFile;
 
 namespace CMPNatural.Application
 {
     public class RegisterProviderDocumentHandler : IRequestHandler<RegisterProviderDocumentCommand, CommandResponse<Provider>>
     {
         private readonly IProviderReposiotry _repository;
+        private readonly IFileStorage fileStorage;
 
-        public RegisterProviderDocumentHandler(IProviderReposiotry repository)
+        public RegisterProviderDocumentHandler(IProviderReposiotry repository, IFileStorage fileStorage)
         {
             _repository = repository;
+            this.fileStorage = fileStorage;
         }
 
         public async Task<CommandResponse<Provider>> Handle(RegisterProviderDocumentCommand request, CancellationToken cancellationToken)
@@ -34,19 +37,19 @@ namespace CMPNatural.Application
             string Insurance = null;
 
             if (request.BusinessLicense != null)
-                BusinessLicense = FileHandler.ProviderfileHandler(request.BaseVirtualPath, request.BusinessLicense, "BusinessLicense", result.Id, path);
+                BusinessLicense = request.BusinessLicense;
 
             if (request.HealthDepartmentPermit != null)
-                HealthDepartmentPermit = FileHandler.ProviderfileHandler(request.BaseVirtualPath, request.HealthDepartmentPermit, "HealthDepartmentPermit", result.Id, path);
+                HealthDepartmentPermit = request.HealthDepartmentPermit;
 
             if (request.WasteHaulerPermit != null)
-                WasteHaulerPermit = FileHandler.ProviderfileHandler(request.BaseVirtualPath, request.WasteHaulerPermit, "WasteHaulerPermit", result.Id, path);
+                WasteHaulerPermit = request.WasteHaulerPermit;
 
             if (request.EPACompliance != null)
-                EPACompliance = FileHandler.ProviderfileHandler(request.BaseVirtualPath, request.EPACompliance, "EPACompliance", result.Id, path);
+                EPACompliance = request.EPACompliance;
 
             if (request.Insurance != null)
-                Insurance = FileHandler.ProviderfileHandler(request.BaseVirtualPath, request.Insurance, "Insurance", result.Id, path);
+                Insurance = request.Insurance;
 
 
             result.BusinessLicense = BusinessLicense;

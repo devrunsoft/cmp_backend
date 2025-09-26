@@ -28,11 +28,12 @@ namespace CMPNatural.Application
         private readonly IRequestTerminateRepository requestTerminate;
         private readonly IMediator mediator;
         private readonly AppSetting _appSetting;
+        private readonly ILocationCompanyRepository locationCompanyRepository;
 
         public AdminUpdateInvoiceHandler(IinvoiceRepository invoiceRepository, IProductPriceRepository productPriceRepository ,
              IBaseServiceAppointmentRepository baseServiceAppointmentRepository, IContractRepository _contractRepository,
              ICompanyContractRepository _companyContractRepository, IAppInformationRepository _appRepository, IRequestTerminateRepository requestTerminate, AppSetting appSetting,
-             IMediator mediator, IAmendmentCompanyContractRepository _amendmentCompanyContractRepository)
+             IMediator mediator, IAmendmentCompanyContractRepository _amendmentCompanyContractRepository, ILocationCompanyRepository locationCompanyRepository)
         {
             _invoiceRepository = invoiceRepository;
             _productPriceRepository = productPriceRepository;
@@ -44,6 +45,7 @@ namespace CMPNatural.Application
             this.requestTerminate = requestTerminate;
             this.mediator = mediator;
             this._amendmentCompanyContractRepository = _amendmentCompanyContractRepository;
+            this.locationCompanyRepository = locationCompanyRepository;
         }
 
         public async Task<CommandResponse<Invoice>> Handle(AdminUpdateInvoiceCommand requests, CancellationToken cancellationToken)
@@ -74,6 +76,10 @@ namespace CMPNatural.Application
             List<ServiceAppointmentEmergency> lstCustomEmrgency = new List<ServiceAppointmentEmergency>();
             List<InvoiceProduct> invoiceProducts = new List<InvoiceProduct>();
 
+            var locations = (await locationCompanyRepository.GetAsync(x => x.CompanyId == invoice.CompanyId,
+            query => query.Include(x => x.CapacityEntity)
+            )).ToList();
+
             foreach (var request in requests.ServiceAppointment)
             {
                 invoiceProducts.Add(new InvoiceProduct()
@@ -103,11 +109,18 @@ namespace CMPNatural.Application
                     serviceEntity.FromHour = request.FromHour;
                     serviceEntity.ToHour = request.ToHour;
 
+
+
                     serviceEntity.ServiceAppointmentLocations = request.LocationCompanyIds
-                        .Select(id => new ServiceAppointmentLocation
-                        {
-                            LocationCompanyId = id
-                        }).ToList();
+                .Select(id =>
+                {
+                    var locationCompany = locations.FirstOrDefault(l => l.Id == id);
+                    return new ServiceAppointmentLocation
+                    {
+                        LocationCompanyId = id,
+                        Qty = locationCompany?.CapacityEntity?.Qty ?? 1
+                    };
+                }).ToList();
 
                     lstCustom.Add(serviceEntity);
                 }
@@ -115,8 +128,6 @@ namespace CMPNatural.Application
                 {
 
 
-                    if (request.ServiceKind == ServiceKind.Custom)
-                    {
                         var command = new BaseServiceAppointment()
                         {
                             CompanyId = CompanyId,
@@ -128,7 +139,7 @@ namespace CMPNatural.Application
                             OperationalAddressId = request.OperationalAddressId,
                             Status = ServiceStatus.Draft,
                             Subsidy = request.Subsidy,
-                            IsEmegency = false,
+                            IsEmegency = request.ServiceKind == ServiceKind.Emergency,
                             Qty = request.qty,
                             FactQty = request.qty,
                             Amount = request.Amount,
@@ -136,43 +147,22 @@ namespace CMPNatural.Application
                             ProductPrice = resultPrice,
                             ProductPriceId = request.ProductPriceId,
                             ServiceAppointmentLocations = request.LocationCompanyIds
-                               .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
-                               .ToList(),
+                           .Select(id =>
+                           {
+                               var locationCompany = locations.FirstOrDefault(l => l.Id == id);
+                               return new ServiceAppointmentLocation
+                               {
+                                   LocationCompanyId = id,
+                                   Qty = locationCompany?.CapacityEntity?.Qty ?? 1
+                               };
+                           }).ToList(),
+
                             DayOfWeek = string.Join(",", request.DayOfWeek.Select(x => x.GetDescription())),
                             FromHour = request.FromHour,
                             ToHour = request.ToHour,
                         };
                         lstCustom.Add(command);
-                    }
-                    else
-                    {
-                        var command = new BaseServiceAppointment()
-                        {
-                            CompanyId = CompanyId,
-                            //FrequencyType = request.FrequencyType,
-                            StartDate = DateTime.Now,
-                            ServiceTypeId = resultPrice.Product.ServiceType,
-                            ServicePriceCrmId = "",
-                            ServiceCrmId = "",
-                            Amount = request.Amount,
-                            Subsidy = request.Subsidy,
-                            ProductId = request.ProductId,
-                            ProductPrice = resultPrice,
-                            ProductPriceId = request.ProductPriceId,
-                            OperationalAddressId = request.OperationalAddressId,
-                            Status = ServiceStatus.Draft,
-                            IsEmegency = true,
-                            Qty = request.qty,
-                            FactQty = request.qty,
-                            ServiceAppointmentLocations = request.LocationCompanyIds
-                            .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
-                            .ToList(),
-                            DayOfWeek = string.Join(",", request.DayOfWeek.Select(x => x.GetDescription())),
-                            FromHour = request.FromHour,
-                            ToHour = request.ToHour,
-                        };
-                        lstCustom.Add(command);
-                    }
+                    
                 }
             }
 

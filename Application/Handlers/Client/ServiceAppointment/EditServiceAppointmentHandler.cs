@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System;
 using CMPNatural.Core.Enums;
+using Microsoft.EntityFrameworkCore;
 
 namespace CMPNatural.Application.Handlers
 {
@@ -14,10 +15,12 @@ namespace CMPNatural.Application.Handlers
     {
         private readonly IServiceAppointmentRepository _serviceAppointmentRepository;
         private readonly IProductPriceRepository _productPriceRepository;
-        public EditServiceAppointmentHandler(IServiceAppointmentRepository billingInformationRepository, IProductPriceRepository _productPriceRepository)
+        private readonly ILocationCompanyRepository locationCompanyRepository;
+        public EditServiceAppointmentHandler(IServiceAppointmentRepository billingInformationRepository, IProductPriceRepository _productPriceRepository, ILocationCompanyRepository locationCompanyRepository)
         {
             _serviceAppointmentRepository = billingInformationRepository;
             this._productPriceRepository = _productPriceRepository;
+            this.locationCompanyRepository = locationCompanyRepository;
         }
 
         public async Task<CommandResponse<BaseServiceAppointment>> Handle(EditerviceAppointmentCommand request, CancellationToken cancellationToken)
@@ -40,6 +43,10 @@ namespace CMPNatural.Application.Handlers
 
             var resultPrice = await _productPriceRepository.GetByIdAsync(request.ProductPriceId);
 
+            var locations = (await locationCompanyRepository.GetAsync(x => x.CompanyId == request.CompanyId,
+               query => query.Include(x => x.CapacityEntity)
+             )).ToList();
+
             entity.FrequencyType = request.FrequencyType;
             entity.ServiceTypeId = (int)request.ServiceTypeId;
             entity.ServicePriceCrmId = "";
@@ -52,9 +59,16 @@ namespace CMPNatural.Application.Handlers
             entity.ProductId = request.ProductId;
             entity.ProductPrice = resultPrice;
             entity.ProductPriceId = request.ProductPriceId;
-            entity.ServiceAppointmentLocations = request.LocationCompanyIds?
-                .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
-                .ToList();
+            entity.ServiceAppointmentLocations = request.LocationCompanyIds
+                                      .Select(id =>
+                                      {
+                                          var locationCompany = locations.FirstOrDefault(l => l.Id == id);
+                                          return new ServiceAppointmentLocation
+                                          {
+                                              LocationCompanyId = id,
+                                              Qty = locationCompany?.CapacityEntity?.Qty ?? 1
+                                          };
+                                      }).ToList();
             entity.DayOfWeek = request.DayOfWeek != null
                 ? string.Join(",", request.DayOfWeek.Select(x => x.GetDescription()))
                 : entity.DayOfWeek;

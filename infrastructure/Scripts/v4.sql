@@ -1,1 +1,0 @@
-﻿ALTER TABLE Provider ADD COLUMN PersonId char(36) NULL;

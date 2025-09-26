@@ -34,7 +34,9 @@ namespace CMPNatural.Application
         {
             var manifest = (await _manifestRepository.GetAsync(x =>
                 (x.Status != ManifestStatus.Completed || x.Status != ManifestStatus.Canceled || x.Status != ManifestStatus.Scaduled)
-                && x.ProviderId != null && x.CompanyId == request.CompanyId && (request.OperationalAddressId == 0 || x.OperationalAddressId == request.OperationalAddressId)
+                && x.ProviderId != null &&
+                x.CompanyId == request.CompanyId &&
+                (request.OperationalAddressId == 0 || x.OperationalAddressId == request.OperationalAddressId)
               )).Count();
 
             var invoices = (await _invoiceRepository.GetAsync(x =>

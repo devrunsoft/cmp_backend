@@ -18,14 +18,16 @@ namespace CMPNatural.Application.Handlers
     {
         private readonly IBaseServiceAppointmentRepository _serviceAppointmentRepository;
         private readonly IProductPriceRepository _productPriceRepository;
+        private readonly ILocationCompanyRepository locationCompanyRepository;
         private readonly IinvoiceRepository _iinvoiceRepository;
 
         public AddServiceAppointmentHandler(IBaseServiceAppointmentRepository billingInformationRepository , IProductPriceRepository productPriceRepository,
-            IinvoiceRepository _iinvoiceRepository)
+            IinvoiceRepository _iinvoiceRepository, ILocationCompanyRepository locationCompanyRepository)
         {
             _serviceAppointmentRepository = billingInformationRepository;
             _productPriceRepository = productPriceRepository;
             this._iinvoiceRepository = _iinvoiceRepository;
+            this.locationCompanyRepository = locationCompanyRepository;
         }
 
         public async Task<CommandResponse<BaseServiceAppointment>> Handle(AddServiceAppointmentCommand request, CancellationToken cancellationToken)
@@ -42,6 +44,10 @@ namespace CMPNatural.Application.Handlers
 
             var dof = request.DayOfWeek.Count == 0 ? request.DayOfWeek : Enum.GetValues(typeof(DayOfWeekEnum)).Cast<DayOfWeekEnum>().ToList();
 
+            var locations = (await locationCompanyRepository.GetAsync(x=>x.CompanyId == request.CompanyId ,
+                query => query.Include(x=>x.Capacity)
+                )).ToList();
+
             if (request.ServiceKind == ServiceKind.Custom)
             {
                  entity = new ServiceAppointment()
@@ -57,14 +63,23 @@ namespace CMPNatural.Application.Handlers
                     Subsidy = request.Subsidy,
                     IsEmegency = false,
                     Qty = request.qty,
-                     FactQty = request.qty,
-                     Amount = request.Amount,
+                    FactQty = request.qty,
+                    Amount = request.Amount,
                     ProductId = request.ProductId,
                     ProductPrice = resultPrice,
                     ProductPriceId = request.ProductPriceId,
+
                     ServiceAppointmentLocations = request.LocationCompanyIds
-                               .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
-                               .ToList(),
+                   .Select(id =>
+                   {
+                       var locationCompany = locations.FirstOrDefault(l => l.Id == id);
+                       return new ServiceAppointmentLocation
+                       {
+                           LocationCompanyId = id,
+                           Qty = locationCompany?.CapacityEntity?.Qty ?? 1
+                       };
+                   }).ToList(),
+
                     DayOfWeek = string.Join(",", dof.Select(x => x.GetDescription())),
                     FromHour = request.FromHour,
                     ToHour = request.ToHour,
@@ -90,9 +105,18 @@ namespace CMPNatural.Application.Handlers
                     IsEmegency = true,
                     Qty = request.qty,
                     FactQty = request.qty,
+
                     ServiceAppointmentLocations = request.LocationCompanyIds
-                    .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
-                    .ToList(),
+                   .Select(id =>
+                   {
+                       var locationCompany = locations.FirstOrDefault(l => l.Id == id);
+                       return new ServiceAppointmentLocation
+                       {
+                           LocationCompanyId = id,
+                           Qty = locationCompany?.CapacityEntity?.Qty ?? 1
+                       };
+                   }).ToList(),
+
                     DayOfWeek = string.Join(",", dof.Select(x => x.GetDescription())),
                     FromHour = request.FromHour,
                     ToHour = request.ToHour,

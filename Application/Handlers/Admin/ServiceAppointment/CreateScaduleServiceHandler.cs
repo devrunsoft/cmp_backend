@@ -18,7 +18,7 @@ namespace CMPNatural.Application
     {
         public static async Task Create(
             Invoice invoiceTemplate, IManifestRepository _manifestRepository, IinvoiceRepository _invoiceRepository, IAppInformationRepository _apprepository,
-             IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository, AppSetting _appSetting)
+             IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository, AppSetting _appSetting, ILocationCompanyRepository locationCompanyRepository)
         {
 
             var invoice = (await _invoiceRepository.GetAsync(x=> x.Id == invoiceTemplate.Id,
@@ -32,6 +32,10 @@ namespace CMPNatural.Application
 
             var baseAppointments = invoice.BaseServiceAppointment;
             var allAppointments = new List<BaseServiceAppointment>();
+
+            var locations = (await locationCompanyRepository.GetAsync(x => x.CompanyId == invoice.CompanyId,
+            query => query.Include(x => x.CapacityEntity)
+            )).ToList();
 
             // Step 1: Generate all future appointments
             foreach (var item in baseAppointments)
@@ -60,10 +64,16 @@ namespace CMPNatural.Application
                         FactQty = item.FactQty,
                         Amount = item.Amount,
                         ServiceTypeId = item.Product.ServiceType,
-                        ServiceAppointmentLocations = item.ServiceAppointmentLocations.Select(x=> new ServiceAppointmentLocation()
-                        {
-                            LocationCompanyId = x.LocationCompanyId,
-                        }).ToList(),
+                        ServiceAppointmentLocations = item.ServiceAppointmentLocations
+                           .Select(id =>
+                           {
+                               var locationCompany = locations.FirstOrDefault(l => l.Id == id.LocationCompanyId);
+                               return new ServiceAppointmentLocation
+                               {
+                                   LocationCompanyId = id.LocationCompanyId,
+                                   Qty = locationCompany?.CapacityEntity?.Qty ?? 1
+                               };
+                           }).ToList(),
                         DayOfWeek = item.DayOfWeek,
                         FromHour = item.FromHour,
                         ToHour = item.ToHour,

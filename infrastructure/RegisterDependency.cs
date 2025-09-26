@@ -22,6 +22,7 @@ using Microsoft.Extensions.Configuration;
 using CMPNatural.infrastructure.DbQuery;
 using CMPNatural.Core.Repositories.Chat;
 using CMPNatural.infrastructure.Repository.Chat;
+using CMPFile;
 
 namespace ScoutDirect.infrastructure
 {
@@ -108,6 +109,8 @@ namespace ScoutDirect.infrastructure
                 DbQueryCreator.Init(Configuration.GetConnectionString("DefaultConnection"));
             }
 
+
+            services.AddSingleton<IFileStorage, MinioFileStorage>();
 
         }
 

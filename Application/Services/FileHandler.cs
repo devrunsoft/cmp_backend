@@ -2,11 +2,32 @@
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using System.Linq;
+using CMPFile;
+using System.Threading.Tasks;
 
-namespace CMPNatural.Application.Services
+namespace CMPNatural
 {
-	public class FileHandler
-	{
+    public static class MinIoFileHandler
+    {
+
+        public static async Task<string?> AppfileHandler(this IFileStorage fileStorage , IFormFile file)
+        {
+            if (file == null)
+                return null;
+            var key = Guid.NewGuid().ToString();
+            var extension = Path.GetExtension(file.FileName);
+            var fileName = $"{key}{extension}";
+
+            await using var stream = file.OpenReadStream();
+
+            fileName = await fileStorage.UploadAsync(fileName, stream, file.ContentType);
+
+            return fileName;
+        }
+    }
+
+        public class FileHandler
+	    {
         public static string ProviderDriverfileHandler(string BaseVirtualPath, IFormFile file, string key, dynamic uniqueId, string path)
         {
             return AppfileHandler(BaseVirtualPath, file, key, $"Provider/{uniqueId}/Driver/{path}");

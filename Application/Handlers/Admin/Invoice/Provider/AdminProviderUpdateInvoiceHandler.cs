@@ -25,11 +25,12 @@ namespace CMPNatural.Application
         private readonly IManifestRepository _repository;
         private readonly IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository;
         private readonly AppSetting _appSetting;
+        private readonly ILocationCompanyRepository locationCompanyRepository;
 
         public AdminProviderUpdateInvoiceHandler(IinvoiceRepository invoiceRepository, IProductPriceRepository productPriceRepository,
              IBaseServiceAppointmentRepository baseServiceAppointmentRepository, IContractRepository _contractRepository,
              ICompanyContractRepository _companyContractRepository, IAppInformationRepository _appRepository,IManifestRepository _repository,
-             IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository, AppSetting appSetting)
+             IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository, AppSetting appSetting , ILocationCompanyRepository locationCompanyRepository)
         {
             _invoiceRepository = invoiceRepository;
             _productPriceRepository = productPriceRepository;
@@ -40,6 +41,7 @@ namespace CMPNatural.Application
             this._repository = _repository;
             this._serviceAppointmentLocationRepository = _serviceAppointmentLocationRepository;
             this._appSetting = appSetting;
+            this.locationCompanyRepository = locationCompanyRepository;
         }
 
         public async Task<CommandResponse<Invoice>> Handle(AdminProviderUpdateInvoiceCommand requests, CancellationToken cancellationToken)
@@ -68,11 +70,16 @@ namespace CMPNatural.Application
             }
 
             var CompanyId = invoice.CompanyId;
-            var services = (await _baseServiceAppointmentRepository.GetAsync(p => p.InvoiceId == invoice.Id)).ToList();
+            var services = (await _baseServiceAppointmentRepository.GetAsync(p => p.InvoiceId == invoice.Id , query => query.Include(x=>x.ServiceAppointmentLocations))).ToList();
             var entity = (await _repository.GetAsync(x => x.InvoiceId == invoice.Id)).FirstOrDefault();
+            var locations = (await locationCompanyRepository.GetAsync(x => x.CompanyId == invoice.CompanyId,
+            query => query.Include(x => x.CapacityEntity)
+            )).ToList();
 
             List<BaseServiceAppointment> lstCustom = new List<BaseServiceAppointment>();
             List<ServiceAppointmentEmergency> lstCustomEmrgency = new List<ServiceAppointmentEmergency>();
+
+
 
             foreach (var request in requests.ServiceAppointment)
             {
@@ -82,7 +89,8 @@ namespace CMPNatural.Application
                     var resultPrice = (await _productPriceRepository.GetAsync(x=>x.Id == request.ProductPriceId ,
                         query=> query.Include(x=>x.Product))).FirstOrDefault();
 
-                    if ((resultPrice.Product.ServiceType == (int)ServiceType.Cooking_Oil_Collection || resultPrice.Product.ServiceType == (int)ServiceType.Grease_Trap_Management) && request.OilQuality == null)
+                    if ((resultPrice.Product.ServiceType == (int)ServiceType.Cooking_Oil_Collection || resultPrice.Product.ServiceType == (int)ServiceType.Grease_Trap_Management)
+                        && request.ServiceAppointmentLocations.Any(x=>x.OilQuality == null))
                     {
                         return new NoAcess<Invoice>
                         {
@@ -92,6 +100,14 @@ namespace CMPNatural.Application
 
 
                     var srv = services.FirstOrDefault(x => x.Id == request.Id);
+
+                    foreach (var item in srv.ServiceAppointmentLocations)
+                    {
+                        var loc = request.ServiceAppointmentLocations.FirstOrDefault(x=>x.LocationCompanyId == item.LocationCompanyId);
+                        item.FactQty = loc.FactQty;
+                        item.OilQuality = loc.OilQuality;
+                    }
+
                     srv = request.ToEntity(srv, CompanyId , invoice.Id);
                     srv.ProductPrice = resultPrice;
                     srv.Status = ServiceStatus.Complete;
@@ -111,8 +127,6 @@ namespace CMPNatural.Application
                         };
                     }
 
-                    if (request.ServiceKind == ServiceKind.Custom)
-                    {
                         var command = new ServiceAppointment()
                         {
                             CompanyId = CompanyId,
@@ -124,53 +138,33 @@ namespace CMPNatural.Application
                             OperationalAddressId = request.OperationalAddressId,
                             Status = ServiceStatus.Complete,
                             Subsidy = request.Subsidy,
-                            IsEmegency = false,
+                            IsEmegency = request.ServiceKind == ServiceKind.Emergency,
                             Qty = request.qty,
                             FactQty = request.FactQty,
                             Amount = request.Amount,
                             ProductId = request.ProductId,
                             ProductPrice = resultPrice,
                             ProductPriceId = request.ProductPriceId,
-                            ServiceAppointmentLocations = request.LocationCompanyIds
-                               .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
-                               .ToList(),
+                            ServiceAppointmentLocations = request.ServiceAppointmentLocations
+                           .Select(x =>
+                           {
+                               var locationCompany = locations.FirstOrDefault(l => l.Id == x.LocationCompanyId);
+                               return new ServiceAppointmentLocation
+                               {
+                                   LocationCompanyId = x.LocationCompanyId,
+                                   Qty = locationCompany?.CapacityEntity?.Qty ?? 1,
+                                   FactQty = x.FactQty,
+                                   OilQuality = x.OilQuality
+                               };
+                           }).ToList(),
+
                             DayOfWeek = string.Join(",", request.DayOfWeek.Select(x => x.GetDescription())),
                             FromHour = request.FromHour,
                             ToHour = request.ToHour,
                             OilQuality = request.OilQuality
                         };
                         lstCustom.Add(command);
-                    }
-                    else
-                    {
-                        var command = new ServiceAppointmentEmergency()
-                        {
-                            CompanyId = CompanyId,
-                            FrequencyType = request.FrequencyType,
-                            StartDate = DateTime.Now,
-                            ServiceTypeId = resultPrice.Product.ServiceType,
-                            ServicePriceCrmId = "",
-                            ServiceCrmId = "",
-                            Amount = request.Amount,
-                            Subsidy = request.Subsidy,
-                            ProductId = request.ProductId,
-                            ProductPrice = resultPrice,
-                            ProductPriceId = request.ProductPriceId,
-                            OperationalAddressId = request.OperationalAddressId,
-                            Status = ServiceStatus.Complete,
-                            IsEmegency = true,
-                            Qty = request.qty,
-                            FactQty = request.FactQty,
-                            ServiceAppointmentLocations = request.LocationCompanyIds
-                            .Select(id => new ServiceAppointmentLocation { LocationCompanyId = id })
-                            .ToList(),
-                            DayOfWeek = string.Join(",", request.DayOfWeek.Select(x => x.GetDescription())),
-                            FromHour = request.FromHour,
-                            ToHour = request.ToHour,
-                            OilQuality = request.OilQuality
-                        };
-                        lstCustom.Add(command);
-                    }
+
 
                 }
             }

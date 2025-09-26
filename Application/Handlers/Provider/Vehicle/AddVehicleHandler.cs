@@ -24,12 +24,12 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<Vehicle>> Handle(AddVehicleCommand request, CancellationToken cancellationToken)
         {
             var path = Guid.NewGuid().ToString();
-            var VehicleRegistration = FileHandler.ProviderDriverfileHandler(request.BaseVirtualPath, request.VehicleRegistration, "VehicleRegistration", request.ProviderId, path);
-            var VehicleInsurance = FileHandler.ProviderDriverfileHandler(request.BaseVirtualPath, request.VehicleInsurance, "VehicleInsurance", request.ProviderId, path);
-            var InspectionReport = FileHandler.ProviderDriverfileHandler(request.BaseVirtualPath, request.InspectionReport, "InspectionReport", request.ProviderId, path);
-            var Picture = FileHandler.ProviderDriverfileHandler(request.BaseVirtualPath, request.Picture, "Picture", request.ProviderId, path);
-            var MeasurementCertificate = FileHandler.ProviderDriverfileHandler(request.BaseVirtualPath, request.MeasurementCertificate, "MeasurementCertificate", request.ProviderId, path);
-            var PeriodicVehicleInspections = FileHandler.ProviderDriverfileHandler(request.BaseVirtualPath, request.PeriodicVehicleInspections, "PeriodicVehicleInspections", request.ProviderId, path);
+            var VehicleRegistration = request.VehicleRegistration;
+            var VehicleInsurance = request.VehicleInsurance;
+            var InspectionReport = request.InspectionReport;
+            var Picture = request.Picture;
+            var MeasurementCertificate = request.MeasurementCertificate;
+            var PeriodicVehicleInspections = request.PeriodicVehicleInspections;
 
             List<VehicleCompartment> vehicleCompartments = new List<VehicleCompartment>();
             for (int i = 0; i < request.VehicleCompartments.Count; i++)

@@ -46,6 +46,18 @@ namespace CMPNatural.Application.Model.ServiceAppointment
 
         public OilQualityEnum? OilQuality { get; set; }
 
+        public List<ServiceAppointmentLocationInput> ServiceAppointmentLocations { get; set; }
+
+
+    }
+
+    public partial class ServiceAppointmentLocationInput
+    {
+        public long LocationCompanyId { get; set; }
+
+        public int? FactQty { get; set; }
+
+        public OilQualityEnum? OilQuality { get; set; }
     }
 
 

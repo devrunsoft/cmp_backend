@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMPEmail", "CMPEmail\CMPEma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMPNatural.infrastructure", "infrastructure\CMPNatural.infrastructure.csproj", "{660150AB-A0AA-45DA-A9D3-564570EB9406}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMPFile", "CMPFile\CMPFile.csproj", "{EBB926DD-48EE-4934-A23C-913FEDC64A7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{660150AB-A0AA-45DA-A9D3-564570EB9406}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{660150AB-A0AA-45DA-A9D3-564570EB9406}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{660150AB-A0AA-45DA-A9D3-564570EB9406}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBB926DD-48EE-4934-A23C-913FEDC64A7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBB926DD-48EE-4934-A23C-913FEDC64A7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBB926DD-48EE-4934-A23C-913FEDC64A7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBB926DD-48EE-4934-A23C-913FEDC64A7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -16,16 +16,19 @@ using CMPNatural.Core.Repositories;
 using System.IO;
 using Microsoft.AspNetCore.Http;
 using CMPNatural.Application.Services;
+using CMPFile;
 
 namespace CMPNatural.Application.Handlers.CommandHandlers
 {
     public class EditDcoumentHanlder : IRequestHandler<EditDocumentCommand, CommandResponse<object>>
     {
         private readonly IDocumentRepository _documentRepository;
+        private readonly IFileStorage fileStorage;
 
-        public EditDcoumentHanlder(IDocumentRepository documentRepository)
+        public EditDcoumentHanlder(IDocumentRepository documentRepository, IFileStorage fileStorage)
         {
             _documentRepository = documentRepository;
+            this.fileStorage = fileStorage;
         }
 
         public async Task<CommandResponse<object>> Handle(EditDocumentCommand request, CancellationToken cancellationToken)
@@ -37,8 +40,8 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                 return new NoAcess() { Message = "No Access to Edit!" };
             }
 
-            var BusinessLicense = FileHandler.fileHandler(request.BaseVirtualPath, request.BusinessLicense, "BusinessLicense");
-            var HealthDepartmentCertificate = FileHandler.fileHandler(request.BaseVirtualPath, request.HealthDepartmentCertificate, "HealthDepartmentCertificate");
+            var BusinessLicense = await fileStorage.AppfileHandler(request.BusinessLicense);
+            var HealthDepartmentCertificate = await fileStorage.AppfileHandler(request.HealthDepartmentCertificate);
 
 
             entity.BusinessLicense = BusinessLicense;

@@ -21,13 +21,10 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<PagesQueryResponse<Manifest>>> Handle(ClientGetPaginateManifestCommand request, CancellationToken cancellationToken)
         {
-            var result = (await _repository.GetBasePagedAsync(request, p=>
-            (p.Status == ManifestStatus.Assigned || p.Status == ManifestStatus.Completed
-            || p.Status == ManifestStatus.Processing || p.Status == ManifestStatus.Send_To_Admin)
-            &&
-            p.CompanyId == request.CompanyId
-            && (request.Status == null || p.Status == request.Status)
-            && p.ProviderId !=null, query => query
+            var result = (await _repository.GetBasePagedAsync(request,
+                x => x.CompanyId == request.CompanyId &&
+                (request.OperationalAddressId == 0 || x.OperationalAddressId == request.OperationalAddressId),
+            query => query
             .Include(x => x.Invoice)
             .ThenInclude(x => x.Company)
              .Include(x => x.Invoice)

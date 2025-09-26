@@ -23,18 +23,18 @@ namespace CMPNatural.Application.Model
 
         public List<int> ProductIds { get; set; }
 
-        public IFormFile BusinessLicense { get; set; }
+        public string BusinessLicense { get; set; }
         public DateTime? BusinessLicenseExp { get; set; }
 
-        public IFormFile HealthDepartmentPermit { get; set; }
+        public string HealthDepartmentPermit { get; set; }
         public DateTime? HealthDepartmentPermitExp { get; set; }
 
-        public IFormFile WasteHaulerPermit { get; set; }
+        public string WasteHaulerPermit { get; set; }
 
-        public IFormFile EPACompliance { get; set; }
+        public string EPACompliance { get; set; }
         public DateTime? EPAComplianceExp { get; set; }
 
-        public IFormFile Insurance { get; set; }
+        public string Insurance { get; set; }
         public DateTime? InsuranceExp { get; set; }
 
         public string? ManagerFirstName { get; set; }

@@ -13,17 +13,17 @@ namespace CMPNatural.Application.Model
 		}
 
         public string Name { get; set; }
-        public IFormFile VehicleRegistration { get; set; } = null!;
+        public string VehicleRegistration { get; set; } = null!;
         public DateTime VehicleRegistrationExp { get; set; }
-        public IFormFile VehicleInsurance { get; set; } = null!;
+        public string VehicleInsurance { get; set; } = null!;
         public DateTime VehicleInsuranceExp { get; set; }
-        public IFormFile InspectionReport { get; set; } = null!;
+        public string InspectionReport { get; set; } = null!;
         public DateTime InspectionReportExp { get; set; }
-        public IFormFile Picture { get; set; }
+        public string Picture { get; set; }
         public int Capacity { get; set; }
         public double Weight { get; set; }
-        public IFormFile MeasurementCertificate { get; set; } = null!;
-        public IFormFile PeriodicVehicleInspections { get; set; } = null!;
+        public string MeasurementCertificate { get; set; } = null!;
+        public string PeriodicVehicleInspections { get; set; } = null!;
         public DateTime PeriodicVehicleInspectionsExp { get; set; }
 
         public List<int> VehicleCompartments { get; set; } = new List<int>();

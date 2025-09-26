@@ -11,6 +11,8 @@ using System.Collections.Generic;
 using CMPNatural.Core.Helper;
 using System.Text.RegularExpressions;
 using Stripe;
+using ScoutDirect.Core.Repositories.Base;
+using System.Linq;
 
 namespace CMPNatural.Application
 {
@@ -19,7 +21,7 @@ namespace CMPNatural.Application
     {
         private readonly IProviderReposiotry _providerReposiotry;
         private readonly IPersonRepository _personRepository;
-
+        
         public AdminPostProviderHandler(IProviderReposiotry providerReposiotry, IPersonRepository _personRepository)
         {
             _providerReposiotry = providerReposiotry;
@@ -28,6 +30,13 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<Provider>> Handle(AdminPostProviderCommand request, CancellationToken cancellationToken)
         {
+
+            var existingDriver = (await _providerReposiotry.GetAsync(x => x.Email == request.Email)).Any();
+            if (existingDriver)
+            {
+                return new NoAcess<Provider>() { Message = "A provider with this email already exists." };
+            }
+
             var emailPattern = @"^[\w\.\+-]+@([\w-]+\.)+[a-zA-Z]{2,7}$";
             if (!Regex.IsMatch(request.Email, emailPattern))
             {
@@ -78,20 +87,20 @@ namespace CMPNatural.Application
             string EPACompliance = null;
             string Insurance = null;
 
-            if (request.BusinessLicense!=null)
-            BusinessLicense = FileHandler.ProviderfileHandler(request.BaseVirtualPath, request.BusinessLicense, "BusinessLicense", result.Id, path);
+            if (request.BusinessLicense != null)
+                BusinessLicense = request.BusinessLicense;
 
             if (request.HealthDepartmentPermit != null)
-            HealthDepartmentPermit = FileHandler.ProviderfileHandler(request.BaseVirtualPath, request.HealthDepartmentPermit, "HealthDepartmentPermit", result.Id, path);
+                HealthDepartmentPermit = request.HealthDepartmentPermit;
 
             if (request.WasteHaulerPermit != null)
-            WasteHaulerPermit = FileHandler.ProviderfileHandler(request.BaseVirtualPath, request.WasteHaulerPermit, "WasteHaulerPermit", result.Id, path);
+                WasteHaulerPermit = request.WasteHaulerPermit;
 
             if (request.EPACompliance != null)
-              EPACompliance = FileHandler.ProviderfileHandler(request.BaseVirtualPath, request.EPACompliance, "EPACompliance", result.Id, path);
+                EPACompliance = request.EPACompliance;
 
             if (request.Insurance != null)
-              Insurance = FileHandler.ProviderfileHandler(request.BaseVirtualPath, request.Insurance, "Insurance", result.Id, path);
+                Insurance = request.Insurance;
 
 
             result.BusinessLicense = BusinessLicense;

@@ -214,16 +214,20 @@ CREATE TABLE `DocumentSubmission` (
 
 CREATE TABLE `Driver` (
   `Id` bigint NOT NULL AUTO_INCREMENT,
-  `FirstName` varchar(200) NOT NULL,
-  `LastName` varchar(200) NOT NULL,
   `License` varchar(600) NOT NULL,
   `LicenseExp` datetime NOT NULL,
   `BackgroundCheck` varchar(600) NOT NULL,
   `BackgroundCheckExp` datetime NOT NULL,
   `ProfilePhoto` varchar(600) DEFAULT NULL,
   `ProviderId` bigint NOT NULL,
+  `Email` varchar(500) NOT NULL,
+  `Password` varchar(500) NOT NULL,
+  `PersonId` char(36) DEFAULT NULL,
+  `Status` varchar(100) NOT NULL DEFAULT 'Approved',
+  `TwoFactor` tinyint(1) NOT NULL DEFAULT '0',
+  `IsDefault` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
 -- CmpAppDevelop.Invoice definition
@@ -314,6 +318,7 @@ CREATE TABLE `Manifest` (
   `BeforeImages` varchar(300) DEFAULT NULL,
   `AfterImages` varchar(300) DEFAULT NULL,
   `StartTime` datetime DEFAULT NULL,
+  `DoingStartTime` datetime DEFAULT NULL,
   `FinishTime` datetime DEFAULT NULL,
   `IsEdited` tinyint(1) DEFAULT NULL,
   `ServiceDateTime` datetime DEFAULT NULL,
