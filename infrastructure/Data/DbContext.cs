@@ -80,6 +80,30 @@ namespace infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Route>(entity =>
+            {
+                entity.ToTable("Route");
+                entity.HasMany(d => d.Items)
+                .WithOne()
+                .HasForeignKey(d => d.RouteId);
+
+                entity.Property(p => p.Status)
+                .HasConversion(
+                x => x.ToString(),
+                x => (RouteStatus)Enum.Parse(typeof(RouteStatus), x)
+                );
+            });
+
+            modelBuilder.Entity<RouteServiceAppointmentLocation>(entity =>
+            {
+                entity.ToTable("RouteServiceAppointmentLocation");
+
+                entity.HasOne(d => d.ServiceAppointmentLocation)
+                .WithOne()
+                .HasForeignKey<RouteServiceAppointmentLocation>(d => d.ServiceAppointmentLocationId);
+
+            });
+
             modelBuilder.Entity<DriverManifest>(entity =>
             {
                 entity.ToTable("DriverManifest");

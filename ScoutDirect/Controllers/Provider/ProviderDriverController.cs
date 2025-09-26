@@ -59,7 +59,9 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 ProviderId = rProviderId,
-                BaseVirtualPath = wwwPath
+                BaseVirtualPath = wwwPath,
+                Email = request.Email,
+                IsDefault = request.IsDefault
             });
             return Ok(result);
         }
@@ -82,7 +84,9 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
                 FirstName = request.FirstName,
                 LastName = request.LastName,
                 ProviderId = rProviderId,
-                BaseVirtualPath = wwwPath
+                BaseVirtualPath = wwwPath,
+                Email = request.Email,
+                IsDefault = request.IsDefault
             });
             return Ok(result);
         }

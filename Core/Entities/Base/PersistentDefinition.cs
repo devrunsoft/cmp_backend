@@ -54,4 +54,6 @@ namespace CMPNatural.Core.Entities
     public partial class ChatSession : IIdentityObject<long> { }
     public partial class ChatClientSession : IIdentityObject<long> { }
     public partial class ChatMessageManualNote : IIdentityObject<long> { }
+    public partial class Route : IIdentityObject<long> { }
+    public partial class RouteServiceAppointmentLocation : IIdentityObject<long> { }
 }

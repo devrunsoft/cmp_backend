@@ -288,6 +288,12 @@
     <None Remove="Handlers\Driver\Home\" />
     <None Remove="Handlers\Driver\Manifest\" />
     <None Remove="Commands\Driver\Manifest\" />
+    <None Remove="Handlers\Provider\Route\" />
+    <None Remove="Commands\Provider\Route\" />
+    <None Remove="Commands\Driver\Route\" />
+    <None Remove="Handlers\Driver\Route\" />
+    <None Remove="Commands\Driver\Vehicle\" />
+    <None Remove="Handlers\Driver\Vehicle\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -583,6 +589,13 @@
     <Folder Include="Handlers\Driver\Home\" />
     <Folder Include="Handlers\Driver\Manifest\" />
     <Folder Include="Commands\Driver\Manifest\" />
+    <Folder Include="Handlers\Provider\Route\" />
+    <Folder Include="Commands\Provider\Route\" />
+    <Folder Include="Commands\Driver\Route\" />
+    <Folder Include="Handlers\Driver\Route\" />
+    <Folder Include="Responses\Driver\" />
+    <Folder Include="Commands\Driver\Vehicle\" />
+    <Folder Include="Handlers\Driver\Vehicle\" />
   </ItemGroup> 
 
   <ItemGroup>

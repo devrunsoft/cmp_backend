@@ -74,6 +74,8 @@
     <None Remove="Controllers\Driver\User\" />
     <None Remove="Controllers\Driver\Home\" />
     <None Remove="Controllers\Driver\Manifest\" />
+    <None Remove="Controllers\Driver\Route\" />
+    <None Remove="Controllers\Driver\Vehicle\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="View\" />
@@ -124,6 +126,8 @@
     <Folder Include="Controllers\Driver\User\" />
     <Folder Include="Controllers\Driver\Home\" />
     <Folder Include="Controllers\Driver\Manifest\" />
+    <Folder Include="Controllers\Driver\Route\" />
+    <Folder Include="Controllers\Driver\Vehicle\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\CMPNatural.Core.csproj">

@@ -23,24 +23,6 @@ namespace CMPNatural.Application
         {
             var result = (await _repository.GetBasePagedAsync(request, p=> p.ProviderId == request.ProviderId &&
             request.Status == null || p.Status == request.Status, query => query
-                        .Include(x => x.Invoice)
-            .ThenInclude(x => x.BaseServiceAppointment)
-            .ThenInclude(x => x.ProductPrice)
-
-            .Include(x => x.Invoice)
-            .ThenInclude(x => x.BaseServiceAppointment)
-            .ThenInclude(x => x.Product)
-
-            .Include(x => x.Invoice)
-            .ThenInclude(x => x.BaseServiceAppointment)
-            .ThenInclude(x => x.ServiceAppointmentLocations)
-            .ThenInclude(x => x.LocationCompany)
-
-
-            .Include(x => x.Invoice)
-            .ThenInclude(x => x.Company)
-
-            .Include(x => x.Provider)
             .Include(x => x.Invoice)
             .ThenInclude(x => x.Company)));
             return new Success<PagesQueryResponse<Manifest>>() { Data = result };

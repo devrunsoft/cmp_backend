@@ -16,6 +16,9 @@ namespace CMPNatural.Core.Enums
         [Description("Assigned")]
         Assigned,
 
+        [Description("Assigned_To_Driver")]
+        Assigned_To_Driver,
+
         [Description("Processing")]
         Processing,
 

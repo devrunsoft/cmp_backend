@@ -1,4 +1,5 @@
-﻿using CMPNatural.Application.Commands.Driver.Home;
+﻿using CMPNatural.Application;
+using CMPNatural.Application.Commands.Driver.Home;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -12,15 +13,16 @@ namespace CMPNatural.Api.Controllers.Driver.Home
         {
         }
 
-        [HttpGet("Manifest/Dates")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Get([FromQuery] DriverGetAllManifestDatesCommand command)
-        {
-            command.DriverId = rDriverId;
-            var result = await _mediator.Send(command);
-            return Ok(result);
-        }
+        //[HttpGet("Manifest/Dates")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[EnableCors("AllowOrigin")]
+        //public async Task<ActionResult> Get([FromQuery] DriverGetAllManifestDatesCommand command)
+        //{
+        //    command.DriverId = rDriverId;
+        //    var result = await _mediator.Send(command);
+        //    return Ok(result);
+        //}
+
     }
 }
 
