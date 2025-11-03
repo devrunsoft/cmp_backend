@@ -11,29 +11,28 @@ using ScoutDirect.Core.Entities.Base;
 using Microsoft.EntityFrameworkCore;
 using NetTopologySuite.Index.HPRtree;
 using CMPNatural.Core.Models;
+using Stripe;
 
 namespace CMPNatural.Application
 {
     public class CreateScaduleServiceHandler
     {
         public static async Task Create(
-            Invoice invoiceTemplate, IManifestRepository _manifestRepository, IinvoiceRepository _invoiceRepository, IAppInformationRepository _apprepository,
+            RequestEntity invoiceTemplate, IBaseServiceAppointmentRepository _serviceAppointment, IManifestRepository _manifestRepository, IRequestRepository _invoiceRepository, IAppInformationRepository _apprepository,
              IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository, AppSetting _appSetting, ILocationCompanyRepository locationCompanyRepository)
         {
 
-            var invoice = (await _invoiceRepository.GetAsync(x=> x.Id == invoiceTemplate.Id,
+            var request = (await _invoiceRepository.GetAsync(x=> x.Id == invoiceTemplate.Id,
                 query => query
                 .Include(i => i.BaseServiceAppointment)
                 .ThenInclude(i => i.ProductPrice)
                 .ThenInclude(p => p.Product)
-                .Include(i => i.BaseServiceAppointment)
-                .ThenInclude(i => i.ServiceAppointmentLocations)
                 )).FirstOrDefault();
 
-            var baseAppointments = invoice.BaseServiceAppointment;
+            var baseAppointments = request.BaseServiceAppointment.ToList();
             var allAppointments = new List<BaseServiceAppointment>();
 
-            var locations = (await locationCompanyRepository.GetAsync(x => x.CompanyId == invoice.CompanyId,
+            var locations = (await locationCompanyRepository.GetAsync(x => x.CompanyId == request.CompanyId,
             query => query.Include(x => x.CapacityEntity)
             )).ToList();
 
@@ -47,10 +46,12 @@ namespace CMPNatural.Application
 
                 for (int i = 1; i < numberOfPayments; i++)
                 {
+                    var status = i == 0 ? ServiceStatus.UpComingScaduled : ServiceStatus.Scaduled;
                     var appointmentDate = baseStartDate.AddDays(i * intervalDays);
                     var appointment = new BaseServiceAppointment
                     {
                         Id = 0,
+                        RequestId = invoiceTemplate.Id,
                         CompanyId = item.CompanyId,
                         ProductId = item.ProductId,
                         ProductPrice = item.ProductPrice,
@@ -58,10 +59,10 @@ namespace CMPNatural.Application
                         Product = item.Product,
                         StartDate = appointmentDate,
                         OperationalAddressId = item.OperationalAddressId,
-                        Status = i == 0 ? ServiceStatus.UpComingScaduled : ServiceStatus.Scaduled,
+                        Status = status,
                         IsEmegency = item.IsEmegency,
                         Qty = item.Qty,
-                        FactQty = item.FactQty,
+                        //FactQty = item.FactQty,
                         Amount = item.Amount,
                         ServiceTypeId = item.Product.ServiceType,
                         ServiceAppointmentLocations = item.ServiceAppointmentLocations
@@ -71,7 +72,8 @@ namespace CMPNatural.Application
                                return new ServiceAppointmentLocation
                                {
                                    LocationCompanyId = id.LocationCompanyId,
-                                   Qty = locationCompany?.CapacityEntity?.Qty ?? 1
+                                   Qty = locationCompany?.CapacityEntity?.Qty ?? 1,
+                                   Status = status
                                };
                            }).ToList(),
                         DayOfWeek = item.DayOfWeek,
@@ -79,41 +81,23 @@ namespace CMPNatural.Application
                         ToHour = item.ToHour,
                         ScaduleDate = appointmentDate,
                     };
+                    appointment = await _serviceAppointment.AddAsync(appointment);
 
                     allAppointments.Add(appointment);
                 }
             }
 
-            // Step 2: Group appointments by StartDate (same invoice if same date)
-            var groupedAppointments = allAppointments
-                .GroupBy(a => a.StartDate.Date);
 
-            // Step 3: Create invoices for each group
-            foreach (var group in groupedAppointments)
+            foreach (var service in allAppointments)
             {
-                var groupedInvoice = new Invoice
+                foreach (var loc in service.ServiceAppointmentLocations)
                 {
-                    CompanyId = invoice.CompanyId,
-                    Status = InvoiceStatus.Scaduled,
-                    InvoiceId = invoice.InvoiceId,
-                    BaseServiceAppointment = group.ToList(),
-                    Amount = group.Sum(a => a.Amount),
-                    Address = invoice.Address,
-                    OperationalAddressId = invoice.OperationalAddressId,
-                    ContractId = invoice.ContractId,
-                    SendDate = group.FirstOrDefault().StartDate,
-                    CreatedAt = DateTime.Now,
-                    InvoiceNumber = "",
-                    RequestNumber = "",
-                    BillingInformationId = invoiceTemplate.BillingInformationId
-                };
-                groupedInvoice.CalculateAmount();
 
-               var item = await _invoiceRepository.AddAsync(groupedInvoice);
-               item.InvoiceNumber = invoice.Number;
-               item.RequestNumber = invoice.ReqNumber;
-               await _invoiceRepository.UpdateAsync(item);
-                await new AdminCreateManifestHandler(_manifestRepository, _invoiceRepository, _apprepository, _serviceAppointmentLocationRepository, _appSetting).Create(item, ManifestStatus.Scaduled);
+                    await new AdminCreateManifestHandler(_manifestRepository, _invoiceRepository, _apprepository, _serviceAppointmentLocationRepository, _appSetting)
+                        .Create(request, ManifestStatus.Scaduled, loc.Id, service.StartDate);
+
+                }
+
             }
         }
 

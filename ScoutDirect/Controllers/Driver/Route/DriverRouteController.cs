@@ -43,9 +43,10 @@ namespace CMPNatural.Api.Controllers.Driver.Route
         [HttpGet("Current")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> GetCurrent()
+        public async Task<ActionResult> GetCurrent([FromQuery] DriverCurrentRouteMapCommand command)
         {
-            var result = await _mediator.Send(new DriverCurrentRouteMapCommand() { DriverId = rDriverId });
+            command.DriverId = rDriverId;
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
 
@@ -53,6 +54,26 @@ namespace CMPNatural.Api.Controllers.Driver.Route
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Start([FromBody] DriverStartRouteCommand command)
+        {
+            command.DriverId = rDriverId;
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpPost("StartInProcces")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> StartInProcces([FromBody] DriverStartInProccessRouteCommand command)
+        {
+            command.DriverId = rDriverId;
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpPost("Arrived")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Arrived([FromBody] DriverArrivedRouteCommand command)
         {
             command.DriverId = rDriverId;
             var result = await _mediator.Send(command);

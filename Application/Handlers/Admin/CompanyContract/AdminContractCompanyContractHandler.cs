@@ -15,7 +15,7 @@ namespace CMPNatural.Application
 	public class AdminContractCompanyContractHandler
 	{
 
-		public static  string Create(List<Invoice> invoice, AppInformation information, Contract contract,Company company, CompanyContract result, AppSetting _appSetting)
+		public static  string Create(List<RequestEntity> invoice, AppInformation information, Contract contract,Company company, CompanyContract result, AppSetting _appSetting)
 		{
             var serviceList = invoice.Select(inv =>
             {

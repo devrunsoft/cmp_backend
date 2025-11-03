@@ -5,7 +5,7 @@ using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Application
 {
-    public class ClientCancelRequestCommand : IRequest<CommandResponse<Invoice>>
+    public class ClientCancelRequestCommand : IRequest<CommandResponse<RequestEntity>>
     {
         public ClientCancelRequestCommand()
         {

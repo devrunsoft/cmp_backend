@@ -27,13 +27,13 @@ namespace CMPNatural.Core.Entities
 
         public long OperationalAddressId { get; set; }
         
-        public long InvoiceId { get; set; }
+        public long RequestId { get; set; }
+
+        public long? InvoiceId { get; set; }
 
         public bool IsEmegency { get; set; }
 
         public int Qty { get; set; } = 1;
-
-        public int? FactQty { get; set; }
 
         public DateTime StartDate { get; set; }
 
@@ -51,7 +51,9 @@ namespace CMPNatural.Core.Entities
 
         public double Subsidy { get; set; }
 
-        public OilQualityEnum? OilQuality { get; set; }
+        //public OilQualityEnum? OilQuality { get; set; }
+
+        public virtual RequestEntity Request { get; set; }
 
         public virtual Invoice Invoice { get; set; }
 

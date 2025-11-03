@@ -27,23 +27,23 @@ namespace CMPNatural.Application
 
             var result = (await _repository.GetAsync(p => p.ManifestId == 143, query => query
             .Include(x => x.Manifest)
-            .ThenInclude(x => x.Invoice)
-            .ThenInclude(x => x.BaseServiceAppointment)
+            .ThenInclude(x => x.ServiceAppointmentLocation)
+            .ThenInclude(x => x.ServiceAppointment)
             .ThenInclude(x => x.ProductPrice)
 
             .Include(x => x.Manifest)
-            .ThenInclude(x => x.Invoice)
-            .ThenInclude(x => x.BaseServiceAppointment)
+            .ThenInclude(x => x.ServiceAppointmentLocation)
+            .ThenInclude(x => x.ServiceAppointment)
             .ThenInclude(x => x.Product)
 
             .Include(x => x.Manifest)
-            .ThenInclude(x => x.Invoice)
-            .ThenInclude(x => x.BaseServiceAppointment)
+            .ThenInclude(x => x.ServiceAppointmentLocation)
+            .ThenInclude(x => x.ServiceAppointment)
             .ThenInclude(x => x.ServiceAppointmentLocations)
             .ThenInclude(x => x.LocationCompany)
 
             .Include(x => x.Manifest)
-            .ThenInclude(x => x.Invoice)
+            .ThenInclude(x => x.Request)
             .ThenInclude(x => x.Company)
             .Include(x => x.Manifest)
             .ThenInclude(x => x.Provider)

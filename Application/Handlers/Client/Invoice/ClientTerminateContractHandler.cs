@@ -28,18 +28,20 @@ namespace CMPNatural.Application.Handlers.Admin.Invoice
             var invoices = (await _invoiceRepository.GetAsync(p => p.InvoiceId == request.InvoiceNumber && p.CompanyId == request.CompanyId &&
             (p.Status == InvoiceStatus.Draft || p.Status == InvoiceStatus.Scaduled),
                 query => query
-                .Include(i => i.BaseServiceAppointment)
+                          .Include(x => x.BaseServiceAppointment).ThenInclude(x => x.ServiceAppointmentLocations)
                 )).ToList();
             foreach (var item in invoices)
             {
-                
-                foreach (var service in item.BaseServiceAppointment)
-                {
-                    service.Status = ServiceStatus.Canceled;
-                }
+
+                //TODO
+                //foreach (var service in item.BaseServiceAppointment)
+                //{
+                //    service.Status = ServiceStatus.Canceled;
+                //    service.ServiceAppointment.Status = ServiceStatus.Canceled;
+                //}
                 item.Status = InvoiceStatus.Canceled;
                 //////
-                var manifest = (await _manifestRepository.GetAsync(x => x.InvoiceId == item.Id)).FirstOrDefault();
+                var manifest = (await _manifestRepository.GetAsync(x => x.RequestId == item.Id)).FirstOrDefault();
                 manifest.Status = ManifestStatus.Canceled;
                 await _manifestRepository.UpdateAsync(manifest);
                 await _invoiceRepository.UpdateAsync(item);

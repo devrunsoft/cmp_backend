@@ -34,6 +34,21 @@ namespace CMPNatural.Core.Enums
         [Description("Submited_Provider")]
         Submited_Provider,
 
+        [Description("In_Process")]
+        In_Process,
+
+        [Description("Arrived")]
+        Arrived,
+
+        [Description("Photo_Before_Work")]
+        Photo_Before_Work,
+
+        [Description("Driver_Update_Service")]
+        Driver_Update_Service,
+
+        [Description("Photo_After_Work")]
+        Photo_After_Work,
+
         [Description("Done_Driver")]
         Done_Driver,
 

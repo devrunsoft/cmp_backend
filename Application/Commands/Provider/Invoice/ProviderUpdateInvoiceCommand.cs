@@ -6,7 +6,7 @@ using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Application
 {
-    public class ProviderUpdateInvoiceCommand : ProviderInvoiceInput, IRequest<CommandResponse<Invoice>>
+    public class ProviderUpdateInvoiceCommand : ProviderInvoiceInput, IRequest<CommandResponse<RequestResponse>>
     {
         public ProviderUpdateInvoiceCommand()
         {

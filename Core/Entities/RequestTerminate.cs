@@ -8,7 +8,7 @@ namespace CMPNatural.Core.Entities
 	{
         public long Id { get; set; }
 
-        public string InvoiceNumber { get; set; }
+        public long RequestId { get; set; }
 
         public long OperationalAddressId { get; set; }
 
@@ -35,7 +35,7 @@ namespace CMPNatural.Core.Entities
             }
         }
 
-        public virtual ICollection<Invoice> Invoice { get; set; } = new List<Invoice>();
+        public virtual RequestEntity Request { get; set; }
         public virtual Company Company { get; set; }
     }
 }

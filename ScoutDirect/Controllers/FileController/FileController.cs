@@ -51,23 +51,6 @@ namespace CMPNatural.Api.Controllers
                 return BadRequest("filePath is required.");
 
             filePath = Uri.UnescapeDataString(filePath);
-            // Determine bucket + objectName
-            // If the first segment looks like yyyy-MM, treat it as bucket; otherwise default to current month bucket.
-
-
-            //string bucket;
-            //string objectName;
-
-            //if (segments.Length > 1 && monthBucketRegex.IsMatch(segments[0]))
-            //{
-            //    bucket = segments[0];
-            //    objectName = string.Join('/', segments.Skip(1));
-            //}
-            //else
-            //{
-            //    bucket = DateTime.UtcNow.ToString("yyyy-MM");
-            //    objectName = string.Join('/', segments);
-            //}
 
             //// Try download from storage
             if (!await fileStorage.ExistsAsync(filePath, ct))
@@ -75,7 +58,6 @@ namespace CMPNatural.Api.Controllers
 
             var stream = await fileStorage.DownloadAsync(filePath, ct);
 
-            // Guess content-type from file name
             var provider = new FileExtensionContentTypeProvider();
             var fileName = Path.GetFileName(filePath);
             if (!provider.TryGetContentType(fileName, out var contentType))

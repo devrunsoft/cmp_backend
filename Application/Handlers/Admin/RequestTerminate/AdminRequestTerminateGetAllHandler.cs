@@ -24,9 +24,9 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<PagesQueryResponse<RequestTerminate>>> Handle(AdminRequestTerminateGetAllCommand request, CancellationToken cancellationToken)
         {
             var result = (await _repository.GetBasePagedAsync(request, null, query => query
-            .Include(x => x.Invoice)
+            .Include(x => x.Request)
             .ThenInclude(x => x.Company)
-             .Include(x => x.Invoice)
+             .Include(x => x.Request)
             .ThenInclude(x => x.Provider)
             ));
             return new Success<PagesQueryResponse<RequestTerminate>>() { Data = result };

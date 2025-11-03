@@ -17,14 +17,16 @@ namespace CMPNatural.Application
 
     public class ClientMenuRepresentationHandler : IRequestHandler<ClientMenuRepresentationCommand, CommandResponse<ClientRepresentationResponse>>
     {
+        private readonly IRequestRepository _requestRepository;
         private readonly IinvoiceRepository _invoiceRepository;
         private readonly IManifestRepository _manifestRepository;
         private readonly ICompanyContractRepository _companyContract;
 
         public ClientMenuRepresentationHandler(IinvoiceRepository iinvoiceRepository, ICompanyContractRepository companyContract,
-            IManifestRepository _manifestRepository
+            IManifestRepository _manifestRepository, IRequestRepository _requestRepository
             )
         {
+            this._requestRepository = _requestRepository;
             _invoiceRepository = iinvoiceRepository;
             _companyContract = companyContract;
             this._manifestRepository = _manifestRepository;
@@ -43,7 +45,7 @@ namespace CMPNatural.Application
                  x.Status == InvoiceStatus.Send_Payment && x.CompanyId == request.CompanyId && ( request.OperationalAddressId==0 || x.OperationalAddressId == request.OperationalAddressId)
                 )).Count();
 
-            var requests = (await _invoiceRepository.GetAsync(x =>
+            var requests = (await _requestRepository.GetAsync(x =>
                 ( x.Status == InvoiceStatus.Draft) && x.CompanyId == request.CompanyId && (request.OperationalAddressId == 0 || x.OperationalAddressId == request.OperationalAddressId)
                 )).Count();
 

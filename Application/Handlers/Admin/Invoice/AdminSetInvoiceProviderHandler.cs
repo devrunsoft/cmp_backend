@@ -13,13 +13,13 @@ using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Application
 {
-    public class AdminSetInvoiceProviderHandler : IRequestHandler<AdminSetInvoiceProviderCommand, CommandResponse<Invoice>>
+    public class AdminSetInvoiceProviderHandler : IRequestHandler<AdminSetInvoiceProviderCommand, CommandResponse<Manifest>>
     {
-        private readonly IinvoiceRepository _invoiceRepository;
+        private readonly IManifestRepository _invoiceRepository;
         private readonly IProviderReposiotry _providerReposiotry;
         private readonly IBaseServiceAppointmentRepository _baseServiceAppointmentRepository;
 
-        public AdminSetInvoiceProviderHandler(IinvoiceRepository invoiceRepository, IProviderReposiotry providerReposiotry,
+        public AdminSetInvoiceProviderHandler(IManifestRepository invoiceRepository, IProviderReposiotry providerReposiotry,
             IBaseServiceAppointmentRepository baseServiceAppointmentRepository)
         {
             _invoiceRepository = invoiceRepository;
@@ -27,22 +27,21 @@ namespace CMPNatural.Application
             _baseServiceAppointmentRepository = baseServiceAppointmentRepository;
         }
 
-        public async Task<CommandResponse<Invoice>> Handle(AdminSetInvoiceProviderCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<Manifest>> Handle(AdminSetInvoiceProviderCommand request, CancellationToken cancellationToken)
         {
             //int MaxDistance = 2000; //meter
-            var invoice = (await _invoiceRepository.GetAsync(p => p.Id == request.InvoiceId, query=>
-            query.Include(p=>p.BaseServiceAppointment))).FirstOrDefault();
+            var manifest = (await _invoiceRepository.GetAsync(p => p.Id == request.ManifestId, query=>
+            query.Include(p=>p.ServiceAppointmentLocation).ThenInclude(x=>x.ServiceAppointment))).FirstOrDefault();
 
-            if (invoice.Status != InvoiceStatus.Needs_Assignment && invoice.Status != InvoiceStatus.Scaduled)
-            {
-                return new NoAcess<Invoice>() { Data = invoice };
-            }
+            //if (manifest.Status != ManifestStatus.Draft && manifest.Status != ManifestStatus.Scaduled)
+            //{
+            //    return new NoAcess<Manifest>() { Data = manifest };
+            //}
 
-            foreach (var serviceAppointment in invoice.BaseServiceAppointment)
-            {
+            var serviceAppointment = manifest.ServiceAppointmentLocation.ServiceAppointment;
                 serviceAppointment.ProviderId = request.ProviderId;
 
-                if (invoice.Status != InvoiceStatus.Scaduled)
+                if (manifest.Status != ManifestStatus.Scaduled)
                 {
                     serviceAppointment.Status = ServiceStatus.Proccessing;
                 }
@@ -52,17 +51,17 @@ namespace CMPNatural.Application
                 }
 
                 await _baseServiceAppointmentRepository.UpdateAsync(serviceAppointment);
-            }
-            invoice.ProviderId = request.ProviderId;
 
-            if (invoice.Status != InvoiceStatus.Scaduled)
-            {
-                invoice.Status = InvoiceStatus.Processing_Provider;
-            }
+            //manifest.ProviderId = request.ProviderId;
 
-            await _invoiceRepository.UpdateAsync(invoice);
+            //if (manifest.Status != InvoiceStatus.Scaduled)
+            //{
+            //    manifest.Status = InvoiceStatus.Processing_Provider;
+            //}
 
-            return new Success<Invoice>() { Data = invoice };
+            await _invoiceRepository.UpdateAsync(manifest);
+
+            return new Success<Manifest>() { Data = manifest };
         }
     }
 }

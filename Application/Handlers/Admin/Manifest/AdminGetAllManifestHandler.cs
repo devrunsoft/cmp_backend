@@ -21,10 +21,13 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<PagesQueryResponse<Manifest>>> Handle(AdminGetAllManifestCommand request, CancellationToken cancellationToken)
         {
-            var result = (await _repository.GetBasePagedAsync(request, p=> request.Status == null || p.Status == request.Status, query => query
-            .Include(x => x.Invoice)
+            var result = (await _repository.GetBasePagedAsync(request, p=> request.Status == null || p.Status == request.Status &&
+            request.startDate ==null || (request.startDate <= p.PreferredDate) &&
+            request.endDate == null || (request.endDate >= p.PreferredDate),
+                query => query
+            .Include(x => x.Request)
             .ThenInclude(x => x.Company)
-             .Include(x => x.Invoice)
+             .Include(x => x.Request)
             .ThenInclude(x => x.Provider)
             ));
             return new Success<PagesQueryResponse<Manifest>>() { Data = result };

@@ -10,6 +10,8 @@ namespace CMPNatural.Application
 		{
 		}
 		public long DriverId { get; set; }
+		public double? Lat { get; set; }
+		public double? Lng { get; set; }
 	}
 }
 

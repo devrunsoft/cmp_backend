@@ -17,10 +17,10 @@ namespace CMPNatural.Application
     {
         private readonly IRequestTerminateRepository terminateRepository;
         private readonly ICompanyContractRepository companyContractRepository;
-        private readonly IinvoiceRepository _invoiceRepository;
+        private readonly IRequestRepository _invoiceRepository;
         private readonly IManifestRepository _manifestRepository;
 
-        public AdminRequestTerminatePostHandler(IinvoiceRepository invoiceRepository, IManifestRepository _manifestRepository, IRequestTerminateRepository terminateRepository,
+        public AdminRequestTerminatePostHandler(IRequestRepository invoiceRepository, IManifestRepository _manifestRepository, IRequestTerminateRepository terminateRepository,
            ICompanyContractRepository companyContractRepository )
         {
             _invoiceRepository = invoiceRepository;
@@ -33,28 +33,32 @@ namespace CMPNatural.Application
         {
             var terminaterequest = (await terminateRepository.GetAsync(x=>x.Id == request.Id)).FirstOrDefault();
 
-            var invoices = (await _invoiceRepository.GetAsync(p => p.InvoiceId == terminaterequest.InvoiceNumber && p.CompanyId == terminaterequest.CompanyId &&
+            var invoices = (await _invoiceRepository.GetAsync(p => p.Id == terminaterequest.RequestId && p.CompanyId == terminaterequest.CompanyId &&
             (p.Status != InvoiceStatus.Complete && p.Status != InvoiceStatus.Deleted),
                 query => query
                 .Include(i => i.BaseServiceAppointment)
+                .ThenInclude(i => i.ServiceAppointmentLocations)
                 )).ToList();
 
             foreach (var item in invoices)
             {
 
-                foreach (var service in item.BaseServiceAppointment)
+                foreach (var i in item.BaseServiceAppointment)
                 {
-                    service.Status = ServiceStatus.Canceled;
+                    foreach (var service in i.ServiceAppointmentLocations)
+                    {
+                        service.Status = ServiceStatus.Canceled;
+                    }
                 }
                 item.Status = InvoiceStatus.Canceled;
                 //////
-                var manifest = (await _manifestRepository.GetAsync(x => x.InvoiceId == item.Id)).FirstOrDefault();
+                var manifest = (await _manifestRepository.GetAsync(x => x.RequestId == item.Id)).FirstOrDefault();
                 if (manifest != null)
                 {
                     manifest.Status = ManifestStatus.Canceled;
                     await _manifestRepository.UpdateAsync(manifest);
                 }
-                var contract = (await companyContractRepository.GetAsync(x => x.InvoiceId == item.InvoiceId)).FirstOrDefault();
+                var contract = (await companyContractRepository.GetAsync(x => x.RequestId == item.Id)).FirstOrDefault();
                 if (manifest != null)
                 {
                     contract.Status = CompanyContractStatus.Canceld;

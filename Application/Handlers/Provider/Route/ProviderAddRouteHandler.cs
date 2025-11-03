@@ -35,19 +35,16 @@ namespace CMPNatural.Application
             // 1) Gather all referenced manifestIds & per-manifest SAL ids from payload
             var payload = request.payload;
             var payloadByManifest = payload
-                .SelectMany(r => r.SalIds)
-                .GroupBy(s => s.ManifestId)
-                .ToDictionary(g => g.Key, g => g.Select(x => x.SalId).ToHashSet());
+                .SelectMany(r => r.manifestIds);
 
-            var allManifestIds = payloadByManifest.Keys.ToList();
+            var allManifestIds = payloadByManifest.ToList();
 
             // 2) Load all manifests (and their SALs) in one shot
             var manifests = await _manifestRepository.GetAsync(
                 m => allManifestIds.Contains(m.Id) && m.ProviderId == request.ProviderId,
                 query => query
-                    .Include(m => m.Invoice)
-                    .ThenInclude(inv => inv.BaseServiceAppointment)
-                    .ThenInclude(b => b.ServiceAppointmentLocations)
+                    .Include(m => m.ServiceAppointmentLocation)
+                    .ThenInclude(inv => inv.ServiceAppointment)
             );
             var manifestMap = manifests.ToDictionary(m => m.Id);
 
@@ -77,53 +74,51 @@ namespace CMPNatural.Application
             }
 
             // 4) Check completeness (all SALs present for each manifest)
-            foreach (var kvp in payloadByManifest)
-            {
-                var manifestId = kvp.Key;
-                var providedSalIds = kvp.Value;
+            //foreach (var kvp in payloadByManifest)
+            //{
+            //    var manifestId = kvp;
 
-                if (!manifestMap.TryGetValue(manifestId, out var manifest))
-                    continue; // existence already reported above
+            //    if (!manifestMap.TryGetValue(manifestId, out var manifest))
+            //        continue; // existence already reported above
 
-                // Collect ALL SAL ids on this manifest (across all base services)
-                var allSalIdsInManifest = (manifest.Invoice?.BaseServiceAppointment)
-                    .SelectMany(bs => bs.ServiceAppointmentLocations)
-                    .Where(sal => sal?.Id != null)
-                    .Select(sal => sal!.Id)
-                    .ToHashSet();
+            //    // Collect ALL SAL ids on this manifest (across all base services)
+            //    var allSalIdsInManifest = (manifest.Invoice?.BaseServiceAppointment)
+            //        .SelectMany(bs => bs.ServiceAppointmentLocations)
+            //        .Where(sal => sal?.Id != null)
+            //        .Select(sal => sal!.Id)
+            //        .ToHashSet();
 
-                // If you need to filter which SALs are "assignable", do it here:
-                // e.g. .Where(sal => sal.Status == ServiceStatus.Pending)
+            //    // If you need to filter which SALs are "assignable", do it here:
+            //    // e.g. .Where(sal => sal.Status == ServiceStatus.Pending)
 
-                // Missing SALs = those in manifest but not in payload
-                var missing = allSalIdsInManifest.Except(providedSalIds).ToList();
-                if (missing.Count > 0)
-                {
-                    var number = string.IsNullOrWhiteSpace(manifest.ManifestNumber) ? "(no number)" : manifest.ManifestNumber;
-                    return new NoAcess<Route>()
-                    {
-                        Message = $"Manifest {number} (Id {manifest.Id}) is incomplete. " +
-                        $"Missing {missing.Count} service location(s): [{string.Join(", ", missing)}]. " +
-                        $"All service locations in a manifest must be included."
-                    };
-                }
-            }
+            //    // Missing SALs = those in manifest but not in payload
+            //    var missing = allSalIdsInManifest.Except(providedSalIds).ToList();
+            //    if (missing.Count > 0)
+            //    {
+            //        var number = string.IsNullOrWhiteSpace(manifest.ManifestNumber) ? "(no number)" : manifest.ManifestNumber;
+            //        return new NoAcess<Route>()
+            //        {
+            //            Message = $"Manifest {number} (Id {manifest.Id}) is incomplete. " +
+            //            $"Missing {missing.Count} service location(s): [{string.Join(", ", missing)}]. " +
+            //            $"All service locations in a manifest must be included."
+            //        };
+            //    }
+            //}
 
             // 5) Check for duplicate SALs across routes (each SAL may only be assigned once)
-            var allPayloadSals = payload.SelectMany(r => r.SalIds).ToList();
-            var duplicateSalIds = allPayloadSals
-                .GroupBy(s => s.SalId)
-                .Where(g => g.Count() > 1)
-                .Select(g => g.Key)
-                .ToList();
+            //var allPayloadSals = payload.SelectMany(r => r.manifestIds).ToList();
+            //var duplicateSalIds = allPayloadSals
+            //    .Where(g => g.Count() > 1)
+            //    .Select(g => g.Key)
+            //    .ToList();
 
-            if (duplicateSalIds.Count > 0)
-            {
-                return new NoAcess<Route>()
-                {
-                    Message = $"Duplicate service locations detected across routes: [{string.Join(", ", duplicateSalIds)}]. Each location can be assigned only once.",
-                };
-            }
+            //if (duplicateSalIds.Count > 0)
+            //{
+            //    return new NoAcess<Route>()
+            //    {
+            //        Message = $"Duplicate service locations detected across routes: [{string.Join(", ", duplicateSalIds)}]. Each location can be assigned only once.",
+            //    };
+            //}
 
             // If any validation failed, return aggregated errors
             //if (errors.Count > 0)
@@ -150,12 +145,12 @@ namespace CMPNatural.Application
                     DriverId = item.DriverId,
                     Name = item.Name,
                     ProviderId = request.ProviderId,
-                    Items = (item.SalIds)
+                    Items = (item.manifestIds)
                         .Select(x => new RouteServiceAppointmentLocation
                         {
-                            ServiceAppointmentLocationId = x.SalId,
-                            ManifestId = x.ManifestId,
-                            ManifestNumber = manifests.FirstOrDefault(p=>p.Id == x.ManifestId).ManifestNumber,
+                            ServiceAppointmentLocationId = manifests.FirstOrDefault(p => p.Id == x).ServiceAppointmentLocationId,
+                            ManifestId = x,
+                            ManifestNumber = manifests.FirstOrDefault(p=>p.Id == x).ManifestNumber,
                         })
                         .ToList()
                 };

@@ -26,13 +26,13 @@ namespace CMPNatural.Application.Handlers.Admin.Invoice
                 query => query.Include(i => i.Company)
                 .ThenInclude(x=>x.BillingInformations)
                 .Include(i => i.Provider)
-                .Include(i=>i.BaseServiceAppointment)
+                     .Include(x => x.BaseServiceAppointment)
                 .ThenInclude(i=>i.ProductPrice)
                 .ThenInclude(p=>p.Product)
-                .Include(i => i.BaseServiceAppointment)
-                .ThenInclude(i => i.ServiceAppointmentLocations)
-                .ThenInclude(p=>p.LocationCompany)
-                .Include(i => i.BillingInformation)
+              .Include(x => x.BaseServiceAppointment)
+              .ThenInclude(x => x.ServiceAppointmentLocations)
+              .ThenInclude(p=>p.LocationCompany)
+              .Include(i => i.BillingInformation)
                 )).FirstOrDefault();
 
             var model = InvoiceMapper.Mapper.Map<InvoiceResponse>(invoices);

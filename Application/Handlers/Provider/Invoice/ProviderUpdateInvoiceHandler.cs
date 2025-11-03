@@ -15,19 +15,20 @@ using Microsoft.VisualBasic;
 using ScoutDirect.Core.Entities.Base;
 using ScoutDirect.Core.Repositories.Base;
 using CMPNatural.Core.Models;
+using CMPNatural.Application.Mapper;
 
 namespace CMPNatural.Application
 {
-    public class ProviderUpdateInvoiceHandler : IRequestHandler<ProviderUpdateInvoiceCommand, CommandResponse<Invoice>>
+    public class ProviderUpdateInvoiceHandler : IRequestHandler<ProviderUpdateInvoiceCommand, CommandResponse<RequestResponse>>
     {
         private readonly IManifestRepository _repository;
-        private readonly IinvoiceRepository _invoiceRepository;
+        private readonly IRequestRepository _invoiceRepository;
         private readonly IAppInformationRepository _apprepository;
         private readonly IBaseServiceAppointmentRepository _baseServiceAppointmentRepository;
         private readonly IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository;
         private readonly AppSetting _appSetting;
 
-        public ProviderUpdateInvoiceHandler(IinvoiceRepository invoiceRepository,
+        public ProviderUpdateInvoiceHandler(IRequestRepository invoiceRepository,
              IBaseServiceAppointmentRepository baseServiceAppointmentRepository,
              IManifestRepository _repository, IAppInformationRepository _apprepository, IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository, AppSetting appSetting)
         {
@@ -39,22 +40,17 @@ namespace CMPNatural.Application
             this._appSetting = appSetting;
         }
 
-        public async Task<CommandResponse<Invoice>> Handle(ProviderUpdateInvoiceCommand requests, CancellationToken cancellationToken)
+        public async Task<CommandResponse<RequestResponse>> Handle(ProviderUpdateInvoiceCommand requests, CancellationToken cancellationToken)
         {
             var invoice = (await _invoiceRepository.GetAsync(p => p.Id == requests.InvoiceId && p.ProviderId == requests.ProviderId, query => query.Include(x => x.Company)
-                .Include(i => i.BaseServiceAppointment)
-                .ThenInclude(i => i.ProductPrice)
-                .ThenInclude(p => p.Product)
-                .Include(i => i.BaseServiceAppointment)
-                .ThenInclude(i => i.ServiceAppointmentLocations)
-                .ThenInclude(p => p.LocationCompany)
+
                 )).FirstOrDefault();
 
-            var entity = (await _repository.GetAsync(x => x.InvoiceId == invoice.Id)).FirstOrDefault();
+            var entity = (await _repository.GetAsync(x => x.RequestId == invoice.Id)).FirstOrDefault();
 
             if (invoice.Status == InvoiceStatus.Send_Payment)
             {
-                return new NoAcess<Invoice>
+                return new NoAcess<RequestResponse>
                 {
                     Message = "You cannot edit this invoice because it is no longer in the 'Processing by Provider' status."
                 };
@@ -62,14 +58,14 @@ namespace CMPNatural.Application
 
             if (entity.Status != ManifestStatus.Processing && entity.Status != ManifestStatus.Assigned)
             {
-                return new NoAcess<Invoice>
+                return new NoAcess<RequestResponse>
                 {
                     Message = "You cannot edit this invoice because the related manifest is not in 'Processing' status."
                 };
             }
 
             var CompanyId = invoice.CompanyId;
-            var services = (await _baseServiceAppointmentRepository.GetAsync(p => p.InvoiceId == invoice.Id)).ToList();
+            var services = (await _baseServiceAppointmentRepository.GetAsync(p => true)).ToList();
 
             //InvoiceStatus invoiceStatus = InvoiceStatus.Submited_Provider;
 
@@ -97,8 +93,8 @@ namespace CMPNatural.Application
                         item.OilQuality = loc.OilQuality;
                     }
 
-                    srv.OilQuality = request.OilQuality;
-                    srv.FactQty = request.FactQty;
+                    //srv.OilQuality = request.OilQuality;
+                    //srv.FactQty = request.FactQty;
                     await _baseServiceAppointmentRepository.UpdateAsync(srv);
                 }
             }
@@ -114,7 +110,7 @@ namespace CMPNatural.Application
             entity.ManifestNumber = entity.Number;
             await _repository.UpdateAsync(entity);
 
-            return new Success<Invoice>() { Data = invoice};
+            return new Success<RequestResponse>() { Data = RequestMapper.Mapper.Map<RequestResponse>(entity)};
 
         }
     }

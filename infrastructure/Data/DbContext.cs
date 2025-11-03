@@ -61,6 +61,7 @@ namespace infrastructure.Data
         public virtual DbSet<ChatNotification> ChatNotification { get; set; } = null!;
         public virtual DbSet<ChatSession> ChatSession { get; set; } = null!;
         public virtual DbSet<ChatMessageManualNote> ChatMessageManualNote { get; set; } = null!;
+        public virtual DbSet<RequestEntity> Request { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -80,6 +81,16 @@ namespace infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ServiceAppointmentLocationFile>(entity =>
+            {
+                entity.ToTable("ServiceAppointmentLocationFile");
+                entity.Property(p => p.Status)
+                .HasConversion(
+                x => x.ToString(),
+                x => (ServiceAppointmentLocationFileEnum)Enum.Parse(typeof(ServiceAppointmentLocationFileEnum), x)
+                );
+            });
+
             modelBuilder.Entity<Route>(entity =>
             {
                 entity.ToTable("Route");
@@ -101,6 +112,10 @@ namespace infrastructure.Data
                 entity.HasOne(d => d.ServiceAppointmentLocation)
                 .WithOne()
                 .HasForeignKey<RouteServiceAppointmentLocation>(d => d.ServiceAppointmentLocationId);
+
+                entity.HasOne(d => d.Route)
+                .WithMany(x => x.Items)
+                .HasForeignKey(d => d.RouteId);
 
             });
 
@@ -232,11 +247,9 @@ namespace infrastructure.Data
                  x => (RequestTerminateProcessEnum)Enum.Parse(typeof(RequestTerminateProcessEnum), x)
                  );
 
-                modelBuilder.Entity<RequestTerminate>()
-                    .HasMany(rt => rt.Invoice)
-                    .WithOne() // or .WithOne() if truly one-to-one
-                    .HasForeignKey(rt => rt.InvoiceId)
-                    .HasPrincipalKey(i => i.InvoiceNumber); // explicitly specify the key
+                entity.HasOne(rt => rt.Request)
+                    .WithMany()                // or .WithOne(...) if you later expose a nav on RequestEntity
+                    .HasForeignKey(rt => rt.RequestId);
 
                 entity.HasOne(d => d.Company)
                 .WithOne()
@@ -286,18 +299,35 @@ namespace infrastructure.Data
             {
                 entity.ToTable("Manifest");
 
+                entity.HasOne(d => d.OperationalAddress)
+                .WithMany()
+                .HasForeignKey(d => d.OperationalAddressId);
+
+                entity.HasOne(d => d.Company)
+                .WithMany()
+                .HasForeignKey(d => d.CompanyId);
+
                 entity.Property(p => p.Status)
                  .HasConversion(
                   x => x.ToString(),
                   x => (ManifestStatus)Enum.Parse(typeof(ManifestStatus), x)
                   );
-                entity.HasOne(d => d.Invoice)
+
+                entity.HasOne(d => d.Request)
+                .WithMany()
+                .HasForeignKey(d => d.RequestId);
+
+                entity.HasOne(d => d.RouteServiceAppointmentLocation)
                 .WithOne()
-                .HasForeignKey<Manifest>(d => d.InvoiceId);
+                .HasForeignKey<RouteServiceAppointmentLocation>(d => d.ManifestId);
+
+                entity.HasOne(d => d.ServiceAppointmentLocation)
+                .WithOne(x=>x.Manifest)
+                .HasForeignKey<Manifest>(d => d.ServiceAppointmentLocationId);
 
                 entity.HasOne(d => d.Provider)
-                .WithOne()
-                .HasForeignKey<Manifest>(d => d.ProviderId);
+                .WithMany()
+                .HasForeignKey(d => d.ProviderId);
 
                 entity.HasOne(d => d.DriverManifest)
                 .WithOne(x=>x.Manifest)
@@ -446,6 +476,9 @@ namespace infrastructure.Data
                 entity.HasOne(d => d.CapacityEntity)
                 .WithMany(p => p.LocationCompany)
                 .HasForeignKey(d => d.CapacityId);
+                entity.HasOne(d => d.Company)
+                .WithMany()
+                .HasForeignKey(d => d.CompanyId);
             });
 
             modelBuilder.Entity<DocumentSubmission>(entity =>
@@ -487,11 +520,11 @@ namespace infrastructure.Data
                  x => (ServiceStatus)Enum.Parse(typeof(ServiceStatus), x)
                  );
 
-                entity.Property(d => d.OilQuality)
-                  .HasConversion(
-                    v => v != null ? v.ToString() : null,
-                    v => v != null ? (OilQualityEnum)Enum.Parse(typeof(OilQualityEnum), v) : (OilQualityEnum?)null
-                  );
+                //entity.Property(d => d.OilQuality)
+                //  .HasConversion(
+                //    v => v != null ? v.ToString() : null,
+                //    v => v != null ? (OilQualityEnum)Enum.Parse(typeof(OilQualityEnum), v) : (OilQualityEnum?)null
+                //  );
 
                 entity.Property(p => p.CancelBy)
                 .HasConversion(
@@ -537,13 +570,17 @@ namespace infrastructure.Data
                       .WithMany(p => p.Invoices)
                  .HasForeignKey(d => d.CompanyId);
 
+                entity.HasOne(d => d.OperationalAddress)
+                      .WithMany()
+                 .HasForeignKey(d => d.OperationalAddressId);
+
                 entity.HasMany(d => d.InvoiceProduct)
                 .WithOne(p => p.Invoice)
                 .HasForeignKey(d => d.InvoiceId);
 
                 entity.HasOne(d => d.BillingInformation)
-                .WithOne()
-                .HasForeignKey<Invoice>(d => d.BillingInformationId);
+                .WithMany()
+                .HasForeignKey(d => d.BillingInformationId);
 
                 entity
                 .Property(p => p.Status)
@@ -552,12 +589,59 @@ namespace infrastructure.Data
                 x => (InvoiceStatus)Enum.Parse(typeof(InvoiceStatus), x)
                 );
 
+                entity
+                .Property(p => p.Type)
+                .HasConversion(
+                x => x.ToString(),
+                x => (InvoiceType)Enum.Parse(typeof(InvoiceType), x)
+                );
+
                 entity.Property(d => d.PaymentStatus)
                 .HasConversion(
                  x => x.ToString(),
                  x => (PaymentStatus)Enum.Parse(typeof(PaymentStatus), x)
                  );
+            });
 
+            modelBuilder.Entity<RequestEntity>(entity =>
+            {
+                entity.ToTable("Request");
+                entity.HasMany(d => d.BaseServiceAppointment)
+                      .WithOne(p => p.Request)
+                 .HasForeignKey(d => d.RequestId);
+
+                entity.HasOne(d => d.Company)
+                      .WithMany(p => p.Requests)
+                 .HasForeignKey(d => d.CompanyId);
+
+                entity.HasOne(d => d.OperationalAddress)
+                      .WithMany()
+                 .HasForeignKey(d => d.OperationalAddressId);
+
+
+                entity.HasOne(d => d.BillingInformation)
+                .WithOne()
+                .HasForeignKey<RequestEntity>(d => d.BillingInformationId);
+
+                entity
+                .Property(p => p.Status)
+                .HasConversion(
+                x => x.ToString(),
+                x => (InvoiceStatus)Enum.Parse(typeof(InvoiceStatus), x)
+                );
+
+                entity
+                .Property(p => p.Type)
+                .HasConversion(
+                x => x.ToString(),
+                x => (InvoiceType)Enum.Parse(typeof(InvoiceType), x)
+                );
+
+                entity.Property(d => d.PaymentStatus)
+                .HasConversion(
+                 x => x.ToString(),
+                 x => (PaymentStatus)Enum.Parse(typeof(PaymentStatus), x)
+                 );
             });
 
 
@@ -573,6 +657,10 @@ namespace infrastructure.Data
                 entity.HasOne(d => d.LocationCompany)
                 .WithMany(p => p.ServiceAppointmentLocations)
                 .HasForeignKey(d => d.LocationCompanyId);
+
+                entity.HasOne(d => d.ServiceAppointment)
+                .WithMany(p => p.ServiceAppointmentLocations)
+                .HasForeignKey(d => d.ServiceAppointmentId);
 
                 entity.Property(d => d.Status)
                 .HasConversion(

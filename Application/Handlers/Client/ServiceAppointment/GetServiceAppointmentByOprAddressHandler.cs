@@ -29,6 +29,19 @@ namespace CMPNatural.Application.Handlers
 
         public async Task<CommandResponse<List<ClientServiceAppointment>>> Handle(GetServiceAppointmentByOprAddressCommand request, CancellationToken cancellationToken)
         {
+var currentStatuses = new[]
+{
+    ServiceStatus.Proccessing,
+
+    ServiceStatus.Updated_Provider,
+    ServiceStatus.Submited_Provider,
+    ServiceStatus.In_Process,
+    ServiceStatus.Arrived,
+    ServiceStatus.Photo_Before_Work,
+    ServiceStatus.Driver_Update_Service,
+    ServiceStatus.Photo_After_Work,
+    ServiceStatus.Done_Driver,
+};
             var result = (await _serviceAppointmentRepository.GetAsync(
                 (p)=> p.OperationalAddressId == request.OperationalAddressId &&
                 p.CompanyId == request.CompanyId &&
@@ -36,12 +49,12 @@ namespace CMPNatural.Application.Handlers
                 (
                 p.Status == ServiceStatus.Draft
                 ||
-                p.Status == ServiceStatus.Proccessing
+                  currentStatuses.Contains(p.Status) 
                 ||
                 p.Status == ServiceStatus.Scaduled) &&
                 //
                 p.Status != ServiceStatus.Canceled, query=> query
-                .Include(x=>x.Invoice)
+                .Include(x=>x.Request)
                 .Include(x=>x.ProductPrice)
                 )
                 ).ToList();
@@ -52,17 +65,17 @@ namespace CMPNatural.Application.Handlers
 
             foreach (var x in data)
             {
-                var invoiceNumber = x.FirstOrDefault().Invoice.InvoiceId;
+                var RequestId = x.FirstOrDefault().Request.Id;
                 TerminateStatusEnum status = TerminateStatusEnum.None;
-                status = await requestTerminateStatus(TerminateStatusEnum.None, invoiceNumber, x);
+                status = await requestTerminateStatus(TerminateStatusEnum.None, RequestId, x);
 
                 dataset.Add(new ClientServiceAppointment
                 {
                     Draft = x.FirstOrDefault(p => p.Status == ServiceStatus.Draft),
-                    Current = x.FirstOrDefault(p => p.Status == ServiceStatus.Proccessing),
+                    Current = x.FirstOrDefault(p => currentStatuses.Contains(p.Status)),
                     Next = x.FirstOrDefault(p => p.Status == ServiceStatus.Scaduled),
                     ServiceId = x.FirstOrDefault(p => p.ProductPriceId == x.Key)?.ProductId ?? 0,
-                    InvoiceNumber = invoiceNumber,
+                    RequestId = RequestId,
                     TerminateStatus = status
                 });
             }
@@ -70,7 +83,7 @@ namespace CMPNatural.Application.Handlers
             return new Success<List<ClientServiceAppointment>>() { Data = dataset };
 
         }
-        public async Task<TerminateStatusEnum> requestTerminateStatus(TerminateStatusEnum status, string invoiceNumber, IGrouping<long, BaseServiceAppointment> x)
+        public async Task<TerminateStatusEnum> requestTerminateStatus(TerminateStatusEnum status, long requestId, IGrouping<long, BaseServiceAppointment> x)
         {
             if(x.Any(p => p.Status == ServiceStatus.Scaduled))
             {
@@ -78,7 +91,7 @@ namespace CMPNatural.Application.Handlers
             }
 
             var terminateRequest = (await _requestTerminateRepository
-                 .GetAsync(t => t.InvoiceNumber == invoiceNumber)).LastOrDefault();
+                 .GetAsync(t => t.RequestId == requestId)).LastOrDefault();
         
             if (terminateRequest != null)
             {

@@ -8,7 +8,7 @@ using ScoutDirect.Core.Base;
 
 namespace CMPNatural.Application
 {
-    public class GetAllInvoiceRequestCommand : PagedQueryRequest, IRequest<CommandResponse<PagesQueryResponse<InvoiceResponse>>>
+    public class GetAllInvoiceRequestCommand : PagedQueryRequest, IRequest<CommandResponse<PagesQueryResponse<RequestResponse>>>
     {
         public long CompanyId { get; set; }
         public long OperationalAddressId { get; set; }

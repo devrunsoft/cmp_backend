@@ -53,6 +53,7 @@ namespace CMPNatural.Application
                 .Include(x => x.Items)
                 .ThenInclude(x => x.ServiceAppointmentLocation)
                 .ThenInclude(x => x.LocationCompany)
+                .ThenInclude(x => x.Company)
             )).FirstOrDefault();
 
             result.Status = RouteStatus.InProcess;
@@ -62,24 +63,37 @@ namespace CMPNatural.Application
             var routeResponse = new RouteDateResponse()
             {
                 Id = result.Id,
-                Name= result.Name,
-                Routes = result.Items.Select(x=>
-                new RouteLocationResponse() {
-                    Id = x.Id,
-                    Address = x.ServiceAppointmentLocation.LocationCompany.Address,
-                    PrimaryFirstName = x.ServiceAppointmentLocation.LocationCompany.PrimaryFirstName,
-                    PrimaryLastName = x.ServiceAppointmentLocation.LocationCompany.PrimaryLastName,
-                    PrimaryPhonNumber = x.ServiceAppointmentLocation.LocationCompany.PrimaryPhonNumber,
-                    ManifestNumber = x.ManifestNumber,
-                    ProductName = x.ServiceAppointmentLocation.ServiceAppointment.Product.Name,
-                    ProductPriceName = x.ServiceAppointmentLocation.ServiceAppointment.ProductPrice.Name,
-                    IsEmegency = x.ServiceAppointmentLocation.ServiceAppointment.IsEmegency,
-                    Capacity = x.ServiceAppointmentLocation.ServiceAppointment.Qty,
-                    ServiceType = ((ServiceType)x.ServiceAppointmentLocation.ServiceAppointment.Product.ServiceType).GetDescription(),
-                    Lat = x.ServiceAppointmentLocation.LocationCompany.Lat,
-                    Lng = x.ServiceAppointmentLocation.LocationCompany.Long
+                Name = result.Name,
+                Date = result.Date,
+                Routes = result.Items
+                .Select(g =>
+                new RouteLocationResponse()
+                {
+                    Id = g.Id,
+                    RouteId = result.Id,
+                    Address = g.ServiceAppointmentLocation.LocationCompany.Address,
+                    PrimaryFirstName = g.ServiceAppointmentLocation.LocationCompany.PrimaryFirstName,
+                    PrimaryLastName = g.ServiceAppointmentLocation.LocationCompany.PrimaryLastName,
+                    PrimaryPhonNumber = g.ServiceAppointmentLocation.LocationCompany.PrimaryPhonNumber,
+                    ManifestNumber = g.ManifestNumber,
+                    LocationCompanyId = g.ServiceAppointmentLocation.LocationCompany.Id,
+                    Lat = g.ServiceAppointmentLocation.LocationCompany.Lat,
+                    Lng = g.ServiceAppointmentLocation.LocationCompany.Long,
+                    CompanyName = g.ServiceAppointmentLocation.LocationCompany.Company.CompanyName,
+                    Services =new RouteServices
+                    {
+                        ProductName = g.ServiceAppointmentLocation.ServiceAppointment.Product.Name,
+                        ProductPriceName = g.ServiceAppointmentLocation.ServiceAppointment.ProductPrice.Name,
+                        IsEmegency = g.ServiceAppointmentLocation.ServiceAppointment.IsEmegency,
+                        Capacity = g.ServiceAppointmentLocation.ServiceAppointment.Qty,
+                        ServiceType = ((ServiceType)g.ServiceAppointmentLocation.ServiceAppointment.Product.ServiceType).GetDescription(),
+                        Status = g.ServiceAppointmentLocation.Status,
+                        FinishDate = g.ServiceAppointmentLocation.FinishDate,
+                        StartedAt = g.ServiceAppointmentLocation.StartedAt,
+                        ServiceAppointmentLocationId = g.ServiceAppointmentLocation.Id,
+                        ManifestNumber = g.ManifestNumber
+                    },
                 }).ToList()
-
             };
 
             return new Success<RouteDateResponse>()

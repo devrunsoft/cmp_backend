@@ -25,7 +25,7 @@ namespace CMPPayment.Model
                             Name = e.ProductPrice.Name,
                         }
                     },
-                    Quantity = e.FactQty,
+                    Quantity = e.ServiceAppointmentLocations.Sum(x=>x.FactQty)??0,
                 }
                 );
             });

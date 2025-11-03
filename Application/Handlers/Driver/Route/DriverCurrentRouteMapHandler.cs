@@ -9,6 +9,12 @@ using Microsoft.EntityFrameworkCore;
 using CMPNatural.Application.Responses.Driver;
 using CMPNatural.Core.Enums;
 using CMPNatural.Application.Commands.Driver.Route;
+using CMPNatural.Application.Responses.Service;
+using System.Net.Http;
+using System.Collections.Generic;
+using CMPNatural.Application.Responses;
+using GeoCoordinatePortable;
+using CMPNatural.Core.Entities;
 
 namespace CMPNatural.Application
 {
@@ -38,6 +44,7 @@ namespace CMPNatural.Application
                 .Include(x => x.Items)
                 .ThenInclude(x => x.ServiceAppointmentLocation)
                 .ThenInclude(x => x.LocationCompany)
+                .ThenInclude(x => x.Company)
             )).LastOrDefault();
 
             if (result == null)
@@ -48,33 +55,113 @@ namespace CMPNatural.Application
                 };
             }
 
-            var routeResponse = new RouteDateResponse()
+
+            var input = result.Items
+                 .Where(x => x?.ServiceAppointmentLocation?.LocationCompany?.Lat != null
+                    && x.ServiceAppointmentLocation.LocationCompany.Long != null)
+                .ToList();
+
+            double radiusMiles = 0.03; // ~158 meters
+            double radiusMeters = radiusMiles * LocationCompany.MetersPerMile;
+
+            //var clusters = LocationCompany.ClusterByRadius(
+            //input,
+            //x => x.ServiceAppointmentLocation!.LocationCompany!.Lat,
+            //x => x.ServiceAppointmentLocation!.LocationCompany!.Long,
+            //radiusMeters);
+
+            var routes = input.Select(x =>
+            {
+                var srv = x.ServiceAppointmentLocation;
+                var lc = x.ServiceAppointmentLocation.LocationCompany!;
+                var lat = lc.Lat;
+                var lng = lc.Long;
+
+                return new RouteLocationResponse
+                {
+                    Id = x.Id,
+                    RouteId = result.Id,
+                    Address = lc.Address,
+                    PrimaryFirstName = lc.PrimaryFirstName,
+                    PrimaryLastName = lc.PrimaryLastName,
+                    PrimaryPhonNumber = lc.PrimaryPhonNumber,
+                    ManifestNumber = x.ManifestNumber,
+                    LocationCompanyId = lc.Id,
+                    Lat = lat,
+                    Lng = lng,
+                    CompanyName = lc.Company?.CompanyName,
+                    Status = srv.Status,
+                    Services = new RouteServices
+                    {
+                        ProductName = x.ServiceAppointmentLocation!.ServiceAppointment!.Product?.Name,
+                        ProductPriceName = x.ServiceAppointmentLocation!.ServiceAppointment!.ProductPrice?.Name,
+                        IsEmegency = x.ServiceAppointmentLocation!.ServiceAppointment!.IsEmegency,
+                        Capacity = x.ServiceAppointmentLocation!.ServiceAppointment!.Qty,
+                        ServiceType = x.ServiceAppointmentLocation!.ServiceAppointment!.Product is { } p
+                            ? ((ServiceType)p.ServiceType).GetDescription()
+                            : null,
+                        Status = x.ServiceAppointmentLocation!.Status,
+                        FinishDate = x.ServiceAppointmentLocation!.FinishDate,
+                        StartedAt = x.ServiceAppointmentLocation!.StartedAt,
+                        ServiceAppointmentLocationId = x.ServiceAppointmentLocation!.Id
+                    }
+                };
+            }).ToList();
+
+            var routeResponse = new RouteDateResponse
             {
                 Id = result.Id,
                 Name = result.Name,
-                Routes = result.Items.Select(x =>
-                new RouteLocationResponse()
-                {
-                    Id = x.Id,
-                    Address = x.ServiceAppointmentLocation.LocationCompany.Address,
-                    PrimaryFirstName = x.ServiceAppointmentLocation.LocationCompany.PrimaryFirstName,
-                    PrimaryLastName = x.ServiceAppointmentLocation.LocationCompany.PrimaryLastName,
-                    PrimaryPhonNumber = x.ServiceAppointmentLocation.LocationCompany.PrimaryPhonNumber,
-                    ManifestNumber = x.ManifestNumber,
-                    ProductName = x.ServiceAppointmentLocation.ServiceAppointment.Product.Name,
-                    ProductPriceName = x.ServiceAppointmentLocation.ServiceAppointment.ProductPrice.Name,
-                    IsEmegency = x.ServiceAppointmentLocation.ServiceAppointment.IsEmegency,
-                    Capacity = x.ServiceAppointmentLocation.ServiceAppointment.Qty,
-                    ServiceType = ((ServiceType)x.ServiceAppointmentLocation.ServiceAppointment.Product.ServiceType).GetDescription(),
-                    Lat = x.ServiceAppointmentLocation.LocationCompany.Lat,
-                    Lng = x.ServiceAppointmentLocation.LocationCompany.Long
-                }).ToList()
-
+                Date = result.Date,
+                Routes = routes
             };
+
+
+            var http = new HttpClient();
+            var service = new GoogleDirectionsService("AIzaSyB4RuysVF06sulgiowRTkToZ-M6gk9uxNU");
+
+            var mainpointList = routeResponse.Routes;
+
+            bool hasCurrent = request.Lat.HasValue && request.Lng.HasValue;
+
+            // Origin: use current if provided, otherwise the first point
+            var origin = hasCurrent
+                ? new LatLngPoint { Lat = request.Lat!.Value, Lng = request.Lng!.Value }
+                : new LatLngPoint { Lat = mainpointList.First().Lat, Lng = mainpointList.First().Lng };
+
+            var destination = new LatLngPoint
+            {
+                Lat = mainpointList.Last().Lat,
+                Lng = mainpointList.Last().Lng
+            };
+
+            var waypointStartIndex = hasCurrent ? 0 : 1;
+            var waypointEndExclusive = Math.Max(mainpointList.Count - 1, waypointStartIndex); // exclude the last (destination)
+            var waypoints = (waypointEndExclusive > waypointStartIndex)
+             ? mainpointList
+                .GetRange(waypointStartIndex, waypointEndExclusive - waypointStartIndex)
+                .Select(p => new LatLngPoint { Lat = p.Lat, Lng = p.Lng })
+                .ToList()
+              : new List<LatLngPoint>();
+
+            var cmd = new DirectionCommand
+            {
+                Origin = origin,
+                Destination = destination,
+                Waypoints = waypoints.Select(p =>
+                new LatLngPoint()
+                {
+                    Lat = p.Lat,
+                    Lng = p.Lng,
+                }).ToList()
+            };
+
+            DirectionsResult r = await service.GetDirectionsAsync(cmd);
+            routeResponse.DirectionsResult = r;
 
             return new Success<RouteDateResponse>()
             {
-                Data = routeResponse
+                Data = routeResponse,
             };
 
         }
@@ -82,3 +169,16 @@ namespace CMPNatural.Application
     }
 }
 
+
+public class DirectionCommand
+{
+    public LatLngPoint Origin { get; set; } = new();
+    public LatLngPoint Destination { get; set; } = new();
+    public List<LatLngPoint> Waypoints { get; set; } = new();
+}
+
+public class LatLngPoint
+{
+    public double Lat { get; set; }
+    public double Lng { get; set; }
+}

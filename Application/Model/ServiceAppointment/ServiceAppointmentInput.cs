@@ -73,7 +73,7 @@ namespace CMPNatural.Application.Model.ServiceAppointment
             model.ProductId = input.ProductId;
             model.OperationalAddressId = input.OperationalAddressId;
             model.CompanyId = companyId;
-            model.InvoiceId = invoiceId;
+            //model.InvoiceId = invoiceId;
             model.Qty = input.qty;
             model.Subsidy = input.Subsidy;
             model.Amount = input.Amount;

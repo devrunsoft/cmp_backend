@@ -21,6 +21,7 @@ namespace CMPNatural.Core.Entities
         public string? PrimaryPhonNumber { get; set; }
         public int Type { get; set; }
         public virtual OperationalAddress OperationalAddress { get; set; }
+        public virtual Company Company { get; set; }
         public virtual Capacity CapacityEntity { get; set; }
         public virtual ICollection<ServiceAppointmentLocation> ServiceAppointmentLocations { get; set; } = new List<ServiceAppointmentLocation>();
 

@@ -17,39 +17,47 @@ namespace CMPNatural.Application
 
     public class AdminCheckInvoiceProviderHandler : IRequestHandler<AdminCheckInvoiceProviderCommand, CommandResponse<List<Provider>>>
     {
-        private readonly IinvoiceRepository _invoiceRepository;
+        private readonly IManifestRepository manifestRepository;
         private readonly IProviderReposiotry _providerReposiotry;
 
-        public AdminCheckInvoiceProviderHandler(IinvoiceRepository invoiceRepository, IProviderReposiotry providerReposiotry)
+        public AdminCheckInvoiceProviderHandler(IManifestRepository manifestRepository, IProviderReposiotry providerReposiotry)
         {
-            _invoiceRepository = invoiceRepository;
+            this.manifestRepository = manifestRepository;
             _providerReposiotry = providerReposiotry;
         }
 
         public async Task<CommandResponse<List<Provider>>> Handle(AdminCheckInvoiceProviderCommand request, CancellationToken cancellationToken)
         {
             //int MaxDistance = 2000; //meter
-            var invoices = (await _invoiceRepository.GetAsync(p=>p.Id== request.InvoiceId,
+            var result = (await manifestRepository.GetAsync(p=>p.Id== request.ManifestId,
                 query => query
-                .Include(i => i.BaseServiceAppointment)
+                .Include(i => i.ServiceAppointmentLocation)
+                .ThenInclude(i => i.ServiceAppointment)
                 .ThenInclude(i => i.Product)
-                .Include(i => i.BaseServiceAppointment)
-                .ThenInclude(i => i.ServiceAppointmentLocations)
-                .ThenInclude(p => p.LocationCompany))).FirstOrDefault();
+                .Include(i => i.ServiceAppointmentLocation)
+                .ThenInclude(i => i.LocationCompany)
+
+                )).FirstOrDefault();
 
             bool shouldCheckLocation = false;
 
-            var locations = invoices.BaseServiceAppointment.SelectMany(p =>
-            {
-                if (p.Product.ServiceType == (int)ServiceType.Cooking_Oil_Collection || p.Product.ServiceType == (int)ServiceType.Grease_Trap_Management)
-                {
-                    shouldCheckLocation = true;
-                }
-               return p.ServiceAppointmentLocations;
-            }
-            ).ToList();
+            //var locations = invoices.ServiceAppointmentLocation;
+            //{
+            //    if (p.Product.ServiceType == (int)ServiceType.Cooking_Oil_Collection || p.Product.ServiceType == (int)ServiceType.Grease_Trap_Management)
+            //    {
+            //        shouldCheckLocation = true;
+            //    }
+            //    return p.ServiceAppointmentLocations;
+            //};
+            var p = result.ServiceAppointmentLocation.ServiceAppointment;
 
-            var providers = (await _providerReposiotry.GetAllSearchProviderAllInvoiceAsync(locations, shouldCheckLocation)).ToList();
+            if (p.Product.ServiceType == (int)ServiceType.Cooking_Oil_Collection || p.Product.ServiceType == (int)ServiceType.Grease_Trap_Management)
+            {
+                shouldCheckLocation = true;
+            }
+
+            var providers = (await _providerReposiotry
+           .GetAllSearchProviderAllInvoiceAsync(new List<ServiceAppointmentLocation>() { result.ServiceAppointmentLocation }, shouldCheckLocation)).ToList();
 
             return new Success<List<Provider>>() { Data = providers };
         }

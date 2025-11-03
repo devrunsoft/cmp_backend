@@ -23,6 +23,7 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.20" />
+    <PackageReference Include="Sentry.AspNetCore" Version="5.16.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -76,6 +77,10 @@
     <None Remove="Controllers\Driver\Manifest\" />
     <None Remove="Controllers\Driver\Route\" />
     <None Remove="Controllers\Driver\Vehicle\" />
+    <None Remove="Controllers\Driver\ServiceAppointmentLocationFile\" />
+    <None Remove="Controllers\Driver\ServiceAppointmentLocation\" />
+    <None Remove="Controllers\Admin\Route\" />
+    <None Remove="Controllers\Admin\Request\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="View\" />
@@ -128,6 +133,11 @@
     <Folder Include="Controllers\Driver\Manifest\" />
     <Folder Include="Controllers\Driver\Route\" />
     <Folder Include="Controllers\Driver\Vehicle\" />
+    <Folder Include="Controllers\Driver\ServiceAppointmentLocationFile\" />
+    <Folder Include="Controllers\Driver\ServiceAppointmentLocation\" />
+    <Folder Include="Controllers\Admin\Route\" />
+    <Folder Include="Controllers\Admin\Route\" />
+    <Folder Include="Controllers\Admin\Request\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\CMPNatural.Core.csproj">

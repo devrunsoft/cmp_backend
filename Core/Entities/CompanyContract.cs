@@ -11,7 +11,7 @@ namespace CMPNatural.Core.Entities
         public string Content { get; set; } = "";
 		public long ContractId { get; set; }
         public long CompanyId { get; set; }
-        public string InvoiceId { get; set; }
+        public long RequestId { get; set; }
         public string? Sign { get; set; }
         public string? AdminSign { get; set; }
         public DateTime? ClientSignDate { get; set; }
@@ -51,8 +51,8 @@ namespace CMPNatural.Core.Entities
             return p =>
              (p.Content != null && p.Content.ToLower().Contains(loweredSearch)) ||
              (p.ContractNumber != null && p.ContractNumber.ToLower().Contains(loweredSearch)) ||
-             (p.InvoiceId != null && p.InvoiceId.ToLower().Contains(loweredSearch)) ||
-             (p.InvoiceId != null && p.InvoiceId.ToLower().Contains(loweredSearch));
+             (p.RequestId != null && p.RequestId.ToString().Contains(loweredSearch)) ||
+             (p.RequestId != null && p.RequestId.ToString().Contains(loweredSearch));
         }
     }
 }

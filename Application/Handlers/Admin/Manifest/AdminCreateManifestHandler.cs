@@ -13,12 +13,12 @@ namespace CMPNatural.Application
 {
 	public class AdminCreateManifestHandler
 	{
-        private readonly IinvoiceRepository _invoiceRepository;
+        private readonly IRequestRepository _invoiceRepository;
         private readonly IAppInformationRepository _apprepository;
         private readonly IManifestRepository _repository;
         private readonly IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository;
         private readonly AppSetting _appSetting;
-        public AdminCreateManifestHandler(IManifestRepository _repository, IinvoiceRepository _invoiceRepository, IAppInformationRepository _apprepository,
+        public AdminCreateManifestHandler(IManifestRepository _repository, IRequestRepository _invoiceRepository, IAppInformationRepository _apprepository,
              IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository, AppSetting appSetting)
         {
 
@@ -28,26 +28,28 @@ namespace CMPNatural.Application
             this._serviceAppointmentLocationRepository = _serviceAppointmentLocationRepository;
             this._appSetting = appSetting;
         }
-        public async Task<CommandResponse<Manifest>> Create(Invoice invoice , ManifestStatus status)
+        public async Task<CommandResponse<Manifest>> Create(RequestEntity request , ManifestStatus status , long ServiceAppointmentLocationId, DateTime StartDate)
 		{
-            var information = (await _apprepository.GetAllAsync()).LastOrDefault();
-            var services = (await _invoiceRepository.GetAsync(x => x.Id == invoice.Id, query => query
-                .Include(x => x.BaseServiceAppointment)
-                .ThenInclude(x => x.Product)
-                .Include(x => x.BaseServiceAppointment)
-                .ThenInclude(x => x.ProductPrice)
-                )).FirstOrDefault();
+            //var information = (await _apprepository.GetAllAsync()).LastOrDefault();
+            //var services = (await _invoiceRepository.GetAsync(x => x.Id == invoice.Id, query => query
+            //    .Include(x => x.BaseServiceAppointment)
+            //    .ThenInclude(x => x.Product)
+            //    .Include(x => x.BaseServiceAppointment)
+            //    .ThenInclude(x => x.ProductPrice)
+            //    )).FirstOrDefault();
 
             var entity = new Manifest()
             {
-                InvoiceId = invoice.Id,
+                RequestId = request.Id,
                 Status = status,
                 Content = "",
-                ContractId = invoice.ContractId.Value,
-                CompanyId = invoice.CompanyId,
-                CreatedAt = invoice.CreatedAt,
+                ContractId = request.ContractId.Value,
+                CompanyId = request.CompanyId,
+                CreatedAt = request.CreatedAt,
                 ManifestNumber = "",
-                OperationalAddressId = invoice.OperationalAddressId
+                OperationalAddressId = request.OperationalAddressId,
+                ServiceAppointmentLocationId = ServiceAppointmentLocationId,
+                PreferredDate = StartDate,
             };
 
             var result = await _repository.AddAsync(entity);

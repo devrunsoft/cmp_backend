@@ -34,10 +34,7 @@ namespace CMPNatural.Application.Handlers.Admin.Auth
             }
 
             var invoices = (await _invoiceRepository.GetBasePagedAsync(request, x=> (request.Status == null ?
-            x.Status == InvoiceStatus.Send_Payment || x.Status == InvoiceStatus.Complete
-
-            //&& x.Status != InvoiceStatus.Processing_Provider
-            : x.Status == request.Status),
+             true : x.Status == request.Status) && x.Type == InvoiceType.Final_Invoice,
 
                 query => query.Include(i => i.Company).Include(x => x.Provider)));
 

@@ -8,10 +8,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using CMPNatural.Application.Mapper;
+using CMPNatural.Application.Responses;
 
 namespace CMPNatural.Application
 {
-    public class ProviderGetManifestHandler : IRequestHandler<ProviderGetManifestCommand, CommandResponse<Manifest>>
+    public class ProviderGetManifestHandler : IRequestHandler<ProviderGetManifestCommand, CommandResponse<ManifestResponse>>
     {
         private readonly IManifestRepository _repository;
 
@@ -20,26 +22,32 @@ namespace CMPNatural.Application
             this._repository = _repository;
         }
 
-        public async Task<CommandResponse<Manifest>> Handle(ProviderGetManifestCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<ManifestResponse>> Handle(ProviderGetManifestCommand request, CancellationToken cancellationToken)
         {
-            var result = (await _repository.GetAsync(p => p.Id == request.Id && p.ProviderId == request.ProviderId, query=> query
-            .Include(x=>x.Invoice)
-            .ThenInclude(x=>x.Company)
-
-            .Include(x => x.Invoice)
-            .ThenInclude(x => x.BaseServiceAppointment)
+            var result = (await _repository.GetAsync(p => p.Id == request.Id, query => query
+            .Include(x => x.ServiceAppointmentLocation)
+            .ThenInclude(x => x.ServiceAppointment)
             .ThenInclude(x => x.ProductPrice)
 
-            .Include(x => x.Invoice)
-            .ThenInclude(x => x.BaseServiceAppointment)
+            .Include(x => x.ServiceAppointmentLocation)
+            .ThenInclude(x => x.ServiceAppointment)
             .ThenInclude(x => x.Product)
 
-            .Include(x => x.Invoice)
-            .ThenInclude(x => x.BaseServiceAppointment)
-            .ThenInclude(x => x.ServiceAppointmentLocations)
+            .Include(x => x.Request)
+            .ThenInclude(x => x.OperationalAddress)
+
+            .Include(x => x.Request)
+            .ThenInclude(x => x.BillingInformation)
+
+
+            .Include(x => x.ServiceAppointmentLocation)
             .ThenInclude(x => x.LocationCompany)
+            .Include(x => x.Request)
+            .ThenInclude(x => x.Company)
+            .Include(x => x.Provider)
             )).FirstOrDefault();
-            return new Success<Manifest>() { Data = result };
+
+            return new Success<ManifestResponse>() { Data = ManifestMapper.Mapper.Map<ManifestResponse>(result) };
         }
     }
 }

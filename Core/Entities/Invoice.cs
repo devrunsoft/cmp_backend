@@ -19,6 +19,7 @@ namespace CMPNatural.Core.Entities
         public DateTime CreatedAt { get; set; }
 
         public long OperationalAddressId { get; set; }
+
         public string Address { get; set; } = "";
 
         public string? Comment { get; set; }
@@ -27,18 +28,17 @@ namespace CMPNatural.Core.Entities
 
         public string InvoiceNumber { get; set; }
 
+        public InvoiceType Type { get; set; }
+
         public string RequestNumber { get; set; }
 
         public long BillingInformationId { get; set; }
-
 
         public virtual Company Company { get; set; } = null!;
 
         public virtual Provider? Provider { get; set; }
 
         public virtual BillingInformation BillingInformation { get; set; } = null!;
-
-
 
         [NotMapped]
         public string Number
@@ -72,6 +72,8 @@ namespace CMPNatural.Core.Entities
         public virtual ICollection<InvoiceProduct> InvoiceProduct { get; set; } = new List<InvoiceProduct>();
 
         public virtual ICollection<BaseServiceAppointment> BaseServiceAppointment { get; set; } = new List<BaseServiceAppointment>();
+
+        public virtual OperationalAddress? OperationalAddress { get; set; }
     }
 }
 

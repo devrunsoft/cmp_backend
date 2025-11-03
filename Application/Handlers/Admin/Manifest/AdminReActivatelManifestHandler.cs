@@ -23,11 +23,11 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<Manifest>> Handle(AdminReActivatelManifestCommand request, CancellationToken cancellationToken)
         {
-            var result = (await _repository.GetAsync(p => p.Id == request.Id , query => query.Include(x=>x.Invoice))).FirstOrDefault();
+            var result = (await _repository.GetAsync(p => p.Id == request.Id , query => query.Include(x=>x.Request))).FirstOrDefault();
 
             if (result.ProviderId == null)
             {
-                result.Status = result.Invoice.Status == InvoiceStatus.Scaduled ? ManifestStatus.Scaduled : ManifestStatus.Draft;
+                result.Status = result.Request.Status == InvoiceStatus.Scaduled ? ManifestStatus.Scaduled : ManifestStatus.Draft;
             }
             else
             {

@@ -37,6 +37,7 @@ namespace CMPNatural.Core.Entities
         public virtual ICollection<OperationalAddress> OperationalAddress { get; set; }
         public virtual ICollection<BillingInformation> BillingInformations { get; set; }
         public virtual ICollection<Invoice> Invoices { get; set; }
+        public virtual ICollection<RequestEntity> Requests { get; set; }
         public virtual ICollection<CompanyContract> CompanyContract { get; set; }
 
     }

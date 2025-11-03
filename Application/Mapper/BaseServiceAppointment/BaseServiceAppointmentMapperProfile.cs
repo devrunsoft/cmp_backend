@@ -11,7 +11,7 @@ namespace CMPNatural.Application.Mapper
         public BaseServiceAppointmentMapperProfile()
         {
             CreateMap<BaseServiceAppointment, BaseServiceAppointmentResponse>()
-                .ForMember(x => x.Invoice, opt => opt.MapFrom(src => InvoiceMapper.Mapper.Map<InvoiceResponse>(src.Invoice)))
+                //.ForMember(x => x.Invoice, opt => opt.MapFrom(src => InvoiceMapper.Mapper.Map<InvoiceResponse>(src.Invoice)))
                 .ReverseMap();
         }
     }

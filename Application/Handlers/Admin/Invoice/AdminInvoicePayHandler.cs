@@ -33,7 +33,9 @@ namespace CMPNatural.Application.Handlers
         public async Task<CommandResponse<InvoiceResponse>> Handle(AdminInvoicePayCommand request, CancellationToken cancellationToken)
         {
             var entity = (await _invoiceRepository.GetAsync(p => p.Id == request.InvoiceId, query =>
-            query.Include(p => p.BaseServiceAppointment))).FirstOrDefault();
+            query
+            .Include(x => x.BaseServiceAppointment).ThenInclude(x => x.ServiceAppointmentLocations)
+            )).FirstOrDefault();
 
             if(entity.Status != InvoiceStatus.Send_Payment)
             {
@@ -45,14 +47,17 @@ namespace CMPNatural.Application.Handlers
 
 
 
-            foreach (var serviceAppointment in entity.BaseServiceAppointment)
+            foreach (var i in entity.BaseServiceAppointment)
             {
-                serviceAppointment.Status = ServiceStatus.Complete;
-                await _baseServiceAppointmentRepository.UpdateAsync(serviceAppointment);
+                foreach (var serviceAppointment in i.ServiceAppointmentLocations)
+                {
+                    serviceAppointment.Status = ServiceStatus.Complete;
+                    await _baseServiceAppointmentRepository.UpdateAsync(i);
+                }
             }
             await _invoiceRepository.UpdateAsync(entity);
 
-            var manifest = (await _manifestRepository.GetAsync(x => x.InvoiceId == request.InvoiceId)).FirstOrDefault();
+            var manifest = (await _manifestRepository.GetAsync(x => x.RequestId == request.InvoiceId)).FirstOrDefault();
             manifest.Status = ManifestStatus.Canceled;
             await _manifestRepository.UpdateAsync(manifest);
 

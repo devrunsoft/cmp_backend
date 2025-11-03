@@ -32,44 +32,44 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<Invoice>> Handle(AdminSetOprLocationProviderCommand request, CancellationToken cancellationToken)
         {
             var invoice = (await _invoiceRepository.GetAsync(p => p.InvoiceId == request.InvoiceId, query =>
-                query.Include(p => p.BaseServiceAppointment))).FirstOrDefault();
+                query)).FirstOrDefault();
 
-            if (!(invoice.Status == InvoiceStatus.Needs_Assignment))
-            {
-                return new NoAcess<Invoice>() { Data = invoice };
-            }
+            //if (!(invoice.Status == InvoiceStatus.Needs_Assignment))
+            //{
+            //    return new NoAcess<Invoice>() { Data = invoice };
+            //}
 
-            foreach (var serviceAppointment in invoice.BaseServiceAppointment)
-            {
-                if (serviceAppointment.Id == request.ServiceId)
-                {
-                    serviceAppointment.ProviderId = request.ProviderId;
-                    await _baseServiceAppointmentRepository.UpdateAsync(serviceAppointment);
-                }
-            }
+            //foreach (var serviceAppointment in invoice.BaseServiceAppointment)
+            //{
+            //    if (serviceAppointment.Id == request.ServiceId)
+            //    {
+            //        serviceAppointment.ProviderId = request.ProviderId;
+            //        await _baseServiceAppointmentRepository.UpdateAsync(serviceAppointment);
+            //    }
+            //}
 
-            if (invoice.BaseServiceAppointment.Any(p => p.ProviderId != null))
-            {
-                var distinctProviders = invoice.BaseServiceAppointment.Select(p => p.ProviderId).Distinct().Count();
-                if (distinctProviders == 1)
-                {
-                    invoice.Status = InvoiceStatus.Processing_Provider;
-                    invoice.ProviderId = request.ProviderId;
-                }
-                else
-                {
-                 //invoice.Status = (int)InvoiceStatus.ProcessingSeprateProvider;
-                }
+            //if (invoice.BaseServiceAppointment.Any(p => p.ProviderId != null))
+            //{
+            //    var distinctProviders = invoice.BaseServiceAppointment.Select(p => p.ProviderId).Distinct().Count();
+            //    if (distinctProviders == 1)
+            //    {
+            //        invoice.Status = InvoiceStatus.Processing_Provider;
+            //        invoice.ProviderId = request.ProviderId;
+            //    }
+            //    else
+            //    {
+            //     //invoice.Status = (int)InvoiceStatus.ProcessingSeprateProvider;
+            //    }
 
-                await _invoiceRepository.UpdateAsync(invoice);
+            //    await _invoiceRepository.UpdateAsync(invoice);
 
-            }
+            //}
 
-            if (!invoice.BaseServiceAppointment.Any(p => p.ProviderId == null))
-            {
-                invoice.Status = InvoiceStatus.Processing_Provider;
-                await _invoiceRepository.UpdateAsync(invoice);
-            }
+            //if (!invoice.BaseServiceAppointment.Any(p => p.ProviderId == null))
+            //{
+            //    invoice.Status = InvoiceStatus.Processing_Provider;
+            //    await _invoiceRepository.UpdateAsync(invoice);
+            //}
 
 
             //if (invoice.BaseServiceAppointment.Any(p => p.ProviderId != null) && invoice.BaseServiceAppointment.Any(p => p.ProviderId == null))

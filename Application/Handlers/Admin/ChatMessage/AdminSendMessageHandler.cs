@@ -81,9 +81,6 @@ namespace CMPNatural.Application.Handlers.Admin
             var result = await _repository.AddAsync(entity);
 
             await _chatService.SendMessageToClient(request.ClientId, entity);
-            //await _chatService.AdminUserTyping(admin.PersonId.ToString(), new UserTypingPayload()
-            //{ ClientId = request.ClientId, IsTyping = false  , OperationalAddressId = request.OperationalAddressId, Name =  }
-            //);
 
             return new Success<ChatMessage>() { Data = result };
         }

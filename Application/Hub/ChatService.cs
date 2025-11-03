@@ -19,6 +19,9 @@ namespace CMPNatural.Application.Hub
     [Newtonsoft.Json.JsonConverter(typeof(JsonStringEnumConverter))]
     public enum ChatEnum
     {
+        [Description("liveLocation")]
+        liveLocation,
+
         [Description("message")]
         message,
 
@@ -42,12 +45,14 @@ namespace CMPNatural.Application.Hub
         Task SendObjectToAllAdmins(string message, ChatEnum type = ChatEnum.message);
         Task AdminUserTyping(string currentPersonId  , UserTypingPayload payload);
         Task ClientUserTyping(UserTypingPayload payload);
+        Task DriverLocation(string currentPersonId, LocationPayload payload);
     }
 
     public class ChatService : IChatService
     {
         private readonly IHubContext<ChatHub, IChatClient> _hubContext;
         private readonly ICompanyRepository _companyRepository;
+        private readonly IProviderReposiotry providerReposiotry;
         private readonly IAdminRepository _adminRepository;
 
         public ChatService(IHubContext<ChatHub, IChatClient> hubContext , IAdminRepository _adminRepository, ICompanyRepository _companyRepository)
@@ -67,6 +72,13 @@ namespace CMPNatural.Application.Hub
         public async Task SendToClient(long clientId, string message, ChatEnum type = ChatEnum.message)
         {
             var company = (await _companyRepository.GetAsync(x => x.Id == clientId)).FirstOrDefault();
+
+            await SendToPerson(company.PersonId.ToString(), message, type);
+        }
+
+        public async Task SendToProvider(long provider, string message, ChatEnum type = ChatEnum.liveLocation)
+        {
+            var company = (await providerReposiotry.GetAsync(x => x.Id == provider)).FirstOrDefault();
 
             await SendToPerson(company.PersonId.ToString(), message, type);
         }
@@ -127,7 +139,14 @@ namespace CMPNatural.Application.Hub
         }
         #endregion
 
+        public async Task DriverLocation(string currentPersonId, LocationPayload payload)
+        {
+            var personId = currentPersonId;
+            payload.PersonId = personId;
+            var m = JsonConvert.SerializeObject(payload, new StringEnumConverter());
+            //await SendToClient(payload.ProviderId, m, ChatEnum.liveLocation);
+            await SendObjectToAllAdmins(m, ChatEnum.liveLocation);
+        }
     }
-
 }
 

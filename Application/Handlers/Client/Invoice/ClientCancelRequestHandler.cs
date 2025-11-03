@@ -13,18 +13,18 @@ using CMPNatural.Core.Entities;
 
 namespace CMPNatural.Application.Handlers
 {
-    public class ClientCancelRequestHandler : IRequestHandler<ClientCancelRequestCommand, CommandResponse<Invoice>>
+    public class ClientCancelRequestHandler : IRequestHandler<ClientCancelRequestCommand, CommandResponse<RequestEntity>>
     {
-        private readonly IinvoiceRepository _invoiceRepository;
+        private readonly IRequestRepository _invoiceRepository;
         private readonly IManifestRepository _manifestRepository;
 
-        public ClientCancelRequestHandler(IinvoiceRepository invoiceRepository, IManifestRepository _manifestRepository)
+        public ClientCancelRequestHandler(IRequestRepository invoiceRepository, IManifestRepository _manifestRepository)
         {
             _invoiceRepository = invoiceRepository;
             this._manifestRepository = _manifestRepository;
         }
 
-        public async Task<CommandResponse<Invoice>> Handle(ClientCancelRequestCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<RequestEntity>> Handle(ClientCancelRequestCommand request, CancellationToken cancellationToken)
         {
             var invoices = (await _invoiceRepository.GetAsync(p => p.RequestNumber == request.RequestNumber && p.CompanyId == request.CompanyId &&
               (p.Status == InvoiceStatus.Draft),
@@ -48,7 +48,7 @@ namespace CMPNatural.Application.Handlers
             }
             
 
-            return new Success<Invoice>() { Data = invoices.FirstOrDefault() };
+            return new Success<RequestEntity>() { Data = invoices.FirstOrDefault() };
         }
     }
 }

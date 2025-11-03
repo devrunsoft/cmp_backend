@@ -25,10 +25,13 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<RequestTerminate>> Handle(AdminRequestTerminateGetCommand request, CancellationToken cancellationToken)
         {
             var result = (await _repository.GetAsync(x=>x.Id == request.Id, query => query
-            .Include(x => x.Invoice)
+            .Include(x => x.Request)
             .ThenInclude(x => x.Company)
-             .Include(x => x.Invoice)
+             .Include(x => x.Request)
             .ThenInclude(x => x.Provider)
+
+            .Include(x => x.Request)
+            .ThenInclude(x => x.BaseServiceAppointment)
             )).FirstOrDefault();
             return new Success<RequestTerminate>() { Data = result };
         }

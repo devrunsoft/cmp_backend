@@ -19,10 +19,10 @@ namespace CMPNatural.Application.Handlers
         private readonly IBaseServiceAppointmentRepository _serviceAppointmentRepository;
         private readonly IProductPriceRepository _productPriceRepository;
         private readonly ILocationCompanyRepository locationCompanyRepository;
-        private readonly IinvoiceRepository _iinvoiceRepository;
+        private readonly IRequestRepository _iinvoiceRepository;
 
         public AddServiceAppointmentHandler(IBaseServiceAppointmentRepository billingInformationRepository , IProductPriceRepository productPriceRepository,
-            IinvoiceRepository _iinvoiceRepository, ILocationCompanyRepository locationCompanyRepository)
+            IRequestRepository _iinvoiceRepository, ILocationCompanyRepository locationCompanyRepository)
         {
             _serviceAppointmentRepository = billingInformationRepository;
             _productPriceRepository = productPriceRepository;
@@ -63,7 +63,7 @@ namespace CMPNatural.Application.Handlers
                     Subsidy = request.Subsidy,
                     IsEmegency = false,
                     Qty = request.qty,
-                    FactQty = request.qty,
+                    //FactQty = request.qty,
                     Amount = request.Amount,
                     ProductId = request.ProductId,
                     ProductPrice = resultPrice,
@@ -104,7 +104,7 @@ namespace CMPNatural.Application.Handlers
                     Status = ServiceStatus.Draft,
                     IsEmegency = true,
                     Qty = request.qty,
-                    FactQty = request.qty,
+                    //FactQty = request.qty,
 
                     ServiceAppointmentLocations = request.LocationCompanyIds
                    .Select(id =>

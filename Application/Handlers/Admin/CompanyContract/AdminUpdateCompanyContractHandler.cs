@@ -19,11 +19,11 @@ namespace CMPNatural.Application
         private readonly ICompanyContractRepository _repository;
         private readonly IContractRepository _contractrepository;
         private readonly IAppInformationRepository _apprepository;
-        private readonly IinvoiceRepository _baseServicerepository;
+        private readonly IRequestRepository _baseServicerepository;
         private readonly AppSetting _appSetting;
 
         public AdminUpdateCompanyContractHandler(ICompanyContractRepository _repository, IContractRepository _contractrepository,
-            IinvoiceRepository baseServicerepository, IAppInformationRepository _apprepository, AppSetting appSetting)
+            IRequestRepository baseServicerepository, IAppInformationRepository _apprepository, AppSetting appSetting)
         {
             this._repository = _repository;
             this._contractrepository = _contractrepository;
@@ -52,7 +52,7 @@ namespace CMPNatural.Application
                 return new NoAcess<CompanyContract>() { Message = "No active contract found!" };
             }
 
-            var invoice = (await _baseServicerepository.GetAsync(x => x.InvoiceId == entity.InvoiceId, query => query
+            var invoice = (await _baseServicerepository.GetAsync(x => x.Id == entity.RequestId, query => query
             .Include(x => x.BaseServiceAppointment)
             .ThenInclude(x => x.Product)
             .Include(x => x.BaseServiceAppointment)

@@ -1,4 +1,5 @@
 ﻿using System;
+using CMPNatural.Application.Responses;
 using CMPNatural.Core.Base;
 using CMPNatural.Core.Entities;
 using CMPNatural.Core.Enums;
@@ -8,7 +9,7 @@ using ScoutDirect.Core.Base;
 
 namespace CMPNatural.Application
 {
-    public class ProviderGetManifestCommand : IRequest<CommandResponse<Manifest>>
+    public class ProviderGetManifestCommand : IRequest<CommandResponse<ManifestResponse>>
     {
         public ProviderGetManifestCommand()
         {

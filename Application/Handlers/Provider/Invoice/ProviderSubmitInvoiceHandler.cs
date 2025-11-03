@@ -39,15 +39,15 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<Invoice>> Handle(ProviderSubmitInvoiceCommand requests, CancellationToken cancellationToken)
         {
             var invoice = (await _invoiceRepository.GetAsync(p => p.Id == requests.InvoiceId && p.ProviderId == requests.ProviderId, query => query.Include(x => x.Company)
-                .Include(i => i.BaseServiceAppointment)
-                .ThenInclude(i => i.ProductPrice)
-                .ThenInclude(p => p.Product)
-                .Include(i => i.BaseServiceAppointment)
-                .ThenInclude(i => i.ServiceAppointmentLocations)
-                .ThenInclude(p => p.LocationCompany)
+                //.Include(i => i.BaseServiceAppointment)
+                //.ThenInclude(i => i.ProductPrice)
+                //.ThenInclude(p => p.Product)
+                //.Include(i => i.BaseServiceAppointment)
+                //.ThenInclude(i => i.ServiceAppointmentLocations)
+                //.ThenInclude(p => p.LocationCompany)
             )).FirstOrDefault();
 
-            var entity = (await _repository.GetAsync(x => x.InvoiceId == invoice.Id)).FirstOrDefault();
+            var entity = (await _repository.GetAsync(x => x.RequestId == invoice.Id)).FirstOrDefault();
 
             if (invoice.Status == InvoiceStatus.Send_Payment)
             {
@@ -66,14 +66,17 @@ namespace CMPNatural.Application
             }
 
             var CompanyId = invoice.CompanyId;
-            var services = (await _baseServiceAppointmentRepository.GetAsync(p => p.InvoiceId == invoice.Id)).ToList();
+            var services = (await _baseServiceAppointmentRepository.GetAsync(p => true)).ToList();
 
             foreach (var srv in services)
             {
+                foreach (var item in srv.ServiceAppointmentLocations)
+                {
                     srv.Status = ServiceStatus.Submited_Provider;
-                    srv.FactQty = srv.Qty;
-                    srv.OilQuality = requests.OilQuality;
+                    item.FactQty = srv.Qty;
+                    item.OilQuality = requests.OilQuality;
                     await _baseServiceAppointmentRepository.UpdateAsync(srv);
+                }
             }
 
             invoice.Comment = requests.Comment;

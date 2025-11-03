@@ -6,9 +6,9 @@ using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Application
 {
-    public class AdminSentInvoiceCommand : IRequest<CommandResponse<Invoice>>
+    public class AdminSentRequestCommand : IRequest<CommandResponse<RequestEntity>>
     {
-        public long InvoiceId { get; set; }
+        public long RequestId { get; set; }
         public long CompanyId { get; set; }
         //public InvoiceStatus Status { get; set; }
     }

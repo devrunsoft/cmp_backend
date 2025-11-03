@@ -32,6 +32,8 @@ namespace CMPNatural.Application
                 query => query
                 .Include(i => i.BaseServiceAppointment)
                 .ThenInclude(i=>i.ProductPrice)
+                .Include(i => i.BaseServiceAppointment)
+                .ThenInclude(i => i.ServiceAppointmentLocations)
                 )).FirstOrDefault();
 
             var model = InvoiceMapper.Mapper.Map<InvoiceResponse>(invoices);

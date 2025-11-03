@@ -15,7 +15,7 @@ namespace CMPNatural.Application.Responses.ClientServiceAppointment
 		public BaseServiceAppointment? Next { get; set; }
         public long ServiceId { get; set; }
         //public bool CanTerminate { get; set; }
-        public string InvoiceNumber { get; set; }
+        public long RequestId { get; set; }
         public TerminateStatusEnum TerminateStatus { get; set; }
     }
 }

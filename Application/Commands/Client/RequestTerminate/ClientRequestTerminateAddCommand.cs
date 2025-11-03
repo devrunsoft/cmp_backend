@@ -9,7 +9,7 @@ namespace CMPNatural.Application.Commands.Client
 {
     public class ClientRequestTerminateAddCommand : IRequest<CommandResponse<RequestTerminate>>
     {
-        public string InvoiceNumber { get; set; }
+        public long RequestId { get; set; }
         public string Message { get; set; }
         public RequestTerminateEnum Status { get; set; } = RequestTerminateEnum.Terminate;
     }

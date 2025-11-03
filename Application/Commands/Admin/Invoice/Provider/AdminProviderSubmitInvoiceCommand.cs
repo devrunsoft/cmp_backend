@@ -6,13 +6,12 @@ using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Application
 {
-    public class AdminProviderSubmitInvoiceCommand : IRequest<CommandResponse<Invoice>>
+    public class AdminProviderSubmitInvoiceCommand : IRequest<CommandResponse<InvoiceResponse>>
     {
         public AdminProviderSubmitInvoiceCommand()
         {
         }
         public long InvoiceId { get; set; }
-        public long ProviderId { get; set; }
         public string Comment { get; set; }
     }
 }

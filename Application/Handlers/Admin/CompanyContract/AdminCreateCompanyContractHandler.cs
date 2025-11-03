@@ -24,10 +24,10 @@ namespace CMPNatural.Application.Handlers
         private readonly ICompanyContractRepository _repository;
         private readonly IContractRepository _contractrepository;
         private readonly IAppInformationRepository _apprepository;
-        private readonly IinvoiceRepository _baseServicerepository;
+        private readonly IRequestRepository _baseServicerepository;
         private readonly AppSetting _appSetting;
         public AdminCreateCompanyContractHandler(ICompanyContractRepository _repository, IContractRepository _contractrepository,
-            IinvoiceRepository baseServicerepository, IAppInformationRepository _apprepository, AppSetting appSetting)
+            IRequestRepository baseServicerepository, IAppInformationRepository _apprepository, AppSetting appSetting)
 		{
             this._repository = _repository;
             this._contractrepository = _contractrepository;
@@ -36,7 +36,7 @@ namespace CMPNatural.Application.Handlers
             this._appSetting = appSetting;
         }
 
-        public async Task<CommandResponse<CompanyContract>> Create(Invoice invoice, long companyId)
+        public async Task<CommandResponse<CompanyContract>> Create(RequestEntity request, long companyId)
         {
             var information = (await _apprepository.GetAllAsync()).LastOrDefault();
             if (information == null)
@@ -47,13 +47,13 @@ namespace CMPNatural.Application.Handlers
             var contract = contracts.FirstOrDefault(c => c.IsDefault);
             contract ??= contracts.LastOrDefault();
 
-            var company = invoice.Company;
+            var company = request.Company;
             if (contract == null)
             {
                 return new NoAcess<CompanyContract>() {  Message = "No active contract found!" };
             }
 
-            var mainInvoice = (await _baseServicerepository.GetAsync(x => x.InvoiceId == invoice.InvoiceId, query => query
+            var mainInvoice = (await _baseServicerepository.GetAsync(x => x.Id == request.Id, query => query
             .Include(x=>x.BaseServiceAppointment)
             .ThenInclude(x=>x.Product)
             .Include(x => x.BaseServiceAppointment)
@@ -62,13 +62,13 @@ namespace CMPNatural.Application.Handlers
 
             var entity = new CompanyContract()
             {
+                RequestId = request.Id,
                 CompanyId = companyId,
-                InvoiceId = invoice.InvoiceId,
                 Status = CompanyContractStatus.Created,
                 CreatedAt = DateTime.Now,
                 ContractId = contract.Id,
                 ContractNumber = "",
-                OperationalAddressId = invoice.OperationalAddressId
+                OperationalAddressId = request.OperationalAddressId
             };
 
             var result = await _repository.AddAsync(entity);
@@ -77,7 +77,7 @@ namespace CMPNatural.Application.Handlers
             //update
             entity.Content = dbContent.ToString();
             entity.ContractNumber = entity.Number;
-            entity.OperationalAddressId = invoice.OperationalAddressId;
+            entity.OperationalAddressId = request.OperationalAddressId;
             await _repository.UpdateAsync(entity);
             return new Success<CompanyContract>() { Data = result};
         }

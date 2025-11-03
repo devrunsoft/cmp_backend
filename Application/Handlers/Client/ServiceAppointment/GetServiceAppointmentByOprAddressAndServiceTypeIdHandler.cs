@@ -27,7 +27,7 @@ namespace CMPNatural.Application.Handlers
             var result = (await _serviceAppointmentRepository.GetList(
                 (p) => p.OperationalAddressId == request.OperationalAddressId &&
                 p.CompanyId == request.CompanyId &&
-                p.Invoice.Status == InvoiceStatus.Processing_Provider &&
+                p.Status == ServiceStatus.Proccessing &&
       
                 p.ServiceCrmId == request.ServiceTypeId
                 )

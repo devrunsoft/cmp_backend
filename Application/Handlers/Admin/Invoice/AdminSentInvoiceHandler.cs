@@ -12,14 +12,14 @@ using CMPNatural.Core.Models;
 
 namespace CMPNatural.Application.Handlers
 {
-    public class AdminSentInvoiceHandler : IRequestHandler<AdminSentInvoiceCommand, CommandResponse<Invoice>>
+    public class AdminSentInvoiceHandler : IRequestHandler<AdminSentRequestCommand, CommandResponse<RequestEntity>>
     {
-        private readonly IinvoiceRepository _invoiceRepository;
+        private readonly IRequestRepository _invoiceRepository;
         private readonly IContractRepository _contractRepository;
         private readonly ICompanyContractRepository _companyContractRepository;
         private readonly IAppInformationRepository _appRepository;
         private readonly AppSetting _appSetting;
-        public AdminSentInvoiceHandler(IinvoiceRepository invoiceRepository,
+        public AdminSentInvoiceHandler(IRequestRepository invoiceRepository,
              IContractRepository contractRepository,
              ICompanyContractRepository companyContractRepository, IAppInformationRepository _appRepository, AppSetting appSetting)
         {
@@ -30,14 +30,14 @@ namespace CMPNatural.Application.Handlers
             this._appSetting = appSetting;
         }
 
-        public async Task<CommandResponse<Invoice>> Handle(AdminSentInvoiceCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<RequestEntity>> Handle(AdminSentRequestCommand request, CancellationToken cancellationToken)
         {
-            var entity = (await _invoiceRepository.GetAsync(p => p.Id == request.InvoiceId,query=>query.Include(x=>x.Company))).FirstOrDefault();
+            var entity = (await _invoiceRepository.GetAsync(p => p.Id == request.RequestId, query=>query.Include(x=>x.Company))).FirstOrDefault();
             entity.Status = InvoiceStatus.Pending_Signature;
 
             if (entity.ContractId != null)
             {
-                return new NoAcess<Invoice>() { Message = "You cannot edit an invoice that is linked to a contract." };
+                return new NoAcess<RequestEntity>() { Message = "You cannot edit an invoice that is linked to a contract." };
             }
             //if (requests.CreateContract)
             //{
@@ -46,17 +46,17 @@ namespace CMPNatural.Application.Handlers
 
                 if (!result.IsSucces())
                 {
-                    return new NoAcess<Invoice>() { Data = entity, Message = result.Message };
+                    return new NoAcess<RequestEntity>() { Data = entity, Message = result.Message };
                 }
                 entity.ContractId = result.Data.Id;
-                entity.InvoiceNumber = entity.Number;
+                //entity.InvoiceNumber = entity.Number;
             //}
 
             entity.CalculateAmount();
 
             await _invoiceRepository.UpdateAsync(entity);
 
-            return new Success<Invoice>() { Data = entity };
+            return new Success<RequestEntity>() { Data = entity };
 
         }
     }

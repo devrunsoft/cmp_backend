@@ -26,25 +26,23 @@ namespace CMPNatural.Application
         {
             var result = (await _repository.GetAsync(p => p.ProviderId == request.ProviderId
              && p.Status == ManifestStatus.Assigned, query => query
-            .Include(x => x.Invoice)
-            .ThenInclude(x => x.BaseServiceAppointment)
+            .Include(x => x.ServiceAppointmentLocation)
+            .ThenInclude(x => x.ServiceAppointment)
             .ThenInclude(x => x.ProductPrice)
 
-            .Include(x => x.Invoice)
-            .ThenInclude(x => x.BaseServiceAppointment)
+            .Include(x => x.ServiceAppointmentLocation)
+            .ThenInclude(x => x.ServiceAppointment)
             .ThenInclude(x => x.Product)
 
-            .Include(x => x.Invoice)
-            .ThenInclude(x => x.BaseServiceAppointment)
-            .ThenInclude(x => x.ServiceAppointmentLocations)
+            .Include(x => x.ServiceAppointmentLocation)
             .ThenInclude(x => x.LocationCompany)
 
 
-            .Include(x => x.Invoice)
+            .Include(x => x.Request)
             .ThenInclude(x => x.Company)
 
             .Include(x => x.Provider)
-            .Include(x => x.Invoice)
+            .Include(x => x.Request)
             .ThenInclude(x => x.Company)
             )).ToList();
             return new Success<List<Manifest>>() { Data = result };

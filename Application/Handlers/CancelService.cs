@@ -27,26 +27,26 @@ namespace CMPNatural.Application.Handlers
         public async Task<BaseServiceAppointment> cancel(BaseServiceAppointment model, CancelEnum cancelEnum)
         {
             var result = (await _serviceAppointmentRepository.GetAsync(p => p.Id == model.Id,query=>
-            query.Include(x=>x.Invoice)
+            query
             )).FirstOrDefault();
 
-            var manifest = (await _manifestRepository.GetAsync(p => p.InvoiceId == result.InvoiceId)).FirstOrDefault();
+            var manifest = (await _manifestRepository.GetAsync(p => true)).FirstOrDefault();
             //var contract = (await _companyContractRepository.GetAsync(p => p.InvoiceId == result.Invoice.InvoiceId)).FirstOrDefault();
 
             //contract.Status = (int)CompanyContractStatus.Canceld;
             //await _companyContractRepository.UpdateAsync(contract);
 
 
-            var canCacnelInvoice = (await _serviceAppointmentRepository.GetAsync(p => p.InvoiceId == result.InvoiceId && p.Id!=result.Id &&
-            (p.Status == ServiceStatus.Draft || p.Status == ServiceStatus.Scaduled || p.Status == ServiceStatus.Proccessing)
-            )).ToList();
+            //var canCacnelInvoice = (await _serviceAppointmentRepository.GetAsync(p => p.InvoiceId == result.InvoiceId && p.Id!=result.Id &&
+            //(p.Status == ServiceStatus.Draft || p.Status == ServiceStatus.Scaduled || p.Status == ServiceStatus.Proccessing)
+            //)).ToList();
 
-            if (!canCacnelInvoice.Any())
-            {
-                manifest.Status = ManifestStatus.Canceled;
-                await _manifestRepository.UpdateAsync(manifest);
-                result.Invoice.Status = InvoiceStatus.Canceled;
-            }
+            //if (!canCacnelInvoice.Any())
+            //{
+            //    manifest.Status = ManifestStatus.Canceled;
+            //    await _manifestRepository.UpdateAsync(manifest);
+            //    result.Invoice.Status = InvoiceStatus.Canceled;
+            //}
 
 
             result.Status = ServiceStatus.Canceled;

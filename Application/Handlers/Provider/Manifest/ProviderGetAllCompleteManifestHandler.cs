@@ -25,7 +25,7 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<List<Manifest>>> Handle(ProviderGetAllCompleteManifestCommand request, CancellationToken cancellationToken)
         {
             var result = (await _repository.GetAsync(p => p.ProviderId == request.ProviderId && p.Status == ManifestStatus.Completed, query => query
-            .Include(x => x.Invoice)
+            .Include(x => x.Request)
             .ThenInclude(x => x.Company))).ToList();
             return new Success<List<Manifest>>() { Data = result };
         }

@@ -12,9 +12,11 @@ namespace CMPNatural.Core.Entities
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public ManifestStatus Status { get; set; }
 
-		public long InvoiceId { get; set; }
+		public long RequestId { get; set; }
 
         public long OperationalAddressId { get; set; }
+
+        public long ServiceAppointmentLocationId { get; set; }
 
         public long? ProviderId { get; set; }
 
@@ -26,7 +28,9 @@ namespace CMPNatural.Core.Entities
 
         public string? AfterImages { get; set; }
 
-		public DateTime? ServiceDateTime { get; set; }
+        public DateTime PreferredDate { get; set; }
+
+        public DateTime? ServiceDateTime { get; set; }
 
 		public DateTime? StartTime { get; set; }
 
@@ -62,9 +66,13 @@ namespace CMPNatural.Core.Entities
 			}
 		}
 
-		public virtual Invoice Invoice { get; set; }
+		public virtual RequestEntity Request { get; set; }
+        public virtual RouteServiceAppointmentLocation RouteServiceAppointmentLocation { get; set; }
         public virtual Provider? Provider { get; set; }
         public virtual DriverManifest DriverManifest { get; set; }
+        public virtual ServiceAppointmentLocation ServiceAppointmentLocation { get; set; }
+        public virtual OperationalAddress? OperationalAddress { get; set; }
+        public virtual Company? Company { get; set; }
 
     }
 }

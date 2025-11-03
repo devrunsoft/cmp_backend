@@ -6,7 +6,6 @@ using CMPNatural.Core.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-using MySqlX.XDevAPI;
 using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Api.Controllers.Admin.Invoice
@@ -17,6 +16,51 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
     {
         public AdminInvoiceController(IMediator mediator) : base(mediator)
         {
+        }
+
+
+        [HttpPut("UpdateComplete/{InvoiceId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> UpdateCompletePut([FromRoute] long InvoiceId, [FromBody] AdminProviderUpdateInvoiceCommand command)
+        {
+
+            command.InvoiceId = InvoiceId;
+            var result = await _mediator.Send(command);
+
+            if (result.IsSucces())
+            {
+                //var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminHasCreateContract, result.Data.ContractId.Value);
+                //sendEmailToClient(result.Data.CompanyId, emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern, emailDetails.ButtonText);
+            }
+            return Ok(result);
+        }
+
+        [HttpPut("SubmitComplete/{InvoiceId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> SubmitCompletePut([FromRoute] long InvoiceId, [FromBody] AdminProviderSubmitInvoiceCommand command)
+        {
+
+            command.InvoiceId = InvoiceId;
+            var result = await _mediator.Send(command);
+
+            if (result.IsSucces())
+            {
+                //var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminHasCreateContract, result.Data.ContractId.Value);
+                //sendEmailToClient(result.Data.CompanyId, emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern, emailDetails.ButtonText);
+            }
+            return Ok(result);
+        }
+
+        [HttpPost("CreateInvoice/{CompanyId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> setInvoiceProvider([FromBody] AdminCreateFinalInvoiceCommand command, [FromRoute] long CompanyId)
+        {
+            command.CompanyId = CompanyId;
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
 
         [HttpGet("report")]
@@ -38,14 +82,7 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
             return Ok(result);
         }
 
-        [HttpGet("Requests")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> GetAllRequest([FromQuery] AdminGetAllRequestCommand command)
-        {
-            var result = await _mediator.Send(command);
-            return Ok(result);
-        }
+
 
         [HttpGet("CreatedInvoice")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -66,12 +103,12 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
             return Ok(result);
         }
 
-        [HttpGet("{InvoiceId}/Provider")]
+        [HttpGet("{ManifestId}/Provider")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> CheckInvoiceProvider([FromRoute] long InvoiceId)
+        public async Task<ActionResult> CheckInvoiceProvider([FromRoute] long ManifestId)
         {
-            var result = await _mediator.Send(new AdminCheckInvoiceProviderCommand() { InvoiceId = InvoiceId });
+            var result = await _mediator.Send(new AdminCheckInvoiceProviderCommand() { ManifestId = ManifestId });
             return Ok(result);
         }
 
@@ -114,36 +151,6 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
             return Ok(result);
         }
 
-
-        [HttpPost("{clientId}/Sent/{invoiceNumber}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Sent([FromRoute] long invoiceNumber, [FromRoute] int clientId)
-        {
-            var rCompanyId = clientId;
-            var resultdata = await _mediator.Send(new GetInvoiceByInvoiceNumberCommand()
-            {
-                CompanyId = rCompanyId,
-                invoiceId = invoiceNumber
-            });
-
-            var result = await _mediator.Send(new AdminSentInvoiceCommand()
-            {
-                CompanyId = rCompanyId,
-                InvoiceId = resultdata.Data.Id,
-                //Status = InvoiceStatus.Processing
-            });
-
-            if (result.Data.ContractId != null)
-            {
-                var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminHasCreateContract, result.Data.ContractId.Value);
-                 sendEmailToClient(rCompanyId ,emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern, emailDetails.ButtonText);
-                 sendNote(MessageNoteType.ContractCreate, clientId , result.Data.ReqNumber);
-            }
-
-            return Ok(result);
-        }
-
         [HttpPost("{clientId}/BillingInformation/{BillingInformationId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
@@ -156,22 +163,22 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
 
         }
 
-        [HttpPut("{InvoiceId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Put([FromRoute] long InvoiceId , [FromBody] AdminUpdateInvoiceCommand command) {
+        //[HttpPut("{InvoiceId}")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //[EnableCors("AllowOrigin")]
+        //public async Task<ActionResult> Put([FromRoute] long InvoiceId , [FromBody] AdminUpdateInvoiceCommand command) {
 
-            command.InvoiceId = InvoiceId;
-            var result = await _mediator.Send(command);
+        //    command.InvoiceId = InvoiceId;
+        //    var result = await _mediator.Send(command);
 
-            if (result.IsSucces() && result.Data.ContractId != null)
-            {
-                var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminHasCreateContract, result.Data.ContractId.Value);
-                sendEmailToClient(result.Data.CompanyId, emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern, emailDetails.ButtonText);
-            }
+        //    if (result.IsSucces() && result.Data.ContractId != null)
+        //    {
+        //        var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminHasCreateContract, result.Data.ContractId.Value);
+        //        sendEmailToClient(result.Data.CompanyId, emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern, emailDetails.ButtonText);
+        //    }
 
-            return Ok(result);
-        }
+        //    return Ok(result);
+        //}
 
         [HttpPut("Pay/{InvoiceId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -184,39 +191,7 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
             return Ok(result);
         }
 
-        [HttpPut("UpdateComplete/{InvoiceId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> UpdateCompletePut([FromRoute] long InvoiceId, [FromBody] AdminProviderUpdateInvoiceCommand command)
-        {
 
-            command.InvoiceId = InvoiceId;
-            var result = await _mediator.Send(command);
-
-            if (result.IsSucces())
-            {
-                //var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminHasCreateContract, result.Data.ContractId.Value);
-                //sendEmailToClient(result.Data.CompanyId, emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern, emailDetails.ButtonText);
-            }
-            return Ok(result);
-        }
-
-        [HttpPut("SubmitComplete/{InvoiceId}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> SubmitCompletePut([FromRoute] long InvoiceId, [FromBody] AdminProviderSubmitInvoiceCommand command)
-        {
-
-            command.InvoiceId = InvoiceId;
-            var result = await _mediator.Send(command);
-
-            if (result.IsSucces())
-            {
-                //var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminHasCreateContract, result.Data.ContractId.Value);
-                //sendEmailToClient(result.Data.CompanyId, emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern, emailDetails.ButtonText);
-            }
-            return Ok(result);
-        }
 
         [HttpDelete("{InvoiceId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]

@@ -23,7 +23,9 @@ namespace CMPNatural.Application.Handlers
 
         public async Task<CommandResponse<InvoiceResponse>> Handle(AdminCancelInvoiceCommand request, CancellationToken cancellationToken)
         {
-            var entity = (await _invoiceRepository.GetAsync(p => p.Id == request.InvoiceId, query => query.Include(x => x.BaseServiceAppointment))).FirstOrDefault();
+            var entity = (await _invoiceRepository.GetAsync(p => p.Id == request.InvoiceId, query => query
+            .Include(x => x.BaseServiceAppointment).ThenInclude(x => x.ServiceAppointmentLocations)
+            )).FirstOrDefault();
 
             if (entity.Status != InvoiceStatus.Draft)
             {
@@ -33,10 +35,13 @@ namespace CMPNatural.Application.Handlers
             entity.Status = InvoiceStatus.Deleted;
             await _invoiceRepository.UpdateAsync(entity);
 
-            foreach (var item in entity.BaseServiceAppointment)
+            foreach (var i in entity.BaseServiceAppointment)
             {
-                item.Status = ServiceStatus.Canceled;
-                await _baseServiceAppointmentRepository.UpdateAsync(item);
+                foreach (var item in i.ServiceAppointmentLocations)
+                {
+                    item.Status = ServiceStatus.Canceled;
+                    await _baseServiceAppointmentRepository.UpdateAsync(i);
+                }
             }
 
             return new Success<InvoiceResponse>() { Data = InvoiceMapper.Mapper.Map<InvoiceResponse>(entity) };

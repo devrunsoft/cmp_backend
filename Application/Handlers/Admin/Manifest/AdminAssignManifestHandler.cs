@@ -13,6 +13,7 @@ using CMPNatural.Core.Extentions;
 using Microsoft.EntityFrameworkCore;
 using ScoutDirect.Core.Repositories;
 using System.ServiceModel.Channels;
+using System.Collections.Generic;
 
 namespace CMPNatural.Application
 {
@@ -38,10 +39,18 @@ namespace CMPNatural.Application
         
         public async Task<CommandResponse<Manifest>> Handle(AdminAssignManifestCommand request, CancellationToken cancellationToken)
         {
-            var entity = (await _repository.GetAsync(p=> p.Id == request.Id && (p.Status == ManifestStatus.Draft || p.Status == ManifestStatus.Scaduled),query=>query.Include(x=>x.Invoice))).FirstOrDefault();
+            var e = (await _repository.GetAsync(p=> p.Id == request.Id && (p.Status == ManifestStatus.Draft || p.Status == ManifestStatus.Scaduled),query=>query.Include(x=>x.Request))).FirstOrDefault();
+            var allentity = (await _repository.GetAsync(p => p.ContractId == e.ContractId && (p.Status == ManifestStatus.Draft || p.Status == ManifestStatus.Scaduled), query => query.Include(x => x.Request))).ToList();
             var provider = (await _providerRepository.GetAsync(p => p.Id == request.ProviderId && p.Status == ProviderStatus.Approved)).FirstOrDefault();
-            var company = (await _companyrepository.GetAsync(p => p.Id == entity.Invoice.CompanyId)).FirstOrDefault();
+            var company = (await _companyrepository.GetAsync(p => p.Id == e.Request.CompanyId)).FirstOrDefault();
             var drivers = (await _driverRepository.GetAsync(p => p.ProviderId == request.ProviderId)).ToList();
+
+            List<Manifest> manifests = new List<Manifest>() { e };
+
+            if (request.AssignAll)
+            {
+                manifests = allentity;
+            }
 
             if (!drivers.Any())
             {
@@ -72,6 +81,12 @@ namespace CMPNatural.Application
                     Message = "The manifest cannot be assigned because the associated provider is currently blocked."
                 };
             }
+
+
+            foreach (var entity in manifests)
+            {
+
+
             if (entity.Status != ManifestStatus.Draft && entity.Status != ManifestStatus.Scaduled)
             {
                 return new NoAcess<Manifest>
@@ -87,7 +102,6 @@ namespace CMPNatural.Application
                 };
             }
 
-            
 
             entity.ServiceDateTime = request.ServiceDateTime.ToLocalTime();
             entity.ProviderId = provider.Id;
@@ -112,7 +126,7 @@ namespace CMPNatural.Application
             content = content.Replace(ManifestKeyEnum.ProviderName.GetDescription(), provider.Name);
 
             entity.Content = content;
-            var result =await _mediator.Send(new AdminSetInvoiceProviderCommand() { ProviderId = provider.Id , InvoiceId = entity.InvoiceId});
+            var result =await _mediator.Send(new AdminSetInvoiceProviderCommand() { ProviderId = provider.Id , ManifestId = entity.Id});
 
             if (result.IsSucces())
             {
@@ -131,10 +145,16 @@ namespace CMPNatural.Application
                     CreateAt = DateTime.Now,
                 };
                 await _driverManifestRepository.AddAsync(driverManifest);
-                #endregion
+                    #endregion
+           }
+           else
+           {
+               throw new Exception("");
+           }
             }
 
-            return new Success<Manifest>() { Data = entity };
+
+            return new Success<Manifest>() { Data = e };
         }
     }
 }

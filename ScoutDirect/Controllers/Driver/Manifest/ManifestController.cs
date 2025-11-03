@@ -40,6 +40,15 @@ namespace CMPNatural.Api.Controllers.Driver.Manifest
             var result = await _mediator.Send(new DriverStartRouteManifestCommand() { DriverId = rDriverId , ManifestId = Id });
             return Ok(result);
         }
+
+        [HttpGet()]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> GetAll()
+        {
+            var result = await _mediator.Send(new DriverGetAllManifestCommand() { DriverId = rDriverId });
+            return Ok(result);
+        }
     }
 }
 

@@ -16,8 +16,8 @@ namespace CMPNatural.Application
     public class SignCompanyContractHandler : IRequestHandler<SignCompanyContractCommand, CommandResponse<CompanyContract>>
     {
         private readonly ICompanyContractRepository _repository;
-        private readonly IinvoiceRepository _invoiceRepository;
-        public SignCompanyContractHandler(ICompanyContractRepository repository, IinvoiceRepository invoiceRepository)
+        private readonly IRequestRepository _invoiceRepository;
+        public SignCompanyContractHandler(ICompanyContractRepository repository, IRequestRepository invoiceRepository)
         {
             _repository = repository;
             _invoiceRepository = invoiceRepository;
@@ -39,7 +39,7 @@ namespace CMPNatural.Application
             await _repository.UpdateAsync(entity);
 
             //update Invoice
-            var invoice = await _invoiceRepository.GetAsync(x => x.InvoiceId == entity.InvoiceId && x.Status == InvoiceStatus.Pending_Signature &&
+            var invoice = await _invoiceRepository.GetAsync(x => x.Id == entity.RequestId && x.Status == InvoiceStatus.Pending_Signature &&
             x.CompanyId == request.CompanyId
             );
 

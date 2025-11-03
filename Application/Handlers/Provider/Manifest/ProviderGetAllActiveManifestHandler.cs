@@ -28,7 +28,7 @@ namespace CMPNatural.Application
             && p.Status != ManifestStatus.Canceled
 
             , query => query
-            .Include(x => x.Invoice)
+            .Include(x => x.Request)
             .ThenInclude(x => x.Company))).ToList();
             return new Success<List<Manifest>>() { Data = result };
         }

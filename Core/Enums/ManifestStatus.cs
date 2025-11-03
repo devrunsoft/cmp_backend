@@ -28,11 +28,17 @@ namespace CMPNatural.Core.Enums
         [Description("Send_To_Admin")]
         Send_To_Admin,
 
+        [Description("Send_To_Provider")]
+        Send_To_Provider,
+
         [Description("Start_Driver")]
         Start_Driver,
 
         [Description("Completed")]
         Completed,
+
+        [Description("Partially_Completed")]
+        Partially_Completed,
 
         [Description("Scaduled")]
         Scaduled,

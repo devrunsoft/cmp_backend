@@ -17,14 +17,14 @@ namespace CMPNatural.Application
 {
     public class AdminBackForUpdateInvoiceHandler : IRequestHandler<AdminBackForUpdateInvoiceCommand, CommandResponse<InvoiceResponse>>
     {
-        private readonly IinvoiceRepository _invoiceRepository;
+        private readonly IRequestRepository _invoiceRepository;
         private readonly IProductPriceRepository _productPriceRepository;
         private readonly IBaseServiceAppointmentRepository _baseServiceAppointmentRepository;
         private readonly IContractRepository _contractRepository;
         private readonly ICompanyContractRepository _companyContractRepository;
         private readonly IAppInformationRepository _appRepository;
 
-        public AdminBackForUpdateInvoiceHandler(IinvoiceRepository invoiceRepository, IProductPriceRepository productPriceRepository ,
+        public AdminBackForUpdateInvoiceHandler(IRequestRepository invoiceRepository, IProductPriceRepository productPriceRepository ,
              IBaseServiceAppointmentRepository baseServiceAppointmentRepository, IContractRepository _contractRepository,
              ICompanyContractRepository _companyContractRepository, IAppInformationRepository _appRepository)
         {
@@ -40,7 +40,7 @@ namespace CMPNatural.Application
         {
 
             var companyContract = (await _companyContractRepository.GetAsync(p => p.Id == requests.CompanyContractId)).FirstOrDefault();
-            var invoice = (await _invoiceRepository.GetAsync(p => p.InvoiceId == companyContract.InvoiceId)).LastOrDefault();
+            var invoice = (await _invoiceRepository.GetAsync(p => p.Id == companyContract.RequestId)).LastOrDefault();
 
             if (invoice.Status != InvoiceStatus.Pending_Signature)
             {

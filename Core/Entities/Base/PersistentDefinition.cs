@@ -56,4 +56,6 @@ namespace CMPNatural.Core.Entities
     public partial class ChatMessageManualNote : IIdentityObject<long> { }
     public partial class Route : IIdentityObject<long> { }
     public partial class RouteServiceAppointmentLocation : IIdentityObject<long> { }
+    public partial class ServiceAppointmentLocationFile : IIdentityObject<long> { }
+    public partial class RequestEntity : IIdentityObject<long> { }
 }

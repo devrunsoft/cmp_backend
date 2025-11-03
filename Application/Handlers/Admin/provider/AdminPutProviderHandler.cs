@@ -27,6 +27,12 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<Provider>> Handle(AdminPutProviderCommand request, CancellationToken cancellationToken)
         {
+            var existingDriver = (await _providerReposiotry.GetAsync(x => x.Email == request.Email && x.Id != request.Id)).Any();
+            if (existingDriver)
+            {
+                return new NoAcess<Provider>() { Message = "A provider with this email already exists." };
+            }
+
             var emailPattern = @"^[\w\.\+-]+@([\w-]+\.)+[a-zA-Z]{2,7}$";
             if (!Regex.IsMatch(request.Email, emailPattern))
             {
@@ -86,19 +92,19 @@ namespace CMPNatural.Application
             string Insurance = null;
 
             if (request.BusinessLicense != null)
-                BusinessLicense = FileHandler.ProviderfileHandler(request.BaseVirtualPath, request.BusinessLicense, "BusinessLicense", entity.Id, path);
+                BusinessLicense = request.BusinessLicense;
 
             if (request.HealthDepartmentPermit != null)
-                HealthDepartmentPermit = FileHandler.ProviderfileHandler(request.BaseVirtualPath, request.HealthDepartmentPermit, "HealthDepartmentPermit", entity.Id, path);
+                HealthDepartmentPermit = request.HealthDepartmentPermit;
 
             if (request.WasteHaulerPermit != null)
-                WasteHaulerPermit = FileHandler.ProviderfileHandler(request.BaseVirtualPath, request.WasteHaulerPermit, "WasteHaulerPermit", entity.Id, path);
+                WasteHaulerPermit = request.WasteHaulerPermit;
 
             if (request.EPACompliance != null)
-                EPACompliance = FileHandler.ProviderfileHandler(request.BaseVirtualPath, request.EPACompliance, "EPACompliance", entity.Id, path);
+                EPACompliance = request.EPACompliance;
 
             if (request.Insurance != null)
-                Insurance = FileHandler.ProviderfileHandler(request.BaseVirtualPath, request.Insurance, "Insurance", entity.Id, path);
+                Insurance = request.Insurance;
 
 
             entity.BusinessLicense = BusinessLicense;

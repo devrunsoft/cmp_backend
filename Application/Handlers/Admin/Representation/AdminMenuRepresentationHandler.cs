@@ -4,8 +4,6 @@ using ScoutDirect.Application.Responses;
 using System.Threading;
 using System.Threading.Tasks;
 using CMPNatural.Core.Repositories;
-using CMPNatural.Core.Base;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using CMPNatural.Application.Responses.AdminMenuRepresentation;
 using CMPNatural.Core.Enums;
@@ -16,14 +14,16 @@ namespace CMPNatural.Application
     public class AdminMenuRepresentationHandler : IRequestHandler<AdminMenuRepresentationCommand, CommandResponse<AdminMenuRepresentationResponse>>
     {
         private readonly IinvoiceRepository _invoiceRepository;
+        private readonly IRequestRepository _requestRepository;
         private readonly ICompanyContractRepository _companyContract;
         private readonly IManifestRepository _manifestRepository;
 
         public AdminMenuRepresentationHandler(IinvoiceRepository iinvoiceRepository, ICompanyContractRepository companyContract,
-             IManifestRepository _manifestRepository
+             IManifestRepository _manifestRepository, IRequestRepository _requestRepository
             )
         {
             _invoiceRepository = iinvoiceRepository;
+            this._requestRepository = _requestRepository;
             _companyContract = companyContract;
             this._manifestRepository = _manifestRepository;
         }
@@ -32,10 +32,10 @@ namespace CMPNatural.Application
         {
 
             var invoices = (await _invoiceRepository.GetAsync(x => 
-                x.Status == InvoiceStatus.Send_Payment
+                x.Status == InvoiceStatus.Send_Payment && x.Type == InvoiceType.Final_Invoice
                 )).Count();
 
-              var requests = (await _invoiceRepository.GetAsync(x =>
+              var requests = (await _requestRepository.GetAsync(x =>
                    x.Status == InvoiceStatus.Draft
                   )).Count();
 

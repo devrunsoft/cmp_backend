@@ -40,6 +40,7 @@ namespace CMPNatural.Api
         Task SendAsync(string method, string arg1);
         Task ClientUserTyping(UserTypingPayload payload);
         Task AdminUserTyping(UserTypingPayload payload);
+              Task DriverLocation(UserTypingPayload payload);
     }
 
     public class ChatHub : Hub<IChatClient>
@@ -91,16 +92,6 @@ namespace CMPNatural.Api
             }
         }
 
-        //public async Task JoinChannel(string channelId)
-        //{
-        //    await Groups.AddToGroupAsync(Context.ConnectionId, ChatGroups.Channel(channelId));
-        //}
-
-        //public async Task LeaveChannel(string channelId)
-        //{
-        //    await Groups.RemoveFromGroupAsync(Context.ConnectionId, ChatGroups.Channel(channelId));
-        //}
-
         public async Task ClientUserTyping(UserTypingPayload payload)
         {
             await chatService.ClientUserTyping(payload);
@@ -109,6 +100,11 @@ namespace CMPNatural.Api
         public async Task AdminUserTyping(UserTypingPayload payload)
         {
             await chatService.AdminUserTyping(Context.User?.FindFirstValue("PersonId"), payload);
+        }
+
+        public async Task DriverLocation(LocationPayload payload)
+        {
+            await chatService.DriverLocation(Context.User?.FindFirstValue("PersonId"), payload);
         }
     }
 }

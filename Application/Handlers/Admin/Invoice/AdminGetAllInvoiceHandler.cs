@@ -12,6 +12,7 @@ using CMPNatural.Application.Responses;
 using ScoutDirect.Core.Authentication;
 using System.Linq;
 using System.Collections.Generic;
+using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Application.Handlers.Admin.Auth
 {
@@ -27,7 +28,8 @@ namespace CMPNatural.Application.Handlers.Admin.Auth
 
         public async Task<CommandResponse<PagesQueryResponse<InvoiceResponse>>> Handle(AdminGetAllInvoiceCommand request, CancellationToken cancellationToken)
         {
-            var invoices = (await _invoiceRepository.GetBasePagedAsync(request, x=> (request.Status == null || x.Status == request.Status) ,
+            var invoices = (await _invoiceRepository.GetBasePagedAsync(request, x=> (request.Status == null || x.Status == request.Status) &&
+            x.Type == InvoiceType.Final_Invoice,
                 query => query.Include(i => i.Company).Include(x=>x.Provider)));
 
             var model = new PagesQueryResponse<InvoiceResponse>(

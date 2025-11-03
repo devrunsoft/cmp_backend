@@ -1,4 +1,27 @@
-﻿-- CmpAppDevelop.Admin definition
+﻿
+-- testdb4.RouteServiceAppointmentLocation definition
+
+CREATE TABLE `RouteServiceAppointmentLocation` (
+  `Id` bigint NOT NULL AUTO_INCREMENT,
+  `ServiceAppointmentLocationId` bigint NOT NULL,
+  `RouteId` bigint NOT NULL,
+  `ManifestId` bigint NOT NULL,
+  `ManifestNumber` varchar(300) NOT NULL DEFAULT '',
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `Route` (
+  `Id` bigint NOT NULL AUTO_INCREMENT,
+  `Date` datetime DEFAULT NULL,
+  `Name` varchar(400) NOT NULL,
+  `CreateAt` datetime NOT NULL,
+  `DriverId` bigint NOT NULL,
+  `Status` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `ProviderId` bigint NOT NULL,
+  `VehicleId` bigint DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 CREATE TABLE `Admin` (
   `Id` bigint NOT NULL AUTO_INCREMENT,

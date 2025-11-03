@@ -17,6 +17,26 @@ namespace CMPNatural.Api.Controllers.Admin.Manifest
         {
         }
 
+
+        [HttpGet("AllManifestRoute/${ProviderId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> AllAssign([FromRoute] long ProviderId)
+        {
+            var result = await _mediator.Send(new ProviderGetAllRouteManifestCommand() { ProviderId = ProviderId });
+            return Ok(result);
+        }
+
+
+        [HttpGet("Completing/Company/{CompanyId}/OperationalAddress/{OperationalAddressId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> getCompleting([FromRoute] long CompanyId, [FromRoute] long OperationalAddressId )
+        {
+            var result = await _mediator.Send(new AdminGetCompletingManifestCommand() { CompanyId = CompanyId , OperationalAddressId = OperationalAddressId });
+            return Ok(result);
+        }
+
         [HttpGet("{Id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]

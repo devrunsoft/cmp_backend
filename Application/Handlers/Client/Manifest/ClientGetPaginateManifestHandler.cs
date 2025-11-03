@@ -25,9 +25,9 @@ namespace CMPNatural.Application
                 x => x.CompanyId == request.CompanyId &&
                 (request.OperationalAddressId == 0 || x.OperationalAddressId == request.OperationalAddressId),
             query => query
-            .Include(x => x.Invoice)
+            .Include(x => x.Request)
             .ThenInclude(x => x.Company)
-             .Include(x => x.Invoice)
+             .Include(x => x.Request)
             .ThenInclude(x => x.Provider)
             ));
             return new Success<PagesQueryResponse<Manifest>>() { Data = result };

@@ -14,9 +14,9 @@ namespace CMPNatural.Application
     public class ClientRequestTerminateAddHandler : IRequestHandler<ClientRequestTerminateAddCommand, CommandResponse<RequestTerminate>>
     {
         private readonly IRequestTerminateRepository _repository;
-        private readonly IinvoiceRepository _iinvoiceRepository;
+        private readonly IRequestRepository _iinvoiceRepository;
 
-        public ClientRequestTerminateAddHandler(IRequestTerminateRepository _repository, IinvoiceRepository _iinvoiceRepository)
+        public ClientRequestTerminateAddHandler(IRequestTerminateRepository _repository, IRequestRepository _iinvoiceRepository)
         {
             this._repository = _repository;
             this._iinvoiceRepository = _iinvoiceRepository;
@@ -24,7 +24,7 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<RequestTerminate>> Handle(ClientRequestTerminateAddCommand request, CancellationToken cancellationToken)
         {
-            var isAddedd = (await _repository.GetAsync(x => x.InvoiceNumber == request.InvoiceNumber &&
+            var isAddedd = (await _repository.GetAsync(x => x.RequestId == request.RequestId &&
             (x.RequestTerminateStatus != RequestTerminateProcessEnum.Updated)
             )).FirstOrDefault();
 
@@ -36,11 +36,11 @@ namespace CMPNatural.Application
                 };
             }
 
-            var invoice = (await _iinvoiceRepository.GetAsync(x => x.InvoiceId == request.InvoiceNumber)).FirstOrDefault();
+            var invoice = (await _iinvoiceRepository.GetAsync(x => x.Id == request.RequestId)).FirstOrDefault();
 
             var entity = new RequestTerminate()
             {
-                InvoiceNumber = invoice.InvoiceId,
+                RequestId = invoice.Id,
                 ContractId = invoice.ContractId??0,
                 OperationalAddressId = invoice.OperationalAddressId,
                 CompanyId = invoice.CompanyId,

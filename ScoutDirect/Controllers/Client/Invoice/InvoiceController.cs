@@ -120,7 +120,7 @@ namespace CMPNatural.Api.Controllers.Invoice
             var result = await service.call(BillingInformationId);
             foreach (var item in result)
             {
-                 var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminInvoices, item.Data.InvoiceId);
+                 var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminInvoices, item.Data.RequestNumber);
                  sendEmailToAdmin(emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern, emailDetails.ButtonText);
                  sendNote(MessageNoteType.RequestCreateByClient, item.Data.OperationalAddressId, item.Data.ReqNumber);
             }

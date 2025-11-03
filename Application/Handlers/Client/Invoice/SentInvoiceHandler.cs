@@ -25,12 +25,12 @@ namespace CMPNatural.Application.Handlers
         public async Task<CommandResponse<object>> Handle(SentInvoiceCommand request, CancellationToken cancellationToken)
         {
             var entity = (await _invoiceRepository.GetAsync(p=>p.CompanyId == request.CompanyId && p.Id == request.InvoiceId,
-                query =>query.Include(x=>x.BaseServiceAppointment).ThenInclude(x=>x.ProductPrice))).FirstOrDefault();
+                query =>query)).FirstOrDefault();
 
-           var amount=  entity.BaseServiceAppointment.Sum(x=>x.ProductPrice.Amount * x.Qty);
+           //var amount=  entity.BaseServiceAppointment.Sum(x=>x.ProductPrice.Amount * x.Qty);
 
             entity.Status = InvoiceStatus.Pending_Signature;
-            entity.Amount = amount;
+            entity.Amount = 0;
 
             await _invoiceRepository.UpdateAsync(entity);
 

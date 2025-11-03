@@ -15,7 +15,7 @@ namespace CMPNatural.infrastructure.Repository
 
         public async Task<IEnumerable<ServiceAppointment>> GetList(Expression<Func<ServiceAppointment, bool>> expression)
         {
-            return await _dbContext.ServiceAppointment.Include(x => x.Invoice).Where(expression).ToListAsync();
+            return await _dbContext.ServiceAppointment.Where(expression).ToListAsync();
         }
     }
 }

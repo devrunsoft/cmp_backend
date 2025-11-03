@@ -42,9 +42,9 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<Manifest>> Handle(AdminChangeAssignManifestCommand request, CancellationToken cancellationToken)
         {
-            var entity = (await _repository.GetAsync(p=> p.Id == request.Id && (p.Status == ManifestStatus.Assigned),query=>query.Include(x=>x.Invoice))).FirstOrDefault();
+            var entity = (await _repository.GetAsync(p=> p.Id == request.Id && (p.Status == ManifestStatus.Assigned),query=>query.Include(x=>x.Request))).FirstOrDefault();
             var provider = (await _providerRepository.GetAsync(p => p.Id == request.ProviderId && p.Status == ProviderStatus.Approved)).FirstOrDefault();
-            var company = (await _companyrepository.GetAsync(p => p.Id == entity.Invoice.CompanyId)).FirstOrDefault();
+            var company = (await _companyrepository.GetAsync(p => p.Id == entity.Request.CompanyId)).FirstOrDefault();
 
             var drivers = (await _driverRepository.GetAsync(p => p.ProviderId == request.ProviderId)).ToList();
 
@@ -116,7 +116,7 @@ namespace CMPNatural.Application
             content = content.Replace(ManifestKeyEnum.ProviderName.GetDescription(), provider.Name);
 
             entity.Content = content;
-            entity.Invoice.ProviderId = request.ProviderId;
+            entity.Request.ProviderId = request.ProviderId;
             //var result = await _mediator.Send(new AdminSetInvoiceProviderCommand() { ProviderId = provider.Id , InvoiceId = entity.InvoiceId});
 
 

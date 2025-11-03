@@ -10,6 +10,8 @@ namespace CMPNatural.Core.Entities
         public string ManifestNumber { get; set; }
 
 		public virtual ServiceAppointmentLocation ServiceAppointmentLocation { get; set; }
-	}
+
+        public virtual Route Route { get; set; }
+    }
 }
 

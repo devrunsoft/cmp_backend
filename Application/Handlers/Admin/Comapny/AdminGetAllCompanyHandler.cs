@@ -20,11 +20,11 @@ namespace CMPNatural.Application.Handlers.Admin.Auth
 
     public class AdminGetAllCompanyHandler : IRequestHandler<AdminGetAllCompanyCommand, CommandResponse<PagesQueryResponse<CompanyResponse>>>
     {
-        private readonly ICompanyRepository _invoiceRepository;
+        private readonly ICompanyRepository _repository;
 
         public AdminGetAllCompanyHandler(ICompanyRepository invoiceRepository)
         {
-            _invoiceRepository = invoiceRepository;
+            _repository = invoiceRepository;
         }
 
         public async Task<CommandResponse<PagesQueryResponse<CompanyResponse>>> Handle(AdminGetAllCompanyCommand request, CancellationToken cancellationToken)
@@ -33,7 +33,7 @@ namespace CMPNatural.Application.Handlers.Admin.Auth
             var addressFilter = QueryCompanyExtensions.FilterByQuery(request.allField, request.CompanyStatus);
             var command = new PagedQueryRequest() { Page = request.Page , Size = request.Size };
 
-            var invoices = (await _invoiceRepository.GetBasePagedAsync(command, addressFilter,
+            var invoices = (await _repository.GetBasePagedAsync(command, addressFilter,
                 query => query.Include(x=>x.OperationalAddress).Include(x=>x.CompanyContract)
                 ));
 

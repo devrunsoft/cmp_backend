@@ -26,8 +26,8 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<PagesQueryResponse<BaseServiceAppointmentResponse>>> Handle(AdminGetAllProviderServiceAssignmentCommand request, CancellationToken cancellationToken)
         {
             var invoices = (await _providerService.GetBasePagedAsync(request, p => p.ProviderId != null && (request.providerId==null? true: (p.ProviderId == request.providerId))
-            ,query=> query.Include(x=>x.Invoice).ThenInclude(x=>x.Provider)
-            .Include(x => x.Invoice).ThenInclude(x=>x.Company)
+            ,query=> query.Include(x=>x.Request).ThenInclude(x=>x.Provider)
+            .Include(x => x.Request).ThenInclude(x=>x.Company)
             ));
 
             var model = new PagesQueryResponse<BaseServiceAppointmentResponse>(

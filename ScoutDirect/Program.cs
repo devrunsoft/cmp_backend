@@ -36,7 +36,12 @@ namespace ScoutDirect.Api
                     //    });
                     //}
 
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseSentry(o =>
+                    {
+                        o.Dsn = "https://ad84f51dd588fd9eb4d161182361c90d@o4510284610207744.ingest.us.sentry.io/4510284611584001";
+                        // When configuring for the first time, to see what the SDK is doing:
+                        o.Debug = true;
+                    }).UseStartup<Startup>(); ;
                 });
     }
 }

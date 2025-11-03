@@ -17,13 +17,13 @@ namespace CMPNatural.Api.Service
 	{
         IMediator _mediator;
         long rCompanyId;
-        public RegisterInvoiceService(IMediator mediator,long rCompanyId)
+        public  RegisterInvoiceService(IMediator mediator,long rCompanyId)
 		{
             _mediator = mediator;
             this.rCompanyId = rCompanyId;
         }
 
-        public async Task<List<CommandResponse<Invoice>>> call(long BillingInformationId)
+        public async Task<List<CommandResponse<RequestEntity>>> call(long BillingInformationId)
 		{
             var resultShopping = (await _mediator.Send(new GetAllShoppingCardCommand()
             {
@@ -44,7 +44,7 @@ namespace CMPNatural.Api.Service
                 })
                 .ToList();
 
-            List<CommandResponse<Invoice>> invoices = new List<CommandResponse<Invoice>>();
+            List<CommandResponse<RequestEntity>> invoices = new List<CommandResponse<RequestEntity>>();
 
 
             foreach (var i in groupedData)
@@ -82,7 +82,7 @@ namespace CMPNatural.Api.Service
                     return invoices;
                 }
 
-              var invoice = await _mediator.Send(new CreateInvoiceCommand()
+              var invoice = await _mediator.Send(new CreateRequestCommand()
                 {
                     CompanyId = rCompanyId,
                     //InvoiceCrmId = invoiceId.ToString(),

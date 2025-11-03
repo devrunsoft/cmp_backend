@@ -20,7 +20,6 @@ namespace CMPNatural.Application
         public long OperationalAddressId { get; set; }
         public long BillingInformationId { get; set; }
         public string Address { get; set; } = "";
-
     }
 }
 

@@ -9,20 +9,21 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CMPNatural.Core.Models;
+using CMPNatural.Application.Mapper;
 
 namespace CMPNatural.Application
 {
-    public class AdminProviderSubmitInvoiceHandler : IRequestHandler<AdminProviderSubmitInvoiceCommand, CommandResponse<Invoice>>
+    public class AdminProviderSubmitInvoiceHandler : IRequestHandler<AdminProviderSubmitInvoiceCommand, CommandResponse<InvoiceResponse>>
     {
         private readonly IManifestRepository _repository;
-        private readonly IinvoiceRepository _invoiceRepository;
+        private readonly IRequestRepository _invoiceRepository;
         private readonly IAppInformationRepository _apprepository;
         private readonly IProductPriceRepository _productPriceRepository;
         private readonly IBaseServiceAppointmentRepository _baseServiceAppointmentRepository;
         private readonly IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository;
         private readonly AppSetting _appSetting;
 
-        public AdminProviderSubmitInvoiceHandler(IinvoiceRepository invoiceRepository, IProductPriceRepository productPriceRepository,
+        public AdminProviderSubmitInvoiceHandler(IRequestRepository invoiceRepository, IProductPriceRepository productPriceRepository,
              IBaseServiceAppointmentRepository baseServiceAppointmentRepository, IManifestRepository _repository, IAppInformationRepository _apprepository,
              IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository, AppSetting appSetting)
         {
@@ -35,34 +36,28 @@ namespace CMPNatural.Application
             this._appSetting = appSetting;
         }
 
-        public async Task<CommandResponse<Invoice>> Handle(AdminProviderSubmitInvoiceCommand requests, CancellationToken cancellationToken)
+        public async Task<CommandResponse<InvoiceResponse>> Handle(AdminProviderSubmitInvoiceCommand requests, CancellationToken cancellationToken)
         {
-            var invoice = (await _invoiceRepository.GetAsync(p => p.Id == requests.InvoiceId && p.ProviderId == requests.ProviderId,
+            var invoice = (await _invoiceRepository.GetAsync(p => p.Id == requests.InvoiceId,
                 query => query.Include(x => x.Company)
-                .Include(i => i.BaseServiceAppointment)
-                .ThenInclude(i => i.ProductPrice)
-                .ThenInclude(p => p.Product)
-                .Include(i => i.BaseServiceAppointment)
-                .ThenInclude(i => i.ServiceAppointmentLocations)
-                .ThenInclude(p => p.LocationCompany)
                 )).FirstOrDefault();
-            var entity = (await _repository.GetAsync(x => x.InvoiceId == invoice.Id)).FirstOrDefault();
+            var entity = (await _repository.GetAsync(x => x.RequestId == invoice.Id)).FirstOrDefault();
 
             if (invoice.Status == InvoiceStatus.Send_Payment)
             {
-                return new NoAcess<Invoice>() { Message = "No Access To Edit This Invoice" };
+                return new NoAcess<InvoiceResponse>() { Message = "No Access To Edit This Invoice" };
             }
 
             if (invoice.Status != InvoiceStatus.Submited_Provider && invoice.Status != InvoiceStatus.Updated_Provider && invoice.Status != InvoiceStatus.Processing_Provider && invoice.Status != InvoiceStatus.Send_To_Admin)
             {
-                return new NoAcess<Invoice>
+                return new NoAcess<InvoiceResponse>
                 {
                     Message = "You cannot edit this invoice because it has not been submitted by the provider."
                 };
             }
 
             var CompanyId = invoice.CompanyId;
-            var services = (await _baseServiceAppointmentRepository.GetAsync(p => p.InvoiceId == invoice.Id)).ToList();
+            var services = (await _baseServiceAppointmentRepository.GetAsync(p => true)).ToList();
 
             foreach (var srv in services)
             {
@@ -82,7 +77,7 @@ namespace CMPNatural.Application
             entity.ManifestNumber = entity.Number;
             await _repository.UpdateAsync(entity);
 
-            return new Success<Invoice>() { Data = invoice };
+            return new Success<InvoiceResponse>() { Data = InvoiceMapper.Mapper.Map<InvoiceResponse>(invoice) };
 
         }
     }
