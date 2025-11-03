@@ -143,7 +143,7 @@ namespace CMPNatural.Application
                 var inv = new Invoice
                 {
                     CompanyId = singleCompanyId,
-                    Status = InvoiceStatus.Draft,
+                    Status = InvoiceStatus.Send_Payment,
                     BaseServiceAppointment = lstCustom,
                     Address = result.FirstOrDefault().OperationalAddress.Address,
                     OperationalAddressId = singleOperationalId,
@@ -155,6 +155,7 @@ namespace CMPNatural.Application
                     RequestNumber = "",
                     ContractId = result.First().ContractId,
                     SendDate = DateTime.Now,
+                    RequestId= result.FirstOrDefault().RequestId,
                 };
 
                 inv.CalculateAmount();

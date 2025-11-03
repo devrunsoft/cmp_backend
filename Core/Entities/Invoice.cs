@@ -14,6 +14,7 @@ namespace CMPNatural.Core.Entities
         public string? Link { get; set; }
         public double Amount { get; set; }
         public string InvoiceId { get; set; } = null!;
+        public long RequestId { get; set; }
         //public DateTime RegisterDate { get; set; }
         public DateTime? SendDate { get; set; }
         public DateTime CreatedAt { get; set; }
