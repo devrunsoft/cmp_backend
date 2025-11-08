@@ -50,6 +50,17 @@ namespace CMPNatural.Api.Controllers.Driver.Route
             return Ok(result);
         }
 
+        [HttpGet("Preview/{RouteId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> GetPreview([FromQuery] DriverPreviewRouteMapCommand command, [FromRoute] long RouteId)
+        {
+            command.RouteId = RouteId;
+            command.DriverId = rDriverId;
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
         [HttpPost("Start")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]

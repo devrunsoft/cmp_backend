@@ -13,26 +13,25 @@ using CMPNatural.Application.Responses.Service;
 using System.Net.Http;
 using System.Collections.Generic;
 using CMPNatural.Application.Responses;
-using GeoCoordinatePortable;
 using CMPNatural.Core.Entities;
 
 namespace CMPNatural.Application
 {
 
-    public class DriverCurrentRouteMapHandler : IRequestHandler<DriverCurrentRouteMapCommand, CommandResponse<RouteDateResponse>>
+    public class DriverPreviewRouteMapHandler : IRequestHandler<DriverPreviewRouteMapCommand, CommandResponse<RouteDateResponse>>
     {
         private readonly IRouteRepository _repository;
 
 
-        public DriverCurrentRouteMapHandler(IRouteRepository repository)
+        public DriverPreviewRouteMapHandler(IRouteRepository repository)
         {
             _repository = repository;
         }
 
-        public async Task<CommandResponse<RouteDateResponse>> Handle(DriverCurrentRouteMapCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<RouteDateResponse>> Handle(DriverPreviewRouteMapCommand request, CancellationToken cancellationToken)
         {
             var result = (await _repository.GetAsync(
-                p => p.Status == RouteStatus.InProcess,
+                p => p.Id == request.RouteId,
                 query => query
                 .Include(x => x.Items)
                 .ThenInclude(x => x.ServiceAppointmentLocation)
@@ -167,18 +166,4 @@ namespace CMPNatural.Application
         }
 
     }
-}
-
-
-public class DirectionCommand
-{
-    public LatLngPoint Origin { get; set; } = new();
-    public LatLngPoint Destination { get; set; } = new();
-    public List<LatLngPoint> Waypoints { get; set; } = new();
-}
-
-public class LatLngPoint
-{
-    public double Lat { get; set; }
-    public double Lng { get; set; }
 }

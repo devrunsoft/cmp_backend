@@ -24,9 +24,10 @@ namespace CMPNatural.Api.Controllers.Admin.Route
             return Ok(result);
         }
 
-        [HttpPost("assign")]
-        public async Task<IActionResult> AssignRoutes([FromBody] ProviderAddRouteCommand command)
+        [HttpPost("assign/{ProviderId}")]
+        public async Task<IActionResult> AssignRoutes([FromBody] ProviderAddRouteCommand command, [FromRoute] long ProviderId)
         {
+            command.ProviderId = ProviderId;
             var result = await _mediator.Send(command);
             return Ok(result);
         }

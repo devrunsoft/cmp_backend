@@ -18,7 +18,7 @@ namespace CMPNatural.Api.Controllers.Admin.Manifest
         }
 
 
-        [HttpGet("AllManifestRoute/${ProviderId}")]
+        [HttpGet("AllManifestRoute/{ProviderId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> AllAssign([FromRoute] long ProviderId)

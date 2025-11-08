@@ -23,25 +23,22 @@ namespace ScoutDirect.Api
                 //})
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    //var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                    var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-                    //if (!environmentName.Equals(ENVIRONMENT_DEVELOPMENT, StringComparison.OrdinalIgnoreCase))
-                    //{
-                    //    webBuilder.UseKestrel(kestrelOptions =>
-                    //    {
-                    //        kestrelOptions.ConfigureHttpsDefaults(httpsOptions =>
-                    //        {
-                    //            httpsOptions.SslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13;
-                    //        });
-                    //    });
-                    //}
-
-                    webBuilder.UseSentry(o =>
+                    if (!environmentName.Equals(ENVIRONMENT_DEVELOPMENT, StringComparison.OrdinalIgnoreCase))
                     {
-                        o.Dsn = "https://ad84f51dd588fd9eb4d161182361c90d@o4510284610207744.ingest.us.sentry.io/4510284611584001";
-                        // When configuring for the first time, to see what the SDK is doing:
-                        o.Debug = true;
-                    }).UseStartup<Startup>(); ;
+                        webBuilder.UseSentry(o =>
+                        {
+                            o.Dsn = "https://ad84f51dd588fd9eb4d161182361c90d@o4510284610207744.ingest.us.sentry.io/4510284611584001";
+                            // When configuring for the first time, to see what the SDK is doing:
+                            o.Debug = true;
+                        }).UseStartup<Startup>(); ;
+                    }
+                    else
+                    {
+                        webBuilder.UseStartup<Startup>();
+                    }
+
                 });
     }
 }
