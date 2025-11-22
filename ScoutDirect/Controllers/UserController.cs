@@ -196,7 +196,7 @@ namespace ScoutDirect.Api.Controllers
 
             if (_env.IsDevelopment())
             {
-                host = "https://localhost:44202";
+                host = "http://localhost:16105";
             }
             else
             {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CMPNatural.Application;
+using CMPNatural.Core.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CMPNatural.Api.Controllers.Admin.Route
 {
+    [MenuAuthorize(MenuEnum.Route)]
     public class AdminRouteController : BaseAdminApiController
     {
         public AdminRouteController(IMediator mediator) : base(mediator)

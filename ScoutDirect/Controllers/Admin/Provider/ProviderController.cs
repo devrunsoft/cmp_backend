@@ -1,5 +1,6 @@
 ﻿using CMPNatural.Application;
 using CMPNatural.Application.Model;
+using CMPNatural.Core.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,7 @@ using ScoutDirect.Application.Responses;
 namespace CMPNatural.Api.Controllers.Admin.Provider
 {
     [ApiController]
+    [MenuAuthorize(MenuEnum.Providers)]
     [Route("api/admin/[controller]")]
     public class ProviderController : BaseAdminApiController
     {
@@ -22,6 +24,7 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [MenuAuthorize(MenuEnum.Providers)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> GetAll([FromQuery] AdminGetAllProviderCommand command)
         {
@@ -31,6 +34,7 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
 
         [HttpGet("{Id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [MenuAuthorize(MenuEnum.ProviderDetail)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> get([FromRoute] int Id)
         {
@@ -40,6 +44,7 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
 
         [RequestSizeLimit(100_000_000)]
         [HttpPut("{Id}")]
+        [MenuAuthorize(MenuEnum.ProviderDetail)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Put([FromRoute] long Id, [FromForm] ProviderInput input)
@@ -52,6 +57,7 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
 
         [RequestSizeLimit(100_000_000)]
         [HttpPost]
+        [MenuAuthorize(MenuEnum.ProviderDetail)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Post([FromForm] ProviderInput input)
@@ -70,6 +76,7 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
         [HttpPut("ChangeStatus/{Id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
+        [MenuAuthorize(MenuEnum.ProviderDetail)]
         public async Task<ActionResult> ChangeStatus([FromRoute] long Id, [FromBody] AdminChangeStatusProviderCommand command)
         {
             command.ProviderId = Id;

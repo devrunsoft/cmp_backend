@@ -1,12 +1,13 @@
 ﻿using CMPNatural.Application;
 using CMPNatural.Application.Model;
+using CMPNatural.Core.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMPNatural.Api.Controllers.Admin.Capacity
 {
-
+    [MenuAuthorize(MenuEnum.Capacity)]
     public class CapacityController : BaseAdminApiController
     {
         public CapacityController(IMediator mediator) : base(mediator)

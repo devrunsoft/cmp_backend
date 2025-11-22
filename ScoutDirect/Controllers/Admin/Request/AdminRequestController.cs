@@ -15,6 +15,7 @@ using ScoutDirect.Application.Responses;
 namespace CMPNatural.Api.Controllers.Admin
 {
     [ApiController]
+    [MenuAuthorize(MenuEnum.Requests)]
     [Route("api/admin/[controller]")]
     public class AdminRequestController : BaseAdminApiController
     {

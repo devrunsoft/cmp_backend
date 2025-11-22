@@ -6,6 +6,7 @@ using CMPNatural.Application;
 using CMPNatural.Application.Commands;
 using CMPNatural.Application.Commands.Admin.Company;
 using CMPNatural.Application.Model;
+using CMPNatural.Core.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CMPNatural.Api.Controllers.Admin.Company
 {
     [ApiController]
+    [MenuAuthorize(MenuEnum.Client)]
     [Route("api/admin/[controller]")]
     public class CompanyController : BaseAdminApiController
     {
@@ -23,6 +25,7 @@ namespace CMPNatural.Api.Controllers.Admin.Company
         }
 
         [HttpGet]
+        [MenuAuthorize(MenuEnum.Client)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> GetAll([FromQuery] AdminGetAllCompanyCommand command)
@@ -32,6 +35,7 @@ namespace CMPNatural.Api.Controllers.Admin.Company
         }
 
         [HttpGet("{Id}")]
+        [MenuAuthorize(MenuEnum.ClientsDetail)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> GetAll([FromRoute] long Id)
@@ -41,6 +45,7 @@ namespace CMPNatural.Api.Controllers.Admin.Company
         }
 
         [HttpPut("ChangeStatus/{Id}")]
+        [MenuAuthorize(MenuEnum.ClientsDetail)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> ChangeStatus([FromRoute] long Id, [FromBody] AdminChangeStatusClientCommand command)

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CMPFile")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6162e181007e29652472d460339d987cc6a604cd")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cf8eec8beee3e49a0bca9dfb9861341806ae3b78")]
 [assembly: System.Reflection.AssemblyProductAttribute("CMPFile")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CMPFile")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

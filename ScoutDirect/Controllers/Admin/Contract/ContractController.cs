@@ -13,6 +13,7 @@ using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Api.Controllers.Admin.Contract
 {
+    [MenuAuthorize(MenuEnum.Contract)]
     public class ContractController : BaseAdminApiController
     {
         public ContractController(IMediator mediator) : base(mediator)

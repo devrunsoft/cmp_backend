@@ -3,12 +3,14 @@ using CMPNatural.Application;
 using CMPNatural.Application.Commands;
 using CMPNatural.Application.Commands.Admin;
 using CMPNatural.Application.Model;
+using CMPNatural.Core.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMPNatural.Api.Controllers.Admin.Message
 {
+    [MenuAuthorize(MenuEnum.Conversation)]
     public class AdminChatMessageManualNoteController : BaseAdminApiController
     {
         public AdminChatMessageManualNoteController(IMediator mediator) : base(mediator)

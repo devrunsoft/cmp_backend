@@ -226,7 +226,7 @@ namespace CMPNatural.Api.Controllers
 
             if (_env.IsDevelopment())
             {
-                host = "https://localhost:44202";
+                host = "http://localhost:16105";
             }
             else
             {
@@ -235,7 +235,8 @@ namespace CMPNatural.Api.Controllers
 
             var link = host + "/api/RegisterCompany/Activate?activationLink=" + data.ActivationLink!.Value.ToString();
             data.ActivationLinkGo = link;
-            new ActivationLink(_highLevelSetting).send(data);
+            sendEmail("Activation Link", "\n\nThank you for signing up!\n\nTo activate your account and get started, please click the button below. This helps us verify your email address and complete your registration.\n\nIf you did not request this, you can safely ignore this message.\n",
+                data.BusinessEmail, link, "Activate Account\n");
         }
 
 

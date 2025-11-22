@@ -6,6 +6,7 @@ using CMPNatural.Application;
 using CMPNatural.Application.Commands;
 using CMPNatural.Application.Commands.Service;
 using CMPNatural.Application.Model;
+using CMPNatural.Core.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,7 @@ namespace CMPNatural.Api.Controllers.Admin.Service
 
 
         [HttpPost("Product")]
+        [MenuAuthorize(MenuEnum.Product)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Post([FromBody] ProductInput input)
@@ -42,6 +44,7 @@ namespace CMPNatural.Api.Controllers.Admin.Service
         }
 
         [HttpPut("Product/{Id}")]
+        [MenuAuthorize(MenuEnum.Product)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Put([FromRoute] long Id,[FromBody] ProductInput input)
@@ -51,6 +54,7 @@ namespace CMPNatural.Api.Controllers.Admin.Service
         }
 
         [HttpDelete("Product/{Id}")]
+        [MenuAuthorize(MenuEnum.Product)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> DeleteProductPrice([FromRoute] long Id)
@@ -63,6 +67,7 @@ namespace CMPNatural.Api.Controllers.Admin.Service
         }
 
         [HttpPost("ProductPrice/{productId}")]
+        [MenuAuthorize(MenuEnum.ProductPrice)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> PostPrice([FromRoute] long productId, [FromBody] ProductPriceInput input)
@@ -72,6 +77,7 @@ namespace CMPNatural.Api.Controllers.Admin.Service
         }
 
         [HttpPut("ProductPrice/{Id}")]
+        [MenuAuthorize(MenuEnum.ProductPrice)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> PutPrice([FromRoute] long Id, [FromBody] ProductPriceInput input)
@@ -83,6 +89,7 @@ namespace CMPNatural.Api.Controllers.Admin.Service
 
 
         [HttpDelete("ProductPrice/{Id}")]
+        [MenuAuthorize(MenuEnum.ProductPrice)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> DeleteProduct([FromRoute] long Id)
@@ -95,6 +102,7 @@ namespace CMPNatural.Api.Controllers.Admin.Service
         }
 
         [HttpGet("GetPaging")]
+        [MenuAuthorize(MenuEnum.Product)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> GetPaging([FromQuery] GetAllProductPaginateCommand command)
@@ -126,6 +134,7 @@ namespace CMPNatural.Api.Controllers.Admin.Service
         }
 
         [HttpGet("GetPaging/{Id}")]
+        [MenuAuthorize(MenuEnum.ProductPrice)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> GetPricePaging([FromRoute] int Id, [FromQuery] GetProductPricePaginateCommand command)

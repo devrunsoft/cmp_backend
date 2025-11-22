@@ -21,7 +21,20 @@ namespace CMPNatural.Core.Enums
         Capacity = 14,
         InvoiceDetail = 15,
         InvoiceAssign = 16,
-        Providers = 17
+        Providers = 17,
+        AdminManagement = 18,
+        Contract = 19,
+        CompanyContract = 20,
+        Information = 21,
+        AccessManagement = 22,
+        Requests = 24,
+        Manifests = 25,
+        ManifestDraft = 26,
+        TermsConditions = 29,
+        Transactions = 30,
+        Logs = 31,
+        TerminateRequest = 32,
+        Conversation = 38,
+        Route = 42
     }
 }
-

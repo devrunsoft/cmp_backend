@@ -11,6 +11,7 @@ using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Api.Controllers.Admin.Manifest
 {
+    [MenuAuthorize(MenuEnum.Manifests)]
     public class ManifestController : BaseAdminApiController
     {
         public ManifestController(IMediator mediator) : base(mediator)

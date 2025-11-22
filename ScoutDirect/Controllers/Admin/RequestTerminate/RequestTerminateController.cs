@@ -1,5 +1,6 @@
 ﻿using CMPNatural.Application.Command;
 using CMPNatural.Application.Commands.Client;
+using CMPNatural.Core.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ namespace CMPNatural.Api.Controllers.Admin.RequestTerminate
         }
 
         [HttpGet]
+        [MenuAuthorize(MenuEnum.Requests)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> GetAll([FromQuery] AdminRequestTerminateGetAllCommand command)

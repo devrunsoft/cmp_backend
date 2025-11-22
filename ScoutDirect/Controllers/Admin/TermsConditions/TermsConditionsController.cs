@@ -1,6 +1,7 @@
 ﻿
 using CMPNatural.Application;
 using CMPNatural.Application.Model;
+using CMPNatural.Core.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CMPNatural.Api.Controllers.Admin.TermsConditions
 {
+    [MenuAuthorize(MenuEnum.TermsConditions)]
     public class TermsConditionsController : BaseAdminApiController
     {
         public TermsConditionsController(IMediator mediator) : base(mediator)

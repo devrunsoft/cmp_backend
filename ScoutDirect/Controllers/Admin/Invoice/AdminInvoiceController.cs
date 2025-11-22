@@ -20,6 +20,7 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
 
 
         [HttpPut("UpdateComplete/{InvoiceId}")]
+        [MenuAuthorize(MenuEnum.InvoiceDetail)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> UpdateCompletePut([FromRoute] long InvoiceId, [FromBody] AdminProviderUpdateInvoiceCommand command)
@@ -37,6 +38,7 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
         }
 
         [HttpPut("SubmitComplete/{InvoiceId}")]
+        [MenuAuthorize(MenuEnum.InvoiceDetail)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> SubmitCompletePut([FromRoute] long InvoiceId, [FromBody] AdminProviderSubmitInvoiceCommand command)
@@ -54,6 +56,7 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
         }
 
         [HttpPost("CreateInvoice/{CompanyId}")]
+        [MenuAuthorize(MenuEnum.Invoices)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> setInvoiceProvider([FromBody] AdminCreateFinalInvoiceCommand command, [FromRoute] long CompanyId)
@@ -74,6 +77,7 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
         }
 
         [HttpGet]
+        [MenuAuthorize(MenuEnum.Invoices)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> GetAll([FromQuery] AdminGetAllInvoiceCommand command)
@@ -85,6 +89,7 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
 
 
         [HttpGet("CreatedInvoice")]
+        [MenuAuthorize(MenuEnum.Invoices)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> GetAllInvoice([FromQuery] AdminGetAllCreatedInvoiceCommand command)
@@ -94,6 +99,7 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
         }
 
         [HttpGet("{InvoiceId}")]
+        [MenuAuthorize(MenuEnum.Invoices)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Get([FromRoute] long InvoiceId)
@@ -104,6 +110,7 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
         }
 
         [HttpGet("{ManifestId}/Provider")]
+        [MenuAuthorize(MenuEnum.Invoices)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> CheckInvoiceProvider([FromRoute] long ManifestId)
@@ -113,6 +120,7 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
         }
 
         [HttpPost("Provider")]
+        [MenuAuthorize(MenuEnum.Invoices)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> setInvoiceProvider([FromBody] AdminSetInvoiceProviderCommand command)
@@ -131,6 +139,7 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
         //}
 
         [HttpGet("OprLocation/{OperationalAddressId}/{ProductId}/Provider")]
+        [MenuAuthorize(MenuEnum.Invoices)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> CheckOprLocationProvider([FromRoute] long OperationalAddressId , [FromRoute] long ProductId)
@@ -143,6 +152,7 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
 
 
         [HttpPost("OprLocation/Provider")]
+        [MenuAuthorize(MenuEnum.Invoices)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> setOprLocationProvider([FromBody] AdminSetOprLocationProviderCommand command)
@@ -152,6 +162,7 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
         }
 
         [HttpPost("{clientId}/BillingInformation/{BillingInformationId}")]
+        [MenuAuthorize(MenuEnum.Invoices)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Post([FromRoute] long clientId, [FromRoute] long BillingInformationId)
@@ -181,6 +192,7 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
         //}
 
         [HttpPut("Pay/{InvoiceId}")]
+        [MenuAuthorize(MenuEnum.Invoices)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Pay([FromRoute] long InvoiceId)
@@ -194,6 +206,7 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
 
 
         [HttpDelete("{InvoiceId}")]
+        [MenuAuthorize(MenuEnum.Invoices)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Delete([FromRoute] long InvoiceId)
@@ -212,6 +225,7 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
 
 
         [HttpPut("Activate/{InvoiceId}")]
+        [MenuAuthorize(MenuEnum.Invoices)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Activate([FromRoute] long InvoiceId)

@@ -2,6 +2,7 @@
 using CMPNatural.Application;
 using CMPNatural.Application.Commands.Admin;
 using CMPNatural.Application.Model;
+using CMPNatural.Core.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ using MySqlX.XDevAPI;
 
 namespace CMPNatural.Api.Controllers.Admin.Message
 {
+    [MenuAuthorize(MenuEnum.Conversation)]
     public class AdminChatMessageController : BaseAdminApiController
     {
         public AdminChatMessageController(IMediator mediator) : base(mediator)
