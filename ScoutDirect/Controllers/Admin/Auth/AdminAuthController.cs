@@ -62,6 +62,7 @@ namespace CMPNatural.Api.Controllers.Admin.Auth
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Post([FromBody] AdminLoginCommand command)
         {
+
             if (command.Password.IsNullOrEmpty())
             {
                 return Ok(new CommandResponse<object>() { Success = false, Message = "Password is not correct" });

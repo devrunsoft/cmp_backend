@@ -369,7 +369,6 @@ namespace ScoutDirect.Api
             });
 
 
-
             GlobalConfiguration.Configuration.UseMemoryStorage();
 
             var settings = serviceProvider.GetRequiredService<HighLevelSettings>();
