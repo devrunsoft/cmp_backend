@@ -33,13 +33,7 @@ namespace CMPNatural.Core.Enums
     {
         Note,
         ManualNote,
-        Message
-    }
-
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum MessageContentType
-    {
-        TEXT,
+        Message,
         IMAGE,
         VIDEO,
         AUDIO,
@@ -50,6 +44,21 @@ namespace CMPNatural.Core.Enums
         REPLY,
         DELETED
     }
+
+    //[JsonConverter(typeof(JsonStringEnumConverter))]
+    //public enum MessageContentType
+    //{
+    //    TEXT,
+    //    IMAGE,
+    //    VIDEO,
+    //    AUDIO,
+    //    FILE,
+    //    LOCATION,
+    //    STICKER,
+    //    SYSTEM,
+    //    REPLY,
+    //    DELETED
+    //}
 
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum MessageNoteType
