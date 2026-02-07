@@ -55,6 +55,16 @@ namespace CMPNatural.Api.Controllers.Admin.Company
             return Ok(result);
         }
 
+        [HttpPost("ImportExcel")]
+        [MenuAuthorize(MenuEnum.Client)]
+        [Consumes("multipart/form-data")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> ImportExcel([FromForm] AdminImportCompanyExcelCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
     }
 }
-

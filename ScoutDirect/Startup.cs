@@ -98,7 +98,7 @@ namespace ScoutDirect.Api
 
             services.Configure<FormOptions>(options =>
             {
-                options.MultipartBodyLengthLimit = 104857600; // 100 MB
+                options.MultipartBodyLengthLimit = 209715200; // 200 MB
             });
 
             services.AddControllers()
@@ -277,6 +277,7 @@ namespace ScoutDirect.Api
             services.AddSignalR();
             services.AddScoped<IChatService, ChatService>();
 
+
         }
 
 
@@ -286,7 +287,7 @@ namespace ScoutDirect.Api
 
             app.Use(async (context, next) =>
             {
-                context.Features.Get<IHttpMaxRequestBodySizeFeature>().MaxRequestBodySize = 30 * 1024 * 1024; // 30 MB
+                context.Features.Get<IHttpMaxRequestBodySizeFeature>().MaxRequestBodySize = 200 * 1024 * 1024; // 200 MB
                 await next.Invoke();
             });
 

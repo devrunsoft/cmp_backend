@@ -26,7 +26,7 @@ namespace CMPNatural.Application
         {
             //int MaxDistance = 2000; //meter
             var location = (await _locationCompanyRepository.GetByIdAsync(request.OperationalAddressId));
-            var providers = (await _providerReposiotry.GetAllSearchProviderAsync(location.Lat, location.Long,
+            var providers = (await _providerReposiotry.GetAllSearchProviderAsync(location.Lat??0, location.Long??0,
                 p=>p.ProviderService.Any(p=>p.ProductId == request.ProductId))).ToList();
             return new Success<List<Provider>>() { Data = providers };
         }
