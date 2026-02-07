@@ -146,6 +146,7 @@ namespace CMPNatural.Application.Hub
             var m = JsonConvert.SerializeObject(payload, new StringEnumConverter());
             //await SendToClient(payload.ProviderId, m, ChatEnum.liveLocation);
             await SendObjectToAllAdmins(m, ChatEnum.liveLocation);
+            //await SendToProvider(payload.ProviderId, m, ChatEnum.liveLocation);
         }
     }
 }

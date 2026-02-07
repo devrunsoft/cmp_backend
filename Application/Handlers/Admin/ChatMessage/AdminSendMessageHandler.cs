@@ -12,6 +12,10 @@ using CMPNatural.Core.Repositories;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using CMPFile;
+using System.IO;
+using CMPNatural;
+using CMPNatural.Core.Extentions;
 
 namespace CMPNatural.Application.Handlers.Admin
 {
@@ -23,14 +27,16 @@ namespace CMPNatural.Application.Handlers.Admin
         private readonly IChatSessionRepository _chatSessionRepository;
         private readonly IChatService _chatService;
         private readonly IMediator _mediator;
+        private readonly IFileStorage _fileStorage;
         public AdminSendMessageHandler(IChatMessageRepository _repository, IChatSessionRepository _chatSessionRepository
-            , IChatService _chatService, IMediator _mediator, IAdminRepository _adminRepository)
+            , IChatService _chatService, IMediator _mediator, IAdminRepository _adminRepository, IFileStorage fileStorage)
         {
             this._adminRepository = _adminRepository;
             this._repository = _repository;
             this._chatSessionRepository = _chatSessionRepository;
             this._chatService = _chatService;
             this._mediator = _mediator;
+            _fileStorage = fileStorage;
         }
         public async Task<CommandResponse<ChatMessage>> Handle(AdminSendMessageCommand request, CancellationToken cancellationToken)
         {
@@ -65,18 +71,34 @@ namespace CMPNatural.Application.Handlers.Admin
                 }
             }
 
+            string? fileUrl = null;
+            string? fileExtension = null;
+            long? fileSize = null;
+            var messageType = MessageType.Message;
+
+            if (request.File != null && request.File.Length > 0)
+            {
+                fileUrl = await _fileStorage.AppfileHandler(request.File);
+                fileExtension = Path.GetExtension(request.File.FileName)?.TrimStart('.');
+                fileSize = request.File.Length;
+                messageType = MessageTypeResolver.ResolveMessageType(request.File.ContentType, fileExtension);
+            }
+
             var entity = new ChatMessage
             {
                 ChatSessionId = chatsession.Id,
                 IsInternalNote = false,
-                Type = MessageType.Message,
-                Content = request.Message,
+                Type = messageType,
+                Content = request.Message ?? string.Empty,
                 SenderId = request.AdminId,
                 SenderType = SenderType.Admin,
                 SentAt = DateTime.Now,
                 OperationalAddressId = request.OperationalAddressId,
                 ClientId = request.ClientId,
-                Mentions = ChatMention
+                Mentions = ChatMention,
+                FileUrl = fileUrl,
+                FileExtension = fileExtension,
+                FileSize = fileSize
             };
             var result = await _repository.AddAsync(entity);
 
@@ -84,6 +106,6 @@ namespace CMPNatural.Application.Handlers.Admin
 
             return new Success<ChatMessage>() { Data = result };
         }
+
     }
 }
-

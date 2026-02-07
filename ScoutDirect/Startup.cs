@@ -232,6 +232,7 @@ namespace ScoutDirect.Api
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
             services.Configure<ExpiresModel>(Configuration.GetSection("Expires"));
             services.Configure<MinioOptions>(Configuration.GetSection("Minio"));
+            services.Configure<SsoOptions>(Configuration.GetSection("Sso"));
 
             var appSetting = Configuration.GetSection("AppSetting").Get<AppSetting>();
             services.AddSingleton(appSetting);

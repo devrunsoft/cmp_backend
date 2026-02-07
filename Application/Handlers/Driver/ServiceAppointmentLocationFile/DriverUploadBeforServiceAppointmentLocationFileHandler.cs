@@ -51,6 +51,7 @@ namespace CMPNatural.Application
 
                 new ServiceAppointmentLocationFile()
                 {
+                    ProviderId = request.ProviderId,
                     DriverId = request.DriverId,
                     Link = request.firstPic,
                     RouteId = request.RouteId,
@@ -60,6 +61,7 @@ namespace CMPNatural.Application
                 },
                 new ServiceAppointmentLocationFile()
                 {
+                    ProviderId = request.ProviderId,
                     DriverId = request.DriverId,
                     Link = request.secondPic,
                     RouteId = request.RouteId,
@@ -69,6 +71,7 @@ namespace CMPNatural.Application
 
                 new ServiceAppointmentLocationFile()
                 {
+                    ProviderId = request.ProviderId,
                     DriverId = request.DriverId,
                     Link = request.thirdPic,
                     RouteId = request.RouteId,
@@ -78,6 +81,7 @@ namespace CMPNatural.Application
 
                 new ServiceAppointmentLocationFile()
                 {
+                    ProviderId = request.ProviderId,
                     DriverId = request.DriverId,
                     Link = request.forthPic,
                     RouteId = request.RouteId,

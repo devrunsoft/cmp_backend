@@ -1,10 +1,4 @@
-﻿using System;
-using System.Security.Authentication;
-
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-
-namespace ScoutDirect.Api
+﻿namespace ScoutDirect.Api
 {
     public class Program
     {
@@ -24,9 +18,17 @@ namespace ScoutDirect.Api
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                    if (!environmentName.Equals(ENVIRONMENT_DEVELOPMENT, StringComparison.OrdinalIgnoreCase))
+                    {
+                        webBuilder.UseSentry().UseStartup<Startup>();
 
+                    }
+                    else
+                    {
+                        webBuilder.UseStartup<Startup>();
 
-                        webBuilder.UseSentry().UseStartup<Startup>(); ;
+                    }
+
 
 
                 });

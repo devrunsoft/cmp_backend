@@ -21,6 +21,29 @@ namespace ScoutDirect.Api.Controllers._Base
             _mediator = mediator;
         }
         protected long rProviderId => long.Parse(Request.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+        protected long? rDriverId
+        {
+            get
+            {
+                var value = Request.HttpContext.User.FindFirst("DriverId")?.Value;
+
+                return long.TryParse(value, out var id)
+                    ? id
+                    : null;
+            }
+        }
+        protected bool rIsDriver
+        {
+            get
+            {
+                var value = Request.HttpContext.User.FindFirst("IsDriver")?.Value;
+
+                return bool.TryParse(value, out var id)
+                    ? id
+                    : false;
+            }
+        }
+
         protected string rEmail => (Request.HttpContext.User.FindFirstValue("Email"));
         protected string userName => Request.HttpContext.User.Identity.Name;
     }

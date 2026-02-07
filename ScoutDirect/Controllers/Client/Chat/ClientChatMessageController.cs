@@ -21,8 +21,9 @@ namespace CMPNatural.Api.Controllers.Client.Chat
 
         [HttpPost("Send/{OperationalAddressId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [Consumes("multipart/form-data")]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Post([FromRoute] long OperationalAddressId, [FromBody] ClientSendMessageCommand command)
+        public async Task<ActionResult> Post([FromRoute] long OperationalAddressId, [FromForm] ClientSendMessageCommand command)
         {
             command.ClientId = rCompanyId;
             command.OperationalAddressId = OperationalAddressId;
@@ -52,4 +53,3 @@ namespace CMPNatural.Api.Controllers.Client.Chat
         }
     }
 }
-

@@ -14,5 +14,15 @@ namespace CMPNatural.Core.Enums
         After,
     }
 
+
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public enum UploadType
+    {
+        [Description("Web")]
+        Web,
+
+        [Description("Mobile")]
+        Mobile,
+    }
 }
 

@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Linq;
 using System.Security.Claims;
-using System.ServiceModel.Channels;
 using System.Threading.Tasks;
 using CMPNatural.Application.Hub;
 using CMPNatural.Core.Entities;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace CMPNatural.Api
 {
+    enum UserType
+    {
+        Admin,
+        Provider
+    }
+
+
     public class UserTypingPayload
     {
         public bool IsTyping { get; set; }
@@ -40,7 +44,7 @@ namespace CMPNatural.Api
         Task SendAsync(string method, string arg1);
         Task ClientUserTyping(UserTypingPayload payload);
         Task AdminUserTyping(UserTypingPayload payload);
-              Task DriverLocation(UserTypingPayload payload);
+        Task DriverLocation(UserTypingPayload payload);
     }
 
     public class ChatHub : Hub<IChatClient>

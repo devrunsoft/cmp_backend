@@ -19,26 +19,26 @@ namespace ScoutDirect.Api.Controllers._Base
 
         }
 
-        [NonAction]
-        public void sendNote(MessageNoteType Type, long OperationalAddressId, string Content = "")
-        {
-            //Task.Run(async () =>
-            //{
-            //    using (var scope = serviceScopeFactory.CreateScope())
-            //    {
-            //        var cache = scope.ServiceProvider.GetRequiredService<Func<CacheTech, ICacheService>>();
-            //        var _cache = cache(CacheTech.Memory);
-            //        var _mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-            //        await _mediator.Send(new ClientSendMessageNoteCommand()
-            //        {
-            //            ClientId = rDriverId,
-            //            Type = Type,
-            //            Content = Content,
-            //            OperationalAddressId = OperationalAddressId
-            //        });
-            //    }
-            //});
-        }
+        //[NonAction]
+        //public void sendNote(MessageNoteType Type, long OperationalAddressId, string Content = "")
+        //{
+        //    //Task.Run(async () =>
+        //    //{
+        //    //    using (var scope = serviceScopeFactory.CreateScope())
+        //    //    {
+        //    //        var cache = scope.ServiceProvider.GetRequiredService<Func<CacheTech, ICacheService>>();
+        //    //        var _cache = cache(CacheTech.Memory);
+        //    //        var _mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+        //    //        await _mediator.Send(new ClientSendMessageNoteCommand()
+        //    //        {
+        //    //            ClientId = rDriverId,
+        //    //            Type = Type,
+        //    //            Content = Content,
+        //    //            OperationalAddressId = OperationalAddressId
+        //    //        });
+        //    //    }
+        //    //});
+        //}
 
         protected Guid PersonId => Guid.Parse(Request.HttpContext.User.FindFirstValue("PersonId"));
         protected long rDriverId => long.Parse(Request.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value);

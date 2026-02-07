@@ -45,20 +45,20 @@ namespace CMPNatural.Core.Enums
         DELETED
     }
 
-    //[JsonConverter(typeof(JsonStringEnumConverter))]
-    //public enum MessageContentType
-    //{
-    //    TEXT,
-    //    IMAGE,
-    //    VIDEO,
-    //    AUDIO,
-    //    FILE,
-    //    LOCATION,
-    //    STICKER,
-    //    SYSTEM,
-    //    REPLY,
-    //    DELETED
-    //}
+    [JsonConverter(typeof(JsonStringEnumConverter))]
+    public enum MessageContentType
+    {
+        TEXT,
+        IMAGE,
+        VIDEO,
+        AUDIO,
+        FILE,
+        LOCATION,
+        STICKER,
+        SYSTEM,
+        REPLY,
+        DELETED
+    }
 
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum MessageNoteType

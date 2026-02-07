@@ -36,7 +36,7 @@ namespace CMPNatural.Application
                 p =>
                 p.RouteId == request.RouteId &&
                 request.RouteServiceAppointmentLocationId == p.ServiceAppointmentLocationId &&
-                p.Route.DriverId == request.DriverId &&
+                (request.DriverId==null || p.Route.DriverId == request.DriverId) &&
                 p.Route.Status == RouteStatus.InProcess,
                 query => query.Include(x=>x.Route)
                 .Include(x=>x.ServiceAppointmentLocation)

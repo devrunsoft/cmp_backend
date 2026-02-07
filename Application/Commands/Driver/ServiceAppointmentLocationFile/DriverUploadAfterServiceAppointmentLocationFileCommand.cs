@@ -9,6 +9,7 @@ namespace CMPNatural.Application
 {
     public class DriverUploadAfterServiceAppointmentLocationFileCommand : IRequest<CommandResponse<ServiceCompletingResponse>>
     {
+        public long? ProviderId { get; set; }
         public long DriverId { get; set; }
         public long RouteId { get; set; }
         public string firstPic { get; set; }

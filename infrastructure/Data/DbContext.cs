@@ -1,9 +1,6 @@
-﻿
-using Barbara.Core.Entities;
-using CMPNatural.Core.Entities;
+﻿using CMPNatural.Core.Entities;
 using CMPNatural.Core.Enums;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace infrastructure.Data
 {
@@ -199,6 +196,12 @@ namespace infrastructure.Data
             modelBuilder.Entity<ChatMessageManualNote>(entity =>
             {
                 entity.ToTable("ChatMessageManualNote");
+
+                entity.Property(m => m.Type)
+                .HasConversion(
+                 x => x.ToString(),
+                 x => (MessageType)Enum.Parse(typeof(MessageType), x)
+                 );
 
                 entity.HasOne(d => d.ChatSession)
                 .WithMany()

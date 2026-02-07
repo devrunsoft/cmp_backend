@@ -19,8 +19,9 @@ namespace CMPNatural.Api.Controllers.Admin.Message
 
         [HttpPost("Send/{ClientId}/{OperationalAddressId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [Consumes("multipart/form-data")]
         [EnableCors("AllowOrigin")]
-        public async Task<ActionResult> Post([FromRoute] long ClientId, [FromRoute] long OperationalAddressId, [FromBody] AdminSendMessageCommand command)
+        public async Task<ActionResult> Post([FromRoute] long ClientId, [FromRoute] long OperationalAddressId, [FromForm] AdminSendMessageCommand command)
         {
             command.OperationalAddressId = OperationalAddressId;
             command.ClientId = ClientId;
@@ -78,4 +79,3 @@ namespace CMPNatural.Api.Controllers.Admin.Message
         }
     }
 }
-

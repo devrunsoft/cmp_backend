@@ -12,6 +12,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.IISIntegration;
 using Microsoft.IdentityModel.Tokens;
 using ScoutDirect.Api.Controllers._Base;
 using ScoutDirect.Application.Responses;
@@ -79,22 +80,36 @@ namespace CMPNatural.Api
         {
             var result = await _mediator.Send(command);
 
+            CommandResponse<DriverResponse>? resultDriver=null;
             if (!result.IsSucces())
             {
-                if (result.Data != null)
+                 resultDriver = await _mediator.Send(new DriverLoginCommand() { Email = command.Email, Password = command.Password });
+
+                if (!result.IsSucces() && !resultDriver.IsSucces())
                 {
-                    EmailSender(result.Data);
+                    if (result.Data != null)
+                    {
+                        EmailSender(result.Data);
+                    }
+                    return Ok(result);
                 }
-                return Ok(result);
+
             }
 
-            var data = result.Data;
+
+            bool isDriver = (resultDriver != null);
+            var email = isDriver ? resultDriver.Data.Email : result.Data.Email;
+            var Id = isDriver ? resultDriver.Data.ProviderId : result.Data.Id;
+            long? DriverId = isDriver ? resultDriver.Data.Id : null;
+            var isFirstLogin = isDriver ? true : result.Data.HasLogin;
+            var IsDefault = isDriver ? resultDriver!.Data.IsDefault : true;
+
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
             var token = new JwtSecurityToken(
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
                 expires: DateTime.Now.AddDays(30),
-                claims: get_claims(data.Email, data.Id),
+                claims: get_claims(email, Id, IsDefault, resultDriver != null, DriverId),
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );
 
@@ -104,7 +119,7 @@ namespace CMPNatural.Api
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
                     expiration = token.ValidTo,
-                    isFirstLogin = data.HasLogin
+                    isFirstLogin = isFirstLogin
                 }
             });
         }
@@ -127,11 +142,14 @@ namespace CMPNatural.Api
                 data.Email, link, "Activate Account\n");
         }
 
-        private Claim[] get_claims( string Email, long ProviderId)
+        private Claim[] get_claims( string Email, long ProviderId, bool IsDefault, bool IsDriver, long? DriverId)
         {
             List<Claim> claims = new List<Claim>() { 
                 new Claim(ClaimTypes.NameIdentifier, ProviderId.ToString()) ,
-                new Claim("Email", Email)
+                new Claim("Email", Email),
+                new Claim("IsDefault", IsDefault==null? null: IsDefault.ToString()),
+                new Claim("IsDriver", IsDriver.ToString()),
+                new Claim("DriverId", DriverId==null ? "-1" : DriverId.ToString()),
             };
             return claims.ToArray();
         }

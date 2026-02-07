@@ -74,7 +74,7 @@ namespace CMPNatural.Application
                     Message = "The manifest cannot be assigned because the associated company is currently blocked."
                 };
             }
-            if (provider.Status == ProviderStatus.Blocked)
+            if (provider == null)
             {
                 return new NoAcess<Manifest>
                 {
