@@ -14,7 +14,10 @@ namespace CMPNatural.Core.Enums
         Pending,
 
         [Description("Blocked")]
-        Blocked
+        Blocked,
+
+        [Description("Incomplete_information")]
+        Incomplete_information
     }
 
 }

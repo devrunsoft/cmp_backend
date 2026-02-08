@@ -12,6 +12,7 @@ using CMPNatural.Core.Enums;
 using CMPNatural.Core.Helper;
 using CMPNatural.Core.Repositories;
 using MediatR;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using ScoutDirect.Application.Responses;
 using ScoutDirect.Core.Repositories;
@@ -23,12 +24,14 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
         private readonly ICompanyRepository _companyRepository;
         private readonly IOperationalAddressRepository _operationalAddressRepository;
         private readonly ILogger<AdminImportCompanyExcelHandler> _logger;
+        private readonly IConfiguration _configuration;
 
-        public AdminImportCompanyExcelHandler(ICompanyRepository companyRepository, IOperationalAddressRepository operationalAddressRepository, ILogger<AdminImportCompanyExcelHandler> logger)
+        public AdminImportCompanyExcelHandler(ICompanyRepository companyRepository, IOperationalAddressRepository operationalAddressRepository, ILogger<AdminImportCompanyExcelHandler> logger, IConfiguration configuration)
         {
             _logger = logger;
             _companyRepository = companyRepository;
             _operationalAddressRepository = operationalAddressRepository;
+            _configuration = configuration;
         }
 
         public async Task<CommandResponse<CompanyExcelImportResult>> Handle(AdminImportCompanyExcelCommand request, CancellationToken cancellationToken)
@@ -47,6 +50,8 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
 
             var companyCache = new Dictionary<string, Core.Entities.Company>(StringComparer.OrdinalIgnoreCase);
             var operationalAddressCache = new Dictionary<string, long>(StringComparer.OrdinalIgnoreCase);
+            var geocodeCache = new Dictionary<string, GeocodeResult>(StringComparer.OrdinalIgnoreCase);
+            var geocodeService = new GoogleGeocodingService(_configuration["GOOGLE_MAPS_API_KEY"] ?? string.Empty);
 
             foreach (var row in rows)
             {
@@ -77,10 +82,33 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                         missing.Add("OperationalAddress.Phone");
 
                     var ContactPerson = (row.ContactPerson ?? string.Empty);
+                    if (string.IsNullOrWhiteSpace(ContactPerson))
+                        missing.Add("OperationalAddress.ContactPerson");
 
                     var email = BuildPlaceholderEmail(operationalUsername, row.RowNumber);
-                    missing.Add("Company.BusinessEmail");
+
                     rowResult.MissingFields = missing;
+
+                    GeocodeResult? geocode = null;
+                    if (!string.IsNullOrWhiteSpace(address))
+                    {
+                        if (!geocodeCache.TryGetValue(address, out var cachedGeo))
+                        {
+                            geocode = await geocodeService.GeocodeAsync(address, cancellationToken);
+                            if (geocode != null)
+                            {
+                                geocodeCache[address] = geocode;
+                            }
+                            else
+                            {
+                                missing.Add("OperationalAddress.Location");
+                            }
+                        }
+                        else
+                        {
+                            geocode = cachedGeo;
+                        }
+                    }
 
                     Core.Entities.Company? companyResult = null;
                     //_logger.LogInformation($"C: {companyName} L: {operationalUsername}");
@@ -107,7 +135,7 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                             Type = (int)CompanyType.Chain,
                             Registered = true,
                             Accepted = true,
-                            Status = CompanyStatus.Approved,
+                            Status = missing.Count==0 ? CompanyStatus.Approved: CompanyStatus.Incomplete_information,
                             CorporateAddress = address,
                             Password = PasswordGenerator.GenerateSecurePassword(),
                         };
@@ -158,7 +186,10 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                         Username = string.IsNullOrWhiteSpace(operationalUsername) ? null : operationalUsername,
                         Password = string.IsNullOrWhiteSpace(operationalUsername) ? null : operationalUsername,
                         FirstName = part0,
-                        LastName = part1
+                        LastName = part1,
+                        Lat = geocode?.Lat,
+                        Long = geocode?.Lng,
+                        County = geocode?.County
                     };
 
                     var operationalResult = await _operationalAddressRepository.AddAsync(operationalAddress);
