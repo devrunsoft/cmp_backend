@@ -116,7 +116,8 @@ namespace CMPNatural.Application.Services
                     State = GetCsvField(fields, CompanyExcelColumns.State),
                     Zip = GetCsvField(fields, CompanyExcelColumns.Zip),
                     Phone = GetCsvField(fields, CompanyExcelColumns.Phone),
-                    CompanyCreatedAt = GetCsvDate(fields, CompanyExcelColumns.CompanyCreatedAt)
+                    CompanyCreatedAt = GetCsvDate(fields, CompanyExcelColumns.CompanyCreatedAt),
+                    ContactPerson = GetCsvField(fields, CompanyExcelColumns.ContactPerson),
                 };
 
                 if (rowData.IsEmpty)
@@ -198,6 +199,7 @@ namespace CMPNatural.Application.Services
         public const int State = 7; // G
         public const int Zip = 8; // H
         public const int Phone = 9; // I
+        public const int ContactPerson = 11; // I
     }
 
     public class CompanyExcelRowData
@@ -211,6 +213,7 @@ namespace CMPNatural.Application.Services
         public string? State { get; set; }
         public string? Zip { get; set; }
         public string? Phone { get; set; }
+        public string? ContactPerson { get; set; }
 
         public bool IsEmpty =>
             string.IsNullOrWhiteSpace(OperationalUsername) &&

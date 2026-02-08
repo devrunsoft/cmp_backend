@@ -71,7 +71,7 @@ namespace ScoutDirect.Api.Controllers
                     issuer: _configuration["JWT:ValidIssuer"],
                     audience: _configuration["JWT:ValidAudience"],
                     expires: DateTime.Now.AddMinutes(_expiresModel.Client),
-                    claims: new GenerateToken().get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered,company.ProfilePicture , company.FullName, company.PersonId),
+                    claims: new GenerateToken().get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered,company.ProfilePicture , company.FullName, company.PersonId, company.OperationalAddressId),
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
 
@@ -258,4 +258,3 @@ namespace ScoutDirect.Api.Controllers
         }
     }
 }
-

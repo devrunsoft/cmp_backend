@@ -9,6 +9,7 @@ namespace CMPNatural.Application.Responses
     public class CompanyResponse : BaseResponse<Guid>
     {
         public long? Id { get; set; }
+        public long? OperationalAddressId { get; set; }
         public string CompanyName { get; set; }
         public string PrimaryFirstName { get; set; }
         public string PrimaryLastName { get; set; }

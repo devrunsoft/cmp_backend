@@ -102,6 +102,7 @@ namespace ScoutDirect.infrastructure
             services.AddTransient<IPaymentConfiguration, PaymentConfiguration>();
 
             services.AddScoped<ICustomDbLogger, CustomDbLogger>();
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(OperationalAddressScopeBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(TransactionBehavior<,>));
 

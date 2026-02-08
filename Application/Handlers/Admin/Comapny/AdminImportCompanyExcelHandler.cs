@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CMPNatural.Application.Commands.Admin.Company;
@@ -44,6 +45,9 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                 ColumnMap = new CompanyExcelColumnMap()
             };
 
+            var companyCache = new Dictionary<string, Core.Entities.Company>(StringComparer.OrdinalIgnoreCase);
+            var operationalAddressCache = new Dictionary<string, long>(StringComparer.OrdinalIgnoreCase);
+
             foreach (var row in rows)
             {
                 var rowResult = new CompanyExcelImportRowResult
@@ -57,12 +61,12 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                 {
                     var missing = new List<string>();
                     var companyName = (row.CompanyName ?? string.Empty).Trim();
-                    if (string.IsNullOrWhiteSpace(companyName))
-                        missing.Add("CompanyName");
-
                     var operationalUsername = (row.OperationalUsername ?? string.Empty).Trim();
                     if (string.IsNullOrWhiteSpace(operationalUsername))
                         missing.Add("OperationalAddress.Username/Password");
+
+                    if (string.IsNullOrWhiteSpace(companyName))
+                        missing.Add("CompanyName");
 
                     var address = BuildAddress(row.Street, row.City, row.State, row.Zip);
                     if (string.IsNullOrWhiteSpace(address))
@@ -72,32 +76,78 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                     if (string.IsNullOrWhiteSpace(phone))
                         missing.Add("OperationalAddress.Phone");
 
+                    var ContactPerson = (row.ContactPerson ?? string.Empty);
+
                     var email = BuildPlaceholderEmail(operationalUsername, row.RowNumber);
                     missing.Add("Company.BusinessEmail");
+                    rowResult.MissingFields = missing;
 
-                    var company = new Core.Entities.Company
+                    Core.Entities.Company? companyResult = null;
+                    //_logger.LogInformation($"C: {companyName} L: {operationalUsername}");
+                    if (!string.IsNullOrWhiteSpace(companyName))
                     {
-                        CompanyName = string.IsNullOrWhiteSpace(companyName) ? "Unknown" : companyName,
-                        PrimaryFirstName = "Unknown",
-                        PrimaryLastName = "Unknown",
-                        PrimaryPhonNumber = string.IsNullOrWhiteSpace(phone) ? "N/A" : phone,
-                        BusinessEmail = email,
-                        Position = "Unknown",
-                        SecondaryFirstName = null,
-                        SecondaryLastName = null,
-                        SecondaryPhoneNumber = null,
-                        ReferredBy = string.Empty,
-                        AccountNumber = string.Empty,
-                        Type = (int)CompanyType.Chain,
-                        Registered = missing.Count == 0,
-                        Accepted = true,
-                        Status = CompanyStatus.Approved,
-                        CorporateAddress = address,
-                        Password = PasswordGenerator.GenerateSecurePassword()
-                    };
+                        companyCache.TryGetValue(companyName, out companyResult);
+                    }
 
-                    var companyResult = await _companyRepository.AddAsync(company);
+                    if (companyResult == null)
+                    {
+                        var company = new Core.Entities.Company
+                        {
+                            CompanyName = string.IsNullOrWhiteSpace(companyName) ? "Unknown" : companyName,
+                            PrimaryFirstName = "Unknown",
+                            PrimaryLastName = "Unknown",
+                            PrimaryPhonNumber = string.IsNullOrWhiteSpace(phone) ? "N/A" : phone,
+                            BusinessEmail = email,
+                            Position = "Unknown",
+                            SecondaryFirstName = null,
+                            SecondaryLastName = null,
+                            SecondaryPhoneNumber = null,
+                            ReferredBy = string.Empty,
+                            AccountNumber = string.Empty,
+                            Type = (int)CompanyType.Chain,
+                            Registered = true,
+                            Accepted = true,
+                            Status = CompanyStatus.Approved,
+                            CorporateAddress = address,
+                            Password = PasswordGenerator.GenerateSecurePassword(),
+                        };
+
+                        companyResult = await _companyRepository.AddAsync(company);
+                        if (!string.IsNullOrWhiteSpace(companyName))
+                        {
+                            companyCache[companyName] = companyResult;
+                        }
+                    }
+
                     rowResult.CompanyId = companyResult.Id;
+
+                    if (!string.IsNullOrWhiteSpace(operationalUsername))
+                    {
+                        var operationalKey = $"{companyResult.Id}:{operationalUsername}".ToLower();
+                        if (operationalAddressCache.TryGetValue(operationalKey, out var existingOperationalId))
+                        {
+                            rowResult.OperationalAddressId = existingOperationalId;
+                            result.Rows.Add(rowResult);
+                            continue;
+                        }
+
+                        var existingOperational = (await _operationalAddressRepository.GetAsync(x =>
+                                x.CompanyId == companyResult.Id && x.Username == operationalUsername))
+                            .FirstOrDefault();
+
+                        if (existingOperational != null)
+                        {
+                            rowResult.OperationalAddressId = existingOperational.Id;
+                            operationalAddressCache[operationalKey] = existingOperational.Id;
+                            result.Rows.Add(rowResult);
+                            continue;
+                        }
+                    }
+
+                    var parts = ContactPerson.Split('#');
+
+                    var part0 = parts.Length > 0 ? parts[0] : string.Empty;
+                    var part1 = parts.Length > 1 ? parts[1] : string.Empty;
 
                     var operationalAddress = new OperationalAddress
                     {
@@ -107,8 +157,8 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                         LocationPhone = string.IsNullOrWhiteSpace(phone) ? string.Empty : phone,
                         Username = string.IsNullOrWhiteSpace(operationalUsername) ? null : operationalUsername,
                         Password = string.IsNullOrWhiteSpace(operationalUsername) ? null : operationalUsername,
-                        FirstName = string.Empty,
-                        LastName = string.Empty
+                        FirstName = part0,
+                        LastName = part1
                     };
 
                     var operationalResult = await _operationalAddressRepository.AddAsync(operationalAddress);
@@ -116,6 +166,11 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
 
                     rowResult.MissingFields = missing;
                     result.ImportedRows += 1;
+                    if (!string.IsNullOrWhiteSpace(operationalUsername))
+                    {
+                        var operationalKey = $"{companyResult.Id}:{operationalUsername}".ToLower();
+                        operationalAddressCache[operationalKey] = operationalResult.Id;
+                    }
                     _logger.LogInformation(result.ImportedRows.ToString());
                 }
                 catch (Exception ex)
