@@ -1,0 +1,60 @@
+using System;
+
+namespace CMPNatural.Core.Entities
+{
+    public partial class Company { public DateTime? IsDelete { get; set; } }
+    public partial class LocationCompany { public DateTime? IsDelete { get; set; } }
+    public partial class DocumentSubmission { public DateTime? IsDelete { get; set; } }
+    public partial class BillingInformation { public DateTime? IsDelete { get; set; } }
+    public partial class OperationalAddress { public DateTime? IsDelete { get; set; } }
+    public partial class BusinessType { public DateTime? IsDelete { get; set; } }
+    public partial class BaseServiceAppointment { public DateTime? IsDelete { get; set; } }
+    public partial class ServiceAppointment { public DateTime? IsDelete { get; set; } }
+    public partial class ServiceAppointmentEmergency { public DateTime? IsDelete { get; set; } }
+    public partial class Product { public DateTime? IsDelete { get; set; } }
+    public partial class ProductPrice { public DateTime? IsDelete { get; set; } }
+    public partial class InvoiceProduct { public DateTime? IsDelete { get; set; } }
+    public partial class Invoice { public DateTime? IsDelete { get; set; } }
+    public partial class ShoppingCard { public DateTime? IsDelete { get; set; } }
+    public partial class ServiceAppointmentLocation { public DateTime? IsDelete { get; set; } }
+    public partial class AdminEntity { public DateTime? IsDelete { get; set; } }
+    public partial class Person { public DateTime? IsDelete { get; set; } }
+    public partial class Provider { public DateTime? IsDelete { get; set; } }
+    public partial class ProviderServiceAssignment { public DateTime? IsDelete { get; set; } }
+    public partial class Driver { public DateTime? IsDelete { get; set; } }
+    public partial class DriverManifest { public DateTime? IsDelete { get; set; } }
+    public partial class Vehicle { public DateTime? IsDelete { get; set; } }
+    public partial class VehicleCompartment { public DateTime? IsDelete { get; set; } }
+    public partial class VehicleService { public DateTime? IsDelete { get; set; } }
+    public partial class Capacity { public DateTime? IsDelete { get; set; } }
+    public partial class ProviderService { public DateTime? IsDelete { get; set; } }
+    public partial class Menu { public DateTime? IsDelete { get; set; } }
+    public partial class AdminMenuAccess { public DateTime? IsDelete { get; set; } }
+    public partial class AppInformation { public DateTime? IsDelete { get; set; } }
+    public partial class Config { public DateTime? IsDelete { get; set; } }
+    public partial class Contract { public DateTime? IsDelete { get; set; } }
+    public partial class InvoiceSource { public DateTime? IsDelete { get; set; } }
+    public partial class CompanyContract { public DateTime? IsDelete { get; set; } }
+    public partial class TermsConditions { public DateTime? IsDelete { get; set; } }
+    public partial class Manifest { public DateTime? IsDelete { get; set; } }
+    public partial class BillingInformationProvider { public DateTime? IsDelete { get; set; } }
+    public partial class ServiceArea { public DateTime? IsDelete { get; set; } }
+    public partial class Payment { public DateTime? IsDelete { get; set; } }
+    public partial class AppLog { public DateTime? IsDelete { get; set; } }
+    public partial class GoHighLevel { public DateTime? IsDelete { get; set; } }
+    public partial class RequestTerminate { public DateTime? IsDelete { get; set; } }
+    public partial class LocationDateTime { public DateTime? IsDelete { get; set; } }
+    public partial class AmendmentCompanyContract { public DateTime? IsDelete { get; set; } }
+    public partial class ChatParticipant { public DateTime? IsDelete { get; set; } }
+    public partial class ChatMention { public DateTime? IsDelete { get; set; } }
+    public partial class ChatMessage { public DateTime? IsDelete { get; set; } }
+    public partial class ChatMessageNote { public DateTime? IsDelete { get; set; } }
+    public partial class ChatNotification { public DateTime? IsDelete { get; set; } }
+    public partial class ChatSession { public DateTime? IsDelete { get; set; } }
+    public partial class ChatClientSession { public DateTime? IsDelete { get; set; } }
+    public partial class ChatMessageManualNote { public DateTime? IsDelete { get; set; } }
+    public partial class Route { public DateTime? IsDelete { get; set; } }
+    public partial class RouteServiceAppointmentLocation { public DateTime? IsDelete { get; set; } }
+    public partial class ServiceAppointmentLocationFile { public DateTime? IsDelete { get; set; } }
+    public partial class RequestEntity { public DateTime? IsDelete { get; set; } }
+}

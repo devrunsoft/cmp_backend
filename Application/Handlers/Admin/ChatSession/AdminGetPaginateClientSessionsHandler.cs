@@ -25,11 +25,13 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<List<ChatClientSession>>> Handle(AdminGetPaginateClientSessionsCommand request, CancellationToken cancellationToken)
         {
-            var query = (await _repository.GetAsync(p => true,
+            var query = (await _repository.GetAsync(p => p.ChatSession.Any(x => x.Messages.Any()),
                 query => query
                 .Include(x => x.Company)
                 .Include(x => x.ChatSession)
                 .ThenInclude(x => x.OperationalAddress)
+                .Include(x => x.ChatSession)
+                .ThenInclude(x => x.Messages)
                 ));
 
             var companyFilter = QueryCompanyExtensions.FilterByCompanyQuery(request.allField);
@@ -42,9 +44,22 @@ namespace CMPNatural.Application
             var result = query
                 .AsQueryable()
                 .Where(filter)
+                .OrderByDescending(x =>
+                    x.ChatSession
+                        .SelectMany(s => s.Messages)
+                        .Select(m => (long?)m.Id)
+                        .Max() ?? 0)
                 .ToList();
+
+            foreach (var item in result)
+            {
+                foreach (var i in item.ChatSession)
+                {
+                    i.UnRead = i.Messages.Count(m => !m.IsSeen && m.SenderType != SenderType.Admin);
+                }
+            }
+
             return new Success<List<ChatClientSession>>() { Data = result };
         }
     }
 }
-

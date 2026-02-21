@@ -15,6 +15,8 @@ namespace CMPNatural.Core.Entities
         public string PrimaryLastName { get; set; } = string.Empty;
         public string PrimaryPhonNumber { get; set; } = string.Empty;
         public string? BusinessEmail { get; set; }
+        public string? PendingEmail { get; set; }
+        public string? EmailChangeCode { get; set; }
 		public string? Position { get; set; }
 		public string? SecondaryFirstName { get; set; } = null;
         public string? SecondaryLastName { get; set; } = null;
@@ -83,6 +85,7 @@ namespace CMPNatural.Core.Entities
             return p =>
                 (p.Id.ToString() == loweredSearch) ||
                 (p.CompanyName != null && p.CompanyName.ToLower().Contains(loweredSearch)) ||
+                (p.OperationalAddress != null && p.OperationalAddress.Any(x=>x.Username.ToLower().Contains(loweredSearch))) ||
                 (p.PrimaryFirstName != null && p.PrimaryFirstName.ToLower().Contains(loweredSearch)) ||
                 (p.PrimaryLastName != null && p.PrimaryLastName.ToLower().Contains(loweredSearch)) ||
                 (p.PrimaryPhonNumber != null && p.PrimaryPhonNumber.ToLower().Contains(loweredSearch)) ||
@@ -99,4 +102,3 @@ namespace CMPNatural.Core.Entities
 
     }
 }
-

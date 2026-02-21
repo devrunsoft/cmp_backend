@@ -64,6 +64,7 @@ namespace CMPNatural.Application.Hub
 
         public async Task SendToPerson(string personId, string message, ChatEnum type = ChatEnum.message)
         {
+
             if (ChatHub.ConnectedUsers.TryGetValue(personId, out var connectionId))
             {
                 await _hubContext.Clients.Client(connectionId.ConnectionId).SendMessage(type.GetDescription(), message);

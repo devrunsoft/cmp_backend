@@ -1,4 +1,6 @@
 ﻿
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace CMPNatural.Core.Entities
 {
     public partial class ChatSession
@@ -10,6 +12,9 @@ namespace CMPNatural.Core.Entities
         public bool IsActive { get; set; } = true;
         public long OperationalAddressId { get; set; }
         public long ChatClientSessionId { get; set; }
+
+        [NotMapped]
+        public int UnRead { get; set; } = 0;
 
         public ChatClientSession ChatClientSession { get; set; }
         public Company Company { get; set; }

@@ -25,13 +25,16 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
         private readonly IOperationalAddressRepository _operationalAddressRepository;
         private readonly ILogger<AdminImportCompanyExcelHandler> _logger;
         private readonly IConfiguration _configuration;
+        private readonly IPersonRepository _personRepository;
 
-        public AdminImportCompanyExcelHandler(ICompanyRepository companyRepository, IOperationalAddressRepository operationalAddressRepository, ILogger<AdminImportCompanyExcelHandler> logger, IConfiguration configuration)
+        public AdminImportCompanyExcelHandler(ICompanyRepository companyRepository, IOperationalAddressRepository operationalAddressRepository, ILogger<AdminImportCompanyExcelHandler> logger, IConfiguration configuration,
+            IPersonRepository _personRepository)
         {
             _logger = logger;
             _companyRepository = companyRepository;
             _operationalAddressRepository = operationalAddressRepository;
             _configuration = configuration;
+            this._personRepository = _personRepository;
         }
 
         public async Task<CommandResponse<CompanyExcelImportResult>> Handle(AdminImportCompanyExcelCommand request, CancellationToken cancellationToken)
@@ -85,30 +88,30 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                     if (string.IsNullOrWhiteSpace(ContactPerson))
                         missing.Add("OperationalAddress.ContactPerson");
 
-                    var email = BuildPlaceholderEmail(operationalUsername, row.RowNumber);
+                    //var email = BuildPlaceholderEmail(operationalUsername, row.RowNumber);
 
                     rowResult.MissingFields = missing;
 
                     GeocodeResult? geocode = null;
-                    if (!string.IsNullOrWhiteSpace(address))
-                    {
-                        if (!geocodeCache.TryGetValue(address, out var cachedGeo))
-                        {
-                            geocode = await geocodeService.GeocodeAsync(address, cancellationToken);
-                            if (geocode != null)
-                            {
-                                geocodeCache[address] = geocode;
-                            }
-                            else
-                            {
-                                missing.Add("OperationalAddress.Location");
-                            }
-                        }
-                        else
-                        {
-                            geocode = cachedGeo;
-                        }
-                    }
+                    //if (!string.IsNullOrWhiteSpace(address))
+                    //{
+                    //    if (!geocodeCache.TryGetValue(address, out var cachedGeo))
+                    //    {
+                    //        geocode = await geocodeService.GeocodeAsync(address, cancellationToken);
+                    //        if (geocode != null)
+                    //        {
+                    //            geocodeCache[address] = geocode;
+                    //        }
+                    //        else
+                    //        {
+                    //            missing.Add("OperationalAddress.Location");
+                    //        }
+                    //    }
+                    //    else
+                    //    {
+                    //        geocode = cachedGeo;
+                    //    }
+                    //}
 
                     Core.Entities.Company? companyResult = null;
                     //_logger.LogInformation($"C: {companyName} L: {operationalUsername}");
@@ -116,17 +119,27 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                     {
                         companyCache.TryGetValue(companyName, out companyResult);
                     }
+                    var parts = ContactPerson.Split('#');
+
+                    var part0 = parts.Length > 0 ? parts[0] : string.Empty;
+                    var part1 = parts.Length > 1 ? parts[1] : string.Empty;
 
                     if (companyResult == null)
                     {
+
+                        var personId = Guid.NewGuid();
+                        var person = new Person() { FirstName = part0, LastName = part1, Id = personId };
+                        await _personRepository.AddAsync(person);
+
                         var company = new Core.Entities.Company
                         {
-                            CompanyName = string.IsNullOrWhiteSpace(companyName) ? "Unknown" : companyName,
-                            PrimaryFirstName = "Unknown",
-                            PrimaryLastName = "Unknown",
-                            PrimaryPhonNumber = string.IsNullOrWhiteSpace(phone) ? "N/A" : phone,
-                            BusinessEmail = email,
-                            Position = "Unknown",
+                            PersonId = personId,
+                            CompanyName = string.IsNullOrWhiteSpace(companyName) ? "" : companyName,
+                            PrimaryFirstName = part0,
+                            PrimaryLastName = part1,
+                            PrimaryPhonNumber = string.IsNullOrWhiteSpace(phone) ? "" : phone,
+                            BusinessEmail = "",
+                            Position = "",
                             SecondaryFirstName = null,
                             SecondaryLastName = null,
                             SecondaryPhoneNumber = null,
@@ -172,10 +185,6 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                         }
                     }
 
-                    var parts = ContactPerson.Split('#');
-
-                    var part0 = parts.Length > 0 ? parts[0] : string.Empty;
-                    var part1 = parts.Length > 1 ? parts[1] : string.Empty;
 
                     var operationalAddress = new OperationalAddress
                     {

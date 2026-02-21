@@ -22,12 +22,17 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<PagesQueryResponse<CompanyContract>>> Handle(AdminGetPaginateCompanyContractCommand request, CancellationToken cancellationToken)
         {
+            var allField = request.allField?.Trim();
             var invoices = (await _repository.GetBasePagedAsync(request,
-             p => (request.CompanyId == null || p.CompanyId == request.CompanyId)  &&  (request.Status == null || p.Status == request.Status),
+             p =>
+                (request.CompanyId == null || p.CompanyId == request.CompanyId) &&
+                (request.Status == null || p.Status == request.Status) &&
+                (string.IsNullOrWhiteSpace(allField) ||
+                 ("C" + p.CreatedAt.Year + "-" + p.CompanyId + "/" + p.OperationalAddressId + "-" + p.Id).Contains(allField))
+             ,
              query =>query.Include(x=>x.Company)
             ));
             return new Success<PagesQueryResponse<CompanyContract>>() { Data = invoices };
         }
     }
 }
-

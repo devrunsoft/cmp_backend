@@ -37,6 +37,10 @@ namespace CMPNatural.Application.Handlers
         {
 
             var company = (await _companyRepository.GetByIdAsync(request.CompanyId));
+            if (string.IsNullOrEmpty(company.BusinessEmail))
+            {
+                company.Status = CompanyStatus.Incomplete_information;
+            }
             if (company.Status != CompanyStatus.Approved)
             {
                 switch (company.Status)

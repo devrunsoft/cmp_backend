@@ -1,4 +1,5 @@
 ﻿
+using System;
 using ScoutDirect.Core.Repositories.Base;
 using infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +34,11 @@ namespace ScoutDirect.infrastructure.Repository
             _cacheService = cacheService;
         }
 
+        private IQueryable<T> BaseQuery()
+        {
+            return _dbContext.Set<T>().Where(x => x.IsDelete == null);
+        }
+
         public async Task<TValue> GetOrCreateAsync<TValue>(
          string key, Func<Task<TValue>> factory, TimeSpan? ttl = null)
         {
@@ -61,31 +67,36 @@ namespace ScoutDirect.infrastructure.Repository
         }
         public async Task DeleteAsync(T entity)
         {
-            _dbContext.Set<T>().Remove(entity);
+            entity.IsDelete = DateTime.UtcNow;
+            _dbContext.Set<T>().Update(entity);
             await _dbContext.SaveChangesAsync();
         }
         public async Task DeleteRangeAsync(List<T> entity)
         {
-            _dbContext.Set<T>().RemoveRange(entity);
+            foreach (var item in entity)
+            {
+                item.IsDelete = DateTime.UtcNow;
+            }
+            _dbContext.Set<T>().UpdateRange(entity);
             await _dbContext.SaveChangesAsync();
         }
         public async Task<IReadOnlyList<T>> GetAllAsync()
         {
-            return await _dbContext.Set<T>().ToListAsync();
+            return await BaseQuery().ToListAsync();
         }
 
         public IReadOnlyList<T> GetAllsync()
         {
-            return _dbContext.Set<T>().ToList();
+            return BaseQuery().ToList();
         }
 
         public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> expression)
         {
-            return await _dbContext.Set<T>().Where(expression).ToListAsync();
+            return await BaseQuery().Where(expression).ToListAsync();
         }
         public async Task<IReadOnlyList<T>> GetAsync(Expression<Func<T, bool>> expression, Func<IQueryable<T>, IQueryable<T>> includeFunc = null)
         {
-            var query = _dbContext.Set<T>().AsQueryable();
+            var query = BaseQuery();
 
             if (includeFunc != null)
             {
@@ -97,12 +108,12 @@ namespace ScoutDirect.infrastructure.Repository
 
         public async Task<T> GetByIdAsync(E id)
         {
-            return await _dbContext.Set<T>().FindAsync(id);
+            return await BaseQuery().FirstOrDefaultAsync(x => x.Id!.Equals(id));
         }
 
         public async Task<IReadOnlyList<T>> GetPagedAsync(PagedQueryRequest pagingParam, Expression<Func<T, bool>> expression)
         {
-            var query = _dbContext.Set<T>().AsQueryable();
+            var query = BaseQuery();
 
 
             if (!string.IsNullOrWhiteSpace(pagingParam.allField))
@@ -112,7 +123,7 @@ namespace ScoutDirect.infrastructure.Repository
 
 
             var skip = (pagingParam.Page - 1) * pagingParam.Size;
-            return await _dbContext.Set<T>().Where(expression)
+            return await query.Where(expression)
                 .OrderByDescending(p => p.Id).Skip(skip).Take(pagingParam.Size).ToListAsync();
         }
 
@@ -163,7 +174,7 @@ namespace ScoutDirect.infrastructure.Repository
 
         public async Task<PagesQueryResponse<T>> GetBasePagedAsync(PagedQueryRequest pagingParam, Expression<Func<T, bool>> expression, Func<IQueryable<T>, IQueryable<T>> includeFunc = null, bool filterAll=true)
         {
-            IQueryable<T> query = _dbContext.Set<T>();
+            IQueryable<T> query = BaseQuery();
 
             if (expression != null)
             {
@@ -196,7 +207,7 @@ namespace ScoutDirect.infrastructure.Repository
 
         public async Task<PagesQueryResponse<T>> GetBasePagedAsync(PagedQueryRequest pagingParam, Func<IQueryable<T>, IQueryable<T>> includeFunc = null, bool filterAll = true)
         {
-            var query = _dbContext.Set<T>().AsQueryable();
+            var query = BaseQuery();
 
             if (includeFunc != null)
             {
