@@ -174,7 +174,7 @@ namespace CMPNatural.Application
            }
             if (!contract)
             {
-                var resultContract = await new AdminCreateProviderContractHandler(_companyContractRepository, _contractRepository, _invoiceRepository, _appRepository, _appSetting)
+                var resultContract = await new AdminCreateProviderContractHandler(_companyContractRepository, _contractRepository, _invoiceRepository, _appRepository, _appSetting, _providerRepository)
                     .Create(e.Request, manifests, request.ProviderId);
 
                 if (!resultContract.IsSucces())

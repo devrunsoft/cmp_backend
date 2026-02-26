@@ -5,24 +5,28 @@ using ScoutDirect.Application.Responses;
 using CMPNatural.Core.Entities;
 using CMPNatural.Core.Repositories;
 using System.Linq;
+using CMPNatural.Application.Commands;
+using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Application.Handlers.CommandHandlers
 {
     public class AddOperationalAddressHandler : IRequestHandler<AddOperationalAddressCommand, CommandResponse<object>>
     {
         private readonly IOperationalAddressRepository _operationalAddressRepository;
+        private readonly ICapacityRepository _capacityRepository;
         private readonly IMediator _mediator;
-        public AddOperationalAddressHandler(IOperationalAddressRepository operationalAddressRepository, IMediator _mediator)
+        public AddOperationalAddressHandler(
+            IOperationalAddressRepository operationalAddressRepository,
+            ICapacityRepository capacityRepository,
+            IMediator mediator)
         {
             _operationalAddressRepository = operationalAddressRepository;
-            this._mediator = _mediator;
+            _capacityRepository = capacityRepository;
+            _mediator = mediator;
         }
 
         public async Task<CommandResponse<object>> Handle(AddOperationalAddressCommand request, CancellationToken cancellationToken)
         {
-
-            OperationalAddress lastOprAdd = (await _operationalAddressRepository.GetAsync(p => p.CompanyId == request.CompanyId)).FirstOrDefault();
-
             var entity = new Core.Entities.OperationalAddress()
                 {
                     Address = request.Address,
@@ -50,6 +54,26 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
 
                 var chatsession = (await _mediator.Send(new CreateChatSessionCommand() { ClientId = request.CompanyId,
                     OperationalAddressId = result.Id })).Data;
+
+                var defaultCapacity = (await _capacityRepository.GetAsync(x => x.Enable)).FirstOrDefault();
+                if (defaultCapacity != null && request.Lat != 0 && request.Long != 0)
+                {
+                    await _mediator.Send(new AddLocationCompanyCommand()
+                    {
+                        CompanyId = request.CompanyId,
+                        OperationalAddressId = result.Id,
+                        Name = request.Name,
+                        Address = request.Address,
+                        Lat = request.Lat,
+                        Long = request.Long,
+                        Comment = string.Empty,
+                        PrimaryFirstName = request.FirstName,
+                        PrimaryLastName = request.LastName,
+                        PrimaryPhonNumber = request.LocationPhone,
+                        CapacityId = defaultCapacity.Id,
+                        Type = LocationType.Other
+                    });
+                }
 
               return new Success<object>() { Data = result, Message = "OperationalAddres Added Successfully!" };
 

@@ -87,20 +87,11 @@ namespace CMPNatural.Application
 
                 foreach (var service in lst)
                 {
-                    if (service.Product.ServiceType == (int)ServiceType.Other)
-                    {
-                        var loc = (await locationCompanyRepository.GetAsync(x=>x.Type == (int)LocationType.Other)).FirstOrDefault();
-                        await new AdminCreateManifestHandler(_manifestRepository, _invoiceRepository, _apprepository, _serviceAppointmentLocationRepository, _appSetting)
-                        .Create(item, ManifestStatus.Draft, loc.Id, service.StartDate);
-                    }
-                    else
-                    {
                         foreach (var loc in service.ServiceAppointmentLocations)
                         {
                             await new AdminCreateManifestHandler(_manifestRepository, _invoiceRepository, _apprepository, _serviceAppointmentLocationRepository, _appSetting)
                           .Create(item, ManifestStatus.Draft, loc.Id, service.StartDate);
                         }
-                    }
                 }
                 await CreateScaduleServiceHandler.Create(item, _baseServiceAppointmentRepository, _manifestRepository, _invoiceRepository, _apprepository, _serviceAppointmentLocationRepository, _appSetting, locationCompanyRepository);
 

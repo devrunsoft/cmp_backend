@@ -18,15 +18,17 @@ namespace CMPNatural.Application.Handlers
         private readonly IContractRepository _contractrepository;
         private readonly IAppInformationRepository _apprepository;
         private readonly IRequestRepository _baseServicerepository;
+        private readonly IProviderReposiotry providerReposiotry;
         private readonly AppSetting _appSetting;
         public AdminCreateProviderContractHandler(IProviderContractRepository _repository, IContractRepository _contractrepository,
-            IRequestRepository baseServicerepository, IAppInformationRepository _apprepository, AppSetting appSetting)
+            IRequestRepository baseServicerepository, IAppInformationRepository _apprepository, AppSetting appSetting, IProviderReposiotry providerReposiotry)
         {
             this._repository = _repository;
             this._contractrepository = _contractrepository;
             this._baseServicerepository = baseServicerepository;
             this._apprepository = _apprepository;
             this._appSetting = appSetting;
+            this.providerReposiotry = providerReposiotry;
         }
 
         public async Task<CommandResponse<ProviderContract>> Create(RequestEntity request, List<Manifest> models, long providerId)
@@ -37,6 +39,7 @@ namespace CMPNatural.Application.Handlers
                 return new NoAcess<ProviderContract>() { Message = "Please complete the information" };
             }
             var contracts = await _contractrepository.GetAsync(x => x.Active && x.Type == ContractType.Provider);
+            var provider = await providerReposiotry.GetByIdAsync(providerId);
             var contract = contracts.FirstOrDefault(c => c.IsDefault);
             contract ??= contracts.LastOrDefault();
 
@@ -58,7 +61,7 @@ namespace CMPNatural.Application.Handlers
             {
                 ManifestIsd = string.Join(",", models.Select(x=>x.Id)),
                 CompanyId = company.Id,
-                Status = CompanyContractStatus.Created,
+                Status = CompanyContractStatus.Send,
                 CreatedAt = DateTime.Now,
                 ContractId = contract.Id,
                 ContractNumber = "",
@@ -69,7 +72,7 @@ namespace CMPNatural.Application.Handlers
 
             var result = await _repository.AddAsync(entity);
 
-            var dbContent = AdminContractProviderContractHandler.Create(mainInvoice, information, contract, company, result, _appSetting);
+            var dbContent = AdminContractProviderContractHandler.Create(mainInvoice, information, contract, provider, result, _appSetting);
             //update
             entity.Content = dbContent.ToString();
             entity.ContractNumber = entity.Number;

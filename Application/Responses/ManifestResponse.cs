@@ -70,5 +70,6 @@ namespace CMPNatural.Application.Responses
     {
         public string? Name { get; set; }
         public string? Address { get; set; }
+        public int Type { get; set; } = 1;
     }
 }

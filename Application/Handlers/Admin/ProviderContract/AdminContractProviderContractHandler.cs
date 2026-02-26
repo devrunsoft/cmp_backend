@@ -14,11 +14,11 @@ namespace CMPNatural.Application
 {
     public class AdminContractProviderContractHandler
     {
-        public static string Create(List<RequestEntity> invoice, AppInformation information, Contract contract, Company company, ProviderContract result, AppSetting _appSetting)
+        public static string Create(List<RequestEntity> invoice, AppInformation information, Contract contract, Provider provider, ProviderContract result, AppSetting _appSetting)
         {
             var serviceList = invoice.Select(inv =>
             {
-                var services = inv.BaseServiceAppointment.Select(x =>
+                var services = inv.BaseServiceAppointment.Where(x=>x.Status == ServiceStatus.Proccessing).Select(x =>
                     $"<strong>{x.Product.Name}</strong> - <strong>{x.ProductPrice.Name}</strong> " +
                     $"<br><strong>Start Date:</strong> {x.StartDate.ToDateString()}" +
                     $" - <strong>Preferred Days:</strong> {x.DayOfWeek} ({x.FromHour.ConvertTimeToString()} until {x.ToHour.ConvertTimeToString()})" +
@@ -38,7 +38,6 @@ namespace CMPNatural.Application
 
             var dbContent = contract.Content.ToString();
             var cleanedNumber = information.CompanyPhoneNumber.FormatPhoneNumber();
-            var provider = invoice.FirstOrDefault()?.Provider;
 
             dbContent = dbContent.Replace(ContractProviderKeysEnum.ManagmentCompanyLogo.GetDescription(), managementCompany.Logo);
             dbContent = dbContent.Replace(ContractProviderKeysEnum.ManagmentCompanyName.GetDescription(), information.CompanyTitle);

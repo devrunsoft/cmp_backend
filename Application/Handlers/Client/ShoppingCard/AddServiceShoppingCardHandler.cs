@@ -11,6 +11,8 @@ using System.Linq;
 using System.ServiceModel.Channels;
 using Microsoft.EntityFrameworkCore;
 using ScoutDirect.Core.Repositories;
+using Stripe;
+using System.Collections.Generic;
 
 namespace CMPNatural.Application.Handlers
 {
@@ -69,8 +71,15 @@ namespace CMPNatural.Application.Handlers
             var price =(await _productPriceRepository.GetAsync(p=>p.Id == request.ProductPriceId && p.Enable!=false, query => query.Include(i => i.Product))).FirstOrDefault();
             var address = (await _operationalAddressRepository.GetAsync(p => p.Id == request.OperationalAddressId)).FirstOrDefault();
 
+            if (price.Product.ServiceType == (int)ServiceType.Other)
+            {
+                var loc = (await _locationCompanyRepository.GetAsync(x => x.Type == (int)LocationType.Other && x.OperationalAddressId == request.OperationalAddressId)).FirstOrDefault();
+                request.LocationCompanyIds= new List<long>() { loc.Id };
+            }
 
-            if (price.Product.ServiceType == (int)ServiceType.Cooking_Oil_Collection || price.Product.ServiceType == (int)ServiceType.Grease_Trap_Management) {
+
+
+                if (price.Product.ServiceType == (int)ServiceType.Cooking_Oil_Collection || price.Product.ServiceType == (int)ServiceType.Grease_Trap_Management) {
                 var locations = (await _locationCompanyRepository.GetAsync(p => request.LocationCompanyIds.Any(e => e == p.Id),
                     p => p.Include(p => p.CapacityEntity))).ToList();
                 if(locations.Count == 0)
@@ -85,6 +94,7 @@ namespace CMPNatural.Application.Handlers
                 Qty = request.qty;
             }
             var dof = request.DayOfWeek.Count == 0 ? request.DayOfWeek : Enum.GetValues(typeof(DayOfWeekEnum)).Cast<DayOfWeekEnum>().ToList();
+
 
             var entity = new ShoppingCard()
             {

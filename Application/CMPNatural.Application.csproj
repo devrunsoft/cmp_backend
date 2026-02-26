@@ -311,6 +311,9 @@
     <None Remove="Handlers\Admin\Invoice\Provider\" />
     <None Remove="Mapper\Route\" />
     <None Remove="Handlers\Admin\ProviderContract\" />
+    <None Remove="Commands\Provider\ProviderContract\" />
+    <None Remove="Handlers\Provider\CompanyContract\" />
+    <None Remove="Commands\Admin\ProviderContract\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -631,6 +634,9 @@
     <Folder Include="Handlers\Admin\Invoice\Provider\" />
     <Folder Include="Mapper\Route\" />
     <Folder Include="Handlers\Admin\ProviderContract\" />
+    <Folder Include="Commands\Provider\ProviderContract\" />
+    <Folder Include="Handlers\Provider\CompanyContract\" />
+    <Folder Include="Commands\Admin\ProviderContract\" />
   </ItemGroup> 
 
   <ItemGroup>
