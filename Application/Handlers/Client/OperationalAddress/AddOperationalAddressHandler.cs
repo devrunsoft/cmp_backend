@@ -40,7 +40,9 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                     Lat = request.Lat,
                     Long = request.Long,
                     Name = request.Name,
-                    LocationDateTimes = request.LocationDateTimeInputs.Select(x => new LocationDateTime()
+                    //Username = request.Username,
+                    Password = request.Password,
+                      LocationDateTimes = request.LocationDateTimeInputs.Select(x => new LocationDateTime()
                     {
                         CompanyId = request.CompanyId,
                         DayName = x.DayName,

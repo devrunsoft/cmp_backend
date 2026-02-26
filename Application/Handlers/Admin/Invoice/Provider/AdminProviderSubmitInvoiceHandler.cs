@@ -15,7 +15,7 @@ namespace CMPNatural.Application
 {
     public class AdminProviderSubmitInvoiceHandler : IRequestHandler<AdminProviderSubmitInvoiceCommand, CommandResponse<InvoiceResponse>>
     {
-        private readonly IManifestRepository _repository;
+        private readonly IRequestRepository _repository;
         private readonly IinvoiceRepository _invoiceRepository;
         private readonly IAppInformationRepository _apprepository;
         private readonly IProductPriceRepository _productPriceRepository;
@@ -24,7 +24,7 @@ namespace CMPNatural.Application
         private readonly AppSetting _appSetting;
 
         public AdminProviderSubmitInvoiceHandler(IinvoiceRepository invoiceRepository, IProductPriceRepository productPriceRepository,
-             IBaseServiceAppointmentRepository baseServiceAppointmentRepository, IManifestRepository _repository, IAppInformationRepository _apprepository,
+             IBaseServiceAppointmentRepository baseServiceAppointmentRepository, IRequestRepository _repository, IAppInformationRepository _apprepository,
              IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository, AppSetting appSetting)
         {
             _invoiceRepository = invoiceRepository;
@@ -41,7 +41,11 @@ namespace CMPNatural.Application
             var invoice = (await _invoiceRepository.GetAsync(p => p.Id == requests.InvoiceId,
                 query => query.Include(x => x.Company)
                 )).FirstOrDefault();
-            //var entity = (await _repository.GetAsync(x => x.RequestId == invoice.RequestId)).FirstOrDefault();
+
+            var entity = (await _repository.GetAsync(x => x.Id == invoice.RequestId)).FirstOrDefault();
+
+            entity.Status = InvoiceStatus.Complete;
+            await _repository.UpdateAsync(entity);
 
             if (invoice.Status == InvoiceStatus.Send_Payment)
             {

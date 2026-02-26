@@ -92,6 +92,16 @@ namespace CMPNatural.Api.Controllers
         public async Task<ActionResult> RegistartionStatusLogin()
         {
 
+            var resultCompany = await _mediator.Send(new GetCompanyCommand()
+            {
+                CompanyId = rCompanyId,
+            })!;
+
+            if (!((CompanyResponse)resultCompany.Data).Registered)
+            {
+                return Ok(new Success<String>() { Data = RegisterType.NotActivate.ToString() });
+            }
+
             var resultbiling = await _mediator.Send(new GetBilingInformationCommand()
             {
                 CompanyId = rCompanyId,
@@ -126,15 +136,7 @@ namespace CMPNatural.Api.Controllers
             //}
 
 
-            var resultCompany = await _mediator.Send(new GetCompanyCommand()
-            {
-                CompanyId = rCompanyId,
-            })!;
 
-            if (!((CompanyResponse)resultCompany.Data).Registered)
-            {
-                return Ok(new Success<String>() { Data = RegisterType.NotActivate.ToString() });
-            }
 
             return Ok(new Success<String>() { Data = RegisterType.Registered.ToString() });
         }
@@ -190,8 +192,8 @@ namespace CMPNatural.Api.Controllers
             }
             else
             {
-                if (string.IsNullOrWhiteSpace(operationalAddress.Username))
-                    missing.Add("OperationalAddress.Username/Password");
+                //if (string.IsNullOrWhiteSpace(operationalAddress.Username))
+                //    missing.Add("OperationalAddress.Username/Password");
                 if (string.IsNullOrWhiteSpace(operationalAddress.Address))
                     missing.Add("OperationalAddress.Address");
                 if (string.IsNullOrWhiteSpace(operationalAddress.LocationPhone))

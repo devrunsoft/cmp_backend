@@ -23,14 +23,14 @@ namespace CMPNatural.Application
         private readonly IContractRepository _contractRepository;
         private readonly ICompanyContractRepository _companyContractRepository;
         private readonly IAppInformationRepository _appRepository;
-        private readonly IManifestRepository _repository;
+        private readonly IRequestRepository _repository;
         private readonly IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository;
         private readonly AppSetting _appSetting;
         private readonly ILocationCompanyRepository locationCompanyRepository;
 
         public AdminProviderUpdateInvoiceHandler(IinvoiceRepository invoiceRepository, IProductPriceRepository productPriceRepository,
              IBaseServiceAppointmentRepository baseServiceAppointmentRepository, IContractRepository _contractRepository,
-             ICompanyContractRepository _companyContractRepository, IAppInformationRepository _appRepository, IManifestRepository _repository,
+             ICompanyContractRepository _companyContractRepository, IAppInformationRepository _appRepository, IRequestRepository _repository,
              IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository, AppSetting appSetting, ILocationCompanyRepository locationCompanyRepository)
         {
             _invoiceRepository = invoiceRepository;
@@ -56,6 +56,10 @@ namespace CMPNatural.Application
                 .ThenInclude(i => i.ServiceAppointmentLocations)
                 .ThenInclude(p => p.LocationCompany)
             )).FirstOrDefault();
+
+            var entity = (await _repository.GetAsync(x => x.Id == invoice.RequestId)).FirstOrDefault();
+            entity.Status = InvoiceStatus.Complete;
+            await _repository.UpdateAsync(entity);
 
             if (invoice.Status == InvoiceStatus.Send_Payment)
             {

@@ -25,14 +25,16 @@ using CMPEmail;
 using Microsoft.Extensions.Options;
 using CMPNatural.Core.Models;
 using CMPNatural.Api.Controllers.Client;
+using ScoutDirect.Api.Controllers._Base;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ScoutDirect.Api.Controllers
 {
     [ApiController]
+    [AllowAnonymous]
     [Route("api/[controller]")]
-    public class UserController : ControllerBase
+    public class UserController : BaseClientApiController
     {
         protected readonly ExpiresModel _expiresModel;
         protected readonly IMediator _mediator;
@@ -42,7 +44,7 @@ namespace ScoutDirect.Api.Controllers
         private readonly HighLevelSettings _highLevelSetting;
         private readonly AppSetting _appSetting;
 
-        public UserController(IMediator mediator, IConfiguration configuration, IWebHostEnvironment env, UpdateContactTokenApi updateContact, IOptions<ExpiresModel> _expiresModel, HighLevelSettings _highLevelSetting, AppSetting appSetting)
+        public UserController(IMediator mediator, IConfiguration configuration, IWebHostEnvironment env, UpdateContactTokenApi updateContact, IOptions<ExpiresModel> _expiresModel, HighLevelSettings _highLevelSetting, AppSetting appSetting) : base(mediator)
         {
             _mediator = mediator;
             _configuration = configuration;
@@ -79,13 +81,15 @@ namespace ScoutDirect.Api.Controllers
 
                 _updateContact.send(command.BusinessEmail, tokenvalue);
 
-                //return Ok(new
-                //{
-                //    token = tokenvalue,
-                //    expiration = token.ValidTo,
-                //    registered = company.Registered,
-                //    accepted = company.Accepted,
-                //});
+                var resultEmail = await _mediator.Send(new ResendEmailCompanyCommand()
+                {
+                    CompanyId = company.Id.Value,
+                    ActivationLink = Guid.NewGuid()
+                });
+                if (resultEmail.IsSucces())
+                {
+                    EmailSender((CompanyResponse)result.Data);
+                }
                 return Ok(new Success<object>()
                 {
                     Data = new
@@ -101,6 +105,25 @@ namespace ScoutDirect.Api.Controllers
 
             return Ok(result);
 
+        }
+
+        void EmailSender(CompanyResponse data)
+        {
+            string host;
+
+            if (_env.IsDevelopment())
+            {
+                host = "http://localhost:16105";
+            }
+            else
+            {
+                host = _appSetting.host;
+            }
+
+            var link = host + "/api/RegisterCompany/Activate?activationLink=" + data.ActivationLink!.Value.ToString();
+            data.ActivationLinkGo = link;
+            sendEmail("Activation Link", "\n\nThank you for signing up!\n\nTo activate your account and get started, please click the button below. This helps us verify your email address and complete your registration.\n\nIf you did not request this, you can safely ignore this message.\n",
+                data.BusinessEmail, link, "Activate Account\n");
         }
 
         [HttpPost]

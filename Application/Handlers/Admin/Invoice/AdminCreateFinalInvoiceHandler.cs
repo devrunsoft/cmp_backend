@@ -143,7 +143,7 @@ namespace CMPNatural.Application
                 var inv = new Invoice
                 {
                     CompanyId = singleCompanyId,
-                    Status = InvoiceStatus.Send_Payment,
+                    Status = InvoiceStatus.Draft,
                     BaseServiceAppointment = lstCustom,
                     Address = result.FirstOrDefault().OperationalAddress.Address,
                     OperationalAddressId = singleOperationalId,

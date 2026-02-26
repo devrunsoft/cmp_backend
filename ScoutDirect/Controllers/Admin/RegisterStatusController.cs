@@ -62,8 +62,8 @@ namespace CMPNatural.Api.Controllers.Admin
             }
             else
             {
-                if (string.IsNullOrWhiteSpace(operationalAddress.Username))
-                    missing.Add("OperationalAddress.Username/Password");
+                //if (string.IsNullOrWhiteSpace(operationalAddress.Username))
+                //    missing.Add("OperationalAddress.Username/Password");
                 if (string.IsNullOrWhiteSpace(operationalAddress.Address))
                     missing.Add("OperationalAddress.Address");
                 if (string.IsNullOrWhiteSpace(operationalAddress.LocationPhone))

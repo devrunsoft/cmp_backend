@@ -11,6 +11,7 @@ using CMPNatural.Core.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using CMPNatural.Core.Extentions;
 
 namespace CMPNatural.Application
 {
@@ -57,9 +58,13 @@ namespace CMPNatural.Application
                 };
             }
 
+            string formattedTime = DateTime.Now.ToString("hh:mm tt");
+
             var content = entity.Content;
             content = CompanyContractHelper.ShowByKey(ContractProviderKeysEnum.ManagmentCompanySign.GetDescription(), content, CompanyContractHelper.SignFont);
             content = content.Replace(ContractProviderKeysEnum.ManagmentCompanySign.GetDescription(), appinformation.Sign);
+            content = CompanyContractHelper.ShowByKey(ContractProviderKeysEnum.ManagmentCompanySignDateTime.GetDescription(), content);
+            content = content.Replace(ContractProviderKeysEnum.ManagmentCompanySignDateTime.GetDescription(), $"{DateTime.Now.ToDateString()} {formattedTime}");
 
             entity.Content = content;
             entity.Status = CompanyContractStatus.Signed;

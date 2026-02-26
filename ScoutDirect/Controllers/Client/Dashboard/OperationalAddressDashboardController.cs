@@ -65,6 +65,7 @@ namespace CMPNatural.Api.Controllers.Auth
                 Long = request.Long,
                 Lat = request.Lat,
                 Name = request.Name,
+                Password = request.Password,
 
             });
 
@@ -89,6 +90,7 @@ namespace CMPNatural.Api.Controllers.Auth
                 Long = request.Long,
                 Lat = request.Lat,
                 Name = request.Name,
+                Password = request.Password,
                 Id = Id
 
             });

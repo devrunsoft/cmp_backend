@@ -16,15 +16,50 @@ namespace CMPNatural.Core.Helper
             return updatedHtml;
         }
 
+        //public static string HideByKey(string key, string content)
+        //{
+        //    // Match <p> tags containing any of the keys
+        //    string pattern = $@"(<p)([^>]*>)([^<]*?({key})[^<]*?)(</p>)";
+        //    string replacement = @"$1 style=""display: none;""$2$3$5";
+
+        //    string updatedHtml = Regex.Replace(content, pattern, replacement);
+        //    return updatedHtml;
+        //}
+
         public static string HideByKey(string key, string content)
         {
-            // Match <p> tags containing any of the keys
-            string pattern = $@"(<p)([^>]*>)([^<]*?({key})[^<]*?)(</p>)";
-            string replacement = @"$1 style=""display: none;""$2$3$5";
+            if (string.IsNullOrEmpty(content) || string.IsNullOrEmpty(key))
+                return content;
 
-            string updatedHtml = Regex.Replace(content, pattern, replacement);
-            return updatedHtml;
+            var escapedKey = Regex.Escape(key);
+            var paragraphPattern = @"<p\b(?<attrs>[^>]*)>(?<inner>.*?)</p>";
+
+            return Regex.Replace(content, paragraphPattern, match =>
+            {
+                var attrs = match.Groups["attrs"].Value;
+                var inner = match.Groups["inner"].Value;
+
+                if (!Regex.IsMatch(inner, escapedKey))
+                    return match.Value;
+
+                var stylePattern = @"\bstyle\s*=\s*""(?<style>[^""]*)""";
+                if (Regex.IsMatch(attrs, stylePattern))
+                {
+                    attrs = Regex.Replace(attrs, stylePattern, styleMatch =>
+                    {
+                        var style = styleMatch.Groups["style"].Value;
+                        var cleanedStyle = Regex.Replace(style, @"display\s*:\s*(none|block)\s*;?", string.Empty, RegexOptions.IgnoreCase).Trim();
+                        var prefix = string.IsNullOrWhiteSpace(cleanedStyle) ? string.Empty : $"{cleanedStyle}; ";
+                        return $"style=\"{prefix}display: none;\"";
+                    });
+                }
+                else
+                {
+                    attrs = $"{attrs} style=\"display: none;\"";
+                }
+
+                return $"<p{attrs}>{inner}</p>";
+            }, RegexOptions.Singleline | RegexOptions.IgnoreCase);
         }
     }
 }
-

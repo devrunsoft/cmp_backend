@@ -26,7 +26,8 @@ namespace CMPNatural.Application
         {
             var result = (await _repository.GetAsync(p => p.CompanyId == request.CompanyId && p.OperationalAddressId == request.OperationalAddressId &&
             p.Status == ManifestStatus.Send_To_Admin
-            || p.Status == ManifestStatus.Send_To_Provider,
+            || p.Status == ManifestStatus.Send_To_Provider
+            || p.Status == ManifestStatus.Assigned_To_Driver,
                 query => query
 
             .Include(x => x.OperationalAddress)

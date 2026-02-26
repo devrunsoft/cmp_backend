@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CMPNatural.Application;
+﻿using CMPNatural.Application;
 using CMPNatural.Application.Commands.OperationalAddress;
 using CMPNatural.Application.Model;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace CMPNatural.Api.Controllers.Admin.Client
 {
-
     public class ClientLocationController : BaseAdminClientApiController
     {
         public ClientLocationController(IMediator mediator , IHttpContextAccessor httpContextAccessor) : base(mediator, httpContextAccessor)
@@ -44,7 +37,6 @@ namespace CMPNatural.Api.Controllers.Admin.Client
         }
 
 
-
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]
@@ -63,7 +55,9 @@ namespace CMPNatural.Api.Controllers.Admin.Client
                 Long = request.Long,
                 Lat = request.Lat,
                 Name = request.Name,
-                LocationDateTimeInputs = request.LocationDateTimeInputs
+                LocationDateTimeInputs = request.LocationDateTimeInputs,
+                Password = request.Password,
+                Username = request.Username
 
             });
             return Ok(result);
@@ -88,7 +82,9 @@ namespace CMPNatural.Api.Controllers.Admin.Client
                 Lat = request.Lat,
                 Name = request.Name,
                 Id = Id,
-                LocationDateTimeInputs = request.LocationDateTimeInputs
+                LocationDateTimeInputs = request.LocationDateTimeInputs,
+                Password = request.Password,
+                Username = request.Username
 
             });
 

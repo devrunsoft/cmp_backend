@@ -19,20 +19,18 @@ namespace CMPNatural.Application
         private readonly IBaseServiceAppointmentRepository _baseServiceAppointmentRepository;
         private readonly ICompanyContractRepository _repository;
         private readonly IAppInformationRepository _apprepository;
-        private readonly IRequestRepository _invoiceRepository;
         private readonly IRequestRepository requestRepository;
         private readonly IManifestRepository _manifestRepository;
         private readonly IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository;
         private readonly AppSetting _appSetting;
         private readonly ILocationCompanyRepository locationCompanyRepository;
 
-        public AdminSignCompanyContractHandler(ICompanyContractRepository repository, IRequestRepository invoiceRepository, IRequestRepository requestRepository,  IAppInformationRepository apprepository,
+        public AdminSignCompanyContractHandler(ICompanyContractRepository repository,IRequestRepository requestRepository,  IAppInformationRepository apprepository,
             IManifestRepository _manifestRepository, IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository, AppSetting _appSetting,
             ILocationCompanyRepository locationCompanyRepository, IBaseServiceAppointmentRepository _baseServiceAppointmentRepository)
         {
             this._baseServiceAppointmentRepository = _baseServiceAppointmentRepository;
             _repository = repository;
-            _invoiceRepository = invoiceRepository;
             this.requestRepository = requestRepository;
             _apprepository = apprepository;
             this._manifestRepository = _manifestRepository;
@@ -89,13 +87,16 @@ namespace CMPNatural.Application
                 {
                         foreach (var loc in service.ServiceAppointmentLocations)
                         {
-                            await new AdminCreateManifestHandler(_manifestRepository, _invoiceRepository, _apprepository, _serviceAppointmentLocationRepository, _appSetting)
+                            await new AdminCreateManifestHandler(_manifestRepository, requestRepository, _apprepository, _serviceAppointmentLocationRepository, _appSetting)
                           .Create(item, ManifestStatus.Draft, loc.Id, service.StartDate);
                         }
                 }
-                await CreateScaduleServiceHandler.Create(item, _baseServiceAppointmentRepository, _manifestRepository, _invoiceRepository, _apprepository, _serviceAppointmentLocationRepository, _appSetting, locationCompanyRepository);
-
+                await CreateScaduleServiceHandler.Create(item, _baseServiceAppointmentRepository, _manifestRepository, requestRepository, _apprepository, _serviceAppointmentLocationRepository, _appSetting, locationCompanyRepository);
+                item.Status = InvoiceStatus.Processing;
+                await requestRepository.UpdateAsync(item);
             }
+
+
 
             return new Success<CompanyContract>() { Data = entity };
         }

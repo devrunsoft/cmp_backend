@@ -17,6 +17,8 @@ namespace CMPNatural.Application.Model
         public string LastName { get; set; }
         public double Lat { get; set; }
         public double Long { get; set; }
+        public string Username { get; set; } = "";
+        public string Password { get; set; } = string.Empty;
         public List<LocationDateTimeInput> LocationDateTimeInputs { get; set; } = new List<LocationDateTimeInput>();
 
     }

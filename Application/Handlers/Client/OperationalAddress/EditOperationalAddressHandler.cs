@@ -86,6 +86,8 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
             entity.Long = request.Long;
             entity.Name = request.Name;
             entity.LocationDateTimes = LocationDateTimes;
+            //entity.Username = request.Username;
+            entity.Password = request.Password;
 
 
             await _operationalAddressRepository.UpdateAsync(entity);

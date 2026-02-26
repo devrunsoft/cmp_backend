@@ -68,7 +68,8 @@ namespace CMPNatural.Api.Controllers.Auth.Register
                 Long=request.Long,
                 Lat=request.Lat,
                 Name = request.Name,
-                LocationDateTimeInputs= request.LocationDateTimeInputs
+                LocationDateTimeInputs= request.LocationDateTimeInputs,
+                Password = request.Password,
 
             });
 
@@ -94,7 +95,8 @@ namespace CMPNatural.Api.Controllers.Auth.Register
                 Lat = request.Lat,
                 Name= request.Name,
                 Id =Id,
-                LocationDateTimeInputs = request.LocationDateTimeInputs
+                LocationDateTimeInputs = request.LocationDateTimeInputs,
+                Password = request.Password,
 
             });
 

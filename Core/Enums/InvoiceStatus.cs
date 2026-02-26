@@ -19,6 +19,9 @@ namespace CMPNatural.Core.Enums
         [Description("Needs_Assignment")]
         Needs_Assignment,
 
+        [Description("Processing")]
+        Processing,
+
         [Description("Processing_Provider")]
         Processing_Provider,
 

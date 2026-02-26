@@ -46,7 +46,6 @@ namespace CMPNatural.Application
             dbContent = dbContent.Replace(ContractProviderKeysEnum.ManagmentCompanyFirstName.GetDescription(), information.CompanyCeoFirstName);
             dbContent = dbContent.Replace(ContractProviderKeysEnum.ManagmentCompanyLastName.GetDescription(), information.CompanyCeoLastName);
             dbContent = dbContent.Replace(ContractProviderKeysEnum.ManagmentCompanyAddress.GetDescription(), information.CompanyAddress);
-            dbContent = dbContent.Replace(ContractProviderKeysEnum.ManagmentCompanySignDateTime.GetDescription(), string.Empty);
 
             dbContent = dbContent.Replace(ContractProviderKeysEnum.ProviderName.GetDescription(), provider?.Name ?? string.Empty);
             dbContent = dbContent.Replace(ContractProviderKeysEnum.ProviderAddress.GetDescription(), provider?.Address ?? string.Empty);
@@ -60,11 +59,12 @@ namespace CMPNatural.Application
             dbContent = CompanyContractHelper.HideByKey(ContractProviderKeysEnum.ManagmentCompanySign.GetDescription(), dbContent);
             dbContent = CompanyContractHelper.HideByKey(ContractProviderKeysEnum.ProviderSign.GetDescription(), dbContent);
             dbContent = CompanyContractHelper.HideByKey(ContractProviderKeysEnum.ProviderSignDateTime.GetDescription(), dbContent);
+            dbContent = CompanyContractHelper.HideByKey(ContractProviderKeysEnum.ManagmentCompanySignDateTime.GetDescription(), dbContent);
 
-            foreach (var key in Enum.GetValues(typeof(ContractProviderKeysEnum)).Cast<ContractProviderKeysEnum>())
-            {
-                dbContent = dbContent.Replace(key.GetDescription(), string.Empty);
-            }
+            //foreach (var key in Enum.GetValues(typeof(ContractProviderKeysEnum)).Cast<ContractProviderKeysEnum>())
+            //{
+            //    dbContent = dbContent.Replace(key.GetDescription(), string.Empty);
+            //}
 
             return dbContent;
         }
