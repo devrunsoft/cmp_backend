@@ -1,4 +1,6 @@
 ﻿using System;
+using CMPNatural.Core.Enums;
+
 namespace CMPNatural.Core.Entities
 {
 	public partial class Contract
@@ -8,6 +10,7 @@ namespace CMPNatural.Core.Entities
 		public string Content { get; set; } = "";
         public string Title { get; set; } = "";
 		public bool IsDefault { get; set; }
-		public DateTime CreatedAt { get; set; }
+        public ContractType Type { get; set; }
+        public DateTime CreatedAt { get; set; }
 	}
 }

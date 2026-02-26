@@ -59,6 +59,7 @@ namespace infrastructure.Data
         public virtual DbSet<ChatSession> ChatSession { get; set; } = null!;
         public virtual DbSet<ChatMessageManualNote> ChatMessageManualNote { get; set; } = null!;
         public virtual DbSet<RequestEntity> Request { get; set; } = null!;
+        public virtual DbSet<ProviderContract> ProviderContract { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -372,9 +373,25 @@ namespace infrastructure.Data
                  );
             });
 
+            modelBuilder.Entity<ProviderContract>(entity =>
+            {
+                entity.ToTable("ProviderContract");
+
+                entity.Property(p => p.Status)
+                .HasConversion(
+                 x => x.ToString(),
+                 x => (CompanyContractStatus)Enum.Parse(typeof(CompanyContractStatus), x)
+                 );
+            });
+
             modelBuilder.Entity<Contract>(entity =>
             {
                 entity.ToTable("Contract");
+                entity.Property(p => p.Type)
+                .HasConversion(
+                x => x.ToString(),
+                x => (ContractType)Enum.Parse(typeof(ContractType), x)
+                );
             });
 
             modelBuilder.Entity<Menu>(entity =>

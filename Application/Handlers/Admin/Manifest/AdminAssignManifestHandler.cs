@@ -14,6 +14,8 @@ using Microsoft.EntityFrameworkCore;
 using ScoutDirect.Core.Repositories;
 using System.ServiceModel.Channels;
 using System.Collections.Generic;
+using CMPNatural.Application.Handlers;
+using CMPNatural.Core.Models;
 
 namespace CMPNatural.Application
 {
@@ -26,8 +28,18 @@ namespace CMPNatural.Application
         private readonly IProviderReposiotry _providerRepository;
         private readonly IMediator _mediator;
 
+        private readonly IRequestRepository _invoiceRepository;
+        private readonly IContractRepository _contractRepository;
+        private readonly IProviderContractRepository _companyContractRepository;
+        private readonly IAppInformationRepository _appRepository;
+        private readonly AppSetting _appSetting;
+
         public AdminAssignManifestHandler(IManifestRepository _repository, IProviderReposiotry _providerRepository, IMediator _mediator, ICompanyRepository _companyrepository,
-             IDriverManifestRepository _driverManifestRepository, IDriverRepository _driverRepository)
+             IDriverManifestRepository _driverManifestRepository, IDriverRepository _driverRepository,
+             IRequestRepository invoiceRepository,
+             IContractRepository contractRepository,
+             IProviderContractRepository companyContractRepository, IAppInformationRepository _appRepository, AppSetting appSetting
+             )
         {
             this._repository = _repository;
             this._providerRepository = _providerRepository;
@@ -35,6 +47,12 @@ namespace CMPNatural.Application
             this._companyrepository = _companyrepository;
             this._driverManifestRepository = _driverManifestRepository;
             this._driverRepository = _driverRepository;
+
+            _invoiceRepository = invoiceRepository;
+            _contractRepository = contractRepository;
+            _companyContractRepository = companyContractRepository;
+            this._appRepository = _appRepository;
+            this._appSetting = appSetting;
         }
         
         public async Task<CommandResponse<Manifest>> Handle(AdminAssignManifestCommand request, CancellationToken cancellationToken)
@@ -44,6 +62,8 @@ namespace CMPNatural.Application
             var provider = (await _providerRepository.GetAsync(p => p.Id == request.ProviderId && p.Status == ProviderStatus.Approved)).FirstOrDefault();
             var company = (await _companyrepository.GetAsync(p => p.Id == e.Request.CompanyId)).FirstOrDefault();
             var drivers = (await _driverRepository.GetAsync(p => p.ProviderId == request.ProviderId)).ToList();
+
+            var contract = (await _companyContractRepository.GetAsync(p => p.ProviderId == request.ProviderId && p.RequestId == e.RequestId)).Any();
 
             List<Manifest> manifests = new List<Manifest>() { e };
 
@@ -148,11 +168,20 @@ namespace CMPNatural.Application
                     #endregion
            }
            else
-           {
-               throw new Exception("");
-           }
+            {
+                    throw new Exception("");
             }
+           }
+            if (!contract)
+            {
+                var resultContract = await new AdminCreateProviderContractHandler(_companyContractRepository, _contractRepository, _invoiceRepository, _appRepository, _appSetting)
+                    .Create(e.Request, manifests, request.ProviderId);
 
+                if (!resultContract.IsSucces())
+                {
+                    return new NoAcess<Manifest>() { Data = e, Message = resultContract.Message };
+                }
+            }
 
             return new Success<Manifest>() { Data = e };
         }

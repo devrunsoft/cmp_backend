@@ -27,6 +27,7 @@ namespace CMPNatural.Application
             entity.Content = request.Content;
             entity.Title = request.Title;
             entity.IsDefault = request.IsDefault;
+            entity.Type = request.Type;
 
             await _repository.UpdateAsync(entity);
             return new Success<Contract>() { Data = entity };

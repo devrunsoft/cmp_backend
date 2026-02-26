@@ -22,9 +22,8 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
         {
 
             OperationalAddress lastOprAdd = (await _operationalAddressRepository.GetAsync(p => p.CompanyId == request.CompanyId)).FirstOrDefault();
-            //if (lastOprAdd == null)
-            //{
-                var entity = new Core.Entities.OperationalAddress()
+
+            var entity = new Core.Entities.OperationalAddress()
                 {
                     Address = request.Address,
                     BusinessId = request.BusinessId,
@@ -53,11 +52,7 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                     OperationalAddressId = result.Id })).Data;
 
               return new Success<object>() { Data = result, Message = "OperationalAddres Added Successfully!" };
-            //}
-            //else
-            //{
-            //    return new NoAcess() { Message = "Operational Address Already Registred!" };
-            //}
+
         }
 
     }

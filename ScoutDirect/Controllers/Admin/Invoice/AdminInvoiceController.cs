@@ -199,7 +199,7 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
         {
             var result = await _mediator.Send(new AdminInvoicePayCommand() { InvoiceId = InvoiceId });
 
-            sendNote(MessageNoteType.PayedByAdmin, result.Data.CompanyId, result.Data.InvoiceNumber ?? "");
+            sendNote(MessageNoteType.PayedByAdmin, result.Data.CompanyId, result.Data.OperationalAddressId, result.Data.InvoiceNumber ?? "");
             return Ok(result);
         }
 
@@ -218,7 +218,7 @@ namespace CMPNatural.Api.Controllers.Admin.Invoice
 
             if (result.IsSucces())
             {
-                sendNote(MessageNoteType.RequestCanceledByClient, result.Data.CompanyId , result.Data.NoteTitle ?? "");
+                sendNote(MessageNoteType.RequestCanceledByClient, result.Data.CompanyId , result.Data.OperationalAddressId, result.Data.NoteTitle ?? "");
             }
             return Ok(result);
         }

@@ -45,17 +45,19 @@ namespace CMPNatural.Application
                 .AsQueryable()
                 .Where(filter)
                 .OrderByDescending(x =>
-                    x.ChatSession
-                        .SelectMany(s => s.Messages)
+                    (x.ChatSession ?? new List<ChatSession>())
+                        .Where(s => s != null)
+                        .SelectMany(s => s.Messages ?? new List<ChatMessage>())
                         .Select(m => (long?)m.Id)
                         .Max() ?? 0)
                 .ToList();
 
             foreach (var item in result)
             {
-                foreach (var i in item.ChatSession)
+                foreach (var i in item.ChatSession ?? new List<ChatSession>())
                 {
-                    i.UnRead = i.Messages.Count(m => !m.IsSeen && m.SenderType != SenderType.Admin);
+                    i.UnRead = (i.Messages ?? new List<ChatMessage>())
+                        .Count(m => !m.IsSeen && m.SenderType != SenderType.Admin);
                 }
             }
 

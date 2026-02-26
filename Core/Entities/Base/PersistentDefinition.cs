@@ -58,4 +58,5 @@ namespace CMPNatural.Core.Entities
     public partial class RouteServiceAppointmentLocation : IIdentityObject<long> { }
     public partial class ServiceAppointmentLocationFile : IIdentityObject<long> { }
     public partial class RequestEntity : IIdentityObject<long> { }
+    public partial class ProviderContract : IIdentityObject<long> { }
 }

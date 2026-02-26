@@ -23,6 +23,7 @@ namespace CMPNatural.Application
               Content = request.Content,
               Title = request.Title,
               CreatedAt = DateTime.Now,
+              Type= request.Type,
               IsDefault = request.IsDefault
             };
 

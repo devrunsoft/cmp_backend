@@ -85,7 +85,7 @@ namespace CMPNatural.Core.Entities
             return p =>
                 (p.Id.ToString() == loweredSearch) ||
                 (p.CompanyName != null && p.CompanyName.ToLower().Contains(loweredSearch)) ||
-                (p.OperationalAddress != null && p.OperationalAddress.Any(x=>x.Username.ToLower().Contains(loweredSearch))) ||
+                (p.OperationalAddress != null && p.OperationalAddress.Any(x => x != null && x.Username != null && x.Username.ToLower().Contains(loweredSearch))) ||
                 (p.PrimaryFirstName != null && p.PrimaryFirstName.ToLower().Contains(loweredSearch)) ||
                 (p.PrimaryLastName != null && p.PrimaryLastName.ToLower().Contains(loweredSearch)) ||
                 (p.PrimaryPhonNumber != null && p.PrimaryPhonNumber.ToLower().Contains(loweredSearch)) ||

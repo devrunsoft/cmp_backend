@@ -39,7 +39,7 @@ namespace CMPNatural.Api.Controllers.Admin.CompanyContract
             var result = await _mediator.Send(new AdminSignCompanyContractCommand() { CompanyId = clientId, CompanyContractId = Id });
             if (result.IsSucces())
             {
-                sendNote(MessageNoteType.ContractSignedByAdmin, result.Data.CompanyId, result.Data.NoteTitle);
+                sendNote(MessageNoteType.ContractSignedByAdmin, result.Data.CompanyId, result.Data.OperationalAddressId, result.Data.NoteTitle);
             }
             return Ok(result);
         }
@@ -52,7 +52,7 @@ namespace CMPNatural.Api.Controllers.Admin.CompanyContract
             var result = await _mediator.Send(new AdminSendCompanyContractCommand() { Id = Id });
             if (result.IsSucces())
             {
-                sendNote(MessageNoteType.ContractSend, result.Data.CompanyId , result.Data.NoteTitle);
+                sendNote(MessageNoteType.ContractSend, result.Data.CompanyId , result.Data.OperationalAddressId, result.Data.NoteTitle);
             }
             return Ok(result);
         }

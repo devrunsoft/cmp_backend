@@ -13,6 +13,9 @@ namespace CMPNatural.Core.Enums
         [Description("GreaseLocation")]
         GreaseLocation = 2,
 
+        [Description("Other")]
+        Other = 3,
+
     }
 }
 

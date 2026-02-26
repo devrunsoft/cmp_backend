@@ -1,17 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
-using System.Reflection.Metadata;
-using System.Runtime.CompilerServices;
-using System.Security.Policy;
-using System.Text;
-using System.Text.RegularExpressions;
+
 using System.Threading.Tasks;
 using CMPNatural.Core.Entities;
 using CMPNatural.Core.Enums;
-using CMPNatural.Core.Extentions;
-using CMPNatural.Core.Helper;
 using CMPNatural.Core.Models;
 using CMPNatural.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -19,16 +12,16 @@ using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Application.Handlers
 {
-	public class AdminCreateCompanyContractHandler
-	{
-        private readonly ICompanyContractRepository _repository;
+    public class AdminCreateProviderContractHandler
+    {
+        private readonly IProviderContractRepository _repository;
         private readonly IContractRepository _contractrepository;
         private readonly IAppInformationRepository _apprepository;
         private readonly IRequestRepository _baseServicerepository;
         private readonly AppSetting _appSetting;
-        public AdminCreateCompanyContractHandler(ICompanyContractRepository _repository, IContractRepository _contractrepository,
+        public AdminCreateProviderContractHandler(IProviderContractRepository _repository, IContractRepository _contractrepository,
             IRequestRepository baseServicerepository, IAppInformationRepository _apprepository, AppSetting appSetting)
-		{
+        {
             this._repository = _repository;
             this._contractrepository = _contractrepository;
             this._baseServicerepository = baseServicerepository;
@@ -36,50 +29,53 @@ namespace CMPNatural.Application.Handlers
             this._appSetting = appSetting;
         }
 
-        public async Task<CommandResponse<CompanyContract>> Create(RequestEntity request, long companyId)
+        public async Task<CommandResponse<ProviderContract>> Create(RequestEntity request, List<Manifest> models, long providerId)
         {
             var information = (await _apprepository.GetAllAsync()).LastOrDefault();
             if (information == null)
             {
-                return new NoAcess<CompanyContract>() { Message = "Please complete the information" };
+                return new NoAcess<ProviderContract>() { Message = "Please complete the information" };
             }
-            var contracts = await _contractrepository.GetAsync(x => x.Active && x.Type == ContractType.Company);
+            var contracts = await _contractrepository.GetAsync(x => x.Active && x.Type == ContractType.Provider);
             var contract = contracts.FirstOrDefault(c => c.IsDefault);
             contract ??= contracts.LastOrDefault();
 
-            var company = request.Company;
             if (contract == null)
             {
-                return new NoAcess<CompanyContract>() {  Message = "No active contract found!" };
+                return new NoAcess<ProviderContract>() { Message = "No active contract found!" };
             }
 
+            var company = request.Company;
             var mainInvoice = (await _baseServicerepository.GetAsync(x => x.Id == request.Id, query => query
-            .Include(x=>x.BaseServiceAppointment)
-            .ThenInclude(x=>x.Product)
+            .Include(x => x.BaseServiceAppointment)
+            .ThenInclude(x => x.Product)
             .Include(x => x.BaseServiceAppointment)
             .ThenInclude(x => x.ProductPrice)
+            .Include(x => x.Provider)
             )).ToList();
 
-            var entity = new CompanyContract()
+            var entity = new ProviderContract()
             {
-                RequestId = request.Id,
-                CompanyId = companyId,
+                ManifestIsd = string.Join(",", models.Select(x=>x.Id)),
+                CompanyId = company.Id,
                 Status = CompanyContractStatus.Created,
                 CreatedAt = DateTime.Now,
                 ContractId = contract.Id,
                 ContractNumber = "",
-                OperationalAddressId = request.OperationalAddressId
+                OperationalAddressId = request.OperationalAddressId,
+                ProviderId = providerId,
+                RequestId = request.Id
             };
 
             var result = await _repository.AddAsync(entity);
 
-            var dbContent = AdminContractCompanyContractHandler.Create(mainInvoice, information, contract, company, result, _appSetting);
+            var dbContent = AdminContractProviderContractHandler.Create(mainInvoice, information, contract, company, result, _appSetting);
             //update
             entity.Content = dbContent.ToString();
             entity.ContractNumber = entity.Number;
             entity.OperationalAddressId = request.OperationalAddressId;
             await _repository.UpdateAsync(entity);
-            return new Success<CompanyContract>() { Data = result};
+            return new Success<ProviderContract>() { Data = result };
         }
 
 
@@ -87,4 +83,3 @@ namespace CMPNatural.Application.Handlers
 
     }
 }
-

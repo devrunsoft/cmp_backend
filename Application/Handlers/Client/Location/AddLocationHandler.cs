@@ -36,6 +36,11 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                 return new NoAcess<object>() { Success = false, Message = "Please select a capacity." };
             }
 
+            if (request.Lat == 0 || request.Long == 0)
+            {
+                return new NoAcess<object>() { Success = false, Message = "Please search and select your location." };
+            }
+
             var entity = new LocationCompany()
             {
                 Capacity= cap.Qty,

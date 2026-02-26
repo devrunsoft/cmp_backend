@@ -15,6 +15,7 @@ namespace CMPNatural.Application
             Title = input.Title;
             this.Id = Id;
             IsDefault = input.IsDefault;
+            Type = input.Type;
         }
 
         public long Id { get; set; }

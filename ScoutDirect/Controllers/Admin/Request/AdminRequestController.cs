@@ -84,7 +84,7 @@ namespace CMPNatural.Api.Controllers.Admin
             {
                 var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminHasCreateContract, result.Data.ContractId.Value);
                 sendEmailToClient(rCompanyId, emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern, emailDetails.ButtonText);
-                sendNote(MessageNoteType.ContractCreate, clientId, result.Data.ReqNumber);
+                sendNote(MessageNoteType.ContractCreate, clientId, result.Data.OperationalAddressId, result.Data.ReqNumber);
             }
 
             return Ok(result);

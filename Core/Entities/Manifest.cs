@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq.Expressions;
 using System.Text.Json.Serialization;
 using CMPNatural.Core.Enums;
 
@@ -46,7 +47,7 @@ namespace CMPNatural.Core.Entities
 
         public long CompanyId { get; set; }
 
-        public string ManifestNumber { get; set; }
+        public string ManifestNumber { get; set; } = string.Empty;
 
         [NotMapped]
         public string NoteTitle
@@ -74,5 +75,49 @@ namespace CMPNatural.Core.Entities
         public virtual OperationalAddress? OperationalAddress { get; set; }
         public virtual Company? Company { get; set; }
 
+        [NotMapped]
+        public ProviderContract? ProviderContract { get; set; }
+
+    }
+
+
+    public static class QueryManifestExtensions
+    {
+        public static Expression<Func<Manifest, bool>> FilterByQuery(string? search, ManifestStatus? status)
+        {
+            return FilterByQuery(search, status, null, null);
+        }
+
+        public static Expression<Func<Manifest, bool>> FilterByQuery(
+            string? search,
+            ManifestStatus? status,
+            DateTime? startDate,
+            DateTime? endDate)
+        {
+            if (string.IsNullOrWhiteSpace(search))
+            {
+                return p =>
+                    (status == null || p.Status == status) &&
+                    (startDate == null || startDate <= p.PreferredDate) &&
+                    (endDate == null || endDate >= p.PreferredDate);
+            }
+
+            var loweredSearch = search.Trim().ToLower();
+            return p =>
+                (status == null || p.Status == status) &&
+                (startDate == null || startDate <= p.PreferredDate) &&
+                (endDate == null || endDate >= p.PreferredDate) &&
+                (
+                    p.Id.ToString() == loweredSearch ||
+                    (p.ManifestNumber != null && p.ManifestNumber.ToLower().Contains(loweredSearch)) ||
+                    (p.Content != null && p.Content.ToLower().Contains(loweredSearch)) ||
+                    (p.Comment != null && p.Comment.ToLower().Contains(loweredSearch)) ||
+                    (p.Company != null && p.Company.CompanyName != null && p.Company.CompanyName.ToLower().Contains(loweredSearch)) ||
+                    (p.Provider != null && p.Provider.Name != null && p.Provider.Name.ToLower().Contains(loweredSearch)) ||
+                    (p.Request != null && p.Request.RequestNumber != null && p.Request.RequestNumber.ToLower().Contains(loweredSearch)) ||
+                    (p.OperationalAddress != null && p.OperationalAddress.Name != null && p.OperationalAddress.Name.ToLower().Contains(loweredSearch)) ||
+                    (p.OperationalAddress != null && p.OperationalAddress.Address != null && p.OperationalAddress.Address.ToLower().Contains(loweredSearch))
+                );
+        }
     }
 }

@@ -57,7 +57,7 @@ namespace CMPNatural.Api.Controllers.Admin.Manifest
 
             if (result.IsSucces())
             {
-                sendNote(MessageNoteType.ManifestAssigned, result.Data.CompanyId , result.Data.NoteTitle);
+                sendNote(MessageNoteType.ManifestAssigned, result.Data.CompanyId , result.Data.OperationalAddressId, result.Data.NoteTitle);
             }
 
             return Ok(result);
@@ -73,7 +73,7 @@ namespace CMPNatural.Api.Controllers.Admin.Manifest
 
             if (result.IsSucces())
             {
-                sendNote(MessageNoteType.ManifestAssigned, result.Data.CompanyId, result.Data.NoteTitle);
+                sendNote(MessageNoteType.ManifestAssigned, result.Data.CompanyId, result.Data.OperationalAddressId, result.Data.NoteTitle);
             }
             return Ok(result);
         }

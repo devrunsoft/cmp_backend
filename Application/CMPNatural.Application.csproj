@@ -310,6 +310,7 @@
     <None Remove="Commands\Admin\Invoice\Provider\" />
     <None Remove="Handlers\Admin\Invoice\Provider\" />
     <None Remove="Mapper\Route\" />
+    <None Remove="Handlers\Admin\ProviderContract\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -629,6 +630,7 @@
     <Folder Include="Commands\Admin\Invoice\Provider\" />
     <Folder Include="Handlers\Admin\Invoice\Provider\" />
     <Folder Include="Mapper\Route\" />
+    <Folder Include="Handlers\Admin\ProviderContract\" />
   </ItemGroup> 
 
   <ItemGroup>

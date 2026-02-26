@@ -14,6 +14,7 @@ namespace CMPNatural.Application
 			Content = input.Content;
             Title = input.Title;
 			IsDefault = input.IsDefault;
+			Type = input.Type;
         }
 	}
 }

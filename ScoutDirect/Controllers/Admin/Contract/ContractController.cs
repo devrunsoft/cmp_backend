@@ -82,6 +82,20 @@ namespace CMPNatural.Api.Controllers.Admin.Contract
             return Ok(new Success<List<NameAndValue<string>>>() { Data = data });
         }
 
+        [HttpGet("ProviderAllKeys")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public ActionResult GetAllProviderKeys()
+        {
+            var data = Enum.GetValues(typeof(ContractProviderKeysEnum)).Cast<ContractProviderKeysEnum>()
+                .Select(x => new NameAndValue<string>()
+                {
+                    name = x.ToString(),
+                    value = x.GetDescription()
+                }).ToList();
+
+            return Ok(new Success<List<NameAndValue<string>>>() { Data = data });
+        }
+
     }
 }
-

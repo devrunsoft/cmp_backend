@@ -83,5 +83,48 @@ namespace CMPNatural.Api.Controllers.Admin
                 }
             });
         }
+
+        [HttpPost]
+        [Route("[action]/{companyId:long}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> RequestEmailChange([FromBody] RequestCompanyEmailChangeCommand command, [FromRoute] long companyId)
+        {
+            if (command == null)
+                return Ok(new NoAcess() { Message = "Invalid request." });
+
+            command.CompanyId = companyId;
+            var result = await _mediator.Send(command);
+            if (!result.Success)
+                return Ok(result);
+
+            var email = command.Email?.Trim() ?? string.Empty;
+            if (string.IsNullOrWhiteSpace(email))
+                return Ok(new NoAcess() { Message = "Email is required." });
+
+            var subject = "Email Change Verification Code";
+            var body = $"Your verification code is <strong>{result.Data}</strong>.";
+            sendEmail(subject, body, email);
+
+            return Ok(new Success<object>()
+            {
+                Data = new { Message = "Verification code sent to your email." }
+            });
+        }
+
+        [HttpPost]
+        [Route("[action]/{companyId:long}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> ConfirmEmailChange([FromBody] ConfirmCompanyEmailChangeCommand command , [FromRoute] long companyId)
+        {
+            if (command == null)
+                return Ok(new NoAcess() { Message = "Invalid request." });
+
+            command.CompanyId = companyId;
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
     }
 }

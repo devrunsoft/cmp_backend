@@ -57,4 +57,5 @@ namespace CMPNatural.Core.Entities
     public partial class RouteServiceAppointmentLocation { public DateTime? IsDelete { get; set; } }
     public partial class ServiceAppointmentLocationFile { public DateTime? IsDelete { get; set; } }
     public partial class RequestEntity { public DateTime? IsDelete { get; set; } }
+    public partial class ProviderContract { public DateTime? IsDelete { get; set; } }
 }

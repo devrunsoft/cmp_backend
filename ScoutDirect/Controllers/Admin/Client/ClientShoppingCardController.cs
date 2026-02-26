@@ -8,6 +8,8 @@ using CmpNatural.CrmManagment.Product;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using CMPNatural.Core.Enums;
+using ScoutDirect.Application.Responses;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -61,6 +63,12 @@ namespace CMPNatural.Api.Controllers.Admin.Client
                 FromHour = request.FromHour,
                 ToHour = request.ToHour
             });
+
+            if (result.IsSucces())
+            {
+                sendNote(MessageNoteType.AddToShoppingCardByAdmin, result.Data.CompanyId, result.Data.OperationalAddressId, result.Data.NoteTitle);
+            }
+
             return Ok(result);
         }
 
@@ -74,6 +82,12 @@ namespace CMPNatural.Api.Controllers.Admin.Client
                 CompanyId = rCompanyId,
                 Id = Id
             });
+
+
+            if (result.IsSucces())
+            {
+                sendNote(MessageNoteType.DeleteFromShoppingCardByAdmin, result.Data.CompanyId, result.Data.OperationalAddressId, result.Data.NoteTitle);
+            }
             return Ok(result);
         }
     }

@@ -49,16 +49,26 @@ namespace CMPNatural.Api.Controllers.Admin
         }
 
         [NonAction]
-        public void sendNote(MessageNoteType Type, long ClientId, string Content = "")
+        public void sendNote(MessageNoteType Type, long ClientId, long OperationalAddressId, string Content = "")
         {
-            Task.Run(async () =>
+            var scopeFactory = serviceScopeFactory;
+            var adminId = AdminId;
+
+            _ = Task.Run(async () =>
             {
-                using (var scope = serviceScopeFactory.CreateScope())
+                using (var scope = scopeFactory.CreateScope())
                 {
                     var cache = scope.ServiceProvider.GetRequiredService<Func<CacheTech, ICacheService>>();
                     var _cache = cache(CacheTech.Memory);
                     var _mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-                    await _mediator.Send(new AdminSendMessageNoteCommand() { ClientId = ClientId, Type = Type, AdminId = AdminId , Content = Content });
+                    try
+                    {
+                        await _mediator.Send(new AdminSendMessageNoteCommand() { ClientId = ClientId, OperationalAddressId = OperationalAddressId, Type = Type, AdminId = adminId, Content = Content });
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                 }
             });
         }
@@ -73,4 +83,3 @@ namespace CMPNatural.Api.Controllers.Admin
 
     }
 }
-

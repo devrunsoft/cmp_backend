@@ -26,15 +26,30 @@ namespace ScoutDirect.Api.Controllers._Base
         [NonAction]
         public void sendNote(MessageNoteType Type, long OperationalAddressId, string Content = "")
         {
-            Task.Run(async () =>
+            var scopeFactory = serviceScopeFactory;
+            var companyId = rCompanyId;
+
+            _ = Task.Run(async () =>
             {
-                using (var scope = serviceScopeFactory.CreateScope()) 
+                using (var scope = scopeFactory.CreateScope())
                 {
                     var cache = scope.ServiceProvider.GetRequiredService<Func<CacheTech, ICacheService>>();
                     var _cache = cache(CacheTech.Memory);
                     var _mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-                    await _mediator.Send(new ClientSendMessageNoteCommand() { ClientId = rCompanyId, Type = Type,
-                       Content = Content  , OperationalAddressId = OperationalAddressId });
+                    try
+                    {
+                        await _mediator.Send(new ClientSendMessageNoteCommand()
+                        {
+                            ClientId = companyId,
+                            Type = Type,
+                            Content = Content,
+                            OperationalAddressId = OperationalAddressId
+                        });
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                 }
             });
         }
