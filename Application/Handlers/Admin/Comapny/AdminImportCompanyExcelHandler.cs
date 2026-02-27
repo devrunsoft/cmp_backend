@@ -93,25 +93,25 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                     rowResult.MissingFields = missing;
 
                     GeocodeResult? geocode = null;
-                    //if (!string.IsNullOrWhiteSpace(address))
-                    //{
-                    //    if (!geocodeCache.TryGetValue(address, out var cachedGeo))
-                    //    {
-                    //        geocode = await geocodeService.GeocodeAsync(address, cancellationToken);
-                    //        if (geocode != null)
-                    //        {
-                    //            geocodeCache[address] = geocode;
-                    //        }
-                    //        else
-                    //        {
-                    //            missing.Add("OperationalAddress.Location");
-                    //        }
-                    //    }
-                    //    else
-                    //    {
-                    //        geocode = cachedGeo;
-                    //    }
-                    //}
+                    if (!string.IsNullOrWhiteSpace(address))
+                    {
+                        if (!geocodeCache.TryGetValue(address, out var cachedGeo))
+                        {
+                            geocode = await geocodeService.GeocodeAsync(address, cancellationToken);
+                            if (geocode != null)
+                            {
+                                geocodeCache[address] = geocode;
+                            }
+                            else
+                            {
+                                missing.Add("OperationalAddress.Location");
+                            }
+                        }
+                        else
+                        {
+                            geocode = cachedGeo;
+                        }
+                    }
 
                     Core.Entities.Company? companyResult = null;
                     //_logger.LogInformation($"C: {companyName} L: {operationalUsername}");

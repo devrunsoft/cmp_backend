@@ -20,7 +20,7 @@ namespace CMPNatural.Application
 
             if (request.IsDefault)
             {
-                await _repository.UnsetDefaultForOthersAsync(request.Id);
+                await _repository.UnsetDefaultForOthersAsync(request.Id , request.Type);
             }
 
             entity.Active = request.Active;

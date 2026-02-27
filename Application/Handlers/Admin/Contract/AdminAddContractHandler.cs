@@ -29,7 +29,7 @@ namespace CMPNatural.Application
 
             if (request.IsDefault)
             {
-                await _repository.UnsetDefaultForOthersAsync(0);
+                await _repository.UnsetDefaultForOthersAsync(0 , request.Type);
             }
 
             var result = await _repository.AddAsync(entity);
