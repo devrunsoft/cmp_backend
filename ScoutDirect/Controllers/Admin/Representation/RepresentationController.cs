@@ -13,7 +13,6 @@ namespace CMPNatural.Api.Controllers.Admin.Representation
 {
     public class RepresentationController : BaseAdminApiController
     {
-
         public RepresentationController(IMediator mediator) : base(mediator)
         {
         }

@@ -20,6 +20,8 @@ using System.Text;
 using System.Text.Json;
 using CMPNatural.Core.Models;
 using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace CMPNatural.Application
 {
@@ -42,38 +44,83 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<DriverResponse>> Handle(AddDriverCommand request, CancellationToken cancellationToken)
         {
-            var existingDriver = (await _repository.GetAsync(x => x.Email == request.Email)).Any();
-            if (existingDriver)
+            Driver driverEntity;
+            var existingDriver = (await _repository.GetAsync(x => x.Email == request.Email, query => query.Include(x => x.ProviderDriver).Include(x=>x.Person))).FirstOrDefault();
+            if (existingDriver!=null)
             {
-                return new NoAcess<DriverResponse>() { Message = "A driver with this email already exists." };
+                driverEntity = existingDriver;
+
+                var path = Guid.NewGuid().ToString();
+
+                if (!string.IsNullOrWhiteSpace(request.ProfilePhoto))
+                {
+                    existingDriver.License = request.ProfilePhoto;
+                }
+                existingDriver.LicenseExp = request.LicenseExp;
+
+                if (!string.IsNullOrWhiteSpace(request.BackgroundCheck))
+                {
+                    existingDriver.BackgroundCheck = request.BackgroundCheck;
+                }
+                existingDriver.BackgroundCheckExp = request.BackgroundCheckExp;
+
+                if (!string.IsNullOrWhiteSpace(request.ProfilePhoto))
+                    existingDriver.ProfilePhoto = request.ProfilePhoto;
+
+                existingDriver.Person.FirstName = request.FirstName;
+                existingDriver.Person.LastName = request.LastName;
+                existingDriver.Email = request.Email;
+                existingDriver.IsDefault = request.IsDefault;
+
+                var hasRelation = existingDriver.ProviderDriver
+                   .Any(x => x.ProviderId == request.ProviderId && x.DriverId == existingDriver.Id);
+
+                if (!hasRelation)
+                {
+                    existingDriver.ProviderDriver.Add(new ProviderDriver
+                    {
+                        ProviderId = request.ProviderId,
+                        DriverId = existingDriver.Id
+                    });
+                }
+
+                await _repository.UpdateAsync(existingDriver);
+
+            }
+            else
+            {
+
+                var personId = Guid.NewGuid();
+                var person = new Person() { FirstName = request.FirstName, LastName = request.LastName, Id = personId };
+                //await _personRepository.AddAsync(person);
+
+                var entity = new Driver()
+                {
+                    License = request.License,
+                    LicenseExp = request.LicenseExp,
+                    BackgroundCheck = request.BackgroundCheck,
+                    BackgroundCheckExp = request.BackgroundCheckExp,
+                    ProfilePhoto = request.ProfilePhoto,
+                    // ProviderId = request.ProviderId,
+                    ProviderDriver = new List<ProviderDriver>() { new ProviderDriver() { ProviderId = request.ProviderId } },
+                    Password = PasswordGenerator.GenerateSecurePassword(),
+                    Email = request.Email,
+                    IsDefault = request.IsDefault,
+                    Person = person
+                };
+
+                var result = await _repository.AddAsync(entity);
+                driverEntity = result;
             }
 
-            var personId = Guid.NewGuid();
-            var person = new Person() { FirstName = request.FirstName, LastName = request.LastName, Id = personId };
-            //await _personRepository.AddAsync(person);
 
-            var entity = new Driver() {
-                License= request.License,
-                LicenseExp = request.LicenseExp,
-                BackgroundCheck = request.BackgroundCheck,
-                BackgroundCheckExp = request.BackgroundCheckExp,
-                ProfilePhoto= request.ProfilePhoto,
-                ProviderId = request.ProviderId,
-                Password = PasswordGenerator.GenerateSecurePassword(),
-                Email = request.Email,
-                IsDefault = request.IsDefault,
-                Person = person
-            };
-
-            var result = await _repository.AddAsync(entity);
-
-           var res= await UpdateSsoUserAsync(request.Email, cancellationToken);
+            var res = await UpdateSsoUserAsync(request.Email, cancellationToken);
             if (!res.IsSucces())
             {
-             return new NoAcess<DriverResponse>(){ Message = "Please try again later"};
+                return new NoAcess<DriverResponse>() { Message = res.Message };
             }
 
-            return new Success<DriverResponse>() { Data = DriverMapper.Mapper.Map<DriverResponse>(result) };
+            return new Success<DriverResponse>() { Data = DriverMapper.Mapper.Map<DriverResponse>(driverEntity) };
         }
 
         private async Task<CommandResponse<DriverResponse>> UpdateSsoUserAsync(string email, CancellationToken cancellationToken)

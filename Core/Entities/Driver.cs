@@ -12,17 +12,18 @@ namespace CMPNatural.Core.Entities
         public Guid PersonId { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public string License { get; set; } = null!;
-        public DateTime LicenseExp { get; set; }
-        public string BackgroundCheck { get; set; } = null!;
-        public DateTime BackgroundCheckExp { get; set; }
+        public string? License { get; set; } = null;
+        public DateTime? LicenseExp { get; set; }
+        public string? BackgroundCheck { get; set; } = null;
+        public DateTime? BackgroundCheckExp { get; set; }
         public string? ProfilePhoto { get; set; }
-        public long ProviderId { get; set; }
+        // public long ProviderId { get; set; }
         public DriverStatus Status { get; set; }
         public bool TwoFactor { get; set; }
         public bool IsDefault { get; set; }
 
         public Person Person { get; set; }
+        public virtual ICollection<ProviderDriver> ProviderDriver { get; set; }
     }
 
     public partial class DriverResponse
@@ -49,4 +50,3 @@ namespace CMPNatural.Core.Entities
         public string FullName { get => $"{FirstName} {LastName}"; }
     }
 }
-

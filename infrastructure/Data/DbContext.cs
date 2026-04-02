@@ -407,6 +407,20 @@ namespace infrastructure.Data
                 .HasForeignKey<AdminMenuAccess>(d => d.MenuId);
             });
 
+            modelBuilder.Entity<ProviderDriver>(entity =>
+            {
+                entity.ToTable("ProviderDriver");
+                entity.HasOne(d => d.Driver)
+                .WithMany(p => p.ProviderDriver)
+                .HasForeignKey(d => d.DriverId);
+
+                entity.HasOne(d => d.Provider)
+                .WithMany(p => p.ProviderDriver)
+                .HasForeignKey(d => d.DriverId);
+
+                entity.HasIndex(x => new { x.ProviderId, x.DriverId }).IsUnique();
+            });
+
             modelBuilder.Entity<Driver>(entity =>
             {
                 entity.ToTable("Driver");

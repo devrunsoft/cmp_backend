@@ -59,4 +59,5 @@ namespace CMPNatural.Core.Entities
     public partial class ServiceAppointmentLocationFile : IIdentityObject<long> { }
     public partial class RequestEntity : IIdentityObject<long> { }
     public partial class ProviderContract : IIdentityObject<long> { }
+    public partial class ProviderDriver : IIdentityObject<long> { }
 }

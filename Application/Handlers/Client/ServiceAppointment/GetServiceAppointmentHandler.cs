@@ -25,13 +25,14 @@ namespace CMPNatural.Application.Handlers
         {
             var result = (await _serviceAppointmentRepository.GetAsync(
                 (p) => p.Id == request.Id &&
-                p.CompanyId == request.CompanyId &&
-                (
-                p.Status == ServiceStatus.Proccessing ||
-                p.Status == ServiceStatus.Scaduled ||
-                p.Status == ServiceStatus.Draft)
-                &&
-                p.Status != ServiceStatus.Canceled
+                p.CompanyId == request.CompanyId
+                //&&
+                //(
+                //p.Status == ServiceStatus.Proccessing ||
+                //p.Status == ServiceStatus.Scaduled ||
+                //p.Status == ServiceStatus.Draft)
+                //&&
+                //p.Status != ServiceStatus.Canceled
                 )
                 ).FirstOrDefault();
 

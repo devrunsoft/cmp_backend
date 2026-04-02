@@ -23,7 +23,7 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<DriverResponse>> Handle(GetDriverCommand request, CancellationToken cancellationToken)
         {
-            var result = (await _repository.GetAsync(p => p.ProviderId == request.ProviderId && p.Id == request.Id , 
+            var result = (await _repository.GetAsync(p => p.Id == request.Id , 
             query => query.Include(x => x.Person))).FirstOrDefault();
             return new Success<DriverResponse>() { Data = DriverMapper.Mapper.Map<DriverResponse>(result) };
         }

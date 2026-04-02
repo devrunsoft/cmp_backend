@@ -73,6 +73,25 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
             return Ok(result);
         }
 
+        [RequestSizeLimit(100_000_000)]
+        [HttpPut("ResetPassword/{Id}")]
+        [MenuAuthorize(MenuEnum.ProviderDetail)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> ResetPassword([FromRoute] long Id , [FromBody] AdminResetProviderPasswordCommand command)
+        {
+            command.ProviderId = Id;
+            string wwwPath = Environment.ContentRootPath;
+            var result = await _mediator.Send(command);
+
+            if (result.IsSucces())
+            {
+                SendToProvider("Your Account Credentials", $"<p style=\"margin: 5px 0;\"> <strong>Username/Email:</strong> <span style=\"color: #16a085; font-family: monospace;\">{result.Data.Email}</span> </p> <p style=\"margin: 5px 0;\"> <strong>Password:</strong> <span style=\"color: #c0392b; font-family: monospace;\">{result.Data.Password}</span> </p>", result.Data.Email, "Login");
+            }
+
+            return Ok(result);
+        }
+
         [HttpPut("ChangeStatus/{Id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [EnableCors("AllowOrigin")]

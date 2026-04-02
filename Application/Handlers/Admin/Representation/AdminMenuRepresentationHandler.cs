@@ -7,6 +7,7 @@ using CMPNatural.Core.Repositories;
 using System.Linq;
 using CMPNatural.Application.Responses.AdminMenuRepresentation;
 using CMPNatural.Core.Enums;
+using CMPNatural.Core.Repositories.Chat;
 
 namespace CMPNatural.Application
 {
@@ -17,11 +18,14 @@ namespace CMPNatural.Application
         private readonly IRequestRepository _requestRepository;
         private readonly ICompanyContractRepository _companyContract;
         private readonly IManifestRepository _manifestRepository;
+        private readonly IChatMessageRepository _repository;
+
 
         public AdminMenuRepresentationHandler(IinvoiceRepository iinvoiceRepository, ICompanyContractRepository companyContract,
-             IManifestRepository _manifestRepository, IRequestRepository _requestRepository
+             IManifestRepository _manifestRepository, IRequestRepository _requestRepository, IChatMessageRepository _repository
             )
         {
+            this._repository = _repository;
             _invoiceRepository = iinvoiceRepository;
             this._requestRepository = _requestRepository;
             _companyContract = companyContract;
@@ -47,7 +51,11 @@ namespace CMPNatural.Application
              x.Status == ManifestStatus.Draft
                  )).Count();
 
-            var model = new AdminMenuRepresentationResponse() { InvoicesCount = invoices, RequestsCount = requests, ContractsCount = ContractsCount , ManifestCount = ManifestCount };
+            var ConversationCount = (await _repository.GetAsync(x =>
+                !x.IsSeen && x.SenderType == SenderType.Client
+                  )).Count();
+
+            var model = new AdminMenuRepresentationResponse() {ConversationCount = ConversationCount, InvoicesCount = invoices, RequestsCount = requests, ContractsCount = ContractsCount , ManifestCount = ManifestCount };
 
             return new Success<AdminMenuRepresentationResponse>() { Data = model };
 

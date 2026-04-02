@@ -35,10 +35,10 @@ namespace CMPNatural.Application
 
             var entity = (await _repository.GetAsync(x=>x.Id == request.Id, query => query.Include(x=>x.Person))).FirstOrDefault();
 
-            if(entity.ProviderId != request.ProviderId)
-            {
-                return new NoAcess<DriverResponse>() { Message = "No Access to Edit!" };
-            }
+            //if(entity.ProviderId != request.ProviderId)
+            //{
+            //    return new NoAcess<DriverResponse>() { Message = "No Access to Edit!" };
+            //}
 
             var path = Guid.NewGuid().ToString();
 

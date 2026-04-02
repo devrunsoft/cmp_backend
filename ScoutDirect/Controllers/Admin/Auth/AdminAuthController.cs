@@ -119,11 +119,15 @@ namespace CMPNatural.Api.Controllers.Admin.Auth
             return token;
         }
 
-        private Claim[] get_claims(Guid PersonId, string Email,string Role , long AdminId,string fullname)
+        private Claim[] get_claims(Guid PersonId, string Email,string Role , long AdminId, string fullname)
         {
             List<Claim> claims = new List<Claim>() { new Claim("isAdmin", "true"),
                 new Claim(ClaimTypes.NameIdentifier, AdminId.ToString()) ,
-                new Claim(ClaimTypes.Role, Role), new Claim("PersonId", PersonId.ToString()), new Claim("Email", Email) };
+                new Claim(ClaimTypes.Role, Role),
+                new Claim("Role", Role),
+                new Claim("PersonId", PersonId.ToString()),
+                new Claim("Email", Email),
+            };
 
             claims.Add(new Claim("FullName", fullname));
             return claims.ToArray();

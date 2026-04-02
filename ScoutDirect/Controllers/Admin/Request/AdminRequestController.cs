@@ -124,6 +124,35 @@ namespace CMPNatural.Api.Controllers.Admin
             }
             return Ok(result);
         }
+
+        [HttpDelete("{RequestId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Delete([FromRoute] long RequestId)
+        {
+            var result = await _mediator.Send(new AdminCancelRequestCommand()
+            {
+                RequestId = RequestId,
+            });
+
+            if (result.IsSucces())
+            {
+                sendNote(MessageNoteType.RequestCanceledByAdmin, result.Data.CompanyId, result.Data.OperationalAddressId);
+            }
+            return Ok(result);
+        }
+
+        [HttpPut("Activate/{RequestId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Activate([FromRoute] long RequestId)
+        {
+            var result = await _mediator.Send(new AdminActivateRequestCommand()
+            {
+                RequestId = RequestId,
+            });
+
+            return Ok(result);
+        }
     }
 }
-

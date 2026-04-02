@@ -13,8 +13,8 @@ namespace CMPNatural.Application
 {
     public class GetAllDriverHandler : IRequestHandler<GetAllDriverCommand, CommandResponse<List<DriverResponse>>>
     {
-        private readonly IDriverRepository _repository;
-        public GetAllDriverHandler(IDriverRepository repository)
+        private readonly IProviderDriverRepository _repository;
+        public GetAllDriverHandler(IProviderDriverRepository repository)
         {
             _repository = repository;
         }
@@ -22,7 +22,7 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<List<DriverResponse>>> Handle(GetAllDriverCommand request, CancellationToken cancellationToken)
         {
             var result = (await _repository.GetAsync(p=>p.ProviderId== request.ProviderId,
-                query => query.Include(x => x.Person))).ToList();
+                query => query.Include(x => x.Driver).ThenInclude(x => x.Person))).Select(x=>x.Driver).ToList();
 
             return new Success<List<DriverResponse>>() { Data = result.Select(x=> DriverMapper.Mapper.Map<DriverResponse>(x)).ToList() };
         }

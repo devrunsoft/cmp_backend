@@ -38,7 +38,7 @@ namespace CMPNatural.Application
 
             if (result != null && result.elements.Any())
             {
-                Task.Run(async () =>
+            Task.Run(async () =>
             {
                 using (var scope = serviceScopeFactory.CreateScope()) // Create a new DI scope
                 {

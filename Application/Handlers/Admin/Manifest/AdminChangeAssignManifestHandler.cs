@@ -25,10 +25,10 @@ namespace CMPNatural.Application
         private readonly IProviderReposiotry _providerRepository;
         private readonly IMediator _mediator;
         private readonly IDriverManifestRepository _driverManifestRepository;
-        private readonly IDriverRepository _driverRepository;
+        private readonly IProviderDriverRepository _driverRepository;
 
         public AdminChangeAssignManifestHandler(IManifestRepository _repository, IProviderReposiotry _providerRepository, IMediator _mediator, ICompanyRepository _companyrepository, IinvoiceRepository _iinvoiceRepository,
-                IDriverManifestRepository _driverManifestRepository, IDriverRepository _driverRepository
+                IDriverManifestRepository _driverManifestRepository, IProviderDriverRepository _driverRepository
             )
         {
             this._repository = _repository;
@@ -46,7 +46,7 @@ namespace CMPNatural.Application
             var provider = (await _providerRepository.GetAsync(p => p.Id == request.ProviderId && p.Status == ProviderStatus.Approved)).FirstOrDefault();
             var company = (await _companyrepository.GetAsync(p => p.Id == entity.Request.CompanyId)).FirstOrDefault();
 
-            var drivers = (await _driverRepository.GetAsync(p => p.ProviderId == request.ProviderId)).ToList();
+            var drivers = (await _driverRepository.GetAsync(p => p.ProviderId == request.ProviderId, query=>query.Include(x=>x.Driver))).Select(x=>x.Driver).ToList();
 
             if (!drivers.Any())
             {

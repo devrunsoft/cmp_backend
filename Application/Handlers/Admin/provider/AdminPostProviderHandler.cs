@@ -108,7 +108,8 @@ namespace CMPNatural.Application
             result.WasteHaulerPermit = WasteHaulerPermit;
             result.EPACompliance = EPACompliance;
             result.Insurance = Insurance;
-            result.Password = PasswordGenerator.GenerateSecurePassword();
+            //result.Password = PasswordGenerator.GenerateSecurePassword();
+            result.Password = request.Password;
 
             await _providerReposiotry.UpdateAsync(result);
 

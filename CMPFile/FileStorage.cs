@@ -75,7 +75,6 @@ public sealed class MinioFileStorage : IFileStorage
 
             try
             {
-                // found → download
                 var ms = new MemoryStream();
                 var getArgs = new GetObjectArgs()
                     .WithBucket(objectName.ToBucket())
@@ -87,11 +86,9 @@ public sealed class MinioFileStorage : IFileStorage
             }
             catch (Minio.Exceptions.ObjectNotFoundException)
             {
-                // not in this bucket → continue
             }
             catch
             {
-                // other errors → rethrow or log
             }
 
         return null; 

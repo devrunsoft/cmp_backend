@@ -38,6 +38,15 @@ namespace CMPNatural.Api.Controllers
             return Ok(result);
         }
 
+        [HttpGet("DriverGetProviders")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> DriverGetProviders()
+        {
+            var result = await _mediator.Send(new DriverGetProviderCommand() { DriverId = rDriverId });
+            return Ok(result);
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]

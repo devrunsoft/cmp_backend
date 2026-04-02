@@ -99,7 +99,7 @@ namespace CMPNatural.Api
 
             bool isDriver = (resultDriver != null);
             var email = isDriver ? resultDriver.Data.Email : result.Data.Email;
-            var Id = isDriver ? resultDriver.Data.ProviderId : result.Data.Id;
+            var Id = isDriver ? 0 : result.Data.Id;
             long? DriverId = isDriver ? resultDriver.Data.Id : null;
             var isFirstLogin = isDriver ? true : result.Data.HasLogin;
             var IsDefault = isDriver ? resultDriver!.Data.IsDefault : true;
@@ -109,6 +109,7 @@ namespace CMPNatural.Api
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
                 expires: DateTime.Now.AddDays(30),
+                //TODO
                 claims: get_claims(email, Id, IsDefault, resultDriver != null, DriverId),
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );

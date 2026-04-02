@@ -1,4 +1,5 @@
 ﻿using CMPNatural.Application;
+using CMPNatural.Application.Commands.Provider.Driver;
 using CMPNatural.Application.Model;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
@@ -38,6 +39,16 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
                 Id= Id,
                 ProviderId = rProviderId,
             });
+            return Ok(result);
+        }
+
+        [HttpDelete("DeleteDriverOfProvider")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> DeleteDriverOfProvider([FromBody] DeleteDriverOfProviderCommand command)
+        {
+            command.ProviderId = rProviderId;
+            var result = await _mediator.Send(command);
             return Ok(result);
         }
 

@@ -11,6 +11,7 @@ using CmpNatural.CrmManagment.Model;
 using CmpNatural.CrmManagment.Product;
 using CMPNatural.Api.Service;
 using CMPNatural.Application;
+using CMPNatural.Application.Commands.Client.Invoice;
 using CMPNatural.Application.Commands.Company;
 using CMPNatural.Application.Commands.Invoice;
 using CMPNatural.Application.Commands.ShoppingCard;
@@ -86,6 +87,18 @@ namespace CMPNatural.Api.Controllers.Invoice
         {
             command.CompanyId = rCompanyId;
             command.OperationalAddressId = OperationalAddressId;
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
+        [HttpGet("Request/{OperationalAddressId}/{Id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> GetRequestId([FromRoute] long OperationalAddressId, [FromRoute] long Id, [FromQuery] GetInvoiceRequestCommand command)
+        {
+            command.CompanyId = rCompanyId;
+            command.OperationalAddressId = OperationalAddressId;
+            command.Id = Id;
             var result = await _mediator.Send(command);
             return Ok(result);
         }

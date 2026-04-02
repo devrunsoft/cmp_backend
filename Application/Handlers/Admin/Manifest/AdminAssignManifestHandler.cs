@@ -23,7 +23,7 @@ namespace CMPNatural.Application
     {
         private readonly IManifestRepository _repository;
         private readonly IDriverManifestRepository _driverManifestRepository;
-        private readonly IDriverRepository _driverRepository;
+        private readonly IProviderDriverRepository _driverRepository;
         private readonly ICompanyRepository _companyrepository;
         private readonly IProviderReposiotry _providerRepository;
         private readonly IMediator _mediator;
@@ -35,7 +35,7 @@ namespace CMPNatural.Application
         private readonly AppSetting _appSetting;
 
         public AdminAssignManifestHandler(IManifestRepository _repository, IProviderReposiotry _providerRepository, IMediator _mediator, ICompanyRepository _companyrepository,
-             IDriverManifestRepository _driverManifestRepository, IDriverRepository _driverRepository,
+             IDriverManifestRepository _driverManifestRepository, IProviderDriverRepository _driverRepository,
              IRequestRepository invoiceRepository,
              IContractRepository contractRepository,
              IProviderContractRepository companyContractRepository, IAppInformationRepository _appRepository, AppSetting appSetting
@@ -61,7 +61,7 @@ namespace CMPNatural.Application
             var allentity = (await _repository.GetAsync(p => p.ContractId == e.ContractId && (p.Status == ManifestStatus.Draft || p.Status == ManifestStatus.Scaduled), query => query.Include(x => x.Request))).ToList();
             var provider = (await _providerRepository.GetAsync(p => p.Id == request.ProviderId && p.Status == ProviderStatus.Approved)).FirstOrDefault();
             var company = (await _companyrepository.GetAsync(p => p.Id == e.Request.CompanyId)).FirstOrDefault();
-            var drivers = (await _driverRepository.GetAsync(p => p.ProviderId == request.ProviderId)).ToList();
+            var drivers = (await _driverRepository.GetAsync(p => p.ProviderId == request.ProviderId, query=> query.Include(x=>x.Driver))).Select(x=>x.Driver).ToList();
 
             var contract = (await _companyContractRepository.GetAsync(p => p.ProviderId == request.ProviderId && p.RequestId == e.RequestId)).Any();
 

@@ -13,6 +13,7 @@ using CMPNatural.Application.Mapper;
 using CMPNatural.Core.Enums;
 using CMPNatural.Core.Base;
 using Stripe;
+using CMPNatural.Application.Commands.Client.Invoice;
 
 namespace CMPNatural.Application.Handlers
 {

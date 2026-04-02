@@ -49,7 +49,7 @@ namespace CMPNatural.Core.Entities
 
         [JsonIgnore]
         [NotMapped]
-        public string NoteTitle => $"{PriceName ?? "Service"} - {AddressName ?? "Location"}";
+        public string NoteTitle => $"{Name} - {PriceName ?? "Service"} - {AddressName ?? "Location"}";
     }
 }
 

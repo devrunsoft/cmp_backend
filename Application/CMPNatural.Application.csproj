@@ -314,6 +314,8 @@
     <None Remove="Commands\Provider\ProviderContract\" />
     <None Remove="Handlers\Provider\CompanyContract\" />
     <None Remove="Commands\Admin\ProviderContract\" />
+    <None Remove="Commands\Provider\Representation\" />
+    <None Remove="Handlers\Provider\Representation\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -637,6 +639,8 @@
     <Folder Include="Commands\Provider\ProviderContract\" />
     <Folder Include="Handlers\Provider\CompanyContract\" />
     <Folder Include="Commands\Admin\ProviderContract\" />
+    <Folder Include="Commands\Provider\Representation\" />
+    <Folder Include="Handlers\Provider\Representation\" />
   </ItemGroup> 
 
   <ItemGroup>

@@ -24,7 +24,8 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<List<Vehicle>>> Handle(DriverGetAllVehicleCommand request, CancellationToken cancellationToken)
         {
             var driver = (await driverRepository.GetAsync(p => p.Id == request.DriverId)).FirstOrDefault();
-            var result = (await _repository.GetAsync(p => p.ProviderId == driver.ProviderId)).ToList();
+            //TODO
+            var result = (await _repository.GetAsync(p => true)).ToList();
             return new Success<List<Vehicle>>() { Data = result };
         }
     }

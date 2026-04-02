@@ -37,7 +37,7 @@ namespace CMPNatural.Application
             {
                 Task.Run(async () =>
                 {
-                    using (var scope = serviceScopeFactory.CreateScope()) // Create a new DI scope
+                    using (var scope = serviceScopeFactory.CreateScope())
                     {
                         var cache = scope.ServiceProvider.GetRequiredService<Func<CacheTech, ICacheService>>();
                         var _mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
@@ -48,7 +48,7 @@ namespace CMPNatural.Application
                         foreach (var item in unseenList)
                         {
                             item.IsSeen = true;
-                            await _repository.UpdateAsync(item);
+                            await IChatMessageRepository.UpdateAsync(item);
                             await _chatService.SendMessageToClient(item.ClientId, item, ChatEnum.seen);
                         }
                     }
