@@ -13,7 +13,8 @@ namespace CMPNatural.Application
     {
         private readonly IAdminRepository _reposiotry;
 
-        public AdminGetAllHandler(IAdminRepository reposiotry)
+        public
+            AdminGetAllHandler(IAdminRepository reposiotry)
         {
             _reposiotry = reposiotry;
         }
@@ -21,7 +22,7 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<PagesQueryResponse<AdminEntity>>> Handle(AdminGetAllCommand request, CancellationToken cancellationToken)
         {
             var result = (await _reposiotry.GetBasePagedAsync(request,x=>
-            x.Role != "SuperAdmin" &&
+            //x.Role != "SuperAdmin" &&
             (string.IsNullOrWhiteSpace(request.allField) ||
             x.Email.Contains(request.allField) ||
             (x.Person.FirstName.Contains(request.allField) || x.Person.LastName.Contains(request.allField)) ||

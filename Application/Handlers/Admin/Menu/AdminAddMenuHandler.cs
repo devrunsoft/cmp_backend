@@ -10,21 +10,31 @@ using CMPNatural.Application.Commands.Admin.Menu;
 using System.Collections.Generic;
 using System.Linq;
 using ScoutDirect.Core.Caching;
+using Microsoft.EntityFrameworkCore;
 
 namespace CMPNatural.Application
 {
     public class AdminAddMenuHandler : IRequestHandler<AdminAddMenuCommand, CommandResponse<AdminEntity>>
     {
         private readonly IAdminMenuAccessRepository _repository;
+        private readonly IAdminRepository _adminrepository;
         private readonly ICacheService _cache;
-        public AdminAddMenuHandler(IAdminMenuAccessRepository repository, Func<CacheTech, ICacheService> _cacheService)
+        public AdminAddMenuHandler(IAdminMenuAccessRepository repository, IAdminRepository _adminrepository, Func<CacheTech, ICacheService> _cacheService)
         {
             _repository = repository;
+            this._adminrepository = _adminrepository;
             _cache = _cacheService(CacheTech.Memory);
         }
         public async Task<CommandResponse<AdminEntity>> Handle(AdminAddMenuCommand request, CancellationToken cancellationToken)
         {
             var entity = (await _repository.GetAsync(p=>p.AdminId == request.AdminId)).ToList();
+
+            var admin = (await _adminrepository.GetAsync(p => p.Id == request.AdminId, query => query.Include(x => x.Person))).FirstOrDefault();
+            if (admin.Role == "SuperAdmin")
+            {
+                return new NoAcess<AdminEntity>() { Data = admin, Message = "Access denied.", };
+            }
+
             var cacheKey = $"menu_access_{request.AdminId}";
 
             await _repository.DeleteRangeAsync(entity);

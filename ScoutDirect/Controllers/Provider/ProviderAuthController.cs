@@ -98,11 +98,12 @@ namespace CMPNatural.Api
 
 
             bool isDriver = (resultDriver != null);
+            var IsDefault = isDriver ? resultDriver!.Data.IsDefault : true;
             var email = isDriver ? resultDriver.Data.Email : result.Data.Email;
-            var Id = isDriver ? 0 : result.Data.Id;
+            var Id = (isDriver) ? 0 : result.Data.Id;
             long? DriverId = isDriver ? resultDriver.Data.Id : null;
             var isFirstLogin = isDriver ? true : result.Data.HasLogin;
-            var IsDefault = isDriver ? resultDriver!.Data.IsDefault : true;
+  
 
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
             var token = new JwtSecurityToken(
@@ -148,8 +149,8 @@ namespace CMPNatural.Api
             List<Claim> claims = new List<Claim>() { 
                 new Claim(ClaimTypes.NameIdentifier, ProviderId.ToString()) ,
                 new Claim("Email", Email),
-                new Claim("IsDefault", IsDefault==null? null: IsDefault.ToString()),
-                new Claim("IsDriver", IsDriver.ToString()),
+                new Claim("IsDefault", IsDefault.ToString()),
+                new Claim("IsDriver", IsDefault? false.ToString() : IsDriver.ToString()),
                 new Claim("DriverId", DriverId==null ? "-1" : DriverId.ToString()),
             };
             return claims.ToArray();

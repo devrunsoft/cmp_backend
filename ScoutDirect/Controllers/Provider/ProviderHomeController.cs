@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CMPNatural.Application;
+﻿using CMPNatural.Api.Attribute;
 using CMPNatural.Application.Commands.Provider;
-using CMPNatural.Core.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using ScoutDirect.Api.Controllers._Base;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CMPNatural.Api.Controllers.Provider
 {
+    [ProviderAuthorize()]
     public class ProviderHomeController : BaseProviderApiController
     {
         public ProviderHomeController(IMediator mediator) : base(mediator)

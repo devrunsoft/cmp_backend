@@ -15,6 +15,7 @@ using ScoutDirect.Application.Responses;
 using ScoutDirect.Api.Controllers._Base;
 using CMPNatural.Application.Command;
 using CMPNatural.Core.Models;
+using CMPNatural.Api.Attribute;
 
 namespace CMPNatural.Api.Controllers.Admin.Provider
 {

@@ -21,6 +21,11 @@ namespace CMPNatural.Application
         {
             var entity = (await _repository.GetAsync(p=>p.Id== request.Id, query=>query.Include(x=>x.Person))).FirstOrDefault();
 
+            if (entity.Role == "SuperAdmin")
+            {
+                return new NoAcess<AdminEntity>() { Data = entity, Message = "Access denied.", };
+            }
+
             entity.Person.FirstName = request.FirstName;
             entity.Person.LastName = request.LastName;
             entity.Email = request.Email;
