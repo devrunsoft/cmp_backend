@@ -57,7 +57,7 @@ namespace CMPNatural.Application
                 foreach (var i in item.ChatSession ?? new List<ChatSession>())
                 {
                     i.UnRead = (i.Messages ?? new List<ChatMessage>())
-                        .Count(m => !m.IsSeen && m.SenderType != SenderType.Admin);
+                        .Count(m => !m.IsSeen && m.SenderType != ParticipantType.Admin);
                 }
             }
 

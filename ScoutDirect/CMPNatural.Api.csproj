@@ -82,6 +82,7 @@
     <None Remove="Controllers\Admin\Route\" />
     <None Remove="Controllers\Admin\Request\" />
     <None Remove="Controllers\Admin\Driver\" />
+    <None Remove="Controllers\Admin\ChatParticipant\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="View\" />
@@ -140,6 +141,7 @@
     <Folder Include="Controllers\Admin\Route\" />
     <Folder Include="Controllers\Admin\Request\" />
     <Folder Include="Controllers\Admin\Driver\" />
+    <Folder Include="Controllers\Admin\ChatParticipant\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\CMPNatural.Core.csproj">

@@ -20,7 +20,7 @@ namespace CMPNatural.Core.Entities
         // public long ProviderId { get; set; }
         public DriverStatus Status { get; set; }
         public bool TwoFactor { get; set; }
-        public bool IsDefault { get; set; }
+        //public bool IsDefault { get; set; }
 
         public Person Person { get; set; }
         public virtual ICollection<ProviderDriver> ProviderDriver { get; set; }

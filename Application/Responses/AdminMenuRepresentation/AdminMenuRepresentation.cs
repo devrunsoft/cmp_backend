@@ -8,6 +8,7 @@ namespace CMPNatural.Application.Responses.AdminMenuRepresentation
         public int InvoicesCount { get; set; }
         public int ManifestCount { get; set; }
         public int ConversationCount { get; set; }
+        public int ProviderConversationCount { get; set; }
     }
 }
 

@@ -316,6 +316,9 @@
     <None Remove="Commands\Admin\ProviderContract\" />
     <None Remove="Commands\Provider\Representation\" />
     <None Remove="Handlers\Provider\Representation\" />
+    <None Remove="Commands\Admin\ChatCommonMessage\" />
+    <None Remove="Handlers\Admin\ChatCommonSession\" />
+    <None Remove="Commands\Admin\ChatCommonMessageNote\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -641,6 +644,9 @@
     <Folder Include="Commands\Admin\ProviderContract\" />
     <Folder Include="Commands\Provider\Representation\" />
     <Folder Include="Handlers\Provider\Representation\" />
+    <Folder Include="Commands\Admin\ChatCommonMessage\" />
+    <Folder Include="Handlers\Admin\ChatCommonSession\" />
+    <Folder Include="Commands\Admin\ChatCommonMessageNote\" />
   </ItemGroup> 
 
   <ItemGroup>

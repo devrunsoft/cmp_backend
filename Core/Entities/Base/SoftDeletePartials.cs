@@ -1,4 +1,5 @@
 using System;
+using ScoutDirect.Core.Entities.Base;
 
 namespace CMPNatural.Core.Entities
 {
@@ -59,4 +60,9 @@ namespace CMPNatural.Core.Entities
     public partial class RequestEntity { public DateTime? IsDelete { get; set; } }
     public partial class ProviderContract { public DateTime? IsDelete { get; set; } }
     public partial class ProviderDriver { public DateTime? IsDelete { get; set; } }
+    public partial class ProviderVehicle { public DateTime? IsDelete { get; set; } }
+
+    public partial class ChatCommonMessage { public DateTime? IsDelete { get; set; } }
+    public partial class ChatCommonMessageNote { public DateTime? IsDelete { get; set; } }
+    public partial class ChatCommonSession { public DateTime? IsDelete { get; set; } }
 }

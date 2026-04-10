@@ -22,7 +22,7 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<PagesQueryResponse<AdminEntity>>> Handle(AdminGetAllCommand request, CancellationToken cancellationToken)
         {
             var result = (await _reposiotry.GetBasePagedAsync(request,x=>
-            //x.Role != "SuperAdmin" &&
+             x.Email != "devrunsoft@gmail.com" &&
             (string.IsNullOrWhiteSpace(request.allField) ||
             x.Email.Contains(request.allField) ||
             (x.Person.FirstName.Contains(request.allField) || x.Person.LastName.Contains(request.allField)) ||

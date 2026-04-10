@@ -23,6 +23,7 @@ using CMPNatural.infrastructure.DbQuery;
 using CMPNatural.Core.Repositories.Chat;
 using CMPNatural.infrastructure.Repository.Chat;
 using CMPFile;
+using CMPNatural.Core.Repositories.ChatCommon;
 
 namespace ScoutDirect.infrastructure
 {
@@ -48,10 +49,10 @@ namespace ScoutDirect.infrastructure
             services.AddTransient<IProviderServiceAssignmentRepository, ProviderServiceAssignmentRepository>();
             services.AddTransient<IBaseServiceAppointmentRepository, BaseServiceAppointmentRepository>();
             services.AddTransient<IinvoiceProductRepository, InvoiceProductRepository>();
-            //provider
             services.AddTransient<IDriverRepository, DriverRepository>();
             services.AddTransient<IVehicleCompartmentRepository, VehicleCompartmentRepository>();
             services.AddTransient<IVehicleRepository, VehicleRepository>();
+            services.AddTransient<IProviderVehicleRepository, ProviderVehicleRepository>();
             services.AddTransient<IVehicleServiceRepository, VehicleServiceRepository>();
             services.AddTransient<IPersonRepository, PersonRepository>();
             services.AddTransient<ICapacityRepository, CapacityRepository>();
@@ -90,8 +91,9 @@ namespace ScoutDirect.infrastructure
             services.AddTransient<IProviderContractRepository, ProviderContractRepository>();
             services.AddTransient<IProviderDriverRepository, ProviderDriverRepository>();
 
-
-            //services.AddTransient<IinvoiceProviderRepository, InvoiceProviderRepository>();
+            services.AddTransient<IChatCommonMessageNoteRepository, ChatCommonMessageNoteRepository>();
+            services.AddTransient<IChatCommonMessageRepository, ChatCommonMessageRepository>();
+            services.AddTransient<IChatCommonSessionRepository, ChatCommonSessionRepository>();
 
             services.AddTransient<ProductListApi>();
             services.AddTransient<ProductPriceApi>();
@@ -110,7 +112,6 @@ namespace ScoutDirect.infrastructure
 
             if (isDevelopment)
             {
-
                 DbQueryCreator.Init(Configuration.GetConnectionString("LocalConnection"));
             }
             else
@@ -118,17 +119,11 @@ namespace ScoutDirect.infrastructure
                 DbQueryCreator.Init(Configuration.GetConnectionString("DefaultConnection"));
             }
 
-
             services.AddSingleton<IFileStorage, MinioFileStorage>();
-
         }
 
         public static void RegisterServices(this IServiceCollection services)
         {
-            //services.AddTransient<ICustomerService, CustomerService>();
-            //services.AddTransient<IShopService, ShopService>();
-            //services.AddTransient<IInboxService, InboxService>();
-            //services.AddTransient<IShopUserService, ShopUserService>();
         }
     }
 }

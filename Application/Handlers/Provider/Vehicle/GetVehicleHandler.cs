@@ -1,8 +1,6 @@
-﻿using System;
-using CMPNatural.Core.Repositories;
+﻿using CMPNatural.Core.Repositories;
 using MediatR;
 using ScoutDirect.Application.Responses;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using CMPNatural.Core.Entities;
@@ -13,20 +11,24 @@ namespace CMPNatural.Application
 {
     public class GetVehicleHandler : IRequestHandler<GetVehicleCommand, CommandResponse<Vehicle>>
     {
-        private readonly IVehicleRepository _repository;
-        public GetVehicleHandler(IVehicleRepository repository)
+        private readonly IProviderVehicleRepository _repository;
+        public GetVehicleHandler(IProviderVehicleRepository repository)
         {
             _repository = repository;
         }
 
         public async Task<CommandResponse<Vehicle>> Handle(GetVehicleCommand request, CancellationToken cancellationToken)
         {
-            var result = (await _repository.GetAsync(p => p.ProviderId == request.ProviderId,
-                query => query.Include(x=>x.VehicleService)
-                .Include(x => x.VehicleCompartment)
-            )).FirstOrDefault();
+            var result = (await _repository.GetAsync(
+                p => p.ProviderId == request.ProviderId && p.VehicleId == request.Id,
+                query => query
+                    .Include(x => x.Vehicle)
+                    .ThenInclude(x => x.VehicleService)
+                    .Include(x => x.Vehicle)
+                    .ThenInclude(x => x.VehicleCompartment)))
+                .Select(x => x.Vehicle)
+                .FirstOrDefault();
             return new Success<Vehicle>() { Data = result };
         }
     }
 }
-

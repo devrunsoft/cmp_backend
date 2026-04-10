@@ -60,6 +60,10 @@ namespace infrastructure.Data
         public virtual DbSet<ChatMessageManualNote> ChatMessageManualNote { get; set; } = null!;
         public virtual DbSet<RequestEntity> Request { get; set; } = null!;
         public virtual DbSet<ProviderContract> ProviderContract { get; set; } = null!;
+        public virtual DbSet<ChatCommonSession> ChatCommonSession { get; set; } = null!;
+        public virtual DbSet<ChatCommonMessage> ChatCommonMessage { get; set; } = null!;
+        public virtual DbSet<ChatCommonMessageNote> ChatCommonMessageNote { get; set; } = null!;
+        public virtual DbSet<ProviderVehicle> ProviderVehicle { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -79,6 +83,21 @@ namespace infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<ProviderVehicle>(entity =>
+            {
+                entity.ToTable("ProviderVehicle");
+                entity.HasOne(d => d.Vehicle)
+                .WithMany(p => p.ProviderVehicle)
+                .HasForeignKey(d => d.VehicleId);
+
+                entity.HasOne(d => d.Provider)
+                .WithMany(p => p.ProviderVehicle)
+                .HasForeignKey(d => d.ProviderId);
+
+                entity.HasIndex(x => new { x.ProviderId, x.VehicleId }).IsUnique();
+            });
+
             modelBuilder.Entity<ServiceAppointmentLocationFile>(entity =>
             {
                 entity.ToTable("ServiceAppointmentLocationFile");
@@ -135,6 +154,16 @@ namespace infrastructure.Data
                 .HasForeignKey(d => d.ClientId);
             });
 
+            modelBuilder.Entity<ChatCommonSession>(entity =>
+            {
+                entity.ToTable("ChatCommonSession");
+
+                entity.HasMany(m => m.Messages)
+                .WithOne(n => n.ChatSession)
+                .HasForeignKey(n => n.ChatCommonSessionId);
+
+            });
+
 
             modelBuilder.Entity<ChatMention>(entity =>
             {
@@ -166,7 +195,7 @@ namespace infrastructure.Data
                 entity.Property(m => m.SenderType)
                 .HasConversion(
                  x => x.ToString(),
-                 x => (SenderType)Enum.Parse(typeof(SenderType), x)
+                 x => (ParticipantType)Enum.Parse(typeof(ParticipantType), x)
                  );
 
                 entity.Property(m => m.Type)
@@ -184,6 +213,28 @@ namespace infrastructure.Data
                 .HasForeignKey(d => d.ChatMessageId);
             });
 
+            modelBuilder.Entity<ChatCommonMessage>(entity =>
+            {
+                entity.ToTable("ChatCommonMessage");
+
+                entity.Property(m => m.SenderType)
+                .HasConversion(
+                 x => x.ToString(),
+                 x => (ParticipantType)Enum.Parse(typeof(ParticipantType), x)
+                 );
+
+                entity.Property(m => m.Type)
+                .HasConversion(
+                 x => x.ToString(),
+                 x => (MessageType)Enum.Parse(typeof(MessageType), x)
+                 );
+
+                entity.HasOne(d => d.ChatSession)
+                .WithMany(x => x.Messages)
+                .HasForeignKey(d => d.ChatCommonSessionId);
+            });
+
+
             modelBuilder.Entity<ChatMessageNote>(entity =>
             {
                 entity.ToTable("ChatMessageNote").HasBaseType<ChatMessage>();
@@ -194,6 +245,18 @@ namespace infrastructure.Data
                  x => (MessageNoteType)Enum.Parse(typeof(MessageNoteType), x)
                  );
             });
+
+            modelBuilder.Entity<ChatCommonMessageNote>(entity =>
+            {
+                entity.ToTable("ChatCommonMessageNote").HasBaseType<ChatCommonMessage>();
+
+                entity.Property(m => m.MessageNoteType)
+                .HasConversion(
+                 x => x.ToString(),
+                 x => (MessageNoteType)Enum.Parse(typeof(MessageNoteType), x)
+                 );
+            });
+
             modelBuilder.Entity<ChatMessageManualNote>(entity =>
             {
                 entity.ToTable("ChatMessageManualNote");

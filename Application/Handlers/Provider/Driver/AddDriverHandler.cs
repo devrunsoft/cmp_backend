@@ -6,12 +6,9 @@ using ScoutDirect.Application.Responses;
 using System.Threading;
 using System.Threading.Tasks;
 using CMPNatural.Core.Entities;
-using CMPNatural.Application.Services;
-using ScoutDirect.Core.Entities.Base;
 using CMPNatural.Application.Mapper;
 using CMPNatural.Core.Helper;
 using CMPFile;
-using System.ServiceModel.Channels;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -28,15 +25,23 @@ namespace CMPNatural.Application
     public class AddDriverHandler : IRequestHandler<AddDriverCommand, CommandResponse<DriverResponse>>
     {
         private readonly IDriverRepository _repository;
+        private readonly IProviderDriverRepository _providerDriverRepository;
         private readonly IPersonRepository _personRepository;
         private readonly IFileStorage fileStorage;
         private readonly AppSetting _appSetting;
         private readonly SsoOptions _ssoOptions;
 
-        public AddDriverHandler(IDriverRepository repository, IPersonRepository _personRepository , IFileStorage fileStorage, AppSetting appSetting, IOptions<SsoOptions> ssoOptions)
+        public AddDriverHandler(
+            IDriverRepository repository,
+            IProviderDriverRepository providerDriverRepository,
+            IPersonRepository personRepository,
+            IFileStorage fileStorage,
+            AppSetting appSetting,
+            IOptions<SsoOptions> ssoOptions)
         {
             _repository = repository;
-            this._personRepository = _personRepository;
+            _providerDriverRepository = providerDriverRepository;
+            _personRepository = personRepository;
             this.fileStorage = fileStorage;
             _appSetting = appSetting;
             _ssoOptions = ssoOptions?.Value ?? new SsoOptions();
@@ -45,12 +50,13 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<DriverResponse>> Handle(AddDriverCommand request, CancellationToken cancellationToken)
         {
             Driver driverEntity;
-            var existingDriver = (await _repository.GetAsync(x => x.Email == request.Email, query => query.Include(x => x.ProviderDriver).Include(x=>x.Person))).FirstOrDefault();
-            if (existingDriver!=null)
+            var existingDriver = (await _repository.GetAsync(
+                x => x.Email == request.Email,
+                query => query.Include(x => x.ProviderDriver).Include(x => x.Person))).FirstOrDefault();
+
+            if (existingDriver != null)
             {
                 driverEntity = existingDriver;
-
-                var path = Guid.NewGuid().ToString();
 
                 if (!string.IsNullOrWhiteSpace(request.ProfilePhoto))
                 {
@@ -70,29 +76,32 @@ namespace CMPNatural.Application
                 existingDriver.Person.FirstName = request.FirstName;
                 existingDriver.Person.LastName = request.LastName;
                 existingDriver.Email = request.Email;
-                existingDriver.IsDefault = request.IsDefault;
 
-                var hasRelation = existingDriver.ProviderDriver
-                   .Any(x => x.ProviderId == request.ProviderId && x.DriverId == existingDriver.Id);
+                var relation = existingDriver.ProviderDriver
+                    .FirstOrDefault(x => x.ProviderId == request.ProviderId && x.DriverId == existingDriver.Id);
 
-                if (!hasRelation)
+                if (relation == null)
                 {
-                    existingDriver.ProviderDriver.Add(new ProviderDriver
+                    relation = new ProviderDriver
                     {
                         ProviderId = request.ProviderId,
-                        DriverId = existingDriver.Id
-                    });
+                        DriverId = existingDriver.Id,
+                        IsDefault = request.IsDefault
+                    };
+                    existingDriver.ProviderDriver.Add(relation);
+                }
+                else
+                {
+                    relation.IsDefault = request.IsDefault;
                 }
 
+                await ResetOtherProviderDefaultsAsync(request.ProviderId, existingDriver.Id, request.IsDefault);
                 await _repository.UpdateAsync(existingDriver);
-
             }
             else
             {
-
                 var personId = Guid.NewGuid();
                 var person = new Person() { FirstName = request.FirstName, LastName = request.LastName, Id = personId };
-                //await _personRepository.AddAsync(person);
 
                 var entity = new Driver()
                 {
@@ -101,39 +110,55 @@ namespace CMPNatural.Application
                     BackgroundCheck = request.BackgroundCheck,
                     BackgroundCheckExp = request.BackgroundCheckExp,
                     ProfilePhoto = request.ProfilePhoto,
-                    // ProviderId = request.ProviderId,
-                    ProviderDriver = new List<ProviderDriver>() { new ProviderDriver() { ProviderId = request.ProviderId } },
+                    ProviderDriver = new List<ProviderDriver>() { new ProviderDriver() { ProviderId = request.ProviderId, IsDefault = request.IsDefault } },
                     Password = PasswordGenerator.GenerateSecurePassword(),
                     Email = request.Email,
-                    IsDefault = request.IsDefault,
                     Person = person
                 };
 
                 var result = await _repository.AddAsync(entity);
+                await ResetOtherProviderDefaultsAsync(request.ProviderId, result.Id, request.IsDefault);
                 driverEntity = result;
             }
 
+            var providerDriver = await LoadProviderDriverAsync(request.ProviderId, driverEntity.Id);
 
-            var res = await UpdateSsoUserAsync(request.Email, cancellationToken);
-            if (!res.IsSucces())
+            return new Success<DriverResponse>() { Data = DriverMapper.Mapper.Map<DriverResponse>(providerDriver) };
+        }
+
+        private async Task ResetOtherProviderDefaultsAsync(long providerId, long driverId, bool shouldReset)
+        {
+            if (!shouldReset)
             {
-                return new NoAcess<DriverResponse>() { Message = res.Message };
+                return;
             }
 
-            return new Success<DriverResponse>() { Data = DriverMapper.Mapper.Map<DriverResponse>(driverEntity) };
+            var otherRelations = await _providerDriverRepository.GetAsync(x => x.ProviderId == providerId && x.DriverId != driverId && x.IsDefault);
+            foreach (var relation in otherRelations)
+            {
+                relation.IsDefault = false;
+                await _providerDriverRepository.UpdateAsync(relation);
+            }
+        }
+
+        private async Task<ProviderDriver> LoadProviderDriverAsync(long providerId, long driverId)
+        {
+            return (await _providerDriverRepository.GetAsync(
+                x => x.ProviderId == providerId && x.DriverId == driverId,
+                query => query.Include(x => x.Driver).ThenInclude(x => x.Person))).FirstOrDefault();
         }
 
         private async Task<CommandResponse<DriverResponse>> UpdateSsoUserAsync(string email, CancellationToken cancellationToken)
         {
             if (string.IsNullOrWhiteSpace(email))
             {
-                    return new NoAcess<DriverResponse>(){ Message = "Please try again later"};
+                return new NoAcess<DriverResponse>() { Message = "Please try again later" };
             }
 
             var serverUrl = _appSetting?.host;
             if (string.IsNullOrWhiteSpace(serverUrl))
             {
-                  return new NoAcess<DriverResponse>(){ Message = "Please try again later"};
+                return new NoAcess<DriverResponse>() { Message = "Please try again later" };
             }
 
             var serverName = serverUrl;
@@ -154,7 +179,7 @@ namespace CMPNatural.Application
             };
 
             var body = JsonSerializer.Serialize(payload);
-            var requestUri = new Uri("http://monitor.app-cmp.com:8081/sso/api/sso/users/update");
+            var requestUri = new Uri("https://sso.app-cmp.com/sso/api/sso/users/update");
             var timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             var signature = CreateSignature("POST", "/api/sso/users/update", body, timestamp, _ssoOptions.SharedSecret);
 
@@ -167,11 +192,11 @@ namespace CMPNatural.Application
             var response = await client.SendAsync(request, cancellationToken);
             if (response.StatusCode != HttpStatusCode.OK)
             {
-                return new NoAcess<DriverResponse>(){ Message = "Please try again later"};
+                return new NoAcess<DriverResponse>() { Message = "Please try again later" };
             }
             else
             {
-                 return new Success<DriverResponse>();
+                return new Success<DriverResponse>();
             }
         }
 

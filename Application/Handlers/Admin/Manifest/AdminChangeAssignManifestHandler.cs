@@ -46,7 +46,7 @@ namespace CMPNatural.Application
             var provider = (await _providerRepository.GetAsync(p => p.Id == request.ProviderId && p.Status == ProviderStatus.Approved)).FirstOrDefault();
             var company = (await _companyrepository.GetAsync(p => p.Id == entity.Request.CompanyId)).FirstOrDefault();
 
-            var drivers = (await _driverRepository.GetAsync(p => p.ProviderId == request.ProviderId, query=>query.Include(x=>x.Driver))).Select(x=>x.Driver).ToList();
+            var drivers = (await _driverRepository.GetAsync(p => p.ProviderId == request.ProviderId, query=>query.Include(x=>x.Driver))).ToList();
 
             if (!drivers.Any())
             {
@@ -140,7 +140,7 @@ namespace CMPNatural.Application
                {
                    ProviderId = request.ProviderId,
                    ManifestId = entity.Id,
-                   DriverId = dirver.Id,
+                   DriverId = dirver.DriverId,
                    CreateAt = DateTime.Now,
                };
              await _driverManifestRepository.AddAsync(driverManifest);
@@ -150,4 +150,3 @@ namespace CMPNatural.Application
         }
     }
 }
-

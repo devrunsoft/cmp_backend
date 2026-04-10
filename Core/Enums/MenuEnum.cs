@@ -35,6 +35,7 @@ namespace CMPNatural.Core.Enums
         Logs = 31,
         TerminateRequest = 32,
         Conversation = 38,
-        Route = 42
+        Route = 42,
+        ParticipantConversation = 48,
     }
 }

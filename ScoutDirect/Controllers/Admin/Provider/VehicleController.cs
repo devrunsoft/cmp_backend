@@ -1,25 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using CMPNatural.Application;
 using CMPNatural.Application.Model;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace CMPNatural.Api.Controllers.Admin.Provider
 {
-
     public class VehicleController : BaseAdminProviderApiController
     {
         private readonly IWebHostEnvironment Environment;
-        public VehicleController(IMediator mediator, IHttpContextAccessor httpContextAccessor,
-            IWebHostEnvironment _environment) : base(mediator, httpContextAccessor)
+        public VehicleController(IMediator mediator, IHttpContextAccessor httpContextAccessor, IWebHostEnvironment _environment) : base(mediator, httpContextAccessor)
         {
             Environment = _environment;
+        }
+
+        [HttpPost("CheckByLicenseNumber")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> CheckByLicenseNumber([FromBody] CheckVehicleByLicenseNumberCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
 
         [HttpGet]
@@ -47,6 +49,16 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
             return Ok(result);
         }
 
+        [HttpDelete("DeleteVehicleOfProvider")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> DeleteVehicleOfProvider([FromBody] DeleteVehicleOfProviderCommand command)
+        {
+            command.ProviderId = rProviderId;
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
         [RequestSizeLimit(100_000_000)]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -59,23 +71,18 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
             {
                 ProviderId = rProviderId,
                 Capacity = request.Capacity,
+                LicenseNumber = request.LicenseNumber,
                 VehicleRegistration = request.VehicleRegistration,
                 VehicleRegistrationExp = request.VehicleRegistrationExp,
-
                 VehicleInsurance = request.VehicleInsurance,
                 VehicleInsuranceExp = request.VehicleInsuranceExp,
-
                 InspectionReport = request.InspectionReport,
                 InspectionReportExp = request.InspectionReportExp,
                 Picture = request.Picture,
-
                 MeasurementCertificate = request.MeasurementCertificate,
-
                 PeriodicVehicleInspections = request.PeriodicVehicleInspections,
                 PeriodicVehicleInspectionsExp = request.PeriodicVehicleInspectionsExp,
-
                 Weight = request.Weight,
-                
                 VehicleCompartments = request.VehicleCompartments,
                 VehicleService = request.VehicleService,
                 Name = request.Name,
@@ -96,30 +103,24 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
                 Id = Id,
                 ProviderId = rProviderId,
                 Capacity = request.Capacity,
+                LicenseNumber = request.LicenseNumber,
                 VehicleRegistration = request.VehicleRegistration,
                 VehicleRegistrationExp = request.VehicleRegistrationExp,
-
                 VehicleInsurance = request.VehicleInsurance,
                 VehicleInsuranceExp = request.VehicleInsuranceExp,
-
                 InspectionReport = request.InspectionReport,
                 InspectionReportExp = request.InspectionReportExp,
                 Picture = request.Picture,
-
                 MeasurementCertificate = request.MeasurementCertificate,
-
                 PeriodicVehicleInspections = request.PeriodicVehicleInspections,
                 PeriodicVehicleInspectionsExp = request.PeriodicVehicleInspectionsExp,
                 Name = request.Name,
                 Weight = request.Weight,
-
                 VehicleCompartments = request.VehicleCompartments,
                 VehicleService = request.VehicleService,
                 BaseVirtualPath = wwwPath
             });
             return Ok(result);
         }
-
     }
 }
-

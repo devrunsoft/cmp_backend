@@ -13,6 +13,7 @@ namespace CMPNatural.Application.Model
 		}
 
         public string Name { get; set; }
+        public string LicenseNumber { get; set; } = null!;
         public string VehicleRegistration { get; set; } = null!;
         public DateTime VehicleRegistrationExp { get; set; }
         public string VehicleInsurance { get; set; } = null!;
@@ -35,4 +36,3 @@ namespace CMPNatural.Application.Model
         public VehicleServiceStatus VehicleServiceStatus { get; set; }
     }
 }
-

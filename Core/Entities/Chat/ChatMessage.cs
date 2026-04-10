@@ -10,7 +10,7 @@ namespace CMPNatural.Core.Entities
         public long ChatSessionId { get; set; }
         public long ClientId { get; set; }
         public long OperationalAddressId { get; set; }
-        public SenderType SenderType { get; set; }
+        public ParticipantType SenderType { get; set; }
         public long SenderId { get; set; }
         public string Content { get; set; } = string.Empty;
         public DateTime SentAt { get; set; } = DateTime.UtcNow;

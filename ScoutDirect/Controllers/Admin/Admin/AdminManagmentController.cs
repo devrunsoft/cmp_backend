@@ -40,7 +40,8 @@ namespace CMPNatural.Api.Controllers.Admin.Admin
                 LastName = input.LastName,
                 IsActive = input.IsActive,
                 TwoFactor = input.TwoFactor,
-                Password = input.Password
+                Password = input.Password,
+                IsSuperAdmin = input.IsSuperAdmin
             });
             return Ok(result);
         }
@@ -58,6 +59,7 @@ namespace CMPNatural.Api.Controllers.Admin.Admin
                 IsActive = input.IsActive,
                 Password = input.Password,
                 TwoFactor = input.TwoFactor,
+                IsSuperAdmin = input.IsSuperAdmin,
                 Id = Id
             });
             return Ok(result);

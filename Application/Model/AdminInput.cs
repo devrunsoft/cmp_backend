@@ -16,6 +16,8 @@ namespace CMPNatural.Application.Model
         public string LastName { get; set; }
 
         public bool TwoFactor { get; set; }
+
+        public bool IsSuperAdmin { get; set; }
     }
 }
 

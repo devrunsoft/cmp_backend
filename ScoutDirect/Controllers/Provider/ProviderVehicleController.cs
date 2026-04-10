@@ -10,10 +10,8 @@ namespace CMPNatural.Api.Controllers.Provider
 {
 	public class ProviderVehicleController : BaseProviderApiController
     {
-
         private readonly IWebHostEnvironment Environment;
-        public ProviderVehicleController(IMediator mediator,
-            IWebHostEnvironment _environment) : base(mediator)
+        public ProviderVehicleController(IMediator mediator, IWebHostEnvironment _environment) : base(mediator)
         {
             Environment = _environment;
         }
@@ -43,6 +41,16 @@ namespace CMPNatural.Api.Controllers.Provider
             return Ok(result);
         }
 
+        [HttpDelete("DeleteVehicleOfProvider")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> DeleteVehicleOfProvider([FromBody] DeleteVehicleOfProviderCommand command)
+        {
+            command.ProviderId = rProviderId;
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
         [RequestSizeLimit(100_000_000)]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -55,23 +63,18 @@ namespace CMPNatural.Api.Controllers.Provider
             {
                 ProviderId = rProviderId,
                 Capacity = request.Capacity,
+                LicenseNumber = request.LicenseNumber,
                 VehicleRegistration = request.VehicleRegistration,
                 VehicleRegistrationExp = request.VehicleRegistrationExp,
-
                 VehicleInsurance = request.VehicleInsurance,
                 VehicleInsuranceExp = request.VehicleInsuranceExp,
-
                 InspectionReport = request.InspectionReport,
                 InspectionReportExp = request.InspectionReportExp,
                 Picture = request.Picture,
-
                 MeasurementCertificate = request.MeasurementCertificate,
-
                 PeriodicVehicleInspections = request.PeriodicVehicleInspections,
                 PeriodicVehicleInspectionsExp = request.PeriodicVehicleInspectionsExp,
-
                 Weight = request.Weight,
-
                 VehicleCompartments = request.VehicleCompartments,
                 VehicleService = request.VehicleService,
                 Name = request.Name,
@@ -92,30 +95,24 @@ namespace CMPNatural.Api.Controllers.Provider
                 Id = Id,
                 ProviderId = rProviderId,
                 Capacity = request.Capacity,
+                LicenseNumber = request.LicenseNumber,
                 VehicleRegistration = request.VehicleRegistration,
                 VehicleRegistrationExp = request.VehicleRegistrationExp,
-
                 VehicleInsurance = request.VehicleInsurance,
                 VehicleInsuranceExp = request.VehicleInsuranceExp,
-
                 InspectionReport = request.InspectionReport,
                 InspectionReportExp = request.InspectionReportExp,
                 Picture = request.Picture,
-
                 MeasurementCertificate = request.MeasurementCertificate,
-
                 PeriodicVehicleInspections = request.PeriodicVehicleInspections,
                 PeriodicVehicleInspectionsExp = request.PeriodicVehicleInspectionsExp,
                 Name = request.Name,
                 Weight = request.Weight,
-
                 VehicleCompartments = request.VehicleCompartments,
                 VehicleService = request.VehicleService,
                 BaseVirtualPath = wwwPath
             });
             return Ok(result);
         }
-
     }
 }
-

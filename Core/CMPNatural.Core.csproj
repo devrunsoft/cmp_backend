@@ -21,6 +21,8 @@
     <None Remove="Payment\" />
     <None Remove="Logger\" />
     <None Remove="Entities\Chat\" />
+    <None Remove="Entities\ChatCommon\" />
+    <None Remove="Repositories\ChatCommon\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -84,5 +86,7 @@
     <Folder Include="Logger\" />
     <Folder Include="Entities\Chat\" />
     <Folder Include="Repositories\Chat\" />
+    <Folder Include="Entities\ChatCommon\" />
+    <Folder Include="Repositories\ChatCommon\" />
   </ItemGroup>
 </Project>

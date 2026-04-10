@@ -8,6 +8,7 @@ using System.Linq;
 using CMPNatural.Application.Responses.AdminMenuRepresentation;
 using CMPNatural.Core.Enums;
 using CMPNatural.Core.Repositories.Chat;
+using CMPNatural.Core.Repositories.ChatCommon;
 
 namespace CMPNatural.Application
 {
@@ -19,10 +20,11 @@ namespace CMPNatural.Application
         private readonly ICompanyContractRepository _companyContract;
         private readonly IManifestRepository _manifestRepository;
         private readonly IChatMessageRepository _repository;
+        private readonly IChatCommonMessageRepository _chatCommonMessageRepository;
 
 
         public AdminMenuRepresentationHandler(IinvoiceRepository iinvoiceRepository, ICompanyContractRepository companyContract,
-             IManifestRepository _manifestRepository, IRequestRepository _requestRepository, IChatMessageRepository _repository
+             IManifestRepository _manifestRepository, IRequestRepository _requestRepository, IChatMessageRepository _repository, IChatCommonMessageRepository _chatCommonMessageRepository
             )
         {
             this._repository = _repository;
@@ -30,6 +32,7 @@ namespace CMPNatural.Application
             this._requestRepository = _requestRepository;
             _companyContract = companyContract;
             this._manifestRepository = _manifestRepository;
+            this._chatCommonMessageRepository = _chatCommonMessageRepository;
         }
 
         public async Task<CommandResponse<AdminMenuRepresentationResponse>> Handle(AdminMenuRepresentationCommand request, CancellationToken cancellationToken)
@@ -52,10 +55,16 @@ namespace CMPNatural.Application
                  )).Count();
 
             var ConversationCount = (await _repository.GetAsync(x =>
-                !x.IsSeen && x.SenderType == SenderType.Client
+                !x.IsSeen && x.SenderType == ParticipantType.Client
                   )).Count();
 
-            var model = new AdminMenuRepresentationResponse() {ConversationCount = ConversationCount, InvoicesCount = invoices, RequestsCount = requests, ContractsCount = ContractsCount , ManifestCount = ManifestCount };
+            var ProviderConversationCount = (await _chatCommonMessageRepository.GetAsync(x =>
+                 !x.IsSeen && (x.SenderType == ParticipantType.Provider || x.SenderType == ParticipantType.Driver)
+                 )).Count();
+
+            var model = new AdminMenuRepresentationResponse() {
+                ProviderConversationCount= ProviderConversationCount,
+                ConversationCount = ConversationCount, InvoicesCount = invoices, RequestsCount = requests, ContractsCount = ContractsCount , ManifestCount = ManifestCount };
 
             return new Success<AdminMenuRepresentationResponse>() { Data = model };
 

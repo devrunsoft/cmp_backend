@@ -43,7 +43,7 @@ namespace CMPNatural.Application.Handlers.Admin
                 MessageNoteType = request.Type,
                 Content = content,
                 SenderId = request.AdminId,
-                SenderType = SenderType.Admin,
+                SenderType = ParticipantType.Admin,
                 SentAt = DateTime.Now,
                 OperationalAddressId = request.OperationalAddressId,
                 ClientId = request.ClientId

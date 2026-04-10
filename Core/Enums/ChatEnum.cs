@@ -8,17 +8,19 @@ namespace CMPNatural.Core.Enums
     {
         Admin,
         Provider,
+        Driver,
         Client
     }
 
 
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum SenderType
-    {
-        Admin,
-        Provider,
-        Client
-    }
+    //[JsonConverter(typeof(JsonStringEnumConverter))]
+    //public enum SenderType
+    //{
+    //    Admin,
+    //    Provider,
+    //    Driver,
+    //    Client
+    //}
 
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum MentionedType

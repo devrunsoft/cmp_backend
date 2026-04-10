@@ -58,7 +58,7 @@ namespace CMPNatural.Application.Handlers.Admin
                 Type = messageType,
                 Content = request.Message ?? string.Empty,
                 SenderId = request.ClientId,
-                SenderType = SenderType.Client,
+                SenderType = ParticipantType.Client,
                 SentAt = DateTime.Now,
                 OperationalAddressId = request.OperationalAddressId,
                 ClientId = request.ClientId,

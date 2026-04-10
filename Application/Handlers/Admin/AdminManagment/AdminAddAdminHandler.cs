@@ -7,15 +7,19 @@ using System.Threading;
 using System.Threading.Tasks;
 using CMPNatural.Application.Handlers.Admin.AdminManagment;
 using System.Linq;
+using DocumentFormat.OpenXml.InkML;
+using Microsoft.AspNetCore.Http;
 
 namespace CMPNatural.Application
 {
     public class AdminAddAdminHandler : IRequestHandler<AdminAddAdminCommand, CommandResponse<AdminEntity>>
     {
         private readonly IAdminRepository _repository;
-        public AdminAddAdminHandler(IAdminRepository repository)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public AdminAddAdminHandler(IAdminRepository repository, IHttpContextAccessor httpContextAccessor)
         {
             _repository = repository;
+            _httpContextAccessor = httpContextAccessor;
         }
         public async Task<CommandResponse<AdminEntity>> Handle(AdminAddAdminCommand request, CancellationToken cancellationToken)
         {
@@ -25,12 +29,23 @@ namespace CMPNatural.Application
             {
                 return new NoAcess<AdminEntity>() { Message = "This email already exists." };
             }
+            var user = _httpContextAccessor.HttpContext?.User;
+
+            var email = user?.FindFirst("Email")?.Value;
+
+            if (request.IsSuperAdmin && email == "alec.bagin@gmail.com")
+            {
+                return new NoAcess<AdminEntity>()
+                {
+                    Message = "Driver cannot create SuperAdmin"
+                };
+            }
 
             var person = new Person() { FirstName = request.FirstName, LastName = request.LastName, Id = Guid.NewGuid() };
             var entity = new AdminEntity
             {
             Email = request.Email,
-            Role = "LimitedAdmin",
+            Role = request.IsSuperAdmin? "SuperAdmin" : "LimitedAdmin",
             IsActive = request.IsActive,
             Password = request.Password,
             Person = person,

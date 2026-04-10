@@ -47,7 +47,7 @@ namespace CMPNatural.Application
                     var _chatService = scope.ServiceProvider.GetRequiredService<IChatService>();
                     var IChatMessageRepository = scope.ServiceProvider.GetRequiredService<IChatMessageRepository>();
 
-                    var unseenList = result.elements.Where(x => !x.IsSeen && x.SenderType != SenderType.Admin);
+                    var unseenList = result.elements.Where(x => !x.IsSeen && x.SenderType != ParticipantType.Admin);
                     foreach (var item in unseenList)
                     {
                         item.IsSeen = true;

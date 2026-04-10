@@ -100,6 +100,7 @@ namespace CMPNatural.Api
             bool isDriver = (resultDriver != null);
             var IsDefault = isDriver ? resultDriver!.Data.IsDefault : true;
             var email = isDriver ? resultDriver.Data.Email : result.Data.Email;
+            string personId = isDriver ? resultDriver.Data.PersonId.ToString() : result.Data.PersonId.ToString();
             var Id = (isDriver) ? 0 : result.Data.Id;
             long? DriverId = isDriver ? resultDriver.Data.Id : null;
             var isFirstLogin = isDriver ? true : result.Data.HasLogin;
@@ -110,8 +111,7 @@ namespace CMPNatural.Api
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
                 expires: DateTime.Now.AddDays(30),
-                //TODO
-                claims: get_claims(email, Id, IsDefault, resultDriver != null, DriverId),
+                claims: get_claims(email, Id, IsDefault, resultDriver != null, DriverId, personId),
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );
 
@@ -144,13 +144,14 @@ namespace CMPNatural.Api
                 data.Email, link, "Activate Account\n");
         }
 
-        private Claim[] get_claims( string Email, long ProviderId, bool IsDefault, bool IsDriver, long? DriverId)
+        private Claim[] get_claims( string Email, long ProviderId, bool IsDefault, bool IsDriver, long? DriverId,string PersonId)
         {
             List<Claim> claims = new List<Claim>() { 
                 new Claim(ClaimTypes.NameIdentifier, ProviderId.ToString()) ,
                 new Claim("Email", Email),
+                new Claim("PersonId", PersonId),
                 new Claim("IsDefault", IsDefault.ToString()),
-                new Claim("IsDriver", IsDefault? false.ToString() : IsDriver.ToString()),
+                new Claim("IsDriver", IsDriver.ToString()),
                 new Claim("DriverId", DriverId==null ? "-1" : DriverId.ToString()),
             };
             return claims.ToArray();

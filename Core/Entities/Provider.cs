@@ -48,8 +48,6 @@ namespace CMPNatural.Core.Entities
         public virtual ICollection<ProviderService> ProviderService { get; set; } = new List<ProviderService>();
         public virtual ICollection<ServiceArea> ServiceArea { get; set; } = new List<ServiceArea>();
         public virtual ICollection<ProviderDriver> ProviderDriver { get; set; }
-
-
+        public virtual ICollection<ProviderVehicle> ProviderVehicle { get; set; } = new List<ProviderVehicle>();
     }
 }
-

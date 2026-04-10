@@ -87,7 +87,7 @@ namespace CMPNatural.Api
             await base.OnDisconnectedAsync(exception);
         }
 
-        public async Task SendMessagwe(string personId, ChatMessage message , string type = "message")
+        public async Task SendMessagwe(string personId, ChatCommonMessage message , string type = "message")
         {
             if (ConnectedUsers.TryGetValue(personId, out var connectionId))
             {

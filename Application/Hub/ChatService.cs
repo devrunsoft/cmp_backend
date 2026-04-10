@@ -25,6 +25,9 @@ namespace CMPNatural.Application.Hub
         [Description("message")]
         message,
 
+        [Description("participantMessage")]
+        participantMessage,
+
         [Description("seen")]
         seen,
 
@@ -37,6 +40,11 @@ namespace CMPNatural.Application.Hub
 
     public interface IChatService
     {
+        Task SendCommonMessageToPerson(string personid, ChatCommonMessage message, ChatEnum type = ChatEnum.participantMessage);
+        Task SendMessageToDriver(long driverId, ChatCommonMessage message, ChatEnum type = ChatEnum.participantMessage);
+        Task SendMessageToProvider(long providerId, ChatCommonMessage message, ChatEnum type = ChatEnum.participantMessage);
+        Task SendCommonToAllAdmins(ChatCommonMessage message, ChatEnum type = ChatEnum.participantMessage);
+
         Task SendMessageToClient(long clientId, ChatMessage message, ChatEnum type = ChatEnum.message);
         Task SendToClient(long clientId, string message, ChatEnum type = ChatEnum.message);
         Task SendMessageToAdmin(long clientId, ChatMessage message, ChatEnum type = ChatEnum.message);
@@ -53,13 +61,17 @@ namespace CMPNatural.Application.Hub
         private readonly IHubContext<ChatHub, IChatClient> _hubContext;
         private readonly ICompanyRepository _companyRepository;
         private readonly IProviderReposiotry providerReposiotry;
+        private readonly IDriverRepository driverRepository;
         private readonly IAdminRepository _adminRepository;
 
-        public ChatService(IHubContext<ChatHub, IChatClient> hubContext , IAdminRepository _adminRepository, ICompanyRepository _companyRepository)
+        public ChatService(IHubContext<ChatHub, IChatClient> hubContext , IAdminRepository _adminRepository, ICompanyRepository _companyRepository,
+            IProviderReposiotry providerReposiotry, IDriverRepository driverRepository)
         {
             _hubContext = hubContext;
             this._adminRepository = _adminRepository;
             this._companyRepository = _companyRepository;
+            this.providerReposiotry = providerReposiotry;
+            this.driverRepository = driverRepository;
         }
 
         public async Task SendToPerson(string personId, string message, ChatEnum type = ChatEnum.message)
@@ -99,9 +111,30 @@ namespace CMPNatural.Application.Hub
 
         #region chat
 
+
         private async Task SendMessageToPerson(string personId, ChatMessage message, ChatEnum type = ChatEnum.message)
         {
             await SendToPerson(personId, JsonConvert.SerializeObject(message, new StringEnumConverter()), type);
+        }
+
+        public async Task SendCommonMessageToPerson(string personId, ChatCommonMessage message, ChatEnum type = ChatEnum.participantMessage)
+        {
+            await SendToPerson(personId, JsonConvert.SerializeObject(message, new StringEnumConverter()), type);
+        }
+
+
+        public async Task SendMessageToProvider(long providerId, ChatCommonMessage message, ChatEnum type = ChatEnum.participantMessage)
+        {
+            var company = (await providerReposiotry.GetAsync(x => x.Id == providerId)).FirstOrDefault();
+
+            await SendCommonMessageToPerson(company.PersonId.ToString(), message, type);
+        }
+
+        public async Task SendMessageToDriver(long driverId, ChatCommonMessage message, ChatEnum type = ChatEnum.participantMessage)
+        {
+            var company = (await driverRepository.GetAsync(x => x.Id == driverId)).FirstOrDefault();
+
+            await SendCommonMessageToPerson(company.PersonId.ToString(), message, type);
         }
 
         public async Task SendMessageToClient(long clientId, ChatMessage message, ChatEnum type = ChatEnum.message)
@@ -119,6 +152,12 @@ namespace CMPNatural.Application.Hub
         }
 
         public async Task SendToAllAdmins(ChatMessage message, ChatEnum type = ChatEnum.message)
+        {
+            var m = JsonConvert.SerializeObject(message, new StringEnumConverter());
+            await SendObjectToAllAdmins(m, type);
+        }
+
+        public async Task SendCommonToAllAdmins(ChatCommonMessage message, ChatEnum type = ChatEnum.participantMessage)
         {
             var m = JsonConvert.SerializeObject(message, new StringEnumConverter());
             await SendObjectToAllAdmins(m, type);
@@ -149,6 +188,8 @@ namespace CMPNatural.Application.Hub
             await SendObjectToAllAdmins(m, ChatEnum.liveLocation);
             //await SendToProvider(payload.ProviderId, m, ChatEnum.liveLocation);
         }
+
+
     }
 }
 
