@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text.Json.Serialization;
+
 namespace CMPNatural.Core.Entities
 {
     public partial class LocationCompany
@@ -23,6 +25,7 @@ namespace CMPNatural.Core.Entities
         public virtual OperationalAddress OperationalAddress { get; set; }
         public virtual Company Company { get; set; }
         public virtual Capacity CapacityEntity { get; set; }
+        [JsonIgnore]
         public virtual ICollection<ServiceAppointmentLocation> ServiceAppointmentLocations { get; set; } = new List<ServiceAppointmentLocation>();
 
     }

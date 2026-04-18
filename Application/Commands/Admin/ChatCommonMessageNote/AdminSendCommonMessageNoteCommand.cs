@@ -14,6 +14,7 @@ namespace CMPNatural.Application.Commands
         public long ChatCommonSessionId { get; set; }
         public MessageNoteType Type { get; set; }
         public string Content { get; set; }
+        public object? Data { get; set; }
     }
 }
 

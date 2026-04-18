@@ -64,6 +64,7 @@ namespace infrastructure.Data
         public virtual DbSet<ChatCommonMessage> ChatCommonMessage { get; set; } = null!;
         public virtual DbSet<ChatCommonMessageNote> ChatCommonMessageNote { get; set; } = null!;
         public virtual DbSet<ProviderVehicle> ProviderVehicle { get; set; } = null!;
+        public virtual DbSet<ManifestGreaseServiceDetail> ManifestGreaseServiceDetail { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -83,6 +84,14 @@ namespace infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<ManifestGreaseServiceDetail>(entity =>
+            {
+                entity.ToTable("ManifestGreaseServiceDetail");
+
+                entity.HasOne(d => d.ServiceAppointmentLocation)
+                 .WithOne(p => p.ManifestGreaseServiceDetail)
+                 .HasForeignKey<ManifestGreaseServiceDetail>(p => p.ServiceAppointmentLocationId);
+            });
 
             modelBuilder.Entity<ProviderVehicle>(entity =>
             {
@@ -754,6 +763,10 @@ namespace infrastructure.Data
                 entity.HasOne(d => d.LocationCompany)
                 .WithMany(p => p.ServiceAppointmentLocations)
                 .HasForeignKey(d => d.LocationCompanyId);
+
+                entity.HasOne(d => d.ManifestGreaseServiceDetail)
+                    .WithOne(p => p.ServiceAppointmentLocation)
+                    .HasForeignKey<ManifestGreaseServiceDetail>(p => p.ServiceAppointmentLocationId);
 
                 entity.HasOne(d => d.ServiceAppointment)
                 .WithMany(p => p.ServiceAppointmentLocations)

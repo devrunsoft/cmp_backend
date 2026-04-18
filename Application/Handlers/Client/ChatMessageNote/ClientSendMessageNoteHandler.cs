@@ -9,6 +9,7 @@ using System.Linq;
 using CMPNatural.Core.Enums;
 using CMPNatural.Application.Hub;
 using CMPNatural.Application.Commands;
+using System.Text.Json;
 
 namespace CMPNatural.Application.Handlers.Admin
 {
@@ -40,7 +41,8 @@ namespace CMPNatural.Application.Handlers.Admin
                 SenderType = ParticipantType.Client,
                 SentAt = DateTime.Now,
                 ClientId = request.ClientId,
-                OperationalAddressId = request.OperationalAddressId
+                OperationalAddressId = request.OperationalAddressId,
+                Payload = request.Data == null ? null : JsonSerializer.Serialize(request.Data)
             };
             var result = await _repository.AddAsync(entity);
 

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text.Json.Serialization;
+
 namespace CMPNatural.Core.Entities
 {
     public partial class ProductPrice { 
@@ -19,7 +21,9 @@ namespace CMPNatural.Core.Entities
     public int Order { get; set; }
 
     public virtual Product Product { get; set; }
+    [JsonIgnore]
     public virtual ICollection<InvoiceProduct> InvoiceProduct { get; set; } = new List<InvoiceProduct>();
+     [JsonIgnore]
     public virtual ICollection<BaseServiceAppointment> ServiceAppointment { get; set; } = new List<BaseServiceAppointment>();
 
     }

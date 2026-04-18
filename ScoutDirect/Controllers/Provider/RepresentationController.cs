@@ -17,7 +17,7 @@ namespace CMPNatural.Api.Controllers.Provider
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Get()
         {
-            var result = await _mediator.Send(new ProviderMenuRepresentationCommand() { ProviderId = rProviderId });
+            var result = await _mediator.Send(new ProviderMenuRepresentationCommand() { ProviderId = rProviderId, IsDriver = rIsDriver, DriverId = rDriverId });
             return Ok(result);
         }
     }

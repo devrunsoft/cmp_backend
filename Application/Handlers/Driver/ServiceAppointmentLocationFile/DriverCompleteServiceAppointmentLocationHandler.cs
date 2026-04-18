@@ -33,6 +33,7 @@ namespace CMPNatural.Application
             x.ServiceAppointmentLocation.Status == ServiceStatus.Photo_Before_Work,
             query => query.Include(x => x.Route)
             .Include(x => x.ServiceAppointmentLocation)
+            .ThenInclude(x => x.ServiceAppointment)
             )).ToList();
 
             if (routeresult.Count() == 0)
@@ -51,6 +52,18 @@ namespace CMPNatural.Application
                 item.ServiceAppointmentLocation.FactQty = i.FactQty;
                 item.ServiceAppointmentLocation.OilQuality = i.OilQuality;
                 item.ServiceAppointmentLocation.Comment = request.Comment;
+
+                if (item.ServiceAppointmentLocation.ServiceAppointment.ServiceTypeId == (int)ServiceType.Grease_Trap_Management)
+                {
+                    item.ServiceAppointmentLocation.ManifestGreaseServiceDetail = new ManifestGreaseServiceDetail()
+                    {
+                        GreasePercentage = i.GreaseDetail.GreasePercentage,
+                        WaterPercentage = i.GreaseDetail.WaterPercentage,
+                        SolidsPercentage = i.GreaseDetail.SolidsPercentage,
+                        CodAmount = i.GreaseDetail.CodAmount,
+                    };
+                }
+
                 await routeServiceAppointmentLocationRepository.UpdateAsync(item);
 
             }

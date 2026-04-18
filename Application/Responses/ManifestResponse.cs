@@ -1,6 +1,7 @@
 ﻿// CMPNatural.Application/Responses/ManifestFlatResponse.cs
 using System;
 using System.Collections.Generic;
+using CMPNatural.Core.Entities;
 using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Application.Responses
@@ -63,7 +64,9 @@ namespace CMPNatural.Application.Responses
         public LocationCompanyMinResponse? LocationCompany { get; set; }
         public decimal? Qty { get; set; }
         public decimal? FactQty { get; set; }
-        public string OilQuality { get; set; } // match FE enum/int
+        public string OilQuality { get; set; }
+        public BaseServiceAppointment ServiceAppointment { get; set; }
+        public virtual ManifestGreaseServiceDetail? ManifestGreaseServiceDetail { get; set; } = null;
     }
 
     public class LocationCompanyMinResponse

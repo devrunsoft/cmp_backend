@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Core.Entities
@@ -22,8 +23,11 @@ namespace CMPNatural.Core.Entities
         public bool Enable { get; set; }
         public int Order { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<ProviderService> ProviderService { get; set; } = new List<ProviderService>();
+        [JsonIgnore]
         public virtual ICollection<ProductPrice> ProductPrice { get; set; } = new List<ProductPrice>();
+        [JsonIgnore]
         public virtual ICollection<BaseServiceAppointment> ServiceAppointment { get; set; } = new List<BaseServiceAppointment>();
     }
 }

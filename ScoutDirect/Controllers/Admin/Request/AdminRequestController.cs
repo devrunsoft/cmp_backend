@@ -56,6 +56,7 @@ namespace CMPNatural.Api.Controllers.Admin
             {
                 var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminHasCreateContract, result.Data.ContractId.Value);
                 sendEmailToClient(result.Data.CompanyId, emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern, emailDetails.ButtonText);
+                sendNote(MessageNoteType.RequestUpdatedbyAdmin, result.Data.CompanyId, result.Data.OperationalAddressId, result.Data.Contract, result.Data.ReqNumber);
             }
 
             return Ok(result);
@@ -84,7 +85,7 @@ namespace CMPNatural.Api.Controllers.Admin
             {
                 var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminHasCreateContract, result.Data.ContractId.Value);
                 sendEmailToClient(rCompanyId, emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern, emailDetails.ButtonText);
-                sendNote(MessageNoteType.ContractCreate, clientId, result.Data.OperationalAddressId, result.Data.ReqNumber);
+                sendNote(MessageNoteType.ContractCreate, clientId, result.Data.OperationalAddressId, result.Data.Contract, result.Data.ReqNumber);
             }
 
             return Ok(result);
@@ -104,6 +105,11 @@ namespace CMPNatural.Api.Controllers.Admin
             {
                 //var emailDetails = EmailLinkHelper.GetEmailDetails(EmailLinkEnum.AdminHasCreateContract, result.Data.ContractId.Value);
                 //sendEmailToClient(result.Data.CompanyId, emailDetails.Subject, emailDetails.Body, emailDetails.LinkPattern, emailDetails.ButtonText);
+            }
+
+            if (result.IsSucces())
+            {
+                sendNote(MessageNoteType.RequestUpdatedbyAdmin, result.Data.CompanyId, result.Data.OperationalAddressId, result.Data, result.Data.ReqNumber);
             }
             return Ok(result);
         }
@@ -137,7 +143,7 @@ namespace CMPNatural.Api.Controllers.Admin
 
             if (result.IsSucces())
             {
-                sendNote(MessageNoteType.RequestCanceledByAdmin, result.Data.CompanyId, result.Data.OperationalAddressId);
+                sendNote(MessageNoteType.RequestCanceledByAdmin, result.Data.CompanyId, result.Data.OperationalAddressId , result.Data, result.Data.ReqNumber);
             }
             return Ok(result);
         }
@@ -151,6 +157,12 @@ namespace CMPNatural.Api.Controllers.Admin
             {
                 RequestId = RequestId,
             });
+
+            if (result.IsSucces())
+            {
+                sendNote(MessageNoteType.RequestReActivateByAdmin, result.Data.CompanyId, result.Data.OperationalAddressId, result.Data, result.Data.ReqNumber);
+            }
+
 
             return Ok(result);
         }

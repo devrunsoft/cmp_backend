@@ -83,9 +83,15 @@ namespace CMPNatural.Core.Enums
         RequestCanceledByClient,
         RequestCanceledByAdmin,
 
+        RequestReActivateByAdmin,
+
         RequestUpdatedbyClient,
         RequestUpdatedbyAdmin,
 
+        ContractDeletedbyAdmin,
+
+        ManifestScaduled,
+        ManifestCreated,
         ManifestAssigned,
 
         SendToClientForPayment,
@@ -107,8 +113,8 @@ namespace CMPNatural.Core.Enums
 
                 MessageNoteType.ContractSend => "Contract Sent",
                 MessageNoteType.ContractCreate => "Contract Created",
-                MessageNoteType.ContractSignedByClient => "Contract Signed",
-                MessageNoteType.ContractSignedByAdmin => "Contract Signed",
+                MessageNoteType.ContractSignedByClient => "Contract Signed By Client",
+                MessageNoteType.ContractSignedByAdmin => "Contract Signed By Admin",
 
                 MessageNoteType.RequestCreateByClient => "Request Created",
                 MessageNoteType.RequestCreateByAdmin => "Request Created",
@@ -116,8 +122,17 @@ namespace CMPNatural.Core.Enums
                 MessageNoteType.RequestCanceledByClient => "Request Canceled",
                 MessageNoteType.RequestCanceledByAdmin => "Request Canceled",
 
+                MessageNoteType.RequestReActivateByAdmin => "Request Activated",
+
+
                 MessageNoteType.RequestUpdatedbyClient => "Request Updated",
-                MessageNoteType.RequestUpdatedbyAdmin => "Request Updated",
+                MessageNoteType.RequestUpdatedbyAdmin => "Request Updated And Contract Created",
+
+                MessageNoteType.ContractDeletedbyAdmin => "Contract Deleted",
+
+                MessageNoteType.ManifestCreated => "Manifest Created",
+                MessageNoteType.ManifestScaduled => "Manifest Scaduled",
+
 
                 MessageNoteType.ManifestAssigned => "Manifest Assigned",
                 MessageNoteType.SendToClientForPayment => "Sent for Payment",

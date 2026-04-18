@@ -26,6 +26,18 @@ namespace ScoutDirect.Api.Controllers._Base
         [NonAction]
         public void sendNote(MessageNoteType Type, long OperationalAddressId, string Content = "")
         {
+            _sendNote(Type, OperationalAddressId,null, Content);
+        }
+
+        [NonAction]
+        public void sendNote(MessageNoteType Type, long OperationalAddressId, object? Payload, string Content = "")
+        {
+            _sendNote(Type, OperationalAddressId, Payload, Content);
+        }
+
+        [NonAction]
+        private void _sendNote(MessageNoteType Type, long OperationalAddressId, object? Payload, string Content = "")
+        {
             var scopeFactory = serviceScopeFactory;
             var companyId = rCompanyId;
 
@@ -43,7 +55,9 @@ namespace ScoutDirect.Api.Controllers._Base
                             ClientId = companyId,
                             Type = Type,
                             Content = Content,
-                            OperationalAddressId = OperationalAddressId
+                            OperationalAddressId = OperationalAddressId,
+                            Data = Payload
+
                         });
                     }
                     catch (Exception ex)

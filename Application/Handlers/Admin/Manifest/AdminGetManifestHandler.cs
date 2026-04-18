@@ -43,6 +43,9 @@ namespace CMPNatural.Application
             .ThenInclude(x => x.ServiceAppointment)
             .ThenInclude(x => x.Product)
 
+            .Include(x => x.ServiceAppointmentLocation)
+            .ThenInclude(x => x.ManifestGreaseServiceDetail)
+            
 
             .Include(x => x.Request)
             .ThenInclude(x=>x.Company)

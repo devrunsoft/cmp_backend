@@ -17,10 +17,9 @@ namespace CMPNatural.Core.Entities
         public string? BackgroundCheck { get; set; } = null;
         public DateTime? BackgroundCheckExp { get; set; }
         public string? ProfilePhoto { get; set; }
-        // public long ProviderId { get; set; }
+        public Guid? ActivationLink { get; set; } = null;
         public DriverStatus Status { get; set; }
         public bool TwoFactor { get; set; }
-        //public bool IsDefault { get; set; }
 
         public Person Person { get; set; }
         public virtual ICollection<ProviderDriver> ProviderDriver { get; set; }

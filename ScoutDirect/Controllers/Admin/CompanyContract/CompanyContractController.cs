@@ -36,10 +36,10 @@ namespace CMPNatural.Api.Controllers.Admin.CompanyContract
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Sign([FromRoute] long Id, [FromRoute] long clientId)
         {
-            var result = await _mediator.Send(new AdminSignCompanyContractCommand() { CompanyId = clientId, CompanyContractId = Id });
+            var result = await _mediator.Send(new AdminSignCompanyContractCommand() { CompanyId = clientId, CompanyContractId = Id, AdminId = AdminId });
             if (result.IsSucces())
             {
-                sendNote(MessageNoteType.ContractSignedByAdmin, result.Data.CompanyId, result.Data.OperationalAddressId, result.Data.NoteTitle);
+                sendNote(MessageNoteType.ContractSignedByAdmin, result.Data.CompanyId, result.Data.OperationalAddressId, result.Data , result.Data.NoteTitle);
             }
             return Ok(result);
         }
@@ -52,7 +52,7 @@ namespace CMPNatural.Api.Controllers.Admin.CompanyContract
             var result = await _mediator.Send(new AdminSendCompanyContractCommand() { Id = Id });
             if (result.IsSucces())
             {
-                sendNote(MessageNoteType.ContractSend, result.Data.CompanyId , result.Data.OperationalAddressId, result.Data.NoteTitle);
+                sendNote(MessageNoteType.ContractSend, result.Data.CompanyId , result.Data.OperationalAddressId, result.Data, result.Data.NoteTitle);
             }
             return Ok(result);
         }
@@ -72,6 +72,11 @@ namespace CMPNatural.Api.Controllers.Admin.CompanyContract
         public async Task<ActionResult> ReturnRequest([FromBody] AdminBackForUpdateInvoiceCommand command)
         {
             var result = await _mediator.Send(command);
+
+            if (result.IsSucces())
+            {
+                sendNote(MessageNoteType.ContractDeletedbyAdmin, result.Data.CompanyId, result.Data.OperationalAddressId, result.Data, result.Data.NoteTitle);
+            }
             return Ok(result);
         }
     }

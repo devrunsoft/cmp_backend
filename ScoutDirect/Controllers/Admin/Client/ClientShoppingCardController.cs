@@ -66,7 +66,7 @@ namespace CMPNatural.Api.Controllers.Admin.Client
 
             if (result.IsSucces())
             {
-                sendNote(MessageNoteType.AddToShoppingCardByAdmin, result.Data.CompanyId, result.Data.OperationalAddressId, result.Data.NoteTitle);
+                sendNote(MessageNoteType.AddToShoppingCardByAdmin, result.Data.CompanyId, result.Data.OperationalAddressId, result.Data, result.Data.NoteTitle);
             }
 
             return Ok(result);

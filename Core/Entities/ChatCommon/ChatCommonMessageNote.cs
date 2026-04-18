@@ -6,6 +6,7 @@ namespace CMPNatural.Core.Entities
     public partial class ChatCommonMessageNote : ChatCommonMessage
     {
         public MessageNoteType MessageNoteType { get; set; }
+        public string Payload { get; set; }
     }
 }
 

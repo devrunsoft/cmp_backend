@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Core.Entities
@@ -61,6 +62,7 @@ namespace CMPNatural.Core.Entities
 
         public virtual ProductPrice ProductPrice { get; set; }
 
+        [JsonIgnore]
         public virtual ICollection<ServiceAppointmentLocation> ServiceAppointmentLocations { get; set; } = new List<ServiceAppointmentLocation>();
 
     }

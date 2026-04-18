@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using CMPNatural.Api.Controllers.Service;
+using CMPNatural.Api.Service;
 using CMPNatural.Application.Commands;
 using CMPNatural.Core.Entities;
 using CMPNatural.Core.Enums;
@@ -51,27 +52,39 @@ namespace CMPNatural.Api.Controllers.Admin
         [NonAction]
         public void sendNote(MessageNoteType Type, long ClientId, long OperationalAddressId, string Content = "")
         {
-            var scopeFactory = serviceScopeFactory;
-            var adminId = AdminId;
-
-            _ = Task.Run(async () =>
-            {
-                using (var scope = scopeFactory.CreateScope())
-                {
-                    var cache = scope.ServiceProvider.GetRequiredService<Func<CacheTech, ICacheService>>();
-                    var _cache = cache(CacheTech.Memory);
-                    var _mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-                    try
-                    {
-                        await _mediator.Send(new AdminSendMessageNoteCommand() { ClientId = ClientId, OperationalAddressId = OperationalAddressId, Type = Type, AdminId = adminId, Content = Content });
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex);
-                    }
-                }
-            });
+            new Note(AdminId, serviceScopeFactory).adminSendNote(Type, ClientId, OperationalAddressId, null, Content);
         }
+
+        [NonAction]
+        public void sendNote(MessageNoteType Type, long ClientId, long OperationalAddressId, object? Payload, string Content = "")
+        {
+            new Note(AdminId, serviceScopeFactory).adminSendNote(Type, ClientId, OperationalAddressId, Payload, Content);
+        }
+
+        //[NonAction]
+        //private void _sendNote(MessageNoteType Type, long ClientId, long OperationalAddressId, object? Payload, string Content = "")
+        //{
+        //    var scopeFactory = serviceScopeFactory;
+        //    var adminId = AdminId;
+
+        //    _ = Task.Run(async () =>
+        //    {
+        //        using (var scope = scopeFactory.CreateScope())
+        //        {
+        //            var cache = scope.ServiceProvider.GetRequiredService<Func<CacheTech, ICacheService>>();
+        //            var _cache = cache(CacheTech.Memory);
+        //            var _mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
+        //            try
+        //            {
+        //                await _mediator.Send(new AdminSendMessageNoteCommand() { Data = Payload, ClientId = ClientId, OperationalAddressId = OperationalAddressId, Type = Type, AdminId = adminId, Content = Content });
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                Console.WriteLine(ex);
+        //            }
+        //        }
+        //    });
+        //}
 
         private IChatMessageNoteRepository _chatMessageNoteRepository;
         protected IChatMessageNoteRepository chatMessageNoteRepository =>

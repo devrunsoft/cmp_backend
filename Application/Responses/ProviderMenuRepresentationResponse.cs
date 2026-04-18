@@ -6,6 +6,7 @@ namespace CMPNatural.Application.Responses
         public int ContractsCount { get; set; }
         public int ManifestCount { get; set; }
         public int RouteCount { get; set; }
+        public int MessagesCount { get; set; }
     }
 }
 

@@ -39,7 +39,7 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
             var result = await _mediator.Send(new AdminSignProviderContractCommand() { ProviderId = providerId, ProviderContractId = Id });
             if (result.IsSucces())
             {
-                sendNote(MessageNoteType.ContractSignedByAdmin, result.Data.CompanyId, result.Data.OperationalAddressId, result.Data.NoteTitle);
+                sendNote(MessageNoteType.ContractSignedByAdmin, result.Data.CompanyId, result.Data.OperationalAddressId, result.Data, result.Data.NoteTitle);
             }
             return Ok(result);
         }

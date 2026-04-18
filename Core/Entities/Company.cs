@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Text.Json.Serialization;
 using CMPNatural.Core.Enums;
 using ScoutDirect.Core.Entities;
 using Stripe.Forwarding;
@@ -39,7 +40,9 @@ namespace CMPNatural.Core.Entities
         public virtual ICollection<OperationalAddress> OperationalAddress { get; set; }
         public virtual ICollection<BillingInformation> BillingInformations { get; set; }
         public virtual ICollection<Invoice> Invoices { get; set; }
+        [JsonIgnore]
         public virtual ICollection<RequestEntity> Requests { get; set; }
+        [JsonIgnore]
         public virtual ICollection<CompanyContract> CompanyContract { get; set; }
 
     }

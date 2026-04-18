@@ -65,4 +65,6 @@ namespace CMPNatural.Core.Entities
     public partial class ChatCommonMessage { public DateTime? IsDelete { get; set; } }
     public partial class ChatCommonMessageNote { public DateTime? IsDelete { get; set; } }
     public partial class ChatCommonSession { public DateTime? IsDelete { get; set; } }
+
+    public partial class ManifestGreaseServiceDetail { public DateTime? IsDelete { get; set; } }
 }

@@ -95,6 +95,8 @@ namespace ScoutDirect.infrastructure
             services.AddTransient<IChatCommonMessageRepository, ChatCommonMessageRepository>();
             services.AddTransient<IChatCommonSessionRepository, ChatCommonSessionRepository>();
 
+            services.AddTransient<IManifestGreaseServiceDetailRepository, ManifestGreaseServiceDetailRepository>();
+
             services.AddTransient<ProductListApi>();
             services.AddTransient<ProductPriceApi>();
             services.AddTransient<ContactApi>();

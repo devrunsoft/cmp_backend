@@ -197,6 +197,7 @@ namespace CMPNatural.Application
                     return new NoAcess<RequestResponse>() { Data = RequestMapper.Mapper.Map<RequestResponse>(invoice), Message = result.Message };
                 }
                 invoice.ContractId = result.Data.Id;
+                invoice.Contract = result.Data;
             }
             else if (canEdit)
             {
@@ -208,10 +209,14 @@ namespace CMPNatural.Application
                     ContractNumber = contract.ContractNumber,
                 });
 
-                await mediator.Send(new AdminUpdateCompanyContractCommand() { CompanyContractId = invoice.ContractId.Value  , ContractId = contract.ContractId});
+               var result = await mediator.Send(new AdminUpdateCompanyContractCommand() { CompanyContractId = invoice.ContractId.Value  , ContractId = contract.ContractId});
+
+                invoice.Contract = result.Data;
             }
 
             await _invoiceRepository.UpdateAsync(invoice);
+
+       
 
             return new Success<RequestResponse>() { Data = RequestMapper.Mapper.Map<RequestResponse>(invoice) };
 

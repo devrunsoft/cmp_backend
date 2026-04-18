@@ -13,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using ScoutDirect.Core.Repositories;
 using Stripe;
 using System.Collections.Generic;
+using DocumentFormat.OpenXml.Bibliography;
 
 namespace CMPNatural.Application.Handlers
 {
@@ -24,15 +25,19 @@ namespace CMPNatural.Application.Handlers
         private readonly IProductPriceRepository _productPriceRepository;
         private readonly IOperationalAddressRepository _operationalAddressRepository;
         private readonly ILocationCompanyRepository _locationCompanyRepository;
+        private readonly IMediator _mediator;
+        private readonly ICapacityRepository _capacityRepository;
 
         public AddServiceShoppingCardHandler(IShoppingCardRepository shoppingCardRepository , ICompanyRepository _companyRepository,
-            IProductPriceRepository productPriceRepository, IOperationalAddressRepository operationalAddressRepository, ILocationCompanyRepository locationCompanyRepository)
+            IProductPriceRepository productPriceRepository, IOperationalAddressRepository operationalAddressRepository, ILocationCompanyRepository locationCompanyRepository, IMediator mediator, ICapacityRepository capacityRepository)
         {
             this._companyRepository = _companyRepository;
             _shoppingCardRepository = shoppingCardRepository;
             _productPriceRepository = productPriceRepository;
             _operationalAddressRepository = operationalAddressRepository;
             _locationCompanyRepository = locationCompanyRepository;
+            this._mediator = mediator;
+            this._capacityRepository = capacityRepository;
         }
 
         public async Task<CommandResponse<ShoppingCard>> Handle(AddServiceShoppingCardCommand request, CancellationToken cancellationToken)
@@ -74,6 +79,26 @@ namespace CMPNatural.Application.Handlers
             if (price.Product.ServiceType == (int)ServiceType.Other)
             {
                 var loc = (await _locationCompanyRepository.GetAsync(x => x.Type == (int)LocationType.Other && x.OperationalAddressId == request.OperationalAddressId)).FirstOrDefault();
+                if (loc == null)
+                {
+                    var defaultCapacity = (await _capacityRepository.GetAsync(x => x.Enable)).FirstOrDefault();
+                    loc = (await _mediator.Send(new AddLocationCompanyCommand()
+                    {
+                        CompanyId = request.CompanyId,
+                        OperationalAddressId = address.Id,
+                        Name = address.Name,
+                        Address = address.Address,
+                        Lat = address.Lat??0,
+                        Long = address.Long??0,
+                        Comment = string.Empty,
+                        PrimaryFirstName = address.FirstName,
+                        PrimaryLastName = address.LastName,
+                        PrimaryPhonNumber = address.LocationPhone,
+                        CapacityId = defaultCapacity.Id,
+                        Type = LocationType.Other
+                    })).Data;
+                }
+
                 request.LocationCompanyIds= new List<long>() { loc.Id };
             }
 

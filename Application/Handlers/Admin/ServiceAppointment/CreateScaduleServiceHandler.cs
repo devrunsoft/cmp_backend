@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using NetTopologySuite.Index.HPRtree;
 using CMPNatural.Core.Models;
 using Stripe;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CMPNatural.Application
 {
@@ -19,7 +20,7 @@ namespace CMPNatural.Application
     {
         public static async Task Create(
             RequestEntity invoiceTemplate, IBaseServiceAppointmentRepository _serviceAppointment, IManifestRepository _manifestRepository, IRequestRepository _invoiceRepository, IAppInformationRepository _apprepository,
-             IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository, AppSetting _appSetting, ILocationCompanyRepository locationCompanyRepository)
+             IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository, AppSetting _appSetting, ILocationCompanyRepository locationCompanyRepository, IServiceScopeFactory serviceScopeFactory, long adminId)
         {
 
             var request = (await _invoiceRepository.GetAsync(x=> x.Id == invoiceTemplate.Id,
@@ -93,8 +94,8 @@ namespace CMPNatural.Application
                 foreach (var loc in service.ServiceAppointmentLocations)
                 {
 
-                    await new AdminCreateManifestHandler(_manifestRepository, _invoiceRepository, _apprepository, _serviceAppointmentLocationRepository, _appSetting)
-                        .Create(request, ManifestStatus.Scaduled, loc.Id, service.StartDate);
+                    await new AdminCreateManifestHandler(_manifestRepository, _invoiceRepository, _apprepository, _serviceAppointmentLocationRepository, _appSetting,serviceScopeFactory)
+                        .Create(request, ManifestStatus.Scaduled, loc.Id, service.StartDate, adminId , MessageNoteType.ManifestScaduled);
 
                 }
 

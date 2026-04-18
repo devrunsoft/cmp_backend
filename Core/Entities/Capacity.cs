@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Text.Json.Serialization;
+
 namespace CMPNatural.Core.Entities
 {
 	public partial class Capacity
@@ -12,6 +14,7 @@ namespace CMPNatural.Core.Entities
 		public int ServiceType { get; set; }
         public int Order { get; set; }
         public bool Enable { get; set; }
+        [JsonIgnore]
         public virtual ICollection<LocationCompany> LocationCompany { get; set; }
     }
 }

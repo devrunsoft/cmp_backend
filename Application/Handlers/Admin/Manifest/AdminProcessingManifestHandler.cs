@@ -47,8 +47,8 @@ namespace CMPNatural.Application
             result.Status = ManifestStatus.Assigned;
             result.Request.Status = InvoiceStatus.Processing_Provider;
 
-            result.ServiceAppointmentLocation.ServiceAppointment.Status  = ServiceStatus.Proccessing;
-            result.ServiceAppointmentLocation.Status = ServiceStatus.Proccessing;
+            result.ServiceAppointmentLocation.ServiceAppointment.Status  = ServiceStatus.Draft;
+            result.ServiceAppointmentLocation.Status = ServiceStatus.Draft;
 
 
             await _repository.UpdateAsync(result);

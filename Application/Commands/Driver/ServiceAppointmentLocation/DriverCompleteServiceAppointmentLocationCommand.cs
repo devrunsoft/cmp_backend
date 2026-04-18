@@ -25,6 +25,18 @@ namespace CMPNatural.Application
 
         public OilQualityEnum OilQuality { get; set; }
 
+        public ManifestGreaseServiceDetailCommand? GreaseDetail { get; set; }
+
+    }
+
+    public class ManifestGreaseServiceDetailCommand
+    {
+        public decimal GreasePercentage { get; set; }
+        public decimal WaterPercentage { get; set; }
+        public decimal SolidsPercentage { get; set; }
+
+        public decimal? CodAmount { get; set; }
+
     }
 }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using CMPNatural.Core.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace CMPNatural.Core.Entities
 {
@@ -32,6 +33,8 @@ namespace CMPNatural.Core.Entities
 
         public virtual Company Company { get; set; } = null!;
 
+        public virtual CompanyContract Contract { get; set; } = null;
+
         public virtual Provider? Provider { get; set; }
 
         public virtual BillingInformation BillingInformation { get; set; } = null!;
@@ -45,6 +48,7 @@ namespace CMPNatural.Core.Entities
             }
         }
 
+        [JsonIgnore]
         public virtual ICollection<BaseServiceAppointment> BaseServiceAppointment { get; set; } = new List<BaseServiceAppointment>();
 
         public virtual OperationalAddress? OperationalAddress { get; set; }

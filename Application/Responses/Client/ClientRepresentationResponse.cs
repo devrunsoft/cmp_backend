@@ -10,6 +10,7 @@ namespace CMPNatural.Application.Responses.Client
         public int Requests { get; set; }
         public int Contract { get; set; }
         public int Manifests { get; set; }
-    }
+		public int Messages { get; set; }
+	}
 }
 

@@ -4,15 +4,11 @@ using MediatR;
 using ScoutDirect.Application.Responses;
 using System.Threading;
 using System.Threading.Tasks;
-using CMPNatural.Application.Commands.Admin;
 using CMPNatural.Core.Repositories.Chat;
-using System.Linq;
 using CMPNatural.Core.Enums;
-using CMPNatural.Api;
-using ScoutDirect.Core.Repositories;
-using Microsoft.AspNetCore.SignalR;
 using CMPNatural.Application.Hub;
 using CMPNatural.Application.Commands;
+using System.Text.Json;
 
 namespace CMPNatural.Application.Handlers.Admin
 {
@@ -46,7 +42,8 @@ namespace CMPNatural.Application.Handlers.Admin
                 SenderType = ParticipantType.Admin,
                 SentAt = DateTime.Now,
                 OperationalAddressId = request.OperationalAddressId,
-                ClientId = request.ClientId
+                ClientId = request.ClientId,
+                Payload = request.Data == null ? null : JsonSerializer.Serialize(request.Data)
             };
             var result = await _repository.AddAsync(entity);
 

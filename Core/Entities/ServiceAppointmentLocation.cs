@@ -34,6 +34,8 @@ namespace CMPNatural.Core.Entities
 
         public virtual Invoice Invoice { get; set; }
 
+        public virtual ManifestGreaseServiceDetail? ManifestGreaseServiceDetail { get; set; } = null;
+
     }
 
 }

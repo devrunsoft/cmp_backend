@@ -71,6 +71,7 @@ namespace CMPNatural.Core.Entities
         public virtual RouteServiceAppointmentLocation RouteServiceAppointmentLocation { get; set; }
         public virtual Provider? Provider { get; set; }
         public virtual DriverManifest DriverManifest { get; set; }
+        [JsonIgnore]
         public virtual ServiceAppointmentLocation ServiceAppointmentLocation { get; set; }
         public virtual OperationalAddress? OperationalAddress { get; set; }
         public virtual Company? Company { get; set; }

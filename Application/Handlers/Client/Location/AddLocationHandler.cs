@@ -17,7 +17,7 @@ using System.Linq;
 
 namespace CMPNatural.Application.Handlers.CommandHandlers
 {
-    public class AddLocationHandler : IRequestHandler<AddLocationCompanyCommand, CommandResponse<object>>
+    public class AddLocationHandler : IRequestHandler<AddLocationCompanyCommand, CommandResponse<LocationCompany>>
     {
         private readonly ILocationCompanyRepository _locationRepository;
         private readonly ICapacityRepository _capacityRepository;
@@ -28,17 +28,17 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
             _capacityRepository = capacityRepository;
         }
 
-        public async Task<CommandResponse<object>> Handle(AddLocationCompanyCommand request, CancellationToken cancellationToken)
+        public async Task<CommandResponse<LocationCompany>> Handle(AddLocationCompanyCommand request, CancellationToken cancellationToken)
         {
             var cap = await _capacityRepository.GetByIdAsync(request.CapacityId);
             if (request.CapacityId == null || request.CapacityId==0)
             {
-                return new NoAcess<object>() { Success = false, Message = "Please select a capacity." };
+                return new NoAcess<LocationCompany>() { Success = false, Message = "Please select a capacity." };
             }
 
             if (request.Lat == 0 || request.Long == 0)
             {
-                return new NoAcess<object>() { Success = false, Message = "Please search and select your location." };
+                return new NoAcess<LocationCompany>() { Success = false, Message = "Please search and select your location." };
             }
 
             var entity = new LocationCompany()
@@ -61,7 +61,7 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
 
             var result= await _locationRepository.AddAsync(entity);
 
-            return new CommandResponse<object>() { Success=true,Data= result, Message="Location added successfully!" };
+            return new CommandResponse<LocationCompany>() { Success=true,Data= result, Message="Location added successfully!" };
         }
 
     }

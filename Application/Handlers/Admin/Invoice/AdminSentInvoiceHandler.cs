@@ -32,7 +32,7 @@ namespace CMPNatural.Application.Handlers
 
         public async Task<CommandResponse<RequestEntity>> Handle(AdminSentRequestCommand request, CancellationToken cancellationToken)
         {
-            var entity = (await _invoiceRepository.GetAsync(p => p.Id == request.RequestId, query=>query.Include(x=>x.Company))).FirstOrDefault();
+            var entity = (await _invoiceRepository.GetAsync(p => p.Id == request.RequestId, query=>query.Include(x=>x.Company).Include(x=>x.Contract))).FirstOrDefault();
             entity.Status = InvoiceStatus.Pending_Signature;
 
             if (entity.ContractId != null)

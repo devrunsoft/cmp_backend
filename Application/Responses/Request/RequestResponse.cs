@@ -34,6 +34,8 @@ namespace CMPNatural.Application
 
         public virtual Company Company { get; set; } = null!;
 
+        public virtual CompanyContract Contract { get; set; } = null;
+
         public virtual Provider? Provider { get; set; }
 
         public virtual BillingInformation BillingInformation { get; set; } = null!;

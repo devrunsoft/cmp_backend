@@ -50,13 +50,13 @@ namespace CMPNatural.Application
             {
                 return new NoAcess<InvoiceResponse>() { Message = "No Access To Edit this Request" };
             }
-
             invoice.ContractId = null;
             invoice.Status = InvoiceStatus.Draft;
             await _invoiceRepository.UpdateAsync(invoice);
             await _companyContractRepository.DeleteAsync(companyContract);
-
-            return new Success<InvoiceResponse>() { Data = InvoiceMapper.Mapper.Map<InvoiceResponse>(invoice)};
+            var response = InvoiceMapper.Mapper.Map<InvoiceResponse>(invoice);
+            response.NoteTitle = companyContract.NoteTitle;
+            return new Success<InvoiceResponse>() { Data = response };
 
         }
 

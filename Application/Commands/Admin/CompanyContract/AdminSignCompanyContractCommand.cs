@@ -11,6 +11,7 @@ namespace CMPNatural.Application
         }
         public long CompanyId { get; set; }
         public long CompanyContractId { get; set; }
+        public long AdminId { get; set; }
     }
 }
 
