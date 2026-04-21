@@ -121,6 +121,16 @@ namespace CMPNatural.Application
                 driverEntity = result;
             }
 
+             if (request.UpdateSso)
+                {
+                    var resultSso = await UpdateSsoUserAsync(request.Email, new CancellationToken());
+
+                    if (!resultSso.IsSucces())
+                    {
+                        return resultSso;
+                    }
+                }
+
             var providerDriver = await LoadProviderDriverAsync(request.ProviderId, driverEntity.Id);
 
             return new Success<DriverResponse>() { Data = DriverMapper.Mapper.Map<DriverResponse>(providerDriver) };
@@ -202,7 +212,7 @@ namespace CMPNatural.Application
 
         private static string CreateSignature(string method, string pathAndQuery, string body, long timestamp, string secret)
         {
-            var canonical = $"{timestamp}.{method.ToUpperInvariant()}.{pathAndQuery}.{body}";
+            var canonical = $"{timestamp}.{method.ToUpperInvariant()}.{pathAndQuery}.{""}";
             using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret ?? string.Empty));
             var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(canonical));
             return Convert.ToHexString(hash);

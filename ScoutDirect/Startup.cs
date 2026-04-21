@@ -35,6 +35,8 @@ using CMPNatural.Api;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.AspNetCore.Http.Connections;
 using CMPNatural.Application.Hub;
+using CMPNatural.Application.Services;
+using CMPNatural.Api.Services;
 using CMPFile;
 
 namespace ScoutDirect.Api
@@ -240,6 +242,8 @@ namespace ScoutDirect.Api
 
             //services.AddTransient<IPaymentConfiguration, PaymentConfiguration>();
             services.AddTransient<IEmailSender, EmailSender>();
+            services.AddScoped<IUnseenMessageEmailScheduler, HangfireUnseenMessageEmailScheduler>();
+            services.AddScoped<IUnseenMessageEmailJob, UnseenMessageEmailJob>();
             //services.Configure<AppConfigModel>(Configuration.GetSection("AppConfig"));
 
             //For In-Memory Caching

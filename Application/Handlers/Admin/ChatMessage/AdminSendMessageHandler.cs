@@ -16,6 +16,7 @@ using CMPFile;
 using System.IO;
 using CMPNatural;
 using CMPNatural.Core.Extentions;
+using CMPNatural.Application.Services;
 
 namespace CMPNatural.Application.Handlers.Admin
 {
@@ -28,8 +29,10 @@ namespace CMPNatural.Application.Handlers.Admin
         private readonly IChatService _chatService;
         private readonly IMediator _mediator;
         private readonly IFileStorage _fileStorage;
+        private readonly IUnseenMessageEmailScheduler _unseenMessageEmailScheduler;
         public AdminSendMessageHandler(IChatMessageRepository _repository, IChatSessionRepository _chatSessionRepository
-            , IChatService _chatService, IMediator _mediator, IAdminRepository _adminRepository, IFileStorage fileStorage)
+            , IChatService _chatService, IMediator _mediator, IAdminRepository _adminRepository, IFileStorage fileStorage,
+            IUnseenMessageEmailScheduler unseenMessageEmailScheduler)
         {
             this._adminRepository = _adminRepository;
             this._repository = _repository;
@@ -37,6 +40,7 @@ namespace CMPNatural.Application.Handlers.Admin
             this._chatService = _chatService;
             this._mediator = _mediator;
             _fileStorage = fileStorage;
+            _unseenMessageEmailScheduler = unseenMessageEmailScheduler;
         }
         public async Task<CommandResponse<ChatMessage>> Handle(AdminSendMessageCommand request, CancellationToken cancellationToken)
         {
@@ -101,6 +105,7 @@ namespace CMPNatural.Application.Handlers.Admin
                 FileSize = fileSize
             };
             var result = await _repository.AddAsync(entity);
+            _unseenMessageEmailScheduler.ScheduleChatMessageEmail(result.Id);
 
             await _chatService.SendMessageToClient(request.ClientId, entity);
 

@@ -13,30 +13,36 @@ using ScoutDirect.Core.Repositories;
 using Microsoft.AspNetCore.SignalR;
 using CMPNatural.Application.Hub;
 using CMPNatural.Application.Commands.Client;
+using CMPNatural.Application.Services;
 using CMPFile;
 using System.IO;
 using CMPNatural;
+using CMPNatural.Core.Repositories;
 
 namespace CMPNatural.Application.Handlers.Admin
 {
     public class ClientSendMessageHandler : IRequestHandler<ClientSendMessageCommand, CommandResponse<ChatMessage>>
     {
         private readonly IChatMessageRepository _repository;
-        private readonly IChatSessionRepository _chatSessionRepository;
+        private readonly IOperationalAddressRepository _operationalAddressRepository;
         private readonly IChatService _chatService;
         private readonly IMediator _mediator;
         private readonly IFileStorage _fileStorage;
-        public ClientSendMessageHandler(IChatMessageRepository _repository, IChatSessionRepository _chatSessionRepository, IChatService _chatService, IMediator _mediator, IFileStorage fileStorage)
+        private readonly IUnseenMessageEmailScheduler _unseenMessageEmailScheduler;
+        public ClientSendMessageHandler(IChatMessageRepository _repository, IOperationalAddressRepository operationalAddressRepository, IChatService _chatService, IMediator _mediator,
+            IFileStorage fileStorage, IUnseenMessageEmailScheduler unseenMessageEmailScheduler)
         {
             this._repository = _repository;
-            this._chatSessionRepository = _chatSessionRepository;
+            this._operationalAddressRepository = operationalAddressRepository;
             this._chatService = _chatService;
             this._mediator = _mediator;
             _fileStorage = fileStorage;
+            _unseenMessageEmailScheduler = unseenMessageEmailScheduler;
         }
         public async Task<CommandResponse<ChatMessage>> Handle(ClientSendMessageCommand request, CancellationToken cancellationToken)
         {
             var chatsession = (await _mediator.Send(new CreateChatSessionCommand() { ClientId = request.ClientId, OperationalAddressId = request.OperationalAddressId })).Data;
+            var address = await _operationalAddressRepository.GetByIdAsync(request.OperationalAddressId);
 
             string? fileUrl = null;
             string? fileExtension = null;
@@ -67,8 +73,9 @@ namespace CMPNatural.Application.Handlers.Admin
                 FileSize = fileSize
             };
             var result = await _repository.AddAsync(entity);
+            _unseenMessageEmailScheduler.ScheduleChatMessageEmail(result.Id);
 
-
+            entity.Username = address.Username;
             await _chatService.SendToAllAdmins(entity);
 
             return new Success<ChatMessage>() { Data = result };

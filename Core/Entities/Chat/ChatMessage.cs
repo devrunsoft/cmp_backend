@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using CMPNatural.Core.Enums;
 using Newtonsoft.Json;
 
@@ -33,8 +34,12 @@ namespace CMPNatural.Core.Entities
         // Optional: video/audio duration in seconds
         public double? DurationSeconds { get; set; }
 
+        [NotMapped]
+        public string Username { get; set; } = string.Empty;
+
         [JsonIgnore]
         public ChatSession ChatSession { get; set; } = null!;
+
         [JsonIgnore]
         public List<ChatMention> Mentions { get; set; } = new();
     }

@@ -45,5 +45,6 @@ namespace CMPNatural.Api.Controllers.Provider
             var result = await _mediator.Send(command);
             return Ok(result);
         }
+
     }
 }

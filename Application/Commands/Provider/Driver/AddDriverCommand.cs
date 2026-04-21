@@ -14,6 +14,7 @@ namespace CMPNatural.Application
 		}
         public long ProviderId { get; set; }
         public string BaseVirtualPath { get; set; }
+        public bool UpdateSso { get; set; }
     }
 }
 

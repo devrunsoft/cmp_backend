@@ -13,6 +13,7 @@ using ScoutDirect.Core.Repositories;
 using Microsoft.AspNetCore.SignalR;
 using CMPNatural.Application.Hub;
 using CMPNatural.Application.Commands.Client;
+using CMPNatural.Application.Services;
 using CMPFile;
 using System.IO;
 using CMPNatural;
@@ -27,13 +28,16 @@ namespace CMPNatural.Application.Handlers.Admin
         private readonly IChatService _chatService;
         private readonly IMediator _mediator;
         private readonly IFileStorage _fileStorage;
-        public ParticipantSendCommonMessageHandler(IChatCommonMessageRepository _repository, IChatCommonSessionRepository _chatSessionRepository, IChatService _chatService, IMediator _mediator, IFileStorage fileStorage)
+        private readonly IUnseenMessageEmailScheduler _unseenMessageEmailScheduler;
+        public ParticipantSendCommonMessageHandler(IChatCommonMessageRepository _repository, IChatCommonSessionRepository _chatSessionRepository, IChatService _chatService,
+            IMediator _mediator, IFileStorage fileStorage, IUnseenMessageEmailScheduler unseenMessageEmailScheduler)
         {
             this._repository = _repository;
             this._chatSessionRepository = _chatSessionRepository;
             this._chatService = _chatService;
             this._mediator = _mediator;
             _fileStorage = fileStorage;
+            _unseenMessageEmailScheduler = unseenMessageEmailScheduler;
         }
         public async Task<CommandResponse<ChatCommonMessage>> Handle(ParticipantSendCommonMessageCommand request, CancellationToken cancellationToken)
         {
@@ -70,6 +74,7 @@ namespace CMPNatural.Application.Handlers.Admin
                 PersonId = chatsession.PersonId
             };
             var result = await _repository.AddAsync(entity);
+            _unseenMessageEmailScheduler.ScheduleCommonMessageEmail(result.Id);
 
 
             await _chatService.SendCommonToAllAdmins(entity);

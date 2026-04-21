@@ -72,7 +72,8 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
                 ProviderId = rProviderId,
                 BaseVirtualPath = wwwPath,
                 Email = request.Email,
-                IsDefault = request.IsDefault
+                IsDefault = request.IsDefault,
+                UpdateSso = !Environment.IsDevelopment()
 
             });
 

@@ -58,5 +58,14 @@ namespace CMPNatural.Api.Controllers.Admin.Message
             var result = await _mediator.Send(command);
             return Ok(result);
         }
+
+        [HttpPost("CreateOrGet")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> CreateOrGet([FromBody] CreateChatCommonSessionCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
     }
 }
