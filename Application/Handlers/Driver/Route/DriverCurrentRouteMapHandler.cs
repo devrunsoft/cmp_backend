@@ -32,7 +32,7 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<RouteDateResponse>> Handle(DriverCurrentRouteMapCommand request, CancellationToken cancellationToken)
         {
             var result = (await _repository.GetAsync(
-                p => p.Status == RouteStatus.InProcess,
+                p => p.Status == RouteStatus.InProcess && p.DriverId == request.DriverId,
                 query => query
                 .Include(x => x.Items)
                 .ThenInclude(x => x.ServiceAppointmentLocation)

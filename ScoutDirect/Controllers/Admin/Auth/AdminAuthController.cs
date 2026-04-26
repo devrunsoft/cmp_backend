@@ -56,6 +56,53 @@ namespace CMPNatural.Api.Controllers.Admin.Auth
             });
         }
 
+
+        [HttpPost("Google")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Google([FromBody] AdminLoginGoogleCommand command)
+        {
+
+            var result = await _mediator.Send(command);
+            if (!result.IsSucces())
+            {
+                return Ok(result);
+            }
+
+            var data = (AdminEntity)result.Data;
+
+            if (data.TwoFactor)
+            {
+                var code = await data.twoFactor(_mediator);
+
+                if (code != null)
+                {
+                    sendEmail("Login Code", $"Code <strong>{code}</strong>", data.Email, $"{appSetting.adminHost}/", "Login");
+                    return Ok(new Success<object>()
+                    {
+                        Data = new
+                        {
+                            token = "TwoFactor",
+                            expiration = DateTime.Now,
+                        }
+                    });
+                }
+
+            }
+
+            var token = generatetoken(data);
+
+            return Ok(new Success<object>()
+            {
+                Data = new
+                {
+                    token = new JwtSecurityTokenHandler().WriteToken(token),
+                    expiration = token.ValidTo,
+                }
+            });
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]

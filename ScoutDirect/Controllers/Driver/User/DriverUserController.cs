@@ -13,6 +13,9 @@ using ScoutDirect.Api.Controllers._Base;
 using ScoutDirect.Application.Responses;
 using Microsoft.Extensions.Options;
 using CMPNatural.Application;
+using Microsoft.AspNetCore.Hosting.Server;
+using CMPNatural.Application.Model;
+using CMPNatural.Application.Commands.Driver.Profile;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,14 +23,38 @@ namespace CMPNatural.Api.Controllers
 {
     public class DriverUserController : BaseDriverApiController
     {
+        private readonly IWebHostEnvironment Environment;
         protected readonly ExpiresModel _expiresModel;
         private readonly IConfiguration _configuration;
-        public DriverUserController(IMediator mediator , IConfiguration _configuration, IOptions<ExpiresModel> _expiresModel) : base(mediator)
+        public DriverUserController(IMediator mediator , IConfiguration _configuration, IOptions<ExpiresModel> _expiresModel, IWebHostEnvironment _environment) : base(mediator)
         {
             this._configuration = _configuration;
             this._expiresModel = _expiresModel.Value;
+            Environment = _environment;
         }
 
+
+        [RequestSizeLimit(100_000_000)]
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Put([FromForm] DriverInput request)
+        {
+            string wwwPath = Environment.ContentRootPath;
+            var result = await _mediator.Send(new DriverUpdateProfileCommand()
+            {
+                DriverId = rDriverId,
+                License = request.License,
+                LicenseExp = request.LicenseExp,
+                BackgroundCheck = request.BackgroundCheck,
+                BackgroundCheckExp = request.BackgroundCheckExp,
+                ProfilePhoto = request.ProfilePhoto,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                BaseVirtualPath = wwwPath,
+            });
+            return Ok(result);
+        }
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -117,7 +144,11 @@ namespace CMPNatural.Api.Controllers
                 new Claim(ClaimTypes.NameIdentifier, DriverId.ToString()) ,
                 //new Claim(ClaimTypes.Role, Role),
                 new Claim("PersonId", PersonId.ToString()),
-                new Claim("Email", Email) };
+                new Claim("DriverId", DriverId.ToString()),
+                new Claim("IsDriver", "true"),
+                new Claim("Email", Email)
+
+                };
 
             claims.Add(new Claim("FullName", fullname));
             return claims.ToArray();

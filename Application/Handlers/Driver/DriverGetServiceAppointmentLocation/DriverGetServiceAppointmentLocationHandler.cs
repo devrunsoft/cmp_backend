@@ -34,6 +34,10 @@ namespace CMPNatural.Application
                 .Include(x => x.Route)
                 .Include(x=>x.ServiceAppointmentLocation)
                 .ThenInclude(x=>x.ServiceAppointment)
+                .ThenInclude(x => x.Product)
+                .Include(x => x.ServiceAppointmentLocation)
+                .ThenInclude(x => x.ServiceAppointment)
+                .ThenInclude(x => x.ProductPrice)
                 )).ToList();
 
             return new Success<List<ServiceAppointmentLocation>>()

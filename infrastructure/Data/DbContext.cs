@@ -1,11 +1,16 @@
 ﻿using CMPNatural.Core.Entities;
 using CMPNatural.Core.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace infrastructure.Data
 {
     public partial class ScoutDBContext : DbContext
     {
+        // private static readonly ValueConverter<DateTime, DateTime> UtcDateTimeConverter = new(
+        //     value => value.Kind == DateTimeKind.Utc ? value : value.ToUniversalTime(),
+        //     value => DateTime.SpecifyKind(value, DateTimeKind.Utc));
+
         public ScoutDBContext()
         {
         }
@@ -201,6 +206,9 @@ namespace infrastructure.Data
             {
                 entity.ToTable("ChatMessage");
 
+                // entity.Property(m => m.SentAt)
+                // .HasConversion(UtcDateTimeConverter);
+
                 entity.Property(m => m.SenderType)
                 .HasConversion(
                  x => x.ToString(),
@@ -225,6 +233,9 @@ namespace infrastructure.Data
             modelBuilder.Entity<ChatCommonMessage>(entity =>
             {
                 entity.ToTable("ChatCommonMessage");
+
+                // entity.Property(m => m.SentAt)
+                // .HasConversion(UtcDateTimeConverter);
 
                 entity.Property(m => m.SenderType)
                 .HasConversion(

@@ -40,7 +40,7 @@ namespace CMPNatural.Application.Handlers.Admin
                 Content = content,
                 SenderId = request.AdminId,
                 SenderType = ParticipantType.Admin,
-                SentAt = DateTime.Now,
+                SentAt = DateTime.UtcNow,
                 OperationalAddressId = request.OperationalAddressId,
                 ClientId = request.ClientId,
                 Payload = request.Data == null ? null : JsonSerializer.Serialize(request.Data)
@@ -54,4 +54,3 @@ namespace CMPNatural.Application.Handlers.Admin
         }
     }
 }
-
