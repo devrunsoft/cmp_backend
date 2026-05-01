@@ -26,6 +26,7 @@ using Microsoft.Extensions.Options;
 using CMPNatural.Core.Models;
 using CMPNatural.Api.Controllers.Client;
 using ScoutDirect.Api.Controllers._Base;
+using CMPNatural.Application;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -55,6 +56,57 @@ namespace ScoutDirect.Api.Controllers
             _appSetting = appSetting;
         }
 
+        [HttpPost("Google")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Google([FromBody] LoginGoogleCompanyCommand command)
+        {
+            var result = await _mediator.Send(command);
+            if (result.Success)
+            {
+                var company = (CompanyResponse)result.Data;
+
+                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+
+                var token = new JwtSecurityToken(
+                    issuer: _configuration["JWT:ValidIssuer"],
+                    audience: _configuration["JWT:ValidAudience"],
+                    expires: DateTime.Now.AddMinutes(_expiresModel.Client),
+                    claims: new GenerateToken().get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered, company.ProfilePicture, company.FullName, company.PersonId, company.BusinessEmail, company.OperationalAddressId),
+                    signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+                    );
+
+                var tokenvalue = new JwtSecurityTokenHandler().WriteToken(token);
+
+                _updateContact.send(result.Data.BusinessEmail, tokenvalue);
+
+                var resultEmail = await _mediator.Send(new ResendEmailCompanyCommand()
+                {
+                    CompanyId = company.Id.Value,
+                    ActivationLink = Guid.NewGuid()
+                });
+                if (resultEmail.IsSucces())
+                {
+                    EmailSender((CompanyResponse)result.Data);
+                }
+                return Ok(new Success<object>()
+                {
+                    Data = new
+                    {
+                        token = tokenvalue,
+                        expiration = token.ValidTo,
+                        registered = company.Registered,
+                        accepted = company.Accepted,
+                    }
+                });
+
+            }
+
+            return Ok(result);
+        }
+
+
         [HttpPost]
         [Route("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -73,7 +125,7 @@ namespace ScoutDirect.Api.Controllers
                     issuer: _configuration["JWT:ValidIssuer"],
                     audience: _configuration["JWT:ValidAudience"],
                     expires: DateTime.Now.AddMinutes(_expiresModel.Client),
-                    claims: new GenerateToken().get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered,company.ProfilePicture , company.FullName, company.PersonId, company.OperationalAddressId),
+                    claims: new GenerateToken().get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered,company.ProfilePicture , company.FullName, company.PersonId,company.BusinessEmail ,company.OperationalAddressId),
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
 
@@ -193,7 +245,7 @@ namespace ScoutDirect.Api.Controllers
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
                 expires: DateTime.Now.AddMinutes(_expiresModel.Client),
-                claims: new GenerateToken().get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered, company.ProfilePicture, company.FullName, company.PersonId),
+                claims: new GenerateToken().get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered, company.ProfilePicture, company.FullName, company.PersonId, company.BusinessEmail),
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );
 

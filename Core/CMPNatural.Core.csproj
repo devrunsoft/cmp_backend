@@ -28,7 +28,6 @@
   <ItemGroup>
     <Compile Remove="Enums\ChatType.cs" />
     <Compile Remove="Enums\InboxStatus.cs" />
-    <Compile Remove="Enums\NotificationType.cs" />
     <Compile Remove="Enums\ShopUserRole.cs" />
     <Compile Remove="Models\InboxUserModel.cs" />
     <Compile Remove="Models\InputAddressModel.cs" />
@@ -58,7 +57,6 @@
     <Compile Remove="Repositories\IInboxRepository.cs" />
     <Compile Remove="Repositories\IInboxStatusRepository.cs" />
     <Compile Remove="Repositories\IInvoiceRepository.cs" />
-    <Compile Remove="Repositories\INotificationRepository.cs" />
     <Compile Remove="Repositories\IOrderMinCostRepository.cs" />
     <Compile Remove="Repositories\IShopInfoRepository.cs" />
     <Compile Remove="Repositories\IShopRepository.cs" />

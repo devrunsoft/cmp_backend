@@ -1,5 +1,6 @@
 ﻿using System;
 using CMPNatural.Core.Enums;
+using Newtonsoft.Json;
 
 namespace CMPNatural.Core.Entities
 {
@@ -28,6 +29,7 @@ namespace CMPNatural.Core.Entities
         public string? Comment { get; set; } = string.Empty;
 
         public virtual BaseServiceAppointment ServiceAppointment { get; set; }
+        [JsonIgnore]
         public virtual LocationCompany LocationCompany { get; set; }
 
         public virtual Manifest Manifest { get; set; }

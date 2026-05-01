@@ -1,13 +1,15 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
+using System.Text.Json.Serialization;
 
-namespace Bazaro.Core.Enums
+namespace CMPNatural.Core.Enums
 {
+
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum NotificationType
     {
-        [Description("اطلاع رسانی")]
-        Alert = 1,
-
-        [Description("هدیه")]
-        Gift = 2, 
+        [Description("Note")]
+        Note,
     }
 }
+

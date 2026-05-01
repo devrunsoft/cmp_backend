@@ -320,6 +320,8 @@
     <None Remove="Handlers\Admin\ChatCommonSession\" />
     <None Remove="Commands\Admin\ChatCommonMessageNote\" />
     <None Remove="Handlers\Provider\Provider\ForgotPassword\" />
+    <None Remove="Commands\Admin\Notification\" />
+    <None Remove="Handlers\Admin\Notification\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -651,6 +653,8 @@
     <Folder Include="Commands\Admin\ChatCommonMessageNote\" />
     <Folder Include="Commands\Provider\Provider\ForgotPassword\" />
     <Folder Include="Handlers\Provider\Provider\ForgotPassword\" />
+    <Folder Include="Commands\Admin\Notification\" />
+    <Folder Include="Handlers\Admin\Notification\" />
   </ItemGroup> 
 
   <ItemGroup>

@@ -17,6 +17,16 @@ namespace CMPNatural.Api.Controllers.Admin.Message
         {
         }
 
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> GetAll([FromQuery] AdminGetAllManualNoteCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
         [HttpPost("Send/{ClientId}/{OperationalAddressId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [Consumes("multipart/form-data")]

@@ -5,10 +5,11 @@ namespace CMPNatural.Api.Controllers.Client
 {
 	public class GenerateToken
 	{
-        public Claim[] get_claims(string adminStatus, string businessEmail, string companyId, bool registered, string? ProfilePicture, string fullname, Guid PersonId, long? operationalAddressId = null)
+        public Claim[] get_claims(string adminStatus, string businessEmail, string companyId, bool registered, string? ProfilePicture, string fullname, Guid PersonId,string email ,  long? operationalAddressId = null)
         {
             List<Claim> claims = new List<Claim>() { new Claim("businessEmail", businessEmail), new Claim("CompanyId", companyId) };
 
+            claims.Add(new Claim("Email", email.ToString()));
             claims.Add(new Claim("Registered", registered.ToString()));
             claims.Add(new Claim("Type", adminStatus));
             claims.Add(new Claim("ProfilePicture", ProfilePicture ?? ""));

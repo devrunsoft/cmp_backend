@@ -52,13 +52,13 @@ namespace CMPNatural.Api.Controllers.Admin
         [NonAction]
         public void sendNote(MessageNoteType Type, long ClientId, long OperationalAddressId, string Content = "")
         {
-            new Note(AdminId, serviceScopeFactory).adminSendNote(Type, ClientId, OperationalAddressId, null, Content);
+            new Note(AdminId, serviceScopeFactory, _mediator).adminSendNote(Type, ClientId, OperationalAddressId, null, Content);
         }
 
         [NonAction]
         public void sendNote(MessageNoteType Type, long ClientId, long OperationalAddressId, object? Payload, string Content = "")
         {
-            new Note(AdminId, serviceScopeFactory).adminSendNote(Type, ClientId, OperationalAddressId, Payload, Content);
+            new Note(AdminId, serviceScopeFactory, _mediator).adminSendNote(Type, ClientId, OperationalAddressId, Payload, Content);
         }
 
         //[NonAction]

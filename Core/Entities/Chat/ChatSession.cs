@@ -1,5 +1,6 @@
 ﻿
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace CMPNatural.Core.Entities
 {
@@ -20,6 +21,7 @@ namespace CMPNatural.Core.Entities
         public Company Company { get; set; }
         public OperationalAddress OperationalAddress { get; set; }
         public virtual ICollection<ChatParticipant> Participants { get; set; }
+        [JsonIgnore]
         public virtual ICollection<ChatMessage> Messages { get; set; }
     }
 }

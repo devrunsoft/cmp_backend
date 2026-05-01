@@ -97,6 +97,8 @@ namespace ScoutDirect.infrastructure
 
             services.AddTransient<IManifestGreaseServiceDetailRepository, ManifestGreaseServiceDetailRepository>();
 
+            services.AddTransient<INotificationRepository, NotificationRepository>();
+
             services.AddTransient<ProductListApi>();
             services.AddTransient<ProductPriceApi>();
             services.AddTransient<ContactApi>();

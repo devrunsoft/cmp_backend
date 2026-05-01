@@ -70,6 +70,7 @@ namespace infrastructure.Data
         public virtual DbSet<ChatCommonMessageNote> ChatCommonMessageNote { get; set; } = null!;
         public virtual DbSet<ProviderVehicle> ProviderVehicle { get; set; } = null!;
         public virtual DbSet<ManifestGreaseServiceDetail> ManifestGreaseServiceDetail { get; set; } = null!;
+        public virtual DbSet<Notification> Notification { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -89,6 +90,16 @@ namespace infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Notification>(entity =>
+            {
+                entity.ToTable("Notification");
+                entity.Property(p => p.type)
+                .HasConversion(
+                x => x.ToString(),
+                x => (NotificationType)Enum.Parse(typeof(NotificationType), x)
+                );
+            });
+
             modelBuilder.Entity<ManifestGreaseServiceDetail>(entity =>
             {
                 entity.ToTable("ManifestGreaseServiceDetail");

@@ -10,6 +10,7 @@ using CMPNatural.Core.Enums;
 using CMPNatural.Core.Models;
 using Microsoft.Extensions.DependencyInjection;
 using CMPNatural.Api.Service;
+using MediatR;
 
 namespace CMPNatural.Application
 {
@@ -21,8 +22,9 @@ namespace CMPNatural.Application
         private readonly IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository;
         private readonly IServiceScopeFactory serviceScopeFactory;
         private readonly AppSetting _appSetting;
+        private readonly IMediator _mediator;
         public AdminCreateManifestHandler(IManifestRepository _repository, IRequestRepository _invoiceRepository, IAppInformationRepository _apprepository,
-             IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository, AppSetting appSetting, IServiceScopeFactory serviceScopeFactory)
+             IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository, AppSetting appSetting, IServiceScopeFactory serviceScopeFactory, IMediator mediator)
         {
 
             this._invoiceRepository = _invoiceRepository;
@@ -31,6 +33,7 @@ namespace CMPNatural.Application
             this._serviceAppointmentLocationRepository = _serviceAppointmentLocationRepository;
             this._appSetting = appSetting;
             this.serviceScopeFactory = serviceScopeFactory;
+            this._mediator = mediator;
         }
         public async Task<CommandResponse<Manifest>> Create(RequestEntity request , ManifestStatus status , long ServiceAppointmentLocationId, DateTime StartDate, long adminId, MessageNoteType messageNoteType)
 		{
@@ -62,7 +65,7 @@ namespace CMPNatural.Application
             entity.ManifestNumber = entity.Number;
             await _repository.UpdateAsync(entity);
 
-            new Note(adminId, serviceScopeFactory).adminSendNote(messageNoteType , request.CompanyId, request.OperationalAddressId, entity , entity.NoteTitle);
+            new Note(adminId, serviceScopeFactory, _mediator).adminSendNote(messageNoteType , request.CompanyId, request.OperationalAddressId, entity , entity.NoteTitle);
 
             return new Success<Manifest>() { Data = result};
 

@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using CMPEmail.Email;
+using CMPNatural.Application;
 using CMPNatural.Application.Commands;
 using CMPNatural.Application.Commands.Company;
 using CMPNatural.Core.Enums;
@@ -50,7 +51,7 @@ namespace ScoutDirect.Api.Controllers._Base
                     var _mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
                     try
                     {
-                        await _mediator.Send(new ClientSendMessageNoteCommand()
+                        var result= await _mediator.Send(new ClientSendMessageNoteCommand()
                         {
                             ClientId = companyId,
                             Type = Type,
@@ -58,6 +59,13 @@ namespace ScoutDirect.Api.Controllers._Base
                             OperationalAddressId = OperationalAddressId,
                             Data = Payload
 
+                        });
+                        await _mediator.Send(new AdminAddNotificationCommand()
+                        {
+                            type = NotificationType.Note,
+                            Title = Type.Description(),
+                            Body = Content,
+                            Payload = result.Data
                         });
                     }
                     catch (Exception ex)

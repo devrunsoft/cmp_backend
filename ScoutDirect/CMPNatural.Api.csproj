@@ -83,6 +83,7 @@
     <None Remove="Controllers\Admin\Request\" />
     <None Remove="Controllers\Admin\Driver\" />
     <None Remove="Controllers\Admin\ChatParticipant\" />
+    <None Remove="Controllers\Admin\Notification\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="View\" />
@@ -142,6 +143,7 @@
     <Folder Include="Controllers\Admin\Request\" />
     <Folder Include="Controllers\Admin\Driver\" />
     <Folder Include="Controllers\Admin\ChatParticipant\" />
+    <Folder Include="Controllers\Admin\Notification\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\CMPNatural.Core.csproj">

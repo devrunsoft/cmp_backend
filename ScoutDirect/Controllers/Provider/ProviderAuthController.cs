@@ -21,6 +21,8 @@ using ScoutDirect.Api.Controllers._Base;
 using ScoutDirect.Application.Responses;
 using Microsoft.Extensions.Options;
 using CMPEmail;
+using CMPNatural.Application.Commands.Admin;
+using CMPNatural.Application.Commands.Driver;
 
 namespace CMPNatural.Api
 {
@@ -225,6 +227,64 @@ namespace CMPNatural.Api
 
             return Ok(result);
         }
+
+
+        [HttpPost("Google")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> Google([FromBody] ProviderLoginGoogleCommand command)
+        {
+
+            var result = await _mediator.Send(command);
+
+            CommandResponse<DriverResponse>? resultDriver = null;
+            if (!result.IsSucces())
+            {
+                resultDriver = await _mediator.Send(new DriverGoogleLoginCommand() { Credential = command.Credential});
+
+                if (!result.IsSucces() && !resultDriver.IsSucces())
+                {
+                    if (result.Data != null)
+                    {
+                        EmailSender(result.Data);
+                    }
+                    return Ok(result);
+                }
+            }
+
+
+            bool isDriver = (resultDriver != null);
+            var IsDefault = isDriver ? resultDriver!.Data.IsDefault : true;
+            var email = isDriver ? resultDriver.Data.Email : result.Data.Email;
+            string personId = isDriver ? resultDriver.Data.PersonId.ToString() : result.Data.PersonId.ToString();
+            var Id = isDriver ? 0 : result.Data.Id;
+            long? DriverId = isDriver ? resultDriver.Data.Id : null;
+            var isFirstLogin = isDriver ? true : result.Data.HasLogin;
+
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+            var token = new JwtSecurityToken(
+                issuer: _configuration["JWT:ValidIssuer"],
+                audience: _configuration["JWT:ValidAudience"],
+                expires: DateTime.Now.AddDays(30),
+                claims: get_claims(email, Id, IsDefault, resultDriver != null, DriverId, personId),
+                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+                );
+
+            return Ok(new Success<object>()
+            {
+                Data = new
+                {
+                    token = new JwtSecurityTokenHandler().WriteToken(token),
+                    expiration = token.ValidTo,
+                    isFirstLogin = isFirstLogin
+                }
+            });
+        }
+
+
+
+
 
         [HttpPost("Login")]
         [AllowAnonymous]

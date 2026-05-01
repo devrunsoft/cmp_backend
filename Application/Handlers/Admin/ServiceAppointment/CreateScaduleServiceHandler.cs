@@ -20,7 +20,7 @@ namespace CMPNatural.Application
     {
         public static async Task Create(
             RequestEntity invoiceTemplate, IBaseServiceAppointmentRepository _serviceAppointment, IManifestRepository _manifestRepository, IRequestRepository _invoiceRepository, IAppInformationRepository _apprepository,
-             IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository, AppSetting _appSetting, ILocationCompanyRepository locationCompanyRepository, IServiceScopeFactory serviceScopeFactory, long adminId)
+             IServiceAppointmentLocationRepository _serviceAppointmentLocationRepository, AppSetting _appSetting, ILocationCompanyRepository locationCompanyRepository, IServiceScopeFactory serviceScopeFactory, long adminId, IMediator mediator)
         {
 
             var request = (await _invoiceRepository.GetAsync(x=> x.Id == invoiceTemplate.Id,
@@ -94,7 +94,7 @@ namespace CMPNatural.Application
                 foreach (var loc in service.ServiceAppointmentLocations)
                 {
 
-                    await new AdminCreateManifestHandler(_manifestRepository, _invoiceRepository, _apprepository, _serviceAppointmentLocationRepository, _appSetting,serviceScopeFactory)
+                    await new AdminCreateManifestHandler(_manifestRepository, _invoiceRepository, _apprepository, _serviceAppointmentLocationRepository, _appSetting,serviceScopeFactory, mediator)
                         .Create(request, ManifestStatus.Scaduled, loc.Id, service.StartDate, adminId , MessageNoteType.ManifestScaduled);
 
                 }

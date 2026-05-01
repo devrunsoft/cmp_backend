@@ -68,4 +68,6 @@ namespace CMPNatural.Core.Entities
     public partial class ProviderVehicle : IIdentityObject<long> { }
 
     public partial class ManifestGreaseServiceDetail : IIdentityObject<long> { }
+
+    public partial class Notification : IIdentityObject<long> { }
 }
