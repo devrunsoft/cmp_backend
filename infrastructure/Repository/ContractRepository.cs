@@ -15,7 +15,7 @@ namespace CMPNatural.infrastructure.Repository
 
         public async Task UnsetDefaultForOthersAsync(long excludeId , ContractType Type)
         {
-            var defaultContracts = await _dbContext.Contract
+            var defaultContracts = await BaseQuery()
                 .Where(c => c.IsDefault && c.Id != excludeId && c.Type == Type)
                 .ToListAsync();
 

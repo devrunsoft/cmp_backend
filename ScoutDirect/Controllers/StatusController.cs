@@ -228,13 +228,13 @@ namespace CMPNatural.Api.Controllers
             if (!result.Success)
                 return Ok(result);
 
-            var email = command.Email?.Trim() ?? string.Empty;
-            if (string.IsNullOrWhiteSpace(email))
-                return Ok(new NoAcess() { Message = "Email is required." });
+            //var email = command.Email?.Trim() ?? string.Empty;
+            //if (string.IsNullOrWhiteSpace(email))
+            //    return Ok(new NoAcess() { Message = "Email is required." });
 
-            var subject = "Email Change Verification Code";
-            var body = $"Your verification code is <strong>{result.Data}</strong>.";
-            sendEmail(subject, body, email);
+            //var subject = "Email Change Verification Code";
+            //var body = $"Your verification code is <strong>{result.Data}</strong>.";
+            //sendEmail(subject, body, email);
 
             return Ok(new Success<object>()
             {

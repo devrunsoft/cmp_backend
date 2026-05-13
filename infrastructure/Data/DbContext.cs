@@ -92,6 +92,7 @@ namespace infrastructure.Data
         {
             modelBuilder.Entity<Notification>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("Notification");
                 entity.Property(p => p.type)
                 .HasConversion(
@@ -102,6 +103,7 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<ManifestGreaseServiceDetail>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("ManifestGreaseServiceDetail");
 
                 entity.HasOne(d => d.ServiceAppointmentLocation)
@@ -111,6 +113,7 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<ProviderVehicle>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("ProviderVehicle");
                 entity.HasOne(d => d.Vehicle)
                 .WithMany(p => p.ProviderVehicle)
@@ -125,6 +128,7 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<ServiceAppointmentLocationFile>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("ServiceAppointmentLocationFile");
                 entity.Property(p => p.Status)
                 .HasConversion(
@@ -135,6 +139,7 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<Route>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("Route");
                 entity.HasMany(d => d.Items)
                 .WithOne()
@@ -149,6 +154,7 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<RouteServiceAppointmentLocation>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("RouteServiceAppointmentLocation");
 
                 entity.HasOne(d => d.ServiceAppointmentLocation)
@@ -163,11 +169,13 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<DriverManifest>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("DriverManifest");
             });
 
             modelBuilder.Entity<ChatClientSession>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("ChatClientSession");
 
                 entity.HasMany(m => m.ChatSession)
@@ -181,6 +189,7 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<ChatCommonSession>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("ChatCommonSession");
 
                 entity.HasMany(m => m.Messages)
@@ -192,6 +201,7 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<ChatMention>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("ChatMention");
 
                 entity.HasOne(m => m.Notification)
@@ -207,6 +217,7 @@ namespace infrastructure.Data
 
 
             modelBuilder.Entity<ChatParticipant>()
+                .HasQueryFilter(x => x.IsDelete == null)
                 .Property(p => p.ParticipantType)
                  .HasConversion(
                  x => x.ToString(),
@@ -215,6 +226,7 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<ChatMessage>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("ChatMessage");
 
                 // entity.Property(m => m.SentAt)
@@ -243,6 +255,7 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<ChatCommonMessage>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("ChatCommonMessage");
 
                 // entity.Property(m => m.SentAt)
@@ -268,6 +281,7 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<ChatMessageNote>(entity =>
             {
+                //entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("ChatMessageNote").HasBaseType<ChatMessage>();
 
                 entity.Property(m => m.MessageNoteType)
@@ -279,6 +293,7 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<ChatCommonMessageNote>(entity =>
             {
+                //entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("ChatCommonMessageNote").HasBaseType<ChatCommonMessage>();
 
                 entity.Property(m => m.MessageNoteType)
@@ -290,6 +305,7 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<ChatMessageManualNote>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("ChatMessageManualNote");
 
                 entity.Property(m => m.Type)
@@ -303,10 +319,11 @@ namespace infrastructure.Data
                 .HasForeignKey(d => d.ChatSessionId);
             });
 
-            modelBuilder.Entity<ChatNotification>();
+            modelBuilder.Entity<ChatNotification>().HasQueryFilter(x => x.IsDelete == null);
 
             modelBuilder.Entity<ChatSession>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("ChatSession");
 
                 entity.HasOne(d => d.Company)
@@ -321,16 +338,19 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<AmendmentCompanyContract>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("AmendmentCompanyContract");
             });
 
             modelBuilder.Entity<LocationDateTime>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("LocationDateTime");
             });
 
             modelBuilder.Entity<RequestTerminate>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("RequestTerminate");
 
                 entity.Property(p => p.Status)
@@ -356,11 +376,13 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<GoHighLevel>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("GoHighLevel");
             });
 
             modelBuilder.Entity<AppLog>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("AppLog");
                 entity.Property(p => p.LogType)
                 .HasConversion(
@@ -370,6 +392,7 @@ namespace infrastructure.Data
             });
             modelBuilder.Entity<Payment>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("Payment");
                 entity.Property(d => d.Status)
                  .HasConversion(
@@ -380,6 +403,7 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<ServiceArea>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("ServiceArea");
                 entity.Property(d => d.ServiceAreaType)
                     .HasConversion(
@@ -390,11 +414,13 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<BillingInformationProvider>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("BillingInformationProvider");
             });
 
             modelBuilder.Entity<Manifest>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("Manifest");
 
                 entity.HasOne(d => d.OperationalAddress)
@@ -434,6 +460,7 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<TermsConditions>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("TermsConditions");
                 entity.Property(p => p.Type)
                 .HasConversion(
@@ -444,16 +471,19 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<AppInformation>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("AppInformation");
             });
 
             modelBuilder.Entity<InvoiceSource>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("InvoiceSource");
             });
 
             modelBuilder.Entity<CompanyContract>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("CompanyContract");
 
                 entity.HasOne(d => d.Company)
@@ -469,6 +499,7 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<ProviderContract>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("ProviderContract");
 
                 entity.Property(p => p.Status)
@@ -480,6 +511,7 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<Contract>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("Contract");
                 entity.Property(p => p.Type)
                 .HasConversion(
@@ -490,11 +522,13 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<Menu>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("Menu");
             });
 
             modelBuilder.Entity<AdminMenuAccess>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("AdminMenuAccess");
                 entity.HasOne(d => d.Menu)
                 .WithOne()
@@ -503,6 +537,7 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<ProviderDriver>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("ProviderDriver");
                 entity.HasOne(d => d.Driver)
                 .WithMany(p => p.ProviderDriver)
@@ -517,6 +552,7 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<Driver>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("Driver");
                 entity.HasOne(d => d.Person)
                 .WithOne()
@@ -531,17 +567,20 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<Vehicle>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("Vehicle");
 
             });
 
             modelBuilder.Entity<VehicleCompartment>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("VehicleCompartment");
             });
 
             modelBuilder.Entity<VehicleService>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("VehicleService");
 
                 entity.Property(d => d.VehicleServiceStatus)
@@ -553,6 +592,7 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<InvoiceProduct>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("InvoiceProduct");
 
                 entity.HasOne(d => d.ProductPrice)
@@ -567,11 +607,13 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<Product>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("Product");
             });
 
             modelBuilder.Entity<ProductPrice>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("ProductPrice");
 
                 entity.HasOne(d => d.Product)
@@ -581,6 +623,7 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<Company>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("Company");
 
                 entity.Property(d => d.Status)
@@ -600,6 +643,7 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<LocationCompany>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("LocationCompany");
                 entity.HasOne(d => d.CapacityEntity)
                 .WithMany(p => p.LocationCompany)
@@ -611,16 +655,19 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<DocumentSubmission>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("DocumentSubmission");
             });
 
             modelBuilder.Entity<BillingInformation>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("BillingInformation");
             });
 
             modelBuilder.Entity<OperationalAddress>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("OperationalAddress");
 
                 entity.HasMany(d => d.LocationCompany)
@@ -633,12 +680,14 @@ namespace infrastructure.Data
             });
 
             modelBuilder.Entity<BusinessType>(entity =>
-            {       
+            {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("BusinessType");
             });
 
             modelBuilder.Entity<BaseServiceAppointment>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("BaseServiceAppointment");
 
 
@@ -675,6 +724,7 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<ServiceAppointment>(entity =>
             {
+                //entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("ServiceAppointment").HasBaseType<BaseServiceAppointment>();
                 entity.Property(e => e.ServiceCrmId)
                   .HasColumnType("varchar(255)") 
@@ -683,12 +733,14 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<ServiceAppointmentEmergency>(entity =>
             {
+                //entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("ServiceAppointmentEmergency").HasBaseType<BaseServiceAppointment>();
 
             });
 
             modelBuilder.Entity<Invoice>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("Invoice");
                 entity.HasMany(d => d.BaseServiceAppointment)
                       .WithOne(p => p.Invoice)
@@ -733,6 +785,7 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<RequestEntity>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("Request");
                 entity.HasMany(d => d.BaseServiceAppointment)
                       .WithOne(p => p.Request)
@@ -775,11 +828,13 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<ShoppingCard>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("ShoppingCard");
             });
 
             modelBuilder.Entity<ServiceAppointmentLocation>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("ServiceAppointmentLocation");
 
                 entity.HasOne(d => d.LocationCompany)
@@ -811,11 +866,13 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<Person>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("Person");
             });
 
             modelBuilder.Entity<AdminEntity>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("Admin");
 
                 entity.HasOne(d => d.Person)
@@ -825,6 +882,7 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<Provider>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("Provider");
 
                 entity
@@ -849,12 +907,14 @@ namespace infrastructure.Data
 
             modelBuilder.Entity<Capacity>(entity =>
             {
+                entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("Capacity");
             });
 
             modelBuilder.Entity<ProviderService>(entity =>
             {
-             entity.ToTable("ProviderService");
+                entity.HasQueryFilter(x => x.IsDelete == null);
+                entity.ToTable("ProviderService");
 
              entity.HasOne(d => d.Product)
             .WithMany(p => p.ProviderService)

@@ -18,7 +18,7 @@ namespace CMPNatural.infrastructure.Repository
 
         public async Task<IEnumerable<OperationalAddress>?> GetWithChild(Expression<Func<OperationalAddress, bool>> expression)
         {
-            return await _dbContext.OperationalAddress.Where(expression)
+            return await BaseQuery().Where(expression)
                 .Include(p=>p.LocationCompany)
                 .Include(p => p.LocationDateTimes)
                 .ToListAsync();

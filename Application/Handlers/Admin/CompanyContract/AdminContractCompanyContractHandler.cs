@@ -20,7 +20,7 @@ namespace CMPNatural.Application
             var serviceList = invoice.Select(inv =>
             {
                 var services = inv.BaseServiceAppointment.Select(x =>
-                    $"<strong>{x.Product.Name}</strong> - <strong>{x.ProductPrice.Name}</strong> " +
+                    $"<strong>{x.Product.Name}</strong> - <strong>{x.ProductPrice.Name}</strong> - Capacity: {x.ServiceAppointmentLocations.Sum(x=>x.Qty)}" +
                     //$"- <strong>Number of Payments:</strong> {x.ProductPrice.NumberofPayments}, " +
                     $"<br><strong>Start Date:</strong> {x.StartDate.ToDateString()}" +
                     $" - <strong>Preferred Days:</strong> {x.DayOfWeek} ({x.FromHour.ConvertTimeToString()} until {x.ToHour.ConvertTimeToString()})" +

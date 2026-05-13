@@ -14,7 +14,6 @@ namespace CMPNatural.infrastructure.Repository
 
         public Task<AdminEntity> GetCachedByIdAsync(long id)
         => GetOrCreateAsync(Key("id", id),
-        () => _dbContext.Set<AdminEntity>().FirstOrDefaultAsync(x => x.Id == id));
+        () => BaseQuery().FirstOrDefaultAsync(x => x.Id == id));
     }
 }
-

@@ -32,7 +32,7 @@ namespace ScoutDirect.infrastructure.Repository
             _cacheService = cacheService;
         }
 
-        private IQueryable<T> BaseQuery()
+        public IQueryable<T> BaseQuery()
         {
             return _dbContext.Set<T>().Where(x => x.IsDelete == null);
         }

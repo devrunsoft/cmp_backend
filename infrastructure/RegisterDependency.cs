@@ -99,6 +99,8 @@ namespace ScoutDirect.infrastructure
 
             services.AddTransient<INotificationRepository, NotificationRepository>();
 
+            services.AddTransient<ILocationDateTimeRepository, LocationDateTimeRepository>();
+
             services.AddTransient<ProductListApi>();
             services.AddTransient<ProductPriceApi>();
             services.AddTransient<ContactApi>();

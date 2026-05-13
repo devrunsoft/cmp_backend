@@ -18,7 +18,7 @@ namespace CMPNatural.infrastructure.Repository
 
         // Only include ServiceArea unless ProviderService is needed
         private IQueryable<Provider> GeBasicQuery() =>
-            _dbContext.Provider
+            BaseQuery()
                 .Include(p => p.ServiceArea)
                 .AsNoTracking(); // Disables change tracking for performance
 
@@ -46,7 +46,7 @@ namespace CMPNatural.infrastructure.Repository
         public async Task<List<Provider>> GetAllSearchProviderAllInvoiceAsync(List<ServiceAppointmentLocation> services, bool checkLocation = true)
         {
             // Include ProviderService only here
-            var providerList = await _dbContext.Provider
+            var providerList = await BaseQuery()
                 .Include(p => p.ServiceArea)
                 .Include(p => p.ProviderService)
                 .Where(p => p.Status != CMPNatural.Core.Enums.ProviderStatus.Blocked)

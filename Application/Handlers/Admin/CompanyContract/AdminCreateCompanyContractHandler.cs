@@ -58,6 +58,8 @@ namespace CMPNatural.Application.Handlers
             .ThenInclude(x=>x.Product)
             .Include(x => x.BaseServiceAppointment)
             .ThenInclude(x => x.ProductPrice)
+            .Include(x => x.BaseServiceAppointment)
+            .ThenInclude(x => x.ServiceAppointmentLocations)
             )).ToList();
 
             var entity = new CompanyContract()

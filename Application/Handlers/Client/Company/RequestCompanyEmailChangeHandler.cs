@@ -35,8 +35,8 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
             }
 
             var code = GenerateCode();
-            company.PendingEmail = email;
-            company.EmailChangeCode = code;
+            company.BusinessEmail = email;
+            //company.EmailChangeCode = code;
 
             await _companyRepository.UpdateAsync(company);
 

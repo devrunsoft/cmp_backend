@@ -10,8 +10,8 @@ namespace CMPNatural.Core.Entities
     public partial class OperationalAddress { public DateTime? IsDelete { get; set; } }
     public partial class BusinessType { public DateTime? IsDelete { get; set; } }
     public partial class BaseServiceAppointment { public DateTime? IsDelete { get; set; } }
-    public partial class ServiceAppointment { public DateTime? IsDelete { get; set; } }
-    public partial class ServiceAppointmentEmergency { public DateTime? IsDelete { get; set; } }
+    //public partial class ServiceAppointment { public DateTime? IsDelete { get; set; } }
+    //public partial class ServiceAppointmentEmergency { public DateTime? IsDelete { get; set; } }
     public partial class Product { public DateTime? IsDelete { get; set; } }
     public partial class ProductPrice { public DateTime? IsDelete { get; set; } }
     public partial class InvoiceProduct { public DateTime? IsDelete { get; set; } }
@@ -49,7 +49,7 @@ namespace CMPNatural.Core.Entities
     public partial class ChatParticipant { public DateTime? IsDelete { get; set; } }
     public partial class ChatMention { public DateTime? IsDelete { get; set; } }
     public partial class ChatMessage { public DateTime? IsDelete { get; set; } }
-    public partial class ChatMessageNote { public DateTime? IsDelete { get; set; } }
+    //public partial class ChatMessageNote { public DateTime? IsDelete { get; set; } }
     public partial class ChatNotification { public DateTime? IsDelete { get; set; } }
     public partial class ChatSession { public DateTime? IsDelete { get; set; } }
     public partial class ChatClientSession { public DateTime? IsDelete { get; set; } }
@@ -63,7 +63,7 @@ namespace CMPNatural.Core.Entities
     public partial class ProviderVehicle { public DateTime? IsDelete { get; set; } }
 
     public partial class ChatCommonMessage { public DateTime? IsDelete { get; set; } }
-    public partial class ChatCommonMessageNote { public DateTime? IsDelete { get; set; } }
+    //public partial class ChatCommonMessageNote { public DateTime? IsDelete { get; set; } }
     public partial class ChatCommonSession { public DateTime? IsDelete { get; set; } }
 
     public partial class ManifestGreaseServiceDetail { public DateTime? IsDelete { get; set; } }

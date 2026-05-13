@@ -15,8 +15,7 @@ namespace ScoutDirect.infrastructure.Repository
 
         public Task<Company?> GetByEmailAsync(string? BusinessEmail)
         {
-            return _dbContext.Company.Where(p => p.BusinessEmail == BusinessEmail).FirstOrDefaultAsync();
+            return BaseQuery().FirstOrDefaultAsync(p => p.BusinessEmail == BusinessEmail);
         }
     }
 }
-
