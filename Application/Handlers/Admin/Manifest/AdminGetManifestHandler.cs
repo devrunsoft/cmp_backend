@@ -45,12 +45,16 @@ namespace CMPNatural.Application
 
             .Include(x => x.ServiceAppointmentLocation)
             .ThenInclude(x => x.ManifestGreaseServiceDetail)
-            
+
+            .Include(x => x.RouteServiceAppointmentLocation)
+            .ThenInclude(x => x.Route)
+            .ThenInclude(x => x.Driver)
 
             .Include(x => x.Request)
             .ThenInclude(x=>x.Company)
             .Include(x => x.Provider)
             )).FirstOrDefault();
+
 
             return new Success<ManifestResponse>() { Data = ManifestMapper.Mapper.Map<ManifestResponse>(result) };
         }

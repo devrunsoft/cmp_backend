@@ -8,7 +8,6 @@ namespace CMPNatural
 {
 	public static class TwoFactorAdmin
 	{
-
 		public static async Task<string?> twoFactor(this AdminEntity entity, IMediator _mediator)
 		{
             Random random = new Random();

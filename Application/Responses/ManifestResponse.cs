@@ -20,10 +20,15 @@ namespace CMPNatural.Application.Responses
         public long? ProviderId { get; set; }
         public string? DriverFullName { get; set; }
 
+        public string? RouteNo { get; set; }
+
+        public string? SvcTime { get; set; }
+
         // Company (from Invoice.Company)
         public string? CompanyPrimaryFirstName { get; set; }
         public string? CompanyPrimaryLastName { get; set; }
         public string? CompanyPrimaryPhoneNumber { get; set; }
+        public string? CompanyEmail { get; set; }
 
         public long CompanyId { get; set; }
 
@@ -56,7 +61,10 @@ namespace CMPNatural.Application.Responses
         public int? ToHour { get; set; }
     }
 
-    public class ProductMinResponse { public string? Name { get; set; } }
+    public class ProductMinResponse {
+        public string? Name { get; set; }
+        public long ServiceType { get; set; }
+    }
     public class ProductPriceMinResponse { public string? Name { get; set; } }
 
     public class ServiceAppointmentLocationResponse

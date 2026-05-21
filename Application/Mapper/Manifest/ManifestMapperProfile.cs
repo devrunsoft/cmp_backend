@@ -1,4 +1,5 @@
 ﻿// CMPNatural.Application/Mapper/ManifestFlatMapperProfile.cs
+using System.Globalization;
 using AutoMapper;
 using CMPNatural.Application.Responses;
 using CMPNatural.Core.Entities;
@@ -39,13 +40,19 @@ namespace CMPNatural.Application.Mapper
                 .ForMember(d => d.NoteTitle, o => o.MapFrom(s => s.NoteTitle))
                 .ForMember(d => d.ProviderName, o => o.MapFrom(s => s.Provider != null ? s.Provider.Name : null))
                 .ForMember(d => d.ProviderId, o => o.MapFrom(s => s.ProviderId))
-                .ForMember(d => d.DriverFullName, o => o.MapFrom(s => ""))
+                .ForMember(d => d.DriverFullName, o =>
+                o.MapFrom(s => $"{s.RouteServiceAppointmentLocation.Route.Driver.Person.FirstName} {s.RouteServiceAppointmentLocation.Route.Driver.Person.LastName}"))
+                .ForMember(d => d.RouteNo, o =>
+                o.MapFrom(s => s.RouteServiceAppointmentLocation != null ? s.RouteServiceAppointmentLocation.Route.Id.ToString() : null))
+                .ForMember(d => d.SvcTime, o =>
+                o.MapFrom(s => s.ServiceDateTime!=null? s.ServiceDateTime.Value.ToString("hh:mm tt", CultureInfo.InvariantCulture): null))
 
                 // Company (via Invoice)
                 .ForMember(d => d.CompanyPrimaryFirstName, o => o.MapFrom(s => s.Request.Company.PrimaryFirstName))
                 .ForMember(d => d.CompanyId, o => o.MapFrom(s => s.Request.Company.Id))
                 .ForMember(d => d.CompanyPrimaryLastName, o => o.MapFrom(s => s.Request.Company.PrimaryLastName))
                 .ForMember(d => d.CompanyPrimaryPhoneNumber, o => o.MapFrom(s => s.Request.Company.PrimaryPhonNumber))
+                .ForMember(d => d.CompanyEmail, o => o.MapFrom(s => s.Request.Company.BusinessEmail))
 
                 // Operational Address
                 .ForMember(d => d.OperationalAddressAddress, o => o.MapFrom(s => s.Request.OperationalAddress.Address))

@@ -68,7 +68,7 @@ namespace CMPNatural.Core.Entities
 		}
 
 		public virtual RequestEntity Request { get; set; }
-        public virtual RouteServiceAppointmentLocation RouteServiceAppointmentLocation { get; set; }
+        public virtual RouteServiceAppointmentLocation? RouteServiceAppointmentLocation { get; set; }
         public virtual Provider? Provider { get; set; }
         public virtual DriverManifest DriverManifest { get; set; }
         [JsonIgnore]

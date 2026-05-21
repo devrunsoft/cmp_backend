@@ -12,6 +12,8 @@ namespace CMPNatural.Core.Entities
 		public virtual ServiceAppointmentLocation ServiceAppointmentLocation { get; set; }
 
         public virtual Route Route { get; set; }
-    }
+
+		//public Manifest Manifest { get; set; }
+	}
 }
 

@@ -14,6 +14,7 @@ namespace CMPNatural.Core.Entities
         public long ProviderId { get; set; }
         public DateTime CreateAt { get; set; }
 		public virtual ICollection<RouteServiceAppointmentLocation> Items { get; set; } = new List<RouteServiceAppointmentLocation>();
+        public virtual Driver Driver { get; set; }
 
     }
 }
