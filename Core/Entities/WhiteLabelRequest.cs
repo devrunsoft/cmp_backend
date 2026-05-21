@@ -3,9 +3,7 @@ namespace CMPNatural.Core.Entities
 {
 	public class WhiteLabelRequest
 	{
-		public WhiteLabelRequest()
-		{
-		}
+		public object MyProperty { get; set; }
 	}
 }
 
