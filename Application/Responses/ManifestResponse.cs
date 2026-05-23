@@ -29,6 +29,7 @@ namespace CMPNatural.Application.Responses
         public string? CompanyPrimaryLastName { get; set; }
         public string? CompanyPrimaryPhoneNumber { get; set; }
         public string? CompanyEmail { get; set; }
+        public string? ComapnyName { get; set; }
 
         public long CompanyId { get; set; }
 
@@ -36,6 +37,7 @@ namespace CMPNatural.Application.Responses
         public long OperationalAddressAddressId { get; set; }
         public string? OperationalAddressAddress { get; set; }
         public string? OperationalAddressLocationPhone { get; set; }
+        public string? LocationCompanyComment { get; set; }
 
         // Billing Info (from Invoice.BillingInformation)
         public string? BillingAddress { get; set; }
@@ -79,8 +81,11 @@ namespace CMPNatural.Application.Responses
 
     public class LocationCompanyMinResponse
     {
+        public double Lat { get; set; }
+        public double Long { get; set; }
         public string? Name { get; set; }
         public string? Address { get; set; }
+        public string? Comment { get; set; }
         public int Type { get; set; } = 1;
     }
 }

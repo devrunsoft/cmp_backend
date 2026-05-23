@@ -49,6 +49,7 @@ namespace CMPNatural.Application
             .Include(x => x.RouteServiceAppointmentLocation)
             .ThenInclude(x => x.Route)
             .ThenInclude(x => x.Driver)
+            .ThenInclude(x => x.Person)
 
             .Include(x => x.Request)
             .ThenInclude(x=>x.Company)

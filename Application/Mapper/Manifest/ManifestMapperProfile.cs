@@ -47,12 +47,12 @@ namespace CMPNatural.Application.Mapper
                 .ForMember(d => d.SvcTime, o =>
                 o.MapFrom(s => s.ServiceDateTime!=null? s.ServiceDateTime.Value.ToString("hh:mm tt", CultureInfo.InvariantCulture): null))
 
-                // Company (via Invoice)
                 .ForMember(d => d.CompanyPrimaryFirstName, o => o.MapFrom(s => s.Request.Company.PrimaryFirstName))
                 .ForMember(d => d.CompanyId, o => o.MapFrom(s => s.Request.Company.Id))
                 .ForMember(d => d.CompanyPrimaryLastName, o => o.MapFrom(s => s.Request.Company.PrimaryLastName))
                 .ForMember(d => d.CompanyPrimaryPhoneNumber, o => o.MapFrom(s => s.Request.Company.PrimaryPhonNumber))
                 .ForMember(d => d.CompanyEmail, o => o.MapFrom(s => s.Request.Company.BusinessEmail))
+                .ForMember(d => d.ComapnyName, o => o.MapFrom(s => s.Request.Company.CompanyName))
 
                 // Operational Address
                 .ForMember(d => d.OperationalAddressAddress, o => o.MapFrom(s => s.Request.OperationalAddress.Address))
@@ -68,6 +68,7 @@ namespace CMPNatural.Application.Mapper
                 // Services and comment (from Invoice)
                 .ForMember(d => d.Services, o => o.MapFrom(s => s.ServiceAppointmentLocation.ServiceAppointment))
                 .ForMember(d => d.ServiceAppointmentLocations, o => o.MapFrom(s => s.ServiceAppointmentLocation))
+                .ForMember(d => d.LocationCompanyComment, o => o.MapFrom(s => s.ServiceAppointmentLocation.LocationCompany.Comment))
                 .ForMember(d => d.Comment, o => o.MapFrom(s => s.Request.Comment))
 
                 // we don’t map back
