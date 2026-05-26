@@ -73,6 +73,7 @@ namespace CMPNatural.Api.Controllers.Admin.Client
                 OperationalAddressId = input.OperationalAddressId,
                 CapacityId = input.CapacityId,
                 Address = input.Address,
+                CallBeforeService = input.CallBeforeService
 
             });
 
@@ -99,6 +100,7 @@ namespace CMPNatural.Api.Controllers.Admin.Client
                 Type = input.Type,
                 CapacityId = input.CapacityId,
                 Address = input.Address,
+                CallBeforeService = input.CallBeforeService
             });
 
             return Ok(result);

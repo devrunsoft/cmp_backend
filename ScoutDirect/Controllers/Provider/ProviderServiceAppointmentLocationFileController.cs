@@ -19,7 +19,7 @@ namespace CMPNatural.Api.Controllers.Provider
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Arrived([FromBody] DriverUploadBeforServiceAppointmentLocationFileCommand command)
         {
-            var route = await _mediator.Send(new ProviderGetRouteCommand() { ProviderId = rProviderId, RouteId = command.RouteId });
+            var route = await _mediator.Send(new ProviderGetRouteCommand() { DriverId = rDriverId , rIsDriver=rIsDriver,  ProviderId = rProviderId, RouteId = command.RouteId });
             command.DriverId = route.Data.DriverId;
             command.ProviderId = rIsDriver ? null : rProviderId;
             var result = await _mediator.Send(command);
@@ -31,7 +31,7 @@ namespace CMPNatural.Api.Controllers.Provider
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> UploadAfter([FromBody] DriverUploadAfterServiceAppointmentLocationFileCommand command)
         {
-            var route = await _mediator.Send(new ProviderGetRouteCommand() { ProviderId = rProviderId, RouteId = command.RouteId });
+            var route = await _mediator.Send(new ProviderGetRouteCommand() { DriverId = rDriverId, rIsDriver = rIsDriver, ProviderId = rProviderId, RouteId = command.RouteId });
             command.DriverId = route.Data.DriverId;
             command.ProviderId = rIsDriver? null: rProviderId;
             var result = await _mediator.Send(command);

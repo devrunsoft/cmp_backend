@@ -60,6 +60,7 @@ namespace CMPNatural.Application
                         GreasePercentage = i.GreaseDetail.GreasePercentage,
                         WaterPercentage = i.GreaseDetail.WaterPercentage,
                         SolidsPercentage = i.GreaseDetail.SolidsPercentage,
+                        OilPercentage = i.GreaseDetail.OilPercentage,
                         CodAmount = i.GreaseDetail.CodAmount,
                     };
                 }

@@ -41,6 +41,8 @@ namespace CMPNatural.Api.Controllers.Provider
         public async Task<ActionResult> Get([FromQuery] ProviderGetAllRouteCommand command)
         {
             command.ProviderId = rProviderId;
+            command.DriverId = rDriverId;
+            command.rIsDriver = rIsDriver;
             var result = await _mediator.Send(command);
             return Ok(result);
         }
@@ -50,7 +52,10 @@ namespace CMPNatural.Api.Controllers.Provider
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Start([FromBody] DriverStartRouteCommand command)
         {
-            var route = await _mediator.Send(new ProviderGetRouteCommand() { ProviderId = rProviderId, RouteId = command.RouteId });
+            var route = await _mediator.Send(new ProviderGetRouteCommand() { ProviderId = rProviderId, RouteId = command.RouteId,
+                DriverId = rDriverId,
+                rIsDriver = rIsDriver,
+            });
             command.DriverId = route.Data.DriverId;
 
             var result = await _mediator.Send(command);
@@ -63,7 +68,11 @@ namespace CMPNatural.Api.Controllers.Provider
         public async Task<ActionResult> GetPreview([FromQuery] DriverPreviewRouteMapCommand command, [FromRoute] long RouteId)
         {
             command.RouteId = RouteId;
-            var route = await _mediator.Send(new ProviderGetRouteCommand() { ProviderId = rProviderId, RouteId = command.RouteId });
+
+            var route = await _mediator.Send(new ProviderGetRouteCommand() { ProviderId = rProviderId, RouteId = command.RouteId ,
+            DriverId = rDriverId,
+            rIsDriver = rIsDriver,
+        });
             command.DriverId = route.Data.DriverId;
             var result = await _mediator.Send(command);
             return Ok(result);
@@ -74,7 +83,10 @@ namespace CMPNatural.Api.Controllers.Provider
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> StartInProcces([FromBody] DriverStartInProccessRouteCommand command)
         {
-            var route = await _mediator.Send(new ProviderGetRouteCommand() { ProviderId = rProviderId, RouteId = command.RouteId });
+            var route = await _mediator.Send(new ProviderGetRouteCommand() { ProviderId = rProviderId, RouteId = command.RouteId,
+                DriverId = rDriverId,
+                rIsDriver = rIsDriver,
+            });
             command.DriverId = route.Data.DriverId;
             var result = await _mediator.Send(command);
             return Ok(result);
@@ -85,7 +97,10 @@ namespace CMPNatural.Api.Controllers.Provider
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Arrived([FromBody] DriverArrivedRouteCommand command)
         {
-            var route = await _mediator.Send(new ProviderGetRouteCommand() { ProviderId = rProviderId, RouteId = command.RouteId });
+            var route = await _mediator.Send(new ProviderGetRouteCommand() { ProviderId = rProviderId, RouteId = command.RouteId,
+                DriverId = rDriverId,
+                rIsDriver = rIsDriver,
+            });
             command.DriverId = route.Data.DriverId;
             var result = await _mediator.Send(command);
             return Ok(result);

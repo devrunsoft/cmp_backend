@@ -10,6 +10,8 @@ namespace CMPNatural.Application.Commands.Provider
     {
         public long ProviderId { get; set; }
         public long RouteId { get; set; }
+        public long? DriverId { get; set; }
+        public bool rIsDriver { get; set; }
     }
 }
 

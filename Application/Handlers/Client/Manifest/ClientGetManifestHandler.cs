@@ -10,16 +10,20 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using CMPNatural.Application.Mapper;
 using CMPNatural.Application.Responses;
+using Microsoft.Extensions.Options;
+using CMPNatural.Core.Models;
 
 namespace CMPNatural.Application
 {
     public class ClientGetManifestHandler : IRequestHandler<ClientGetManifestCommand, CommandResponse<ManifestResponse>>
     {
         private readonly IManifestRepository _repository;
+        private readonly AppConfig _config;
 
-        public ClientGetManifestHandler(IManifestRepository _repository)
+        public ClientGetManifestHandler(IManifestRepository _repository, IOptions<AppConfig> config)
         {
             this._repository = _repository;
+            _config = config.Value;
         }
 
         public async Task<CommandResponse<ManifestResponse>> Handle(ClientGetManifestCommand request, CancellationToken cancellationToken)
@@ -48,9 +52,12 @@ namespace CMPNatural.Application
             .ThenInclude(x => x.Company)
             .Include(x => x.Provider)
             )).FirstOrDefault();
+            var response = ManifestMapper.Mapper.Map<ManifestResponse>(result);
+            response.OperationalAddressAddressId = _config.AddressId
+                ? result.Request.OperationalAddress.Username
+                : result.Request.OperationalAddress.Id.ToString();
 
-            return new Success<ManifestResponse>() { Data = ManifestMapper.Mapper.Map<ManifestResponse>(result) };
+            return new Success<ManifestResponse>() { Data = response };
         }
     }
 }
-

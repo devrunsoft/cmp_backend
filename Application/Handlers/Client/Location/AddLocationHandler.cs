@@ -56,6 +56,7 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
                 OperationalAddressId = request.OperationalAddressId,
                 CapacityId = request.CapacityId,
                 Address = request.Address?? "",
+                CallBeforeService = request.CallBeforeService
 
             };
 

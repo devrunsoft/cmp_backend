@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using CMPNatural.Application;
 using CMPNatural.Application.Model;
+using CMPNatural.Application.Responses;
+using CMPNatural.Core.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using ScoutDirect.Api.Controllers._Base;
+using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Api.Controllers.Provider
 {
@@ -21,10 +25,18 @@ namespace CMPNatural.Api.Controllers.Provider
         [EnableCors("AllowOrigin")]
         public async Task<ActionResult> Get()
         {
-            var result = await _mediator.Send(new GetAllVehicleCommand()
+            CommandResponse<List<Vehicle>> result = null;
+            if (rIsDriver)
             {
-                ProviderId = rProviderId,
-            });
+                result = await _mediator.Send(new DriverGetAllVehicleCommand() { DriverId = rDriverId.Value });
+            }
+            else
+            {
+                result = await _mediator.Send(new GetAllVehicleCommand()
+                {
+                    ProviderId = rProviderId,
+                });
+            }
             return Ok(result);
         }
 

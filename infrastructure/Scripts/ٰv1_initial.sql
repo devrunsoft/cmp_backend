@@ -575,6 +575,7 @@ CREATE TABLE `ManifestGreaseServiceDetail` (
   `GreasePercentage` decimal(10,0) NOT NULL,
   `WaterPercentage` decimal(10,0) NOT NULL,
   `SolidsPercentage` decimal(10,0) NOT NULL,
+  `OilPercentage` decimal(10,0) NOT NULL,
   `CodAmount` decimal(10,0) DEFAULT NULL,
   `IsDelete` datetime DEFAULT NULL,
   PRIMARY KEY (`Id`)

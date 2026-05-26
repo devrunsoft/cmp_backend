@@ -3,7 +3,8 @@ namespace CMPEmail.Email
 {
 	public class MailModel
 	{
-		public string toEmail { get; set; }
+        public string FromName { get; set; } = "Ameriguardsvc";
+        public string toEmail { get; set; }
 		public string Subject { get; set; } = "";
         public string Body { get; set; } = "";
         public string Name { get; set; } = "";

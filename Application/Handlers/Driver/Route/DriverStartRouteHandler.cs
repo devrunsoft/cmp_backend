@@ -30,7 +30,7 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<RouteDateResponse>> Handle(DriverStartRouteCommand request, CancellationToken cancellationToken)
         {
             var inProcessService = (await _repository.GetAsync(
-                p => p.Status == RouteStatus.InProcess
+                p => p.Status == RouteStatus.InProcess && p.DriverId == request.DriverId
             )).Any();
 
             if (inProcessService)

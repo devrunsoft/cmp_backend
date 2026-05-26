@@ -63,6 +63,7 @@ namespace CMPNatural.Application.Handlers.CommandHandlers
             entity.Type = (int)request.Type;
             entity.CapacityId = request.CapacityId;
             entity.Address = request.Address??"";
+            entity.CallBeforeService = request.CallBeforeService;
 
             await _locationRepository.UpdateAsync(entity);
 

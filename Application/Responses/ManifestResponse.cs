@@ -13,6 +13,9 @@ namespace CMPNatural.Application.Responses
         public string ManifestNumber { get; set; } = "";
         public DateTime? ServiceDateTime { get; set; }
 
+        public bool CallBeforeService { get; set; }
+        public string OpeningHours { get; set; }
+
         // Manifest-related extras
         public string Number { get; set; } = "";
         public string NoteTitle { get; set; } = "";
@@ -34,8 +37,9 @@ namespace CMPNatural.Application.Responses
         public long CompanyId { get; set; }
 
         // Operational Address (from Invoice.OperationalAddress)
-        public long OperationalAddressAddressId { get; set; }
+        public string OperationalAddressAddressId { get; set; }
         public string? OperationalAddressAddress { get; set; }
+        public string? CrossStreets { get; set; }
         public string? OperationalAddressLocationPhone { get; set; }
         public string? LocationCompanyComment { get; set; }
 

@@ -22,7 +22,7 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<Route>> Handle(ProviderGetRouteCommand request, CancellationToken cancellationToken)
         {
-            var result = (await _repository.GetAsync(p => p.ProviderId == request.ProviderId && p.Id == request.RouteId)).FirstOrDefault();
+            var result = (await _repository.GetAsync(p => request.rIsDriver ? p.DriverId == request.DriverId : p.ProviderId == request.ProviderId && p.Id == request.RouteId)).FirstOrDefault();
             return new Success<Route>() { Data = result };
         }
     }
