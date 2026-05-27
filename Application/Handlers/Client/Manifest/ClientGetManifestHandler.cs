@@ -53,7 +53,7 @@ namespace CMPNatural.Application
             .Include(x => x.Provider)
             )).FirstOrDefault();
             var response = ManifestMapper.Mapper.Map<ManifestResponse>(result);
-            response.OperationalAddressAddressId = _config.AddressId
+            response.OperationalAddressAddressIdOrUsername = _config.AddressId
                 ? result.Request.OperationalAddress.Username
                 : result.Request.OperationalAddress.Id.ToString();
 

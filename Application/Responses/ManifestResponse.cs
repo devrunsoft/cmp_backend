@@ -37,7 +37,8 @@ namespace CMPNatural.Application.Responses
         public long CompanyId { get; set; }
 
         // Operational Address (from Invoice.OperationalAddress)
-        public string OperationalAddressAddressId { get; set; }
+        public long OperationalAddressAddressId { get; set; }
+        public string OperationalAddressAddressIdOrUsername { get; set; }
         public string? OperationalAddressAddress { get; set; }
         public string? CrossStreets { get; set; }
         public string? OperationalAddressLocationPhone { get; set; }

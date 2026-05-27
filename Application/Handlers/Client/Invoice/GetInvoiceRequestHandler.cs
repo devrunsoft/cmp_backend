@@ -25,6 +25,8 @@ namespace CMPNatural.Application.Handlers
             (request.OperationalAddressId == 0 || p.OperationalAddressId == request.OperationalAddressId)
             , query => query
             .Include(p => p.BaseServiceAppointment)
+            .ThenInclude(p => p.Product)
+            .ThenInclude(p=>p.ProductPrice)
             )).FirstOrDefault();
             return new Success<RequestResponse>() { Data = RequestMapper.Mapper.Map<RequestResponse>(entity) };
         }

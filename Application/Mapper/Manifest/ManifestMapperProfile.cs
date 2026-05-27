@@ -59,7 +59,7 @@ namespace CMPNatural.Application.Mapper
                 .ForMember(d => d.OperationalAddressAddress, o => o.MapFrom(s => s.ServiceAppointmentLocation.LocationCompany.Address))
                 .ForMember(d => d.OperationalAddressLocationPhone, o => o.MapFrom(s => s.ServiceAppointmentLocation.LocationCompany.PrimaryPhonNumber))
                 .ForMember(d => d.CallBeforeService, o => o.MapFrom(s => s.ServiceAppointmentLocation.LocationCompany.CallBeforeService))
-                .ForMember(d => d.OperationalAddressAddressId, o => o.MapFrom(s => s.Request.OperationalAddress.Id.ToString()))
+                .ForMember(d => d.OperationalAddressAddressId, o => o.MapFrom(s => s.Request.OperationalAddress.Id))
 
                 // Billing
                 .ForMember(d => d.BillingAddress, o => o.MapFrom(s => s.Request.BillingInformation.Address))
