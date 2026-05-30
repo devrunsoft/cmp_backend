@@ -70,4 +70,8 @@ namespace CMPNatural.Core.Entities
     public partial class ManifestGreaseServiceDetail : IIdentityObject<long> { }
 
     public partial class Notification : IIdentityObject<long> { }
+
+    public partial class Tenant : IIdentityObject<long> { }
+    public partial class TenantAccess : IIdentityObject<long> { }
+    public partial class WhiteLabelRequest : IIdentityObject<long> { }
 }

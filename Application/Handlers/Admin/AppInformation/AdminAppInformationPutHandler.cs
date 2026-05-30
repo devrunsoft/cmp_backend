@@ -24,10 +24,10 @@ namespace CMPNatural.Application
         public async Task<CommandResponse<AppInformation>> Handle(AdminAppInformationPutCommand request, CancellationToken cancellationToken)
         {
 
+            var id = Guid.NewGuid().ToString();
             string CompanyIcon = null;
             if (request.CompanyIcon != null)
-                CompanyIcon = FileHandler.AppfileHandler(request.BaseVirtualPath, request.CompanyIcon, "CompanyIcon", "Admin/AppInfromation");
-
+                CompanyIcon = FileHandler.AppfileHandler(request.BaseVirtualPath, request.CompanyIcon, "CompanyIcon", $"Admin/AppInfromation/{id}");
             //var entity = (await _repository.GetAllAsync()).FirstOrDefault();
             //if (entity == null)
             //{

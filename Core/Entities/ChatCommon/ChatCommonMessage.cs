@@ -7,6 +7,7 @@ namespace CMPNatural.Core.Entities
 	public partial class ChatCommonMessage
 	{
         public long Id { get; set; }
+        public long? TenantId { get; set; }
         public long ChatCommonSessionId { get; set; }
         public ParticipantType SenderType { get; set; }
         public long SenderId { get; set; }

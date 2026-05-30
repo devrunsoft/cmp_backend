@@ -8,6 +8,7 @@ namespace CMPNatural.Core.Entities
     public partial class ChatMessage
     {
         public long Id { get; set; }
+        public long? TenantId { get; set; }
         public long ChatSessionId { get; set; }
         public long ClientId { get; set; }
         public long OperationalAddressId { get; set; }

@@ -70,7 +70,7 @@ namespace CMPNatural.Api.Controllers
                     issuer: _configuration["JWT:ValidIssuer"],
                     audience: _configuration["JWT:ValidAudience"],
                     expires: DateTime.Now.AddMinutes(_expiresModel.Client),
-                    claims: new GenerateToken().get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered, company.ProfilePicture, company.FullName, company.PersonId, company.BusinessEmail),
+                    claims: new GenerateToken().get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered, company.ProfilePicture, company.FullName, company.PersonId, company.BusinessEmail, null, company.TenantId),
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
 
@@ -269,7 +269,7 @@ namespace CMPNatural.Api.Controllers
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
                 expires: DateTime.Now.AddMinutes(_expiresModel.Client),
-                claims: get_claims(data.Type.ToString(), data.BusinessEmail, data.Id.ToString(), data.ProfilePicture , data.FullName , data.PersonId),
+                claims: get_claims(data.Type.ToString(), data.BusinessEmail, data.Id.ToString(), data.ProfilePicture , data.FullName , data.PersonId, data.TenantId),
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );
 
@@ -288,7 +288,7 @@ namespace CMPNatural.Api.Controllers
             });
         }
 
-        private Claim[] get_claims(string adminStatus, string businessEmail, string companyId, string? ProfilePicture,string fullname , Guid PersonId)
+        private Claim[] get_claims(string adminStatus, string businessEmail, string companyId, string? ProfilePicture,string fullname , Guid PersonId, long? tenantId)
         {
             List<Claim> claims = new List<Claim>() { new Claim("businessEmail", businessEmail), new Claim("CompanyId", companyId) };
 
@@ -297,6 +297,10 @@ namespace CMPNatural.Api.Controllers
             claims.Add(new Claim("ProfilePicture", ProfilePicture ?? ""));
             claims.Add(new Claim("FullName", fullname));
             claims.Add(new Claim("PersonId", PersonId.ToString()));
+            if (tenantId.HasValue)
+            {
+                claims.Add(new Claim("TenantId", tenantId.Value.ToString()));
+            }
 
             return claims.ToArray();
         }
@@ -387,5 +391,4 @@ namespace CMPNatural.Api.Controllers
         }
     }
 }
-
 

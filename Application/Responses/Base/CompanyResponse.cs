@@ -29,6 +29,7 @@ namespace CMPNatural.Application.Responses
         public string? ActivationLinkGo { get; set; } = null;
         public string? ProfilePicture { get; set; } = null;
         public Guid PersonId { get; set; }
+        public long? TenantId { get; set; }
         public BillingInformation? BillingInformation { get; set; } = null;
 
         public string FullName { get { return $"{PrimaryFirstName} {PrimaryLastName}"; } }

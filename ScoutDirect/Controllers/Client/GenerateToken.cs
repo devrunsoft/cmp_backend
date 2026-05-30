@@ -5,7 +5,7 @@ namespace CMPNatural.Api.Controllers.Client
 {
 	public class GenerateToken
 	{
-        public Claim[] get_claims(string adminStatus, string businessEmail, string companyId, bool registered, string? ProfilePicture, string fullname, Guid PersonId,string email ,  long? operationalAddressId = null)
+        public Claim[] get_claims(string adminStatus, string businessEmail, string companyId, bool registered, string? ProfilePicture, string fullname, Guid PersonId, string email, long? operationalAddressId = null, long? tenantId = null)
         {
             List<Claim> claims = new List<Claim>() { new Claim("businessEmail", businessEmail), new Claim("CompanyId", companyId) };
 
@@ -18,6 +18,11 @@ namespace CMPNatural.Api.Controllers.Client
             if (operationalAddressId.HasValue && operationalAddressId.Value > 0)
             {
                 claims.Add(new Claim("OperationalAddressId", operationalAddressId.Value.ToString()));
+            }
+
+            if (tenantId.HasValue)
+            {
+                claims.Add(new Claim("TenantId", tenantId.Value.ToString()));
             }
 
             return claims.ToArray();

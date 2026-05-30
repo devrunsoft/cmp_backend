@@ -66,6 +66,10 @@ namespace ScoutDirect.Api.Controllers
             if (result.Success)
             {
                 var company = (CompanyResponse)result.Data;
+                if (currentTenant?.TenantId.HasValue == true && company.TenantId != currentTenant.TenantId)
+                {
+                    return Ok(new CommandResponse<object>() { Success = false, Message = "This client account is not assigned to the requested tenant." });
+                }
 
                 var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
@@ -73,7 +77,7 @@ namespace ScoutDirect.Api.Controllers
                     issuer: _configuration["JWT:ValidIssuer"],
                     audience: _configuration["JWT:ValidAudience"],
                     expires: DateTime.Now.AddMinutes(_expiresModel.Client),
-                    claims: new GenerateToken().get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered, company.ProfilePicture, company.FullName, company.PersonId, company.BusinessEmail, company.OperationalAddressId),
+                    claims: new GenerateToken().get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered, company.ProfilePicture, company.FullName, company.PersonId, company.BusinessEmail, company.OperationalAddressId, company.TenantId),
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
 
@@ -118,6 +122,10 @@ namespace ScoutDirect.Api.Controllers
             if (result.Success)
             {
                 var company = (CompanyResponse) result.Data;
+                if (currentTenant?.TenantId.HasValue == true && company.TenantId != currentTenant.TenantId)
+                {
+                    return Ok(new CommandResponse<object>() { Success = false, Message = "This client account is not assigned to the requested tenant." });
+                }
 
                 var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
@@ -125,7 +133,7 @@ namespace ScoutDirect.Api.Controllers
                     issuer: _configuration["JWT:ValidIssuer"],
                     audience: _configuration["JWT:ValidAudience"],
                     expires: DateTime.Now.AddMinutes(_expiresModel.Client),
-                    claims: new GenerateToken().get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered,company.ProfilePicture , company.FullName, company.PersonId,company.BusinessEmail ,company.OperationalAddressId),
+                    claims: new GenerateToken().get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered,company.ProfilePicture , company.FullName, company.PersonId,company.BusinessEmail ,company.OperationalAddressId, company.TenantId),
                     signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                     );
 
@@ -245,7 +253,7 @@ namespace ScoutDirect.Api.Controllers
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
                 expires: DateTime.Now.AddMinutes(_expiresModel.Client),
-                claims: new GenerateToken().get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered, company.ProfilePicture, company.FullName, company.PersonId, company.BusinessEmail),
+                claims: new GenerateToken().get_claims(company.Type.ToString(), company.BusinessEmail, company.Id.ToString(), company.Registered, company.ProfilePicture, company.FullName, company.PersonId, company.BusinessEmail, null, company.TenantId),
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );
 

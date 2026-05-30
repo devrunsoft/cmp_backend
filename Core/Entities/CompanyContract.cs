@@ -8,6 +8,7 @@ namespace CMPNatural.Core.Entities
 	public partial class CompanyContract
 	{
 		public long Id { get; set; }
+        public long? TenantId { get; set; }
         public string Content { get; set; } = "";
 		public long ContractId { get; set; }
         public long CompanyId { get; set; }
@@ -56,4 +57,3 @@ namespace CMPNatural.Core.Entities
         }
     }
 }
-

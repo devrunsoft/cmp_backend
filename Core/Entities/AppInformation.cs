@@ -8,7 +8,8 @@ namespace CMPNatural.Core.Entities
 		}
 
 		public long Id { get; set; }
-		public string CompanyTitle { get; set; }
+        public long? TenantId { get; set; }
+        public string CompanyTitle { get; set; }
 		public string CompanyIcon { get; set; }
         public string CompanyAddress { get; set; }
         public string CompanyEmail{ get; set; }

@@ -96,7 +96,8 @@ namespace CMPNatural.Api
                     true,
                     false,
                     null,
-                    provider.PersonId?.ToString() ?? Guid.Empty.ToString());
+                    provider.PersonId?.ToString() ?? Guid.Empty.ToString(),
+                    provider.TenantId);
             }
 
             var driver = (await _driverRepository.GetAsync(x => x.Email == input.email, query => query.Include(x => x.ProviderDriver))).FirstOrDefault();
@@ -152,14 +153,14 @@ namespace CMPNatural.Api
             return Ok(new Success<object>());
         }
 
-        private ActionResult BuildResetPasswordHtml(string email, long providerId, bool isDefault, bool isDriver, long? driverId, string personId)
+        private ActionResult BuildResetPasswordHtml(string email, long providerId, bool isDefault, bool isDriver, long? driverId, string personId, long? tenantId = null)
         {
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
             var token = new JwtSecurityToken(
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
                 expires: DateTime.Now.AddMinutes(_expiresModel.Client),
-                claims: get_claims(email, providerId, isDefault, isDriver, driverId, personId),
+                claims: get_claims(email, providerId, isDefault, isDriver, driverId, personId, tenantId),
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
 
@@ -261,13 +262,29 @@ namespace CMPNatural.Api
             var Id = isDriver ? 0 : result.Data.Id;
             long? DriverId = isDriver ? resultDriver.Data.Id : null;
             var isFirstLogin = isDriver ? true : result.Data.HasLogin;
+            long? tenantId = null;
+
+            if (isDriver)
+            {
+                var driverProvider = await _providerRepository.GetByIdAsync(resultDriver!.Data.ProviderId);
+                tenantId = driverProvider?.TenantId;
+            }
+            else
+            {
+                tenantId = result.Data.TenantId;
+            }
+
+            if (currentTenant?.TenantId.HasValue == true && tenantId != currentTenant.TenantId)
+            {
+                return Ok(new CommandResponse<object>() { Success = false, Message = "This provider account is not assigned to the requested tenant." });
+            }
 
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
             var token = new JwtSecurityToken(
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
                 expires: DateTime.Now.AddDays(30),
-                claims: get_claims(email, Id, IsDefault, resultDriver != null, DriverId, personId),
+                claims: get_claims(email, Id, IsDefault, resultDriver != null, DriverId, personId, tenantId),
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );
 
@@ -316,13 +333,29 @@ namespace CMPNatural.Api
             var Id = isDriver ? 0 : result.Data.Id;
             long? DriverId = isDriver ? resultDriver.Data.Id : null;
             var isFirstLogin = isDriver ? true : result.Data.HasLogin;
+            long? tenantId = null;
+
+            if (isDriver)
+            {
+                var driverProvider = await _providerRepository.GetByIdAsync(resultDriver!.Data.ProviderId);
+                tenantId = driverProvider?.TenantId;
+            }
+            else
+            {
+                tenantId = result.Data.TenantId;
+            }
+
+            if (currentTenant?.TenantId.HasValue == true && tenantId != currentTenant.TenantId)
+            {
+                return Ok(new CommandResponse<object>() { Success = false, Message = "This provider account is not assigned to the requested tenant." });
+            }
 
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
             var token = new JwtSecurityToken(
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
                 expires: DateTime.Now.AddDays(30),
-                claims: get_claims(email, Id, IsDefault, resultDriver != null, DriverId, personId),
+                claims: get_claims(email, Id, IsDefault, resultDriver != null, DriverId, personId, tenantId),
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );
 
@@ -355,7 +388,7 @@ namespace CMPNatural.Api
                 data.Email, link, "Activate Account\n");
         }
 
-        private Claim[] get_claims(string Email, long ProviderId, bool IsDefault, bool IsDriver, long? DriverId, string PersonId)
+        private Claim[] get_claims(string Email, long ProviderId, bool IsDefault, bool IsDriver, long? DriverId, string PersonId, long? tenantId)
         {
             List<Claim> claims = new List<Claim>() {
                 new Claim(ClaimTypes.NameIdentifier, ProviderId.ToString()) ,
@@ -365,6 +398,10 @@ namespace CMPNatural.Api
                 new Claim("IsDriver", IsDriver.ToString()),
                 new Claim("DriverId", DriverId==null ? "-1" : DriverId.ToString()),
             };
+            if (tenantId.HasValue)
+            {
+                claims.Add(new Claim("TenantId", tenantId.Value.ToString()));
+            }
             return claims.ToArray();
         }
     }

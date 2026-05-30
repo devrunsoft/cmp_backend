@@ -7,6 +7,7 @@ namespace CMPNatural.Core.Entities
 	public partial class ChatClientSession
 	{
         public long Id { get; set; }
+        public long? TenantId { get; set; }
         public long ClientId { get; set; }
         public bool IsActive { get; set; } = true;
 

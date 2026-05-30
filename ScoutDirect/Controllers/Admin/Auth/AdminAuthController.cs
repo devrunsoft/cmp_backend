@@ -44,6 +44,10 @@ namespace CMPNatural.Api.Controllers.Admin.Auth
             }
 
             var data = (AdminEntity)result.Data;
+            if (currentTenant?.TenantId.HasValue == true && data.TenantId != currentTenant.TenantId)
+            {
+                return Ok(new CommandResponse<object>() { Success = false, Message = "This admin account is not assigned to the requested tenant." });
+            }
             var token = generatetoken(data);
 
             return Ok(new Success<object>()
@@ -71,6 +75,10 @@ namespace CMPNatural.Api.Controllers.Admin.Auth
             }
 
             var data = (AdminEntity)result.Data;
+            if (currentTenant?.TenantId.HasValue == true && data.TenantId != currentTenant.TenantId)
+            {
+                return Ok(new CommandResponse<object>() { Success = false, Message = "This admin account is not assigned to the requested tenant." });
+            }
 
             if (data.TwoFactor)
             {
@@ -122,6 +130,10 @@ namespace CMPNatural.Api.Controllers.Admin.Auth
             }
 
             var data = (AdminEntity)result.Data;
+            if (currentTenant?.TenantId.HasValue == true && data.TenantId != currentTenant.TenantId)
+            {
+                return Ok(new CommandResponse<object>() { Success = false, Message = "This admin account is not assigned to the requested tenant." });
+            }
 
             if (data.TwoFactor)
             {
@@ -160,13 +172,13 @@ namespace CMPNatural.Api.Controllers.Admin.Auth
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
             expires: DateTime.Now.AddMinutes(_expiresModel.Admin),
-            claims: get_claims(data.PersonId, data.Email, data.Role, data.Id, data.FullName),
+            claims: get_claims(data.PersonId, data.Email, data.Role, data.Id, data.FullName, data.TenantId),
             signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
             return token;
         }
 
-        private Claim[] get_claims(Guid PersonId, string Email,string Role , long AdminId, string fullname)
+        private Claim[] get_claims(Guid PersonId, string Email,string Role , long AdminId, string fullname, long? tenantId)
         {
             List<Claim> claims = new List<Claim>() { new Claim("isAdmin", "true"),
                 new Claim(ClaimTypes.NameIdentifier, AdminId.ToString()) ,
@@ -177,8 +189,11 @@ namespace CMPNatural.Api.Controllers.Admin.Auth
             };
 
             claims.Add(new Claim("FullName", fullname));
+            if (tenantId.HasValue)
+            {
+                claims.Add(new Claim("TenantId", tenantId.Value.ToString()));
+            }
             return claims.ToArray();
         }
     }
 }
-

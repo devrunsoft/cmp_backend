@@ -16,6 +16,7 @@ using CMPNatural.Application;
 using Microsoft.AspNetCore.Hosting.Server;
 using CMPNatural.Application.Model;
 using CMPNatural.Application.Commands.Driver.Profile;
+using CMPNatural.Core.Repositories;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -26,11 +27,13 @@ namespace CMPNatural.Api.Controllers
         private readonly IWebHostEnvironment Environment;
         protected readonly ExpiresModel _expiresModel;
         private readonly IConfiguration _configuration;
-        public DriverUserController(IMediator mediator , IConfiguration _configuration, IOptions<ExpiresModel> _expiresModel, IWebHostEnvironment _environment) : base(mediator)
+        private readonly IProviderReposiotry _providerRepository;
+        public DriverUserController(IMediator mediator , IConfiguration _configuration, IOptions<ExpiresModel> _expiresModel, IWebHostEnvironment _environment, IProviderReposiotry providerRepository) : base(mediator)
         {
             this._configuration = _configuration;
             this._expiresModel = _expiresModel.Value;
             Environment = _environment;
+            _providerRepository = providerRepository;
         }
 
 
@@ -92,6 +95,11 @@ namespace CMPNatural.Api.Controllers
             }
 
             var data = (DriverResponse)result.Data;
+            var provider = await _providerRepository.GetByIdAsync(data.ProviderId);
+            if (currentTenant?.TenantId.HasValue == true && provider?.TenantId != currentTenant.TenantId)
+            {
+                return Ok(new CommandResponse<object>() { Success = false, Message = "This driver account is not assigned to the requested tenant." });
+            }
 
             //if (data.TwoFactor)
             //{
@@ -111,7 +119,7 @@ namespace CMPNatural.Api.Controllers
             //    }
             //}
 
-            var token = generatetoken(data);
+            var token = generatetoken(data, provider?.TenantId);
 
             return Ok(new Success<object>()
             {
@@ -125,20 +133,20 @@ namespace CMPNatural.Api.Controllers
             });
         }
 
-        private JwtSecurityToken generatetoken(DriverResponse data)
+        private JwtSecurityToken generatetoken(DriverResponse data, long? tenantId)
         {
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
             var token = new JwtSecurityToken(
                 issuer: _configuration["JWT:ValidIssuer"],
                 audience: _configuration["JWT:ValidAudience"],
             expires: DateTime.Now.AddMinutes(_expiresModel.Admin),
-            claims: get_claims(data.PersonId, data.Email, data.Id, data.FullName),
+            claims: get_claims(data.PersonId, data.Email, data.Id, data.FullName, tenantId),
             signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
             return token;
         }
 
-        private Claim[] get_claims(Guid PersonId, string Email, long DriverId, string fullname)
+        private Claim[] get_claims(Guid PersonId, string Email, long DriverId, string fullname, long? tenantId)
         {
                 List<Claim> claims = new List<Claim>() {
                 new Claim(ClaimTypes.NameIdentifier, DriverId.ToString()) ,
@@ -151,8 +159,11 @@ namespace CMPNatural.Api.Controllers
                 };
 
             claims.Add(new Claim("FullName", fullname));
+            if (tenantId.HasValue)
+            {
+                claims.Add(new Claim("TenantId", tenantId.Value.ToString()));
+            }
             return claims.ToArray();
         }
     }
 }
-

@@ -9,6 +9,7 @@ namespace CMPNatural.Core.Entities
 	public partial class Manifest
 	{
 		public long Id { get; set; }
+        public long? TenantId { get; set; }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public ManifestStatus Status { get; set; }

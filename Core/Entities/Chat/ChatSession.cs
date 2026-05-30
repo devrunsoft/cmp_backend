@@ -7,6 +7,7 @@ namespace CMPNatural.Core.Entities
     public partial class ChatSession
     {
         public long Id { get; set; }
+        public long? TenantId { get; set; }
         public long ClientId { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime? ClosedAt { get; set; }
@@ -25,5 +26,4 @@ namespace CMPNatural.Core.Entities
         public virtual ICollection<ChatMessage> Messages { get; set; }
     }
 }
-
 

@@ -92,6 +92,8 @@ namespace ScoutDirect.Api
                     });
             });
 
+            services.AddHttpContextAccessor();
+
 
             //services.AddSignalR().AddJsonProtocol(options =>
             //{
@@ -281,6 +283,7 @@ namespace ScoutDirect.Api
             services.AddHangfireServer();
             services.AddSignalR();
             services.AddScoped<IChatService, ChatService>();
+            services.AddScoped<ICurrentTenantAccessor, CurrentTenantAccessor>();
 
 
         }
@@ -353,6 +356,7 @@ namespace ScoutDirect.Api
 
 
             app.UseRouting();
+            app.UseMiddleware<TenantResolutionMiddleware>();
             app.UseCors("AllowOrigin");
 
             //app.UseSignalRQueryStringAuth();

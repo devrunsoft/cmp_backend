@@ -41,12 +41,14 @@ namespace CMPNatural.Core.Entities
 
         public Guid? ActivationLink { get; set; } = null;
         public bool? HasLogin { get; set; }
+        public long? TenantId { get; set; }
 
         public string? ManagerFirstName { get; set; }
         public string? ManagerLastName { get; set; }
         public string? ManagerPhoneNumber { get; set; }
        
 
+        public virtual Tenant? Tenant { get; set; }
         public virtual ICollection<ProviderService> ProviderService { get; set; } = new List<ProviderService>();
         public virtual ICollection<ServiceArea> ServiceArea { get; set; } = new List<ServiceArea>();
         public virtual ICollection<ProviderDriver> ProviderDriver { get; set; }

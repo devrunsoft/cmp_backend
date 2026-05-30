@@ -14,8 +14,10 @@ namespace CMPNatural.Core.Entities
         public bool? IsActive { get; set; } = true;
 
         public Guid PersonId { get; set; }
+        public long? TenantId { get; set; }
 
 		public virtual Person Person { get; set; }
+        public virtual Tenant? Tenant { get; set; }
 
         public string Password { get; set; }
 
@@ -30,4 +32,3 @@ namespace CMPNatural.Core.Entities
 
     }
 }
-

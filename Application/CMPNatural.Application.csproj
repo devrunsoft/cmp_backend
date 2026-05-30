@@ -322,6 +322,8 @@
     <None Remove="Handlers\Provider\Provider\ForgotPassword\" />
     <None Remove="Commands\Admin\Notification\" />
     <None Remove="Handlers\Admin\Notification\" />
+    <None Remove="Handlers\Provider\WhiteLabel\" />
+    <None Remove="Commands\Provider\WhiteLabel\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -655,6 +657,8 @@
     <Folder Include="Handlers\Provider\Provider\ForgotPassword\" />
     <Folder Include="Commands\Admin\Notification\" />
     <Folder Include="Handlers\Admin\Notification\" />
+    <Folder Include="Handlers\Provider\WhiteLabel\" />
+    <Folder Include="Commands\Provider\WhiteLabel\" />
   </ItemGroup> 
 
   <ItemGroup>

@@ -2,6 +2,8 @@
 using CMPNatural.Core.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System.Collections.Generic;
+using System.Text.Json;
 
 namespace infrastructure.Data
 {
@@ -71,6 +73,9 @@ namespace infrastructure.Data
         public virtual DbSet<ProviderVehicle> ProviderVehicle { get; set; } = null!;
         public virtual DbSet<ManifestGreaseServiceDetail> ManifestGreaseServiceDetail { get; set; } = null!;
         public virtual DbSet<Notification> Notification { get; set; } = null!;
+        public virtual DbSet<Tenant> Tenant { get; set; } = null!;
+        public virtual DbSet<TenantAccess> TenantAccess { get; set; } = null!;
+        public virtual DbSet<WhiteLabelRequest> WhiteLabelRequest { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -90,6 +95,60 @@ namespace infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Tenant>(entity =>
+            {
+                entity.HasQueryFilter(x => x.IsDelete == null);
+                entity.ToTable("Tenant");
+                entity.Property(x => x.Name).HasMaxLength(255);
+                entity.Property(x => x.Slug).HasMaxLength(128);
+                entity.Property(x => x.Host).HasMaxLength(255);
+                entity.HasIndex(x => x.Slug).IsUnique();
+                entity.HasIndex(x => x.Host).IsUnique();
+            });
+
+            modelBuilder.Entity<TenantAccess>(entity =>
+            {
+                entity.HasQueryFilter(x => x.IsDelete == null);
+                entity.ToTable("TenantAccess");
+
+                entity.HasIndex(x => new { x.TenantId, x.AccessibleTenantId }).IsUnique();
+
+                entity.HasOne(x => x.Tenant)
+                    .WithMany(x => x.TenantAccesses)
+                    .HasForeignKey(x => x.TenantId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(x => x.AccessibleTenant)
+                    .WithMany()
+                    .HasForeignKey(x => x.AccessibleTenantId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<WhiteLabelRequest>(entity =>
+            {
+                entity.HasQueryFilter(x => x.IsDelete == null);
+                entity.ToTable("WhiteLabelRequest");
+
+                entity.Property(x => x.CustomDomain).HasMaxLength(255);
+                entity.Property(x => x.SubDomain).HasMaxLength(255);
+                entity.Property(x => x.DispatchAccessibleTenantIds)
+                    .HasConversion(
+                        x => JsonSerializer.Serialize(x ?? new List<long>(), (JsonSerializerOptions?)null),
+                        x => string.IsNullOrWhiteSpace(x)
+                            ? new List<long>()
+                            : JsonSerializer.Deserialize<List<long>>(x, (JsonSerializerOptions?)null) ?? new List<long>());
+
+                entity.HasIndex(x => x.ProviderId).IsUnique();
+
+                entity.HasOne(x => x.Provider)
+                    .WithMany()
+                    .HasForeignKey(x => x.ProviderId);
+
+                entity.HasOne(x => x.Tenant)
+                    .WithMany()
+                    .HasForeignKey(x => x.TenantId);
+            });
+
             modelBuilder.Entity<Notification>(entity =>
             {
                 entity.HasQueryFilter(x => x.IsDelete == null);
@@ -636,6 +695,10 @@ namespace infrastructure.Data
                 .WithOne(p => p.Company)
                 .HasForeignKey(d => d.CompanyId);
 
+                entity.HasOne(d => d.Tenant)
+                .WithMany(p => p.Companies)
+                .HasForeignKey(d => d.TenantId);
+
                 entity.HasMany(d => d.OperationalAddress)
                 .WithOne(p => p.Company)
                 .HasForeignKey(d => d.CompanyId);
@@ -878,6 +941,10 @@ namespace infrastructure.Data
                 entity.HasOne(d => d.Person)
                 .WithOne()
                 .HasForeignKey<AdminEntity>(d => d.PersonId);
+
+                entity.HasOne(d => d.Tenant)
+                .WithMany(p => p.Admins)
+                .HasForeignKey(d => d.TenantId);
             });
 
             modelBuilder.Entity<Provider>(entity =>
@@ -899,6 +966,10 @@ namespace infrastructure.Data
                 entity.HasMany(d => d.ProviderService)
                 .WithOne(p => p.Provider)
 .               HasForeignKey(d => d.ProviderId);
+
+                entity.HasOne(d => d.Tenant)
+                .WithMany(p => p.Providers)
+                .HasForeignKey(d => d.TenantId);
 
                 entity.HasMany(d => d.ServiceArea)
                 .WithOne(p => p.Provider)

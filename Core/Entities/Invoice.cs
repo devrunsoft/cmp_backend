@@ -7,6 +7,7 @@ namespace CMPNatural.Core.Entities
 	public partial class Invoice
 	{
 		public long Id { get; set; }
+        public long? TenantId { get; set; }
 		public long CompanyId { get; set; }
         public long? ProviderId { get; set; }
         public InvoiceStatus Status { get; set; }
@@ -77,4 +78,3 @@ namespace CMPNatural.Core.Entities
         public virtual OperationalAddress? OperationalAddress { get; set; }
     }
 }
-

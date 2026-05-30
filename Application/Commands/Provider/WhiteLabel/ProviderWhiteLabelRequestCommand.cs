@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using CMPNatural.Core.Entities;
+using MediatR;
+using ScoutDirect.Application.Responses;
 
-namespace CMPNatural.Core.Entities
+namespace CMPNatural.Application.Commands.Provider.WhiteLabel
 {
-    public partial class WhiteLabelRequest
+    public class ProviderWhiteLabelRequestCommand : IRequest<CommandResponse<WhiteLabelRequest>>
     {
-        public long Id { get; set; }
         public long ProviderId { get; set; }
-        public long? TenantId { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public DateTime? UpdatedAt { get; set; }
 
         public bool ManageClientsDirectly { get; set; }
 
@@ -28,8 +26,5 @@ namespace CMPNatural.Core.Entities
         public string? SubDomain { get; set; }
 
         public List<long> DispatchAccessibleTenantIds { get; set; } = new();
-
-        public virtual Provider Provider { get; set; } = null!;
-        public virtual Tenant? Tenant { get; set; }
     }
 }

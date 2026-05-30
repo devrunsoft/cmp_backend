@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using CMPNatural.Core.Entities;
 using System.Linq;
 using CMPNatural.Application.Commands;
+using CMPNatural.Core.Services;
 
 namespace CMPNatural.Application
 {
@@ -19,7 +20,9 @@ namespace CMPNatural.Application
         }
         public async Task<CommandResponse<string>> Handle(LogoCommand request, CancellationToken cancellationToken)
         {
-            var entity = (await _repository.GetAllAsync()).FirstOrDefault();
+            var tenantContext = TenantExecutionContext.Current;
+            var tenantId = tenantContext?.TenantId;
+            var entity = (await _repository.GetAsync(x => x.TenantId == tenantId)).LastOrDefault();
             return new Success<string>() { Data = entity==null ? "" : entity.CompanyIcon };
         }
     }

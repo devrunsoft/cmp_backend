@@ -9,6 +9,7 @@ namespace CMPNatural.Core.Entities
 		{
 		}
 		public long Id { get; set; }
+        public long? TenantId { get; set; }
 		public string CheckoutSessionId { get; set; }
 		public long InvoiceId { get; set; }
         public long CompanyId { get; set; }
@@ -19,4 +20,3 @@ namespace CMPNatural.Core.Entities
 
 	}
 }
-

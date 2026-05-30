@@ -8,6 +8,7 @@ using CMPNatural.Core.Entities;
 using System.Linq;
 using System.Collections.Generic;
 using ScoutDirect.Core.Caching;
+using CMPNatural.Core.Services;
 
 namespace CMPNatural.Application
 {
@@ -22,7 +23,9 @@ namespace CMPNatural.Application
         }
         public async Task<CommandResponse<AppInformation>> Handle(AdminAppInformationGetCommand request, CancellationToken cancellationToken)
         {
-            var entity = (await _repository.GetAllAsync()).LastOrDefault();
+            var tenantContext = TenantExecutionContext.Current;
+            var tenantId = tenantContext?.TenantId;
+            var entity = (await _repository.GetAsync(x=>x.TenantId == tenantId)).LastOrDefault();
 
             var cacheKey = $"AppInformation";
             _cache.Set(cacheKey, entity);

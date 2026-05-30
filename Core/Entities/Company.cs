@@ -31,6 +31,7 @@ namespace CMPNatural.Core.Entities
         public CompanyStatus Status { get; set; }
         public Guid? ActivationLink { get; set; } = null;
         public Guid? PersonId { get; set; } = null;
+        public long? TenantId { get; set; }
         public string? ProfilePicture { get; set; }
 		public string CorporateAddress { get; set; }
         public string? Username { get; set; }
@@ -40,6 +41,7 @@ namespace CMPNatural.Core.Entities
         public virtual ICollection<OperationalAddress> OperationalAddress { get; set; }
         public virtual ICollection<BillingInformation> BillingInformations { get; set; }
         public virtual ICollection<Invoice> Invoices { get; set; }
+        public virtual Tenant? Tenant { get; set; }
         [JsonIgnore]
         public virtual ICollection<RequestEntity> Requests { get; set; }
         [JsonIgnore]

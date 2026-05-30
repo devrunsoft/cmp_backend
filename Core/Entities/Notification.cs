@@ -6,6 +6,7 @@ namespace CMPNatural.Core.Entities
 	public partial class Notification
 	{
 		public long Id { get; set; }
+        public long? TenantId { get; set; }
 
 		public string Title { get; set; } = string.Empty;
 
@@ -21,4 +22,3 @@ namespace CMPNatural.Core.Entities
 
     }
 }
-

@@ -6,6 +6,7 @@ using CMPNatural.Core.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ScoutDirect.Core.Caching;
+using CMPNatural.Api.Services;
 
 namespace ScoutDirect.Api.Controllers._Base
 {
@@ -78,6 +79,12 @@ namespace ScoutDirect.Api.Controllers._Base
         private IServiceScopeFactory _serviceScopeFactory;
         protected IServiceScopeFactory serviceScopeFactory =>
             _serviceScopeFactory ??= HttpContext.RequestServices.GetRequiredService<IServiceScopeFactory>();
+
+        private ICurrentTenantAccessor _currentTenantAccessor;
+        protected ICurrentTenantAccessor currentTenantAccessor =>
+            _currentTenantAccessor ??= HttpContext.RequestServices.GetRequiredService<ICurrentTenantAccessor>();
+
+        protected TenantRequestContext? currentTenant => currentTenantAccessor.Current;
 
     }
 }

@@ -8,6 +8,7 @@ using ScoutDirect.Core.Caching;
 using ScoutDirect.Core.Entities.Base;
 using System.Linq.Expressions;
 using CMPNatural.Core.Base;
+using CMPNatural.Core.Services;
 
 namespace ScoutDirect.infrastructure.Repository
 {
@@ -34,12 +35,75 @@ namespace ScoutDirect.infrastructure.Repository
 
         public IQueryable<T> BaseQuery()
         {
-            return _dbContext.Set<T>().Where(x => x.IsDelete == null);
+            IQueryable<T> query = _dbContext.Set<T>().Where(x => x.IsDelete == null);
+            var tenantContext = TenantExecutionContext.Current;
+
+            if (tenantContext?.TenantId == null || tenantContext.CanViewAllRecords)
+            {
+                return query;
+            }
+
+            var tenantIdProperty = typeof(T).GetProperty("TenantId");
+            if (tenantIdProperty == null || tenantIdProperty.PropertyType != typeof(long?))
+            {
+                return query;
+            }
+
+            var parameter = Expression.Parameter(typeof(T), "x");
+            var property = Expression.Property(parameter, tenantIdProperty);
+            var accessibleTenantIds = tenantContext.AccessibleTenantIds?
+                .Where(x => x > 0)
+                .Distinct()
+                .ToList() ?? new List<long>();
+
+            if (tenantContext.TenantId.Value > 0 && !accessibleTenantIds.Contains(tenantContext.TenantId.Value))
+            {
+                accessibleTenantIds.Add(tenantContext.TenantId.Value);
+            }
+
+            if (accessibleTenantIds.Count == 0)
+            {
+                return query;
+            }
+
+            var valueProperty = typeof(long?).GetProperty(nameof(Nullable<long>.Value))!;
+            var hasValueProperty = typeof(long?).GetProperty(nameof(Nullable<long>.HasValue))!;
+            var hasValueExpression = Expression.Property(property, hasValueProperty);
+            var propertyValueExpression = Expression.Property(property, valueProperty);
+
+            var containsMethod = typeof(List<long>).GetMethod(nameof(List<long>.Contains), new[] { typeof(long) })!;
+            var tenantIdListExpression = Expression.Constant(accessibleTenantIds);
+            var containsExpression = Expression.Call(tenantIdListExpression, containsMethod, propertyValueExpression);
+            var finalExpression = Expression.AndAlso(hasValueExpression, containsExpression);
+            var lambda = Expression.Lambda<Func<T, bool>>(finalExpression, parameter);
+
+            return query.Where(lambda);
         }
 
         private static IQueryable<T> ApplyIdOrdering(IQueryable<T> query, bool ascending)
         {
             return ascending ? query.OrderBy(p => p.Id) : query.OrderByDescending(p => p.Id);
+        }
+
+        private static void ApplyTenantId(T entity)
+        {
+            var tenantContext = TenantExecutionContext.Current;
+            if (tenantContext?.TenantId == null)
+            {
+                return;
+            }
+
+            var tenantIdProperty = typeof(T).GetProperty("TenantId");
+            if (tenantIdProperty == null || tenantIdProperty.PropertyType != typeof(long?))
+            {
+                return;
+            }
+
+            var currentValue = (long?)tenantIdProperty.GetValue(entity);
+            if (!currentValue.HasValue)
+            {
+                tenantIdProperty.SetValue(entity, tenantContext.TenantId);
+            }
         }
 
         public async Task<TValue> GetOrCreateAsync<TValue>(string key, Func<Task<TValue>> factory, TimeSpan? ttl = null)
@@ -56,6 +120,7 @@ namespace ScoutDirect.infrastructure.Repository
 
         public async Task<T> AddAsync(T entity)
         {
+            ApplyTenantId(entity);
             await _dbContext.Set<T>().AddAsync(entity);
             await _dbContext.SaveChangesAsync();
             return entity;
@@ -63,6 +128,11 @@ namespace ScoutDirect.infrastructure.Repository
 
         public async Task AddRangeAsync(List<T> entity)
         {
+            foreach (var item in entity)
+            {
+                ApplyTenantId(item);
+            }
+
             await _dbContext.Set<T>().AddRangeAsync(entity);
             await _dbContext.SaveChangesAsync();
         }
