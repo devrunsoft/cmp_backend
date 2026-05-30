@@ -44,6 +44,7 @@ namespace CMPNatural.Application
             this.ManagerFirstName = input.ManagerFirstName;
             this.ManagerLastName = input.ManagerLastName;
             this.ManagerPhoneNumber = input.ManagerPhoneNumber;
+            this.Logo = input.Logo;
             this.BaseVirtualPath = BaseVirtualPath;
         }
 

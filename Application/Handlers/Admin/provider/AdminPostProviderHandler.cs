@@ -74,7 +74,8 @@ namespace CMPNatural.Application
                 ManagerFirstName = request.ManagerFirstName,
                 ManagerLastName = request.ManagerLastName,
                 ManagerPhoneNumber = request.ManagerPhoneNumber,
-                PersonId = personId
+                PersonId = personId,
+                Logo= request.Logo
 
             };
             var result = await _providerReposiotry.AddAsync(entity);
