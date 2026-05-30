@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CMPNatural.Application;
+using CMPNatural.Core.Base;
+using CMPNatural.Core.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using ScoutDirect.Api.Controllers._Base;
+using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Api.Controllers.Provider
 {
@@ -22,7 +25,16 @@ namespace CMPNatural.Api.Controllers.Provider
         public async Task<ActionResult> Get([FromQuery] ProviderGetAllManifestCommand command)
         {
             command.ProviderId = rProviderId;
-            var result = await _mediator.Send(command);
+            CommandResponse<PagesQueryResponse<Manifest>> result;
+
+              if (rIsDriver) {
+                result = await _mediator.Send(new DriverGetAllManifestCommand() { DriverId = rDriverId.Value });
+            }
+            else {
+
+                result = await _mediator.Send(command);
+            }
+
             return Ok(result);
         }
 

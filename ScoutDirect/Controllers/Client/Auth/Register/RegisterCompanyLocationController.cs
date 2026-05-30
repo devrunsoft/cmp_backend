@@ -66,7 +66,8 @@ namespace CMPNatural.Api.Controllers
                 Type = input.Type,
                 OperationalAddressId = input.OperationalAddressId,
                 CapacityId = input.CapacityId,
-                Address = input.Address
+                Address = input.Address,
+                CallBeforeService = input.CallBeforeService
 
             });
 
@@ -92,7 +93,8 @@ namespace CMPNatural.Api.Controllers
                 PrimaryPhonNumber = input.PrimaryPhonNumber,
                 Type=input.Type,
                 CapacityId = input.CapacityId,
-                Address = input.Address
+                Address = input.Address,
+                CallBeforeService = input.CallBeforeService
 
             });
 

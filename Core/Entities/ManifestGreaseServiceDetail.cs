@@ -12,6 +12,7 @@ namespace CMPNatural.Core.Entities
         public decimal GreasePercentage { get; set; }
         public decimal WaterPercentage { get; set; }
         public decimal SolidsPercentage { get; set; }
+        public decimal OilPercentage { get; set; }
 
         public decimal? CodAmount { get; set; }
 

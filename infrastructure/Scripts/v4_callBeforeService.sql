@@ -1,0 +1,1 @@
+﻿ALTER TABLE `LocationCompany` ADD COLUMN `CallBeforeService` TINYINT(1) NOT NULL DEFAULT 0;

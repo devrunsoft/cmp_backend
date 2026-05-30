@@ -10,6 +10,8 @@ namespace CMPNatural.Application
 	public class ProviderGetAllRouteCommand : PagedQueryRequest, IRequest<CommandResponse<PagesQueryResponse<Route>>>
     {
         public long ProviderId { get; set; }
+        public long? DriverId { get; set; }
+        public bool rIsDriver { get; set; }
     }
 }
 

@@ -39,11 +39,11 @@ namespace CMPNatural.Application
         {
 
             var invoices = (await routeRepository.GetAsync(x =>
-                (x.Status == RouteStatus.InProcess || x.Status == RouteStatus.Draft)  && x.ProviderId == request.ProviderId
+                (x.Status == RouteStatus.InProcess || x.Status == RouteStatus.Draft)  && request.IsDriver ? x.DriverId == request.DriverId : x.ProviderId == request.ProviderId
                 )).Count();
 
             var ContractsCount = (await _companyContract.GetAsync(x =>
-              x.Status == CompanyContractStatus.Send && x.ProviderId == request.ProviderId
+              x.Status == CompanyContractStatus.Send 
               )).Count();
 
             var ManifestCount = (await _manifestRepository.GetAsync(x =>

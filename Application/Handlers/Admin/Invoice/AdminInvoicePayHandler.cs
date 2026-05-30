@@ -57,9 +57,14 @@ namespace CMPNatural.Application.Handlers
             }
             await _invoiceRepository.UpdateAsync(entity);
 
-            var manifest = (await _manifestRepository.GetAsync(x => x.RequestId == request.InvoiceId)).FirstOrDefault();
-            manifest.Status = ManifestStatus.Canceled;
-            await _manifestRepository.UpdateAsync(manifest);
+            //var manifests = (await _manifestRepository.GetAsync(x => x.RequestId == entity.RequestId)).ToList();
+            //foreach (var manifest in manifests)
+            //{
+
+            //manifest.Status = ManifestStatus.Completed;
+            //await _manifestRepository.UpdateAsync(manifest);
+
+            //}
 
             return new Success<InvoiceResponse>() { Data = InvoiceMapper.Mapper.Map<InvoiceResponse>(entity) };
 

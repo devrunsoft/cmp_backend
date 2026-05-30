@@ -13,10 +13,16 @@ namespace CMPNatural.Application.Responses
         public string ManifestNumber { get; set; } = "";
         public DateTime? ServiceDateTime { get; set; }
 
+        public bool CallBeforeService { get; set; }
+        public string OpeningHours { get; set; }
+
         // Manifest-related extras
         public string Number { get; set; } = "";
         public string NoteTitle { get; set; } = "";
         public string? ProviderName { get; set; }
+        public string? ProviderAddress { get; set; }
+        public string? ProviderNumber { get; set; }
+        public string? ProviderLogo { get; set; }
         public long? ProviderId { get; set; }
         public string? DriverFullName { get; set; }
 
@@ -29,13 +35,17 @@ namespace CMPNatural.Application.Responses
         public string? CompanyPrimaryLastName { get; set; }
         public string? CompanyPrimaryPhoneNumber { get; set; }
         public string? CompanyEmail { get; set; }
+        public string? ComapnyName { get; set; }
 
         public long CompanyId { get; set; }
 
         // Operational Address (from Invoice.OperationalAddress)
         public long OperationalAddressAddressId { get; set; }
+        public string OperationalAddressAddressIdOrUsername { get; set; }
         public string? OperationalAddressAddress { get; set; }
+        public string? CrossStreets { get; set; }
         public string? OperationalAddressLocationPhone { get; set; }
+        public string? LocationCompanyComment { get; set; }
 
         // Billing Info (from Invoice.BillingInformation)
         public string? BillingAddress { get; set; }
@@ -79,8 +89,11 @@ namespace CMPNatural.Application.Responses
 
     public class LocationCompanyMinResponse
     {
+        public double Lat { get; set; }
+        public double Long { get; set; }
         public string? Name { get; set; }
         public string? Address { get; set; }
+        public string? Comment { get; set; }
         public int Type { get; set; } = 1;
     }
 }

@@ -22,6 +22,7 @@ namespace CMPNatural.Core.Entities
         public string? PrimaryLastName { get; set; }
         public string? PrimaryPhonNumber { get; set; }
         public int Type { get; set; }
+        public bool CallBeforeService { get; set; } = false;
         public virtual OperationalAddress OperationalAddress { get; set; }
         public virtual Company Company { get; set; }
         public virtual Capacity CapacityEntity { get; set; }

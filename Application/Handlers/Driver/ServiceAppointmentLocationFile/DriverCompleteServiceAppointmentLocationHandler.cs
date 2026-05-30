@@ -53,13 +53,14 @@ namespace CMPNatural.Application
                 item.ServiceAppointmentLocation.OilQuality = i.OilQuality;
                 item.ServiceAppointmentLocation.Comment = request.Comment;
 
-                if (item.ServiceAppointmentLocation.ServiceAppointment.ServiceTypeId == (int)ServiceType.Grease_Trap_Management)
+                if (item.ServiceAppointmentLocation.ServiceAppointment.ServiceTypeId == (int)ServiceType.Grease_Trap_Management || item.ServiceAppointmentLocation.ServiceAppointment.ServiceTypeId == (int)ServiceType.Cooking_Oil_Collection)
                 {
                     item.ServiceAppointmentLocation.ManifestGreaseServiceDetail = new ManifestGreaseServiceDetail()
                     {
                         GreasePercentage = i.GreaseDetail.GreasePercentage,
                         WaterPercentage = i.GreaseDetail.WaterPercentage,
                         SolidsPercentage = i.GreaseDetail.SolidsPercentage,
+                        OilPercentage = i.GreaseDetail.OilPercentage,
                         CodAmount = i.GreaseDetail.CodAmount,
                     };
                 }

@@ -62,8 +62,9 @@ namespace CMPNatural.Api.Controllers.Auth.dashboard
                 PrimaryPhonNumber = input.PrimaryPhonNumber,
                 Type = input.Type,
                 OperationalAddressId = input.OperationalAddressId,
-                CapacityId = input.CapacityId
-
+                CapacityId = input.CapacityId,
+                CallBeforeService = input.CallBeforeService,
+                Address = input.Address,
             });
 
             return Ok(result);
@@ -87,7 +88,9 @@ namespace CMPNatural.Api.Controllers.Auth.dashboard
                 PrimaryLastName = input.PrimaryLastName,
                 PrimaryPhonNumber = input.PrimaryPhonNumber,
                 Type = input.Type,
-                CapacityId = input.CapacityId
+                CapacityId = input.CapacityId,
+                CallBeforeService = input.CallBeforeService,
+                Address = input.Address,
 
             });
 

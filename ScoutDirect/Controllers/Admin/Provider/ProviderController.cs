@@ -73,6 +73,28 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
             return Ok(result);
         }
 
+        [HttpGet("ExportExcel")]
+        [MenuAuthorize(MenuEnum.Providers)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> ExportExcel()
+        {
+            var result = await _mediator.Send(new AdminExportProviderExcelCommand());
+            return File(result.Content, result.ContentType, result.FileName);
+        }
+
+        [RequestSizeLimit(100_000_000)]
+        [HttpPost("ImportExcel")]
+        [MenuAuthorize(MenuEnum.Providers)]
+        [Consumes("multipart/form-data")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> ImportExcel([FromForm] AdminImportProviderExcelCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+
         [RequestSizeLimit(100_000_000)]
         [HttpPut("ResetPassword/{Id}")]
         [MenuAuthorize(MenuEnum.ProviderDetail)]
@@ -104,4 +126,3 @@ namespace CMPNatural.Api.Controllers.Admin.Provider
         }
     }
 }
-

@@ -25,6 +25,7 @@ namespace CMPNatural.Application.Model
 
         public List<int> ProductIds { get; set; }
 
+        public string Logo { get; set; }
         public string BusinessLicense { get; set; }
         public DateTime? BusinessLicenseExp { get; set; }
 

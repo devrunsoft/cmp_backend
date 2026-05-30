@@ -21,7 +21,7 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<PagesQueryResponse<Route>>> Handle(ProviderGetAllRouteCommand request, CancellationToken cancellationToken)
         {
-            var result = (await _repository.GetBasePagedAsync(request, p => p.ProviderId == request.ProviderId));
+            var result = (await _repository.GetBasePagedAsync(request, p => request.rIsDriver? p.DriverId == request.DriverId: p.ProviderId == request.ProviderId));
             return new Success<PagesQueryResponse<Route>>() { Data = result };
         }
     }

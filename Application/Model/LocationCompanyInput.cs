@@ -20,6 +20,7 @@ namespace CMPNatural.Application.Commands
         public string PrimaryLastName { get; set; }
         public string PrimaryPhonNumber { get; set; }
         public long OperationalAddressId { get; set; }
+        public bool CallBeforeService { get; set; } = false;
         public LocationType Type { get; set; }
     }
 }

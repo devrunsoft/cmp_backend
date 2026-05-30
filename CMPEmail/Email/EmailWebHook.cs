@@ -30,7 +30,8 @@ namespace CmpNatural.CrmManagment.Webhook
                 string postbody = JsonConvert.SerializeObject(new { email = model.toEmail, link = model.Link,
                     subject = model.Subject,
                     body = model.Body,
-                    buttonText = model.buttonText
+                    buttonText = model.buttonText,
+                    fromName = model.FromName
 
                 });
 

@@ -575,6 +575,7 @@ CREATE TABLE `ManifestGreaseServiceDetail` (
   `GreasePercentage` decimal(10,0) NOT NULL,
   `WaterPercentage` decimal(10,0) NOT NULL,
   `SolidsPercentage` decimal(10,0) NOT NULL,
+  `OilPercentage` decimal(10,0) NOT NULL,
   `CodAmount` decimal(10,0) DEFAULT NULL,
   `IsDelete` datetime DEFAULT NULL,
   PRIMARY KEY (`Id`)
@@ -696,6 +697,7 @@ CREATE TABLE `Provider` (
   `HealthDepartmentPermit` varchar(700) DEFAULT NULL,
   `HealthDepartmentPermitExp` datetime DEFAULT NULL,
   `WasteHaulerPermit` varchar(700) DEFAULT NULL,
+  `Logo` varchar(700) DEFAULT NULL,
   `EPACompliance` varchar(700) DEFAULT NULL,
   `EPAComplianceExp` datetime DEFAULT NULL,
   `Insurance` varchar(700) DEFAULT NULL,

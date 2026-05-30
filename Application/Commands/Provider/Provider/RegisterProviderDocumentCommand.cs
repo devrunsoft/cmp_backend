@@ -27,6 +27,8 @@ namespace CMPNatural.Application
 
         public string Insurance { get; set; }
         public DateTime? InsuranceExp { get; set; }
+
+        public string Logo { get; set; }
     }
 }
 

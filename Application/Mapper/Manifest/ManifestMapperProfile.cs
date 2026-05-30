@@ -39,6 +39,9 @@ namespace CMPNatural.Application.Mapper
                 .ForMember(d => d.Number, o => o.MapFrom(s => s.Number))
                 .ForMember(d => d.NoteTitle, o => o.MapFrom(s => s.NoteTitle))
                 .ForMember(d => d.ProviderName, o => o.MapFrom(s => s.Provider != null ? s.Provider.Name : null))
+                .ForMember(d => d.ProviderAddress, o => o.MapFrom(s => s.Provider != null ? s.Provider.Address : null))
+                .ForMember(d => d.ProviderNumber, o => o.MapFrom(s => s.Provider != null ? s.Provider.PhoneNumber : null))
+                .ForMember(d => d.ProviderLogo, o => o.MapFrom(s => s.Provider != null ? s.Provider.Logo : null))
                 .ForMember(d => d.ProviderId, o => o.MapFrom(s => s.ProviderId))
                 .ForMember(d => d.DriverFullName, o =>
                 o.MapFrom(s => $"{s.RouteServiceAppointmentLocation.Route.Driver.Person.FirstName} {s.RouteServiceAppointmentLocation.Route.Driver.Person.LastName}"))
@@ -47,16 +50,18 @@ namespace CMPNatural.Application.Mapper
                 .ForMember(d => d.SvcTime, o =>
                 o.MapFrom(s => s.ServiceDateTime!=null? s.ServiceDateTime.Value.ToString("hh:mm tt", CultureInfo.InvariantCulture): null))
 
-                // Company (via Invoice)
                 .ForMember(d => d.CompanyPrimaryFirstName, o => o.MapFrom(s => s.Request.Company.PrimaryFirstName))
                 .ForMember(d => d.CompanyId, o => o.MapFrom(s => s.Request.Company.Id))
                 .ForMember(d => d.CompanyPrimaryLastName, o => o.MapFrom(s => s.Request.Company.PrimaryLastName))
                 .ForMember(d => d.CompanyPrimaryPhoneNumber, o => o.MapFrom(s => s.Request.Company.PrimaryPhonNumber))
                 .ForMember(d => d.CompanyEmail, o => o.MapFrom(s => s.Request.Company.BusinessEmail))
+                .ForMember(d => d.ComapnyName, o => o.MapFrom(s => s.Request.Company.CompanyName))
 
                 // Operational Address
-                .ForMember(d => d.OperationalAddressAddress, o => o.MapFrom(s => s.Request.OperationalAddress.Address))
-                .ForMember(d => d.OperationalAddressLocationPhone, o => o.MapFrom(s => s.Request.OperationalAddress.LocationPhone))
+                .ForMember(d => d.CrossStreets, o => o.MapFrom(s => s.Request.OperationalAddress.CrossStreet))
+                .ForMember(d => d.OperationalAddressAddress, o => o.MapFrom(s => s.ServiceAppointmentLocation.LocationCompany.Address))
+                .ForMember(d => d.OperationalAddressLocationPhone, o => o.MapFrom(s => s.ServiceAppointmentLocation.LocationCompany.PrimaryPhonNumber))
+                .ForMember(d => d.CallBeforeService, o => o.MapFrom(s => s.ServiceAppointmentLocation.LocationCompany.CallBeforeService))
                 .ForMember(d => d.OperationalAddressAddressId, o => o.MapFrom(s => s.Request.OperationalAddress.Id))
 
                 // Billing
@@ -68,6 +73,7 @@ namespace CMPNatural.Application.Mapper
                 // Services and comment (from Invoice)
                 .ForMember(d => d.Services, o => o.MapFrom(s => s.ServiceAppointmentLocation.ServiceAppointment))
                 .ForMember(d => d.ServiceAppointmentLocations, o => o.MapFrom(s => s.ServiceAppointmentLocation))
+                .ForMember(d => d.LocationCompanyComment, o => o.MapFrom(s => s.ServiceAppointmentLocation.LocationCompany.Comment))
                 .ForMember(d => d.Comment, o => o.MapFrom(s => s.Request.Comment))
 
                 // we don’t map back
