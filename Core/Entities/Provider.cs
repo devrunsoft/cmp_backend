@@ -23,6 +23,8 @@ namespace CMPNatural.Core.Entities
         public string? Password { get; set; } = "";
         public ProviderRegistrationStatus RegistrationStatus { get; set; } = ProviderRegistrationStatus.Complete;
 
+        public string? Logo { get; set; }
+
         public string? BusinessLicense { get; set; }
         public DateTime? BusinessLicenseExp { get; set; }
 

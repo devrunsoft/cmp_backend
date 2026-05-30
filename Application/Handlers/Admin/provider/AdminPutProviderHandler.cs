@@ -81,7 +81,7 @@ namespace CMPNatural.Application
             entity.ManagerFirstName = request.ManagerFirstName;
             entity.ManagerLastName = request.ManagerLastName;
             entity.ManagerPhoneNumber = request.ManagerPhoneNumber;
-
+            entity.Logo = request.Logo;
 
             #region file
             var path = Guid.NewGuid().ToString();

@@ -63,6 +63,8 @@ namespace CMPNatural.Application
             result.Insurance = Insurance;
             result.InsuranceExp = request.InsuranceExp;
 
+            result.Logo = request.Logo;
+
             await _repository.UpdateAsync(result);
 
             await _repository.UpdateAsync(result);

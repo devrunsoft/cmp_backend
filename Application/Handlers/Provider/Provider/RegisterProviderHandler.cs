@@ -51,7 +51,7 @@ namespace CMPNatural.Application
                 Status = ProviderStatus.PendingEmail,
                 RegistrationStatus = ProviderRegistrationStatus.Basic_Information,
                 ActivationLink = Guid.NewGuid(),
-                PersonId = personId
+                PersonId = personId,
             };
 
             var result = await _repository.AddAsync(entity);

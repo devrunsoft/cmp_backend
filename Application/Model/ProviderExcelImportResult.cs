@@ -10,6 +10,8 @@ namespace CMPNatural.Application.Model
         public int UpdatedRows { get; set; }
         public ProviderExcelColumnMap ColumnMap { get; set; } = new ProviderExcelColumnMap();
         public List<ProviderExcelImportRowResult> Rows { get; set; } = new List<ProviderExcelImportRowResult>();
+        public DriverExcelImportResult Drivers { get; set; } = new DriverExcelImportResult();
+        public VehicleExcelImportResult Vehicles { get; set; } = new VehicleExcelImportResult();
     }
 
     public class ProviderExcelImportRowResult

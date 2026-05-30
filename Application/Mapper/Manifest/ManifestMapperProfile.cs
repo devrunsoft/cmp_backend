@@ -39,6 +39,9 @@ namespace CMPNatural.Application.Mapper
                 .ForMember(d => d.Number, o => o.MapFrom(s => s.Number))
                 .ForMember(d => d.NoteTitle, o => o.MapFrom(s => s.NoteTitle))
                 .ForMember(d => d.ProviderName, o => o.MapFrom(s => s.Provider != null ? s.Provider.Name : null))
+                .ForMember(d => d.ProviderAddress, o => o.MapFrom(s => s.Provider != null ? s.Provider.Address : null))
+                .ForMember(d => d.ProviderNumber, o => o.MapFrom(s => s.Provider != null ? s.Provider.PhoneNumber : null))
+                .ForMember(d => d.ProviderLogo, o => o.MapFrom(s => s.Provider != null ? s.Provider.Logo : null))
                 .ForMember(d => d.ProviderId, o => o.MapFrom(s => s.ProviderId))
                 .ForMember(d => d.DriverFullName, o =>
                 o.MapFrom(s => $"{s.RouteServiceAppointmentLocation.Route.Driver.Person.FirstName} {s.RouteServiceAppointmentLocation.Route.Driver.Person.LastName}"))

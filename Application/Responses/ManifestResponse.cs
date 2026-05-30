@@ -20,6 +20,9 @@ namespace CMPNatural.Application.Responses
         public string Number { get; set; } = "";
         public string NoteTitle { get; set; } = "";
         public string? ProviderName { get; set; }
+        public string? ProviderAddress { get; set; }
+        public string? ProviderNumber { get; set; }
+        public string? ProviderLogo { get; set; }
         public long? ProviderId { get; set; }
         public string? DriverFullName { get; set; }
 

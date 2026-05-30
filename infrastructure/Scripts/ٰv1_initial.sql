@@ -697,6 +697,7 @@ CREATE TABLE `Provider` (
   `HealthDepartmentPermit` varchar(700) DEFAULT NULL,
   `HealthDepartmentPermitExp` datetime DEFAULT NULL,
   `WasteHaulerPermit` varchar(700) DEFAULT NULL,
+  `Logo` varchar(700) DEFAULT NULL,
   `EPACompliance` varchar(700) DEFAULT NULL,
   `EPAComplianceExp` datetime DEFAULT NULL,
   `Insurance` varchar(700) DEFAULT NULL,
