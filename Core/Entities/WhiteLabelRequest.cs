@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Core.Entities
 {
@@ -27,7 +28,10 @@ namespace CMPNatural.Core.Entities
 
         public string? SubDomain { get; set; }
 
-        public List<long> DispatchAccessibleTenantIds { get; set; } = new();
+        public WhiteLabelStatus Status { get; set; }
+        public string? AdminReviewNote { get; set; }
+
+
 
         public virtual Provider Provider { get; set; } = null!;
         public virtual Tenant? Tenant { get; set; }

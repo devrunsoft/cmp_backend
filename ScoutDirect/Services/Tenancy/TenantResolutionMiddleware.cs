@@ -1,4 +1,5 @@
 using CMPNatural.Core.Entities;
+using CMPNatural.Core.Enums;
 using CMPNatural.Core.Models;
 using CMPNatural.Core.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -30,6 +31,7 @@ namespace CMPNatural.Api.Services
             var tenantContext = await ResolveTenantContextAsync(host, tenantRepository, appSetting);
             if (tenantContext != null)
             {
+                tenantContext.PortalType = ResolvePortalType(context.Request.Path);
                 currentTenantAccessor.Current = tenantContext;
             }
 
@@ -127,6 +129,27 @@ namespace CMPNatural.Api.Services
             return Uri.TryCreate(configuredUrl, UriKind.Absolute, out var uri)
                 ? string.Equals(uri.Host, requestHost, StringComparison.OrdinalIgnoreCase)
                 : string.Equals(configuredUrl.Trim().ToLowerInvariant(), requestHost, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static PortalType? ResolvePortalType(PathString path)
+        {
+            if (path.StartsWithSegments("/api/provider", StringComparison.OrdinalIgnoreCase))
+            {
+                return PortalType.Provider;
+            }
+
+            if (path.StartsWithSegments("/api/admin", StringComparison.OrdinalIgnoreCase))
+            {
+                return PortalType.Admin;
+            }
+
+            if (path.StartsWithSegments("/api/client", StringComparison.OrdinalIgnoreCase) ||
+                path.StartsWithSegments("/api/user", StringComparison.OrdinalIgnoreCase))
+            {
+                return PortalType.Client;
+            }
+
+            return null;
         }
     }
 }

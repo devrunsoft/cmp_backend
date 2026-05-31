@@ -12,7 +12,6 @@ namespace CMPNatural.Core.Enums
 
         [Description("Grease_Trap_Management")]
         Grease_Trap_Management,
-
     }
 }
 

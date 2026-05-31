@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CMPNatural.Core.Enums;
 
 namespace CMPNatural.Core.Models
 {
@@ -9,6 +10,7 @@ namespace CMPNatural.Core.Models
         public string Host { get; set; } = string.Empty;
         public bool CanViewAllRecords { get; set; }
         public bool CanManageDispatch { get; set; }
+        public PortalType? PortalType { get; set; }
         public List<long> AccessibleTenantIds { get; set; } = new();
         public bool IsResolvedFromDatabase { get; set; }
     }

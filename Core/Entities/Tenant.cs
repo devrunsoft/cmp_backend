@@ -21,6 +21,7 @@ namespace CMPNatural.Core.Entities
         public string? LogoUrl { get; set; }
         public string? SupportEmail { get; set; }
 
+        public virtual ICollection<TenantDomain> Domains { get; set; } = new List<TenantDomain>();
         public virtual ICollection<TenantAccess> TenantAccesses { get; set; } = new List<TenantAccess>();
         public virtual ICollection<AdminEntity> Admins { get; set; } = new List<AdminEntity>();
         public virtual ICollection<Company> Companies { get; set; } = new List<Company>();

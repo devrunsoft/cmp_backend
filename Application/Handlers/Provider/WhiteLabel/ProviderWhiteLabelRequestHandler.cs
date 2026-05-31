@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using CMPNatural.Application.Commands.Provider.WhiteLabel;
 using CMPNatural.Core.Entities;
+using CMPNatural.Core.Enums;
 using CMPNatural.Core.Repositories;
 using MediatR;
 using ScoutDirect.Application.Responses;
@@ -39,8 +40,13 @@ namespace CMPNatural.Application
                 {
                     ProviderId = request.ProviderId,
                     TenantId = provider.TenantId,
-                    CreatedAt = DateTime.UtcNow
+                    CreatedAt = DateTime.UtcNow,
+                    Status = WhiteLabelStatus.Pending
                 };
+            }
+            else if(entity.Status == WhiteLabelStatus.Accepted)
+            {
+                return new NoAcess<WhiteLabelRequest>() { Data = entity };
             }
 
             entity.ManageClientsDirectly = request.ManageClientsDirectly;
@@ -51,8 +57,9 @@ namespace CMPNatural.Application
             entity.WantsCustomDomain = request.WantsCustomDomain;
             entity.CustomDomain = request.CustomDomain;
             entity.SubDomain = request.SubDomain;
-            entity.DispatchAccessibleTenantIds = request.DispatchAccessibleTenantIds?.Distinct().ToList() ?? new List<long>();
             entity.UpdatedAt = DateTime.UtcNow;
+            entity.Status = WhiteLabelStatus.Pending;
+            entity.AdminReviewNote = null;
 
             if (entity.Id == 0)
             {
@@ -74,7 +81,7 @@ namespace CMPNatural.Application
                 entity = new WhiteLabelRequest()
                 {
                     ProviderId = request.ProviderId,
-                    DispatchAccessibleTenantIds = new List<long>()
+                    //DispatchAccessibleTenantIds = new List<long>()
                 };
             }
 

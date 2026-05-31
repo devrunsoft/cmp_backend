@@ -71,6 +71,7 @@ namespace CMPNatural.Core.Entities
     public partial class Notification { public DateTime? IsDelete { get; set; } }
 
     public partial class Tenant { public DateTime? IsDelete { get; set; } }
+    public partial class TenantDomain { public DateTime? IsDelete { get; set; } }
     public partial class TenantAccess { public DateTime? IsDelete { get; set; } }
     public partial class WhiteLabelRequest { public DateTime? IsDelete { get; set; } }
 }

@@ -74,6 +74,7 @@ namespace infrastructure.Data
         public virtual DbSet<ManifestGreaseServiceDetail> ManifestGreaseServiceDetail { get; set; } = null!;
         public virtual DbSet<Notification> Notification { get; set; } = null!;
         public virtual DbSet<Tenant> Tenant { get; set; } = null!;
+        public virtual DbSet<TenantDomain> TenantDomain { get; set; } = null!;
         public virtual DbSet<TenantAccess> TenantAccess { get; set; } = null!;
         public virtual DbSet<WhiteLabelRequest> WhiteLabelRequest { get; set; } = null!;
 
@@ -106,6 +107,26 @@ namespace infrastructure.Data
                 entity.HasIndex(x => x.Host).IsUnique();
             });
 
+            modelBuilder.Entity<TenantDomain>(entity =>
+            {
+                entity.HasQueryFilter(x => x.IsDelete == null);
+                entity.ToTable("TenantDomain");
+                entity.Property(x => x.Host).HasMaxLength(255);
+                entity.HasIndex(x => x.Host).IsUnique();
+                entity.HasIndex(x => new { x.TenantId, x.IsPrimary });
+
+                entity.Property(p => p.PortalType)
+                .HasConversion(
+                x => x.ToString(),
+                x => (PortalType)Enum.Parse(typeof(PortalType), x)
+                );
+
+                entity.HasOne(x => x.Tenant)
+                    .WithMany(x => x.Domains)
+                    .HasForeignKey(x => x.TenantId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
             modelBuilder.Entity<TenantAccess>(entity =>
             {
                 entity.HasQueryFilter(x => x.IsDelete == null);
@@ -129,14 +150,20 @@ namespace infrastructure.Data
                 entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("WhiteLabelRequest");
 
+                entity.Property(x => x.Status)
+                    .HasConversion(
+                        x => x.ToString(),
+                        x => (WhiteLabelStatus)Enum.Parse(typeof(WhiteLabelStatus), x));
+
                 entity.Property(x => x.CustomDomain).HasMaxLength(255);
                 entity.Property(x => x.SubDomain).HasMaxLength(255);
-                entity.Property(x => x.DispatchAccessibleTenantIds)
-                    .HasConversion(
-                        x => JsonSerializer.Serialize(x ?? new List<long>(), (JsonSerializerOptions?)null),
-                        x => string.IsNullOrWhiteSpace(x)
-                            ? new List<long>()
-                            : JsonSerializer.Deserialize<List<long>>(x, (JsonSerializerOptions?)null) ?? new List<long>());
+                entity.Property(x => x.AdminReviewNote).HasMaxLength(2000);
+                //entity.Property(x => x.DispatchAccessibleTenantIds)
+                //    .HasConversion(
+                //        x => JsonSerializer.Serialize(x ?? new List<long>(), (JsonSerializerOptions?)null),
+                //        x => string.IsNullOrWhiteSpace(x)
+                //            ? new List<long>()
+                //            : JsonSerializer.Deserialize<List<long>>(x, (JsonSerializerOptions?)null) ?? new List<long>());
 
                 entity.HasIndex(x => x.ProviderId).IsUnique();
 

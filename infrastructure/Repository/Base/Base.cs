@@ -8,6 +8,7 @@ using ScoutDirect.Core.Caching;
 using ScoutDirect.Core.Entities.Base;
 using System.Linq.Expressions;
 using CMPNatural.Core.Base;
+using CMPNatural.Core.Enums;
 using CMPNatural.Core.Services;
 
 namespace ScoutDirect.infrastructure.Repository
@@ -37,6 +38,11 @@ namespace ScoutDirect.infrastructure.Repository
         {
             IQueryable<T> query = _dbContext.Set<T>().Where(x => x.IsDelete == null);
             var tenantContext = TenantExecutionContext.Current;
+
+            if (tenantContext?.PortalType == PortalType.Provider)
+            {
+                return query;
+            }
 
             if (tenantContext?.TenantId == null || tenantContext.CanViewAllRecords)
             {

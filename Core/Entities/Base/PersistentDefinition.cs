@@ -72,6 +72,7 @@ namespace CMPNatural.Core.Entities
     public partial class Notification : IIdentityObject<long> { }
 
     public partial class Tenant : IIdentityObject<long> { }
+    public partial class TenantDomain : IIdentityObject<long> { }
     public partial class TenantAccess : IIdentityObject<long> { }
     public partial class WhiteLabelRequest : IIdentityObject<long> { }
 }
