@@ -11,6 +11,7 @@ namespace CMPNatural.Core.Entities
         public bool IsVerified { get; set; }
         public bool IsActive { get; set; } = true;
         public PortalType PortalType { get; set; }
+        public bool Verified { get; set; }
 
         public virtual Tenant Tenant { get; set; } = null!;
     }

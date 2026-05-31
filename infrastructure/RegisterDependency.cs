@@ -24,6 +24,7 @@ using CMPNatural.Core.Repositories.Chat;
 using CMPNatural.infrastructure.Repository.Chat;
 using CMPFile;
 using CMPNatural.Core.Repositories.ChatCommon;
+using CMPNatural.Core.Services;
 
 namespace ScoutDirect.infrastructure
 {
@@ -129,6 +130,7 @@ namespace ScoutDirect.infrastructure
             }
 
             services.AddSingleton<IFileStorage, MinioFileStorage>();
+            services.AddTransient<IHostVerificationService, HostVerificationService>();
         }
 
         public static void RegisterServices(this IServiceCollection services)

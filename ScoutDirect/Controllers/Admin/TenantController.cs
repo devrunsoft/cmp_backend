@@ -22,5 +22,29 @@ namespace CMPNatural.Api.Controllers
             var result = await _mediator.Send(command);
             return Ok(result);
         }
+
+        [HttpGet("{tenantId}/VerifyHost")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> VerifyHost([FromRoute] long tenantId)
+        {
+            var result = await _mediator.Send(new AdminVerifyTenantHostCommand
+            {
+                TenantId = tenantId
+            });
+            return Ok(result);
+        }
+
+        [HttpGet("Domain/{tenantDomainId}/VerifyHost")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> VerifyDomainHost([FromRoute] long tenantDomainId)
+        {
+            var result = await _mediator.Send(new AdminVerifyTenantDomainHostCommand
+            {
+                TenantDomainId = tenantDomainId
+            });
+            return Ok(result);
+        }
     }
 }
