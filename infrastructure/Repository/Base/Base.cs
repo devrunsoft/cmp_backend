@@ -39,7 +39,7 @@ namespace ScoutDirect.infrastructure.Repository
             IQueryable<T> query = _dbContext.Set<T>().Where(x => x.IsDelete == null);
             var tenantContext = TenantExecutionContext.Current;
 
-            if (tenantContext?.PortalType == PortalType.Provider)
+            if (tenantContext?.PortalType == PortalType.Provider || tenantContext?.PortalType == PortalType.Driver)
             {
                 return query;
             }

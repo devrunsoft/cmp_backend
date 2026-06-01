@@ -46,5 +46,53 @@ namespace CMPNatural.Api.Controllers
             });
             return Ok(result);
         }
+
+        [HttpPost("{tenantId}/Cloudflare")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> AddHostToCloudflare([FromRoute] long tenantId)
+        {
+            var result = await _mediator.Send(new AdminAddTenantHostToCloudflareCommand
+            {
+                TenantId = tenantId
+            });
+            return Ok(result);
+        }
+
+        [HttpDelete("{tenantId}/Cloudflare")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> RemoveHostFromCloudflare([FromRoute] long tenantId)
+        {
+            var result = await _mediator.Send(new AdminRemoveTenantHostFromCloudflareCommand
+            {
+                TenantId = tenantId
+            });
+            return Ok(result);
+        }
+
+        [HttpPost("Domain/{tenantDomainId}/Cloudflare")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> AddDomainHostToCloudflare([FromRoute] long tenantDomainId)
+        {
+            var result = await _mediator.Send(new AdminAddTenantDomainHostToCloudflareCommand
+            {
+                TenantDomainId = tenantDomainId
+            });
+            return Ok(result);
+        }
+
+        [HttpDelete("Domain/{tenantDomainId}/Cloudflare")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [EnableCors("AllowOrigin")]
+        public async Task<ActionResult> RemoveDomainHostFromCloudflare([FromRoute] long tenantDomainId)
+        {
+            var result = await _mediator.Send(new AdminRemoveTenantDomainHostFromCloudflareCommand
+            {
+                TenantDomainId = tenantDomainId
+            });
+            return Ok(result);
+        }
     }
 }

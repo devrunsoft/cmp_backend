@@ -113,6 +113,9 @@ namespace ScoutDirect.infrastructure
             services.AddTransient<CustomValueApi>();
             services.AddTransient<SyncByCrm>();
 
+            services.AddSingleton(new HttpClient());
+            services.AddTransient<CloudflareDnsService>();
+
             services.AddTransient<IPaymentConfiguration, PaymentConfiguration>();
 
             services.AddScoped<ICustomDbLogger, CustomDbLogger>();

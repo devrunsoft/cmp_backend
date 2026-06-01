@@ -102,6 +102,7 @@ namespace infrastructure.Data
                 entity.ToTable("Tenant");
                 entity.Property(x => x.Name).HasMaxLength(255);
                 entity.Property(x => x.Slug).HasMaxLength(128);
+                entity.Property(x => x.SubDomain).HasMaxLength(255);
                 entity.Property(x => x.Host).HasMaxLength(255);
                 entity.HasIndex(x => x.Slug).IsUnique();
                 entity.HasIndex(x => x.Host).IsUnique();
@@ -111,6 +112,7 @@ namespace infrastructure.Data
             {
                 entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("TenantDomain");
+                entity.Property(x => x.SubDomain).HasMaxLength(255);
                 entity.Property(x => x.Host).HasMaxLength(255);
                 entity.HasIndex(x => x.Host).IsUnique();
                 entity.HasIndex(x => new { x.TenantId, x.IsPrimary });
@@ -172,8 +174,8 @@ namespace infrastructure.Data
                     .HasForeignKey(x => x.ProviderId);
 
                 entity.HasOne(x => x.Tenant)
-                    .WithMany()
-                    .HasForeignKey(x => x.TenantId);
+                    .WithOne()
+                    .HasForeignKey<Tenant>(x => x.WhiteLabelRequestId);
             });
 
             modelBuilder.Entity<Notification>(entity =>

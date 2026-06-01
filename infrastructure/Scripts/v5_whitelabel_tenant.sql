@@ -2,6 +2,7 @@ CREATE TABLE `Tenant` (
     `Id` BIGINT NOT NULL AUTO_INCREMENT,
     `Name` VARCHAR(255) NOT NULL,
     `Slug` VARCHAR(128) NULL,
+    `SubDomain` VARCHAR(255) NULL,
     `Host` VARCHAR(255) NULL,
     `IsActive` TINYINT(1) NOT NULL DEFAULT 1,
     `WantsDispatchManagement` TINYINT(1) NOT NULL DEFAULT 0,
@@ -15,6 +16,9 @@ CREATE TABLE `Tenant` (
     `SecondaryColor` VARCHAR(32) NULL,
     `LogoUrl` VARCHAR(1024) NULL,
     `SupportEmail` VARCHAR(255) NULL,
+    `Verified` TINYINT(1) NOT NULL DEFAULT 0,
+    `ProviderId` BIGINT NOT NULL,
+    `WhiteLabelRequestId` BIGINT NOT NULL,
     `IsDelete` DATETIME NULL,
     PRIMARY KEY (`Id`),
     UNIQUE KEY `UX_Tenant_Slug` (`Slug`),
@@ -24,14 +28,17 @@ CREATE TABLE `Tenant` (
 CREATE TABLE `TenantDomain` (
     `Id` BIGINT NOT NULL AUTO_INCREMENT,
     `TenantId` BIGINT NOT NULL,
+    `SubDomain` VARCHAR(255) NULL,
     `Host` VARCHAR(255) NOT NULL,
     `PortalType` VARCHAR(32) NOT NULL,
     `IsPrimary` TINYINT(1) NOT NULL DEFAULT 0,
     `IsVerified` TINYINT(1) NOT NULL DEFAULT 0,
     `IsActive` TINYINT(1) NOT NULL DEFAULT 1,
+    `Verified` TINYINT(1) NOT NULL DEFAULT 0,
     `IsDelete` DATETIME NULL,
     PRIMARY KEY (`Id`),
-    -- UNIQUE KEY `UX_TenantDomain_Host` (`Host`),
+    UNIQUE KEY `UX_TenantDomain_Host` (`Host`),
+    KEY `IX_TenantDomain_TenantId_IsPrimary` (`TenantId`, `IsPrimary`),
     CONSTRAINT `FK_TenantDomain_Tenant_TenantId`
         FOREIGN KEY (`TenantId`) REFERENCES `Tenant` (`Id`)
 );
@@ -90,6 +97,11 @@ ALTER TABLE `Company`
 ALTER TABLE `Provider`
     ADD COLUMN `TenantId` BIGINT NULL,
     ADD CONSTRAINT `FK_Provider_Tenant_TenantId`
+        FOREIGN KEY (`TenantId`) REFERENCES `Tenant` (`Id`);
+
+ALTER TABLE `AppInformation`
+    ADD COLUMN `TenantId` BIGINT NULL,
+    ADD CONSTRAINT `FK_AppInformation_Tenant_TenantId`
         FOREIGN KEY (`TenantId`) REFERENCES `Tenant` (`Id`);
 
 ALTER TABLE `Request`
@@ -187,16 +199,43 @@ JOIN `Company` c ON c.`Id` = cs.`ClientId`
 SET cs.`TenantId` = c.`TenantId`
 WHERE cs.`TenantId` IS NULL;
 
+UPDATE `ChatMessage` cm
+JOIN `ChatSession` cs ON cs.`Id` = cm.`ChatSessionId`
+SET cm.`TenantId` = cs.`TenantId`
+WHERE cm.`TenantId` IS NULL;
+
+UPDATE `ChatClientSession` ccs
+JOIN `Company` c ON c.`Id` = ccs.`ClientId`
+SET ccs.`TenantId` = c.`TenantId`
+WHERE ccs.`TenantId` IS NULL;
+
+UPDATE `ChatCommonSession` ccs
+JOIN `Company` c ON c.`Id` = ccs.`ClientId`
+SET ccs.`TenantId` = c.`TenantId`
+WHERE ccs.`TenantId` IS NULL;
+
+UPDATE `ChatCommonMessage` ccm
+JOIN `ChatCommonSession` ccs ON ccs.`Id` = ccm.`ChatCommonSessionId`
+SET ccm.`TenantId` = ccs.`TenantId`
+WHERE ccm.`TenantId` IS NULL;
+
 CREATE INDEX `IX_Admin_TenantId` ON `Admin` (`TenantId`);
 CREATE INDEX `IX_Company_TenantId` ON `Company` (`TenantId`);
 CREATE INDEX `IX_Provider_TenantId` ON `Provider` (`TenantId`);
+CREATE INDEX `IX_AppInformation_TenantId` ON `AppInformation` (`TenantId`);
 CREATE INDEX `IX_Request_TenantId` ON `Request` (`TenantId`);
 CREATE INDEX `IX_Invoice_TenantId` ON `Invoice` (`TenantId`);
 CREATE INDEX `IX_Manifest_TenantId` ON `Manifest` (`TenantId`);
 CREATE INDEX `IX_CompanyContract_TenantId` ON `CompanyContract` (`TenantId`);
 CREATE INDEX `IX_ProviderContract_TenantId` ON `ProviderContract` (`TenantId`);
 CREATE INDEX `IX_Payment_TenantId` ON `Payment` (`TenantId`);
+CREATE INDEX `IX_ChatClientSession_TenantId` ON `ChatClientSession` (`TenantId`);
+CREATE INDEX `IX_ChatCommonSession_TenantId` ON `ChatCommonSession` (`TenantId`);
+CREATE INDEX `IX_ChatCommonMessage_TenantId` ON `ChatCommonMessage` (`TenantId`);
+CREATE INDEX `IX_ChatMessage_TenantId` ON `ChatMessage` (`TenantId`);
 CREATE INDEX `IX_ChatSession_TenantId` ON `ChatSession` (`TenantId`);
 CREATE INDEX `IX_Notification_TenantId` ON `Notification` (`TenantId`);
+CREATE INDEX `IX_WhiteLabelRequest_TenantId` ON `WhiteLabelRequest` (`TenantId`);
+CREATE INDEX `IX_TenantDomain_TenantId` ON `TenantDomain` (`TenantId`);
 CREATE INDEX `IX_TenantAccess_TenantId` ON `TenantAccess` (`TenantId`);
 CREATE INDEX `IX_TenantAccess_AccessibleTenantId` ON `TenantAccess` (`AccessibleTenantId`);

@@ -138,6 +138,11 @@ namespace CMPNatural.Api.Services
                 return PortalType.Provider;
             }
 
+            if (path.StartsWithSegments("/api/driver", StringComparison.OrdinalIgnoreCase))
+            {
+                return PortalType.Driver;
+            }
+
             if (path.StartsWithSegments("/api/admin", StringComparison.OrdinalIgnoreCase))
             {
                 return PortalType.Admin;

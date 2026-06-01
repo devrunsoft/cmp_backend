@@ -15,10 +15,12 @@ namespace CMPNatural.Application.Services
     {
         private static readonly JsonSerializerOptions JsonOptions = new(JsonSerializerDefaults.Web);
         private readonly string _verificationSecret;
+        private readonly string? _cloudflareDomain;
 
         public HostVerificationService(IConfiguration configuration)
         {
             _verificationSecret = configuration["JWT:Secret"] ?? configuration["AppSetting:host"] ?? "cmpnatural-host-verification";
+            _cloudflareDomain = configuration["Cloudflare:Domain"]?.Trim().Trim('.');
         }
 
         public string CreateSignature(string challenge)
@@ -43,7 +45,7 @@ namespace CMPNatural.Application.Services
                    await TryVerifyAsync("http", normalizedHost, challenge, expectedSignature, cancellationToken);
         }
 
-        private static string? NormalizeHost(string? host)
+        private string? NormalizeHost(string? host)
         {
             if (string.IsNullOrWhiteSpace(host))
             {
@@ -63,7 +65,14 @@ namespace CMPNatural.Application.Services
                 .ToLowerInvariant();
 
             var slashIndex = sanitized.IndexOf('/');
-            return slashIndex >= 0 ? sanitized[..slashIndex] : sanitized;
+            var normalized = slashIndex >= 0 ? sanitized[..slashIndex] : sanitized;
+
+            if (!normalized.Contains('.') && !string.IsNullOrWhiteSpace(_cloudflareDomain))
+            {
+                normalized = $"{normalized}.{_cloudflareDomain}";
+            }
+
+            return normalized;
         }
 
         private static HttpClient CreateHttpClient()

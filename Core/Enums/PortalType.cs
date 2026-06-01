@@ -16,6 +16,10 @@ namespace CMPNatural.Core.Enums
         [Description("Provider")]
         Provider ,
 
+
+        [Description("Driver")]
+        Driver,
+
     }
 }
 

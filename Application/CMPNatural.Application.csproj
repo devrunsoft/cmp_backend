@@ -667,5 +667,6 @@
   <ItemGroup>
     <ProjectReference Include="..\Core\CMPNatural.Core.csproj" />
     <ProjectReference Include="..\CMPFile\CMPFile.csproj" />
+    <ProjectReference Include="..\CMPEmail\CMPEmail.csproj" />
   </ItemGroup>
 </Project>

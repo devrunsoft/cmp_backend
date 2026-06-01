@@ -7,6 +7,7 @@ namespace CMPNatural.Core.Entities
         public long Id { get; set; }
         public string Name { get; set; } = string.Empty;
         public string? Slug { get; set; }
+        public string? SubDomain { get; set; }
         public string? Host { get; set; }
         public bool IsActive { get; set; } = true;
         public bool WantsDispatchManagement { get; set; }
@@ -21,6 +22,8 @@ namespace CMPNatural.Core.Entities
         public string? LogoUrl { get; set; }
         public string? SupportEmail { get; set; }
         public bool Verified { get; set; }
+        public long ProviderId { get; set; }
+        public long WhiteLabelRequestId { get; set; }
 
         public virtual ICollection<TenantDomain> Domains { get; set; } = new List<TenantDomain>();
         public virtual ICollection<TenantAccess> TenantAccesses { get; set; } = new List<TenantAccess>();

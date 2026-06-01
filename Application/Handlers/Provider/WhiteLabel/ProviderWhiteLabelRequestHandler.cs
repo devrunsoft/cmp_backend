@@ -8,6 +8,7 @@ using CMPNatural.Core.Entities;
 using CMPNatural.Core.Enums;
 using CMPNatural.Core.Repositories;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using ScoutDirect.Application.Responses;
 
 namespace CMPNatural.Application
@@ -75,15 +76,14 @@ namespace CMPNatural.Application
 
         public async Task<CommandResponse<WhiteLabelRequest>> Handle(ProviderGetWhiteLabelRequestCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _repository.GetByProviderIdAsync(request.ProviderId);
-            if (entity == null)
-            {
-                entity = new WhiteLabelRequest()
-                {
-                    ProviderId = request.ProviderId,
-                    //DispatchAccessibleTenantIds = new List<long>()
-                };
-            }
+            var entity = (await _repository.GetAsync(x=>x.ProviderId == request.ProviderId , query => query.Include(x=>x.Tenant).ThenInclude(x=>x.Domains))).FirstOrDefault();
+            //if (entity == null)
+            //{
+            //    entity = new WhiteLabelRequest()
+            //    {
+            //        ProviderId = request.ProviderId,
+            //    };
+            //}
 
             return new Success<WhiteLabelRequest>() { Data = entity };
         }

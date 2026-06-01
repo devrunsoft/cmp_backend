@@ -6,6 +6,7 @@ namespace CMPNatural.Core.Entities
     {
         public long Id { get; set; }
         public long TenantId { get; set; }
+        public string? SubDomain { get; set; }
         public string Host { get; set; } = string.Empty;
         public bool IsPrimary { get; set; }
         public bool IsVerified { get; set; }
