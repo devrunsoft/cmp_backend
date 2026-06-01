@@ -75,28 +75,13 @@ namespace CMPNatural.Application
 
             if (entity.Status == WhiteLabelStatus.Accepted)
             {
-                var provider = await _providerRepository.GetByIdAsync(entity.ProviderId);
-                if (provider == null)
-                {
-                    return new NoAcess<WhiteLabelRequest>() { Message = "Provider not found." };
-                }
 
-                if (string.IsNullOrWhiteSpace(provider.Email))
-                {
-                    return new NoAcess<WhiteLabelRequest>() { Message = "Provider email is required to create the white-label admin account." };
-                }
-
-                var adminExists = (await _adminRepository.GetAsync(x => x.Email == provider.Email)).Any();
-                if (adminExists)
-                {
-                    return new NoAcess<WhiteLabelRequest>() { Message = "An admin account with the provider email already exists." };
-                }
 
                 var domain = (entity.WantsCustomDomain ? entity.CustomDomain : entity.SubDomain);
                 var tenantSubDomain = entity.WantsCustomDomain? $"api.{domain}": $"{domain}-api";
                 var tenent = new Tenant()
                 {
-                    SubDomain = entity.SubDomain,
+                    SubDomain = entity.WantsCustomDomain? null : tenantSubDomain,
                     Host = BuildHost(tenantSubDomain, cloudflareDomain, entity.WantsCustomDomain),
                     AdminCanViewAllRecords = false,
                     AllowMainAdminAccess = false,
@@ -117,7 +102,7 @@ namespace CMPNatural.Application
                 tenent = await _tenantRepository.AddAsync(tenent);
                 if (!entity.WantsCustomDomain)
                 {
-                    await _cloudflareDnsService.CreateTenantWildcardDnsAsync(tenent.SubDomain!, backendip);
+                    await _cloudflareDnsService.CreateTenantWildcardDnsAsync(tenantSubDomain, backendip);
                 }
 
 
@@ -126,6 +111,7 @@ namespace CMPNatural.Application
                 List<TenantDomain> domains = new List<TenantDomain>();
                 if (entity.WantsClientPortal)
                 {
+
                     var clientSubDomain = entity.WantsCustomDomain ? null : $"{domain}-client";
                     domains.Add(new TenantDomain()
                     {
@@ -135,18 +121,77 @@ namespace CMPNatural.Application
                         PortalType = PortalType.Client
                     });
 
+
                 }
 
                 if (!entity.WantsDispatchManagement)
                 {
+
                     var adminSubDomain = entity.WantsCustomDomain ? null : $"{domain}-admin";
+                    var host = BuildHost(adminSubDomain, cloudflareDomain, entity.WantsCustomDomain);
                     domains.Add(new TenantDomain()
                     {
                         TenantId = tenent.Id,
                         SubDomain = adminSubDomain,
-                        Host = BuildHost(adminSubDomain, cloudflareDomain, entity.WantsCustomDomain),
+                        Host = host,
                         PortalType = PortalType.Admin
                     });
+
+                    #region CreateAdmin
+
+                    var provider = await _providerRepository.GetByIdAsync(entity.ProviderId);
+                    if (provider == null)
+                    {
+                        return new NoAcess<WhiteLabelRequest>() { Message = "Provider not found." };
+                    }
+
+                    if (string.IsNullOrWhiteSpace(provider.Email))
+                    {
+                        return new NoAcess<WhiteLabelRequest>() { Message = "Provider email is required to create the white-label admin account." };
+                    }
+
+                    var adminExists = (await _adminRepository.GetAsync(x => x.Email == provider.Email)).Any();
+                    if (adminExists)
+                    {
+                        return new NoAcess<WhiteLabelRequest>() { Message = "An admin account with the provider email already exists." };
+                    }
+
+                    var adminPassword = PasswordGenerator.GenerateSecurePassword();
+                    var superAdmin = new AdminEntity
+                    {
+                        Email = provider.Email,
+                        Password = adminPassword,
+                        Role = "SuperAdmin",
+                        IsActive = true,
+                        TenantId = tenent.Id,
+                        TwoFactor = false,
+                        Person = new Person
+                        {
+                            Id = Guid.NewGuid(),
+                            FirstName = GetProviderFirstName(provider),
+                            LastName = GetProviderLastName(provider)
+                        }
+                    };
+
+                    await _adminRepository.AddAsync(superAdmin);
+
+                    _emailSender.SendEmail(new MailModel
+                    {
+                        toEmail = provider.Email,
+                        Subject = "Your white-label admin account is ready",
+                        Name = GetProviderFirstName(provider),
+                        CompanyName = provider.Name,
+                        Link = host,
+                        buttonText = "Open Admin Portal",
+                        Body =
+                            "Your white-label request has been approved.\n\n" +
+                            "Your admin account has been created with the following credentials:\n\n" +
+                            $"Email: {provider.Email}\n" +
+                            $"Password: <strong>{adminPassword}</strong><br/><br/>" +
+                            "Use the button below to open the admin portal and sign in."
+                    });
+
+                    #endregion
                 }
 
                 var providerSubDomain = entity.WantsCustomDomain ? null : $"{domain}-provider";
@@ -167,40 +212,7 @@ namespace CMPNatural.Application
                     }
                  }
 
-                var adminPassword = PasswordGenerator.GenerateSecurePassword();
-                var superAdmin = new AdminEntity
-                {
-                    Email = provider.Email,
-                    Password = adminPassword,
-                    Role = "SuperAdmin",
-                    IsActive = true,
-                    TenantId = tenent.Id,
-                    TwoFactor = false,
-                    Person = new Person
-                    {
-                        Id = Guid.NewGuid(),
-                        FirstName = GetProviderFirstName(provider),
-                        LastName = GetProviderLastName(provider)
-                    }
-                };
 
-                await _adminRepository.AddAsync(superAdmin);
-
-                _emailSender.SendEmail(new MailModel
-                {
-                    toEmail = provider.Email,
-                    Subject = "Your white-label admin account is ready",
-                    Name = GetProviderFirstName(provider),
-                    CompanyName = provider.Name,
-                    Link = _appSetting.adminHost,
-                    buttonText = "Open Admin Portal",
-                    Body =
-                        "Your white-label request has been approved.\n\n" +
-                        "Your admin account has been created with the following credentials:\n\n" +
-                        $"Email: {provider.Email}\n" +
-                        $"Password: {adminPassword}\n\n" +
-                        "Use the button below to open the admin portal and sign in."
-                });
             }
 
             return new Success<WhiteLabelRequest>() { Data = entity };
