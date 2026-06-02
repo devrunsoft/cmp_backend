@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using CMPNatural.Core.Entities;
 using CMPNatural.Core.Enums;
 using CMPNatural.Core.Models;
@@ -21,12 +22,14 @@ namespace CMPNatural.Api.Services
             ICurrentTenantAccessor currentTenantAccessor,
             AppSetting appSetting)
         {
+            
             var host = context.Request.Host.Host?.Trim().ToLowerInvariant();
             if (string.IsNullOrWhiteSpace(host))
             {
                 await _next(context);
                 return;
             }
+            //var TenantId = long.TryParse(context.User.FindFirstValue("TenantId"), out var claimTenantId);
 
             var tenantContext = await ResolveTenantContextAsync(host, tenantRepository, appSetting);
             if (tenantContext != null)
@@ -37,6 +40,7 @@ namespace CMPNatural.Api.Services
 
             try
             {
+
                 //var expectedPortal = ResolveExpectedPortal(context.Request.Path);
                 //if (expectedPortal.HasValue && tenantContext?.PortalType.HasValue == true && tenantContext.PortalType != expectedPortal)
                 //{
@@ -49,20 +53,20 @@ namespace CMPNatural.Api.Services
                 //    return;
                 //}
 
-                //if (tenantContext?.TenantId != null && context.User.Identity?.IsAuthenticated == true)
-                //{
-                //    var claimValue = context.User.FindFirstValue("TenantId");
-                //    if (long.TryParse(claimValue, out var claimTenantId) && claimTenantId != tenantContext.TenantId.Value)
-                //    {
-                //        context.Response.StatusCode = StatusCodes.Status403Forbidden;
-                //        await context.Response.WriteAsJsonAsync(new
-                //        {
-                //            Success = false,
-                //            Message = "This account is not allowed on the requested tenant domain."
-                //        });
-                //        return;
-                //    }
-                //}
+                if (context.User.Identity?.IsAuthenticated == true)
+                {
+                    var claimValue = context.User.FindFirstValue("TenantId");
+                    if (long.TryParse(claimValue, out var claimTenantId) && claimTenantId != tenantContext?.TenantId)
+                    {
+                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        await context.Response.WriteAsJsonAsync(new
+                        {
+                            Success = false,
+                            Message = "This session is not valid for the requested tenant domain. Please sign in again."
+                        });
+                        return;
+                    }
+                }
 
                 await _next(context);
             }

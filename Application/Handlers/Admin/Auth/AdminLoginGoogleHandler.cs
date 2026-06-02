@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CMPNatural.Application.Commands.Admin;
 using CMPNatural.Core.Entities;
 using CMPNatural.Core.Repositories;
+using CMPNatural.Core.Services;
 using Google.Apis.Auth;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -54,9 +55,10 @@ namespace CMPNatural.Application.Handlers.Admin.Auth
             {
                 return new NoAcess<AdminEntity> { Message = "Google email is not verified." };
             }
-
+            var tenantContext = TenantExecutionContext.Current;
+            var tenentId = tenantContext?.TenantId;
             var admin = (await _adminRepository.GetAsync(
-                p => p.Email == payload.Email,
+                p => p.Email == payload.Email && p.TenantId == tenentId,
                 query => query.Include(x => x.Person)))
                 .FirstOrDefault();
 

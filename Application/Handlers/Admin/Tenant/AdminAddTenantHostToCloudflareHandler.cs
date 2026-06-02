@@ -32,9 +32,15 @@ namespace CMPNatural.Application
                 return new NoAcess<bool> { Data = false, Message = "Tenant host not found." };
             }
 
-            await _cloudflareDnsService.CreateTenantWildcardDnsAsync(tenant.SubDomain ?? tenant.Host!, _configuration["Cloudflare:BackendServerIp"]);
+            var created = await _cloudflareDnsService.CreateTenantWildcardDnsAsync(tenant.SubDomain ?? tenant.Host!, _configuration["Cloudflare:BackendServerIp"]);
+
             tenant.Verified = true;
             await _tenantRepository.UpdateAsync(tenant);
+
+            if (!created)
+            {
+                return new Success<bool> { Data = false, Message = "DNS record already exists." };
+            }
 
             return new Success<bool> { Data = true };
         }

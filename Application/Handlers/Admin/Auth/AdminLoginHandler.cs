@@ -13,6 +13,7 @@ using CMPNatural.Core.Repositories;
 using System.Linq;
 using ScoutDirect.Core.Caching;
 using Microsoft.EntityFrameworkCore;
+using CMPNatural.Core.Services;
 
 namespace CMPNatural.Application.Handlers.Admin.Auth
 {
@@ -30,7 +31,10 @@ namespace CMPNatural.Application.Handlers.Admin.Auth
 
         public async Task<CommandResponse<AdminEntity>> Handle(AdminLoginCommand request, CancellationToken cancellationToken)
         {
-            var admin = (await _adminRepository.GetAsync(p => p.Email == request.Email,query=>query.Include(x=>x.Person))).FirstOrDefault();
+            var tenantContext = TenantExecutionContext.Current;
+            var tenentId = tenantContext?.TenantId;
+
+            var admin = (await _adminRepository.GetAsync(p => p.Email == request.Email && p.TenantId == tenentId, query=>query.Include(x=>x.Person))).FirstOrDefault();
 
             if (admin == null)
             {
@@ -47,6 +51,12 @@ namespace CMPNatural.Application.Handlers.Admin.Auth
 
             var cacheKey = $"menu_access_{admin.Id}";
             _cache.Remove(cacheKey);
+
+
+            //if (admin.TenantId != tenantContext?.TenantId)
+            //{
+            //    return new NoAcess<AdminEntity>() { Message = "Login failed. Please check your username and password and try again." };
+            //}
 
             return new Success<AdminEntity>() { Data = admin };
 

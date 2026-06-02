@@ -14,6 +14,8 @@ using CMPNatural.Application.Mapper;
 using CMPNatural.Application.Responses;
 using CMPNatural.Core.Entities;
 using CMPNatural.Core.Repositories;
+using CMPNatural.Core.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace CMPNatural.Application.Handlers.QueryHandlers
 {
@@ -31,12 +33,14 @@ namespace CMPNatural.Application.Handlers.QueryHandlers
 
         public async Task<CommandResponse<object>> Handle(LoginCompanyCommand request, CancellationToken cancellationToken)
         {
-            var person = (await _personRepository.GetAsync(x=>x.BusinessEmail == request.BusinessEmail && x.Password == request.Password)).FirstOrDefault();
+            var tenantContext = TenantExecutionContext.Current;
+            var tenentId = tenantContext?.TenantId;
+            var person = (await _personRepository.GetAsync(x=>x.BusinessEmail == request.BusinessEmail && x.Password == request.Password && x.TenantId == tenentId)).FirstOrDefault();
 
             if (person == null)
             {
                 var operationalAddress = (await _operationalAddressRepository.GetAsync(x =>
-                        x.Username == request.BusinessEmail && x.Password == request.Password))
+                        x.Username == request.BusinessEmail && x.Password == request.Password && x.Company.TenantId == tenentId, query => query.Include(x=>x.Company)))
                     .FirstOrDefault();
 
                 if (operationalAddress == null)

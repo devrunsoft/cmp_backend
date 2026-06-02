@@ -26,16 +26,16 @@ namespace CMPNatural.Application.Services
         }
 
 
-        public async Task CreateTenantWildcardDnsAsync(string tenant, string serverIp)
+        public async Task<bool> CreateTenantWildcardDnsAsync(string tenant, string serverIp)
         {
             if (!isProduction)
             {
-                return;
+                return false;
             }
 
             if (await DnsRecordExistsAsync(tenant))
             {
-                return;
+                return false;
             }
 
             var token = _configuration["Cloudflare:ApiToken"];
@@ -65,6 +65,8 @@ namespace CMPNatural.Application.Services
                 var error = await response.Content.ReadAsStringAsync();
                 throw new Exception($"Cloudflare DNS creation failed: {error}");
             }
+
+            return true;
         }
 
         public async Task<bool> DnsRecordExistsAsync(string tenant)

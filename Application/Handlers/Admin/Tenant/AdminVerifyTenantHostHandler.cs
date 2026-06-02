@@ -33,12 +33,33 @@ namespace CMPNatural.Application
             }
 
             var dnsExists = await _cloudflareDnsService.DnsRecordExistsAsync(tenant.SubDomain ?? tenant.Host);
-            //var isValid = dnsExists && await _hostVerificationService.VerifyHostAsync(tenant.Host, cancellationToken);
-            var isValid = dnsExists;
+            var serverDnsCheck= await _hostVerificationService.VerifyHostAsync(tenant.Host, cancellationToken);
+            var isValid = dnsExists && serverDnsCheck;
             tenant.Verified = isValid;
             await _tenantRepository.UpdateAsync(tenant);
 
-            return new Success<bool>() { Data = isValid };
+
+            if (!dnsExists)
+            {
+                return new Success<bool>
+                {
+                    Data = false,
+                    Message = "DNS record was not found. Please verify your DNS configuration and try again."
+                };
+            }
+
+            if (!isValid)
+            {
+                return new Success<bool>
+                {
+                    Data = false,
+                    Message = "DNS record was found, but the domain is not yet pointing to the required server. Please wait for DNS propagation and try again."
+                };
+            }
+
+
+
+            return new Success<bool>() { Data = isValid, Message = "Domain verification completed successfully." };
         }
     }
 }

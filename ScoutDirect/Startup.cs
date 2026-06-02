@@ -356,12 +356,12 @@ namespace ScoutDirect.Api
 
 
             app.UseRouting();
-            app.UseMiddleware<TenantResolutionMiddleware>();
             app.UseCors("AllowOrigin");
 
             //app.UseSignalRQueryStringAuth();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseMiddleware<TenantResolutionMiddleware>();
             app.UseElmah();
 
             app.UseEndpoints(endpoints =>
