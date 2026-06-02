@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CMPNatural.Application;
 using CMPNatural.Application.Commands;
 using CMPNatural.Application.Model;
+using CMPNatural.Api.Attribute;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CMPNatural.Api.Controllers.Admin.AppInformation
 {
     [Authorize(Roles = "SuperAdmin")]
+    [GlobalSuperAdminAuthorize]
     public class GoHighLevelController : BaseAdminApiController
     {
         public GoHighLevelController(IMediator mediator) : base(mediator)
@@ -39,4 +41,3 @@ namespace CMPNatural.Api.Controllers.Admin.AppInformation
 
     }
 }
-

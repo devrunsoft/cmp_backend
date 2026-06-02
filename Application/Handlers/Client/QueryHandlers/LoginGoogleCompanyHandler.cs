@@ -16,6 +16,7 @@ using CMPNatural.Core.Entities;
 using CMPNatural.Core.Repositories;
 using Google.Apis.Auth;
 using Microsoft.Extensions.Configuration;
+using CMPNatural.Core.Services;
 
 namespace CMPNatural.Application.Handlers.QueryHandlers
 {
@@ -59,7 +60,10 @@ namespace CMPNatural.Application.Handlers.QueryHandlers
                 return new NoAcess<CompanyResponse> { Message = "Invalid Google credential." };
             }
 
-            var person = (await _personRepository.GetAsync(x => x.BusinessEmail == payload.Email)).FirstOrDefault();
+            var tenantContext = TenantExecutionContext.Current;
+            var tenentId = tenantContext?.TenantId;
+
+            var person = (await _personRepository.GetAsync(x => x.BusinessEmail == payload.Email && x.TenantId == tenentId)).FirstOrDefault();
 
             if (person == null)
             {

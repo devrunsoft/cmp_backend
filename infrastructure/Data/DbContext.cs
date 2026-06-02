@@ -233,6 +233,10 @@ namespace infrastructure.Data
                 .WithOne()
                 .HasForeignKey(d => d.RouteId);
 
+                entity.HasOne(d => d.Tenant)
+                .WithMany(p => p.Routes)
+                .HasForeignKey(d => d.TenantId);
+
                 entity.Property(p => p.Status)
                 .HasConversion(
                 x => x.ToString(),
@@ -555,6 +559,10 @@ namespace infrastructure.Data
                  x => x.ToString(),
                  x => (TermsConditionsEnum)Enum.Parse(typeof(TermsConditionsEnum), x)
                  );
+
+                entity.HasOne(d => d.Tenant)
+                .WithMany(p => p.TermsConditions)
+                .HasForeignKey(d => d.TenantId);
             });
 
             modelBuilder.Entity<AppInformation>(entity =>
@@ -606,6 +614,10 @@ namespace infrastructure.Data
                 x => x.ToString(),
                 x => (ContractType)Enum.Parse(typeof(ContractType), x)
                 );
+
+                entity.HasOne(d => d.Tenant)
+                .WithMany(p => p.Contracts)
+                .HasForeignKey(d => d.TenantId);
             });
 
             modelBuilder.Entity<Menu>(entity =>
@@ -697,6 +709,10 @@ namespace infrastructure.Data
             {
                 entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("Product");
+
+                entity.HasOne(d => d.Tenant)
+                .WithMany(p => p.Products)
+                .HasForeignKey(d => d.TenantId);
             });
 
             modelBuilder.Entity<ProductPrice>(entity =>
@@ -707,6 +723,10 @@ namespace infrastructure.Data
                 entity.HasOne(d => d.Product)
                 .WithMany(p => p.ProductPrice)
                 .HasForeignKey(d => d.ProductId);
+
+                entity.HasOne(d => d.Tenant)
+                .WithMany(p => p.ProductPrices)
+                .HasForeignKey(d => d.TenantId);
             });
 
             modelBuilder.Entity<Company>(entity =>
@@ -1009,6 +1029,10 @@ namespace infrastructure.Data
             {
                 entity.HasQueryFilter(x => x.IsDelete == null);
                 entity.ToTable("Capacity");
+
+                entity.HasOne(d => d.Tenant)
+                .WithMany(p => p.Capacities)
+                .HasForeignKey(d => d.TenantId);
             });
 
             modelBuilder.Entity<ProviderService>(entity =>

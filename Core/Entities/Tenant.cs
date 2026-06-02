@@ -30,5 +30,11 @@ namespace CMPNatural.Core.Entities
         public virtual ICollection<AdminEntity> Admins { get; set; } = new List<AdminEntity>();
         public virtual ICollection<Company> Companies { get; set; } = new List<Company>();
         public virtual ICollection<Provider> Providers { get; set; } = new List<Provider>();
+        public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+        public virtual ICollection<ProductPrice> ProductPrices { get; set; } = new List<ProductPrice>();
+        public virtual ICollection<Contract> Contracts { get; set; } = new List<Contract>();
+        public virtual ICollection<Capacity> Capacities { get; set; } = new List<Capacity>();
+        public virtual ICollection<TermsConditions> TermsConditions { get; set; } = new List<TermsConditions>();
+        public virtual ICollection<Route> Routes { get; set; } = new List<Route>();
     }
 }

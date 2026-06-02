@@ -179,14 +179,14 @@ namespace CMPNatural.Api
         {
             string host = _appSetting.host;
             var link = host + "/api/Provider/ProviderAuth/CheckResetPassword?forgotPasswordLink=" + data.ActivationLink!.Value + "&&email=" + data.Email;
-            sendEmail("Reset Password", "", data.Email, link, "Reset");
+            sendEmail("Reset Password", "", data.Email, link, "Reset Password");
         }
 
         void emailSender(Driver data)
         {
             string host = _appSetting.host;
             var link = host + "/api/Provider/ProviderAuth/CheckResetPassword?forgotPasswordLink=" + data.ActivationLink!.Value + "&&email=" + data.Email;
-            sendEmail("Reset Password", "", data.Email, link, "Reset");
+            sendEmail("Reset Password", "", data.Email, link, "Reset Password");
         }
 
         [HttpPut("OperationalAddress")]

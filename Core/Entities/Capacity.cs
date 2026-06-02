@@ -9,11 +9,14 @@ namespace CMPNatural.Core.Entities
 		{
 		}
 		public long Id { get; set; }
+		public long? TenantId { get; set; }
 		public string Name { get; set; }
 		public int Qty { get; set; }
 		public int ServiceType { get; set; }
         public int Order { get; set; }
         public bool Enable { get; set; }
+        [JsonIgnore]
+        public virtual Tenant? Tenant { get; set; }
         [JsonIgnore]
         public virtual ICollection<LocationCompany> LocationCompany { get; set; }
     }

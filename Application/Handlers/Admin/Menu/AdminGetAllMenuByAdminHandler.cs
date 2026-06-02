@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using CMPNatural.Core.Services;
 
 namespace CMPNatural.Application
 {
@@ -25,12 +26,19 @@ namespace CMPNatural.Application
         }
         public async Task<CommandResponse<List<Menu>>> Handle(AdminGetAllMenuByAdminCommand request, CancellationToken cancellationToken)
         {
+            var tenantContext = TenantExecutionContext.Current;
+            List<long> restrictedTenent = new List<long>() { 31, 52, 53 , 54 };
+            if (tenantContext?.TenantId == null)
+            {
+                restrictedTenent = new List<long>();
+            }
+
             var isSuperAdmin = (await _adminRepository.GetByIdAsync(request.AdminId)).Role == "SuperAdmin";
             List<Menu> entity;
 
             if (isSuperAdmin)
             {
-                entity = (await _menuRepository.GetAllAsync()).ToList();
+                entity = (await _menuRepository.GetAllAsync()).Where(x=> !restrictedTenent.Contains(x.Id)).ToList();
             }
             else
             {

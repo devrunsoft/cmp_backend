@@ -3,6 +3,7 @@ using CMPNatural.Application.Commands.Admin.AdminManagment;
 using CMPNatural.Application.Commands.Admin.Menu;
 using CMPNatural.Application.Handlers.Admin.AdminManagment;
 using CMPNatural.Application.Model;
+using CMPNatural.Api.Attribute;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CMPNatural.Api.Controllers.Admin.Admin
 {
     [Authorize(Roles = "SuperAdmin")]
+    // [GlobalSuperAdminAuthorize]
     public class AdminManagmentController : BaseAdminApiController
     {
         protected readonly IMediator _mediator;
@@ -105,4 +107,3 @@ namespace CMPNatural.Api.Controllers.Admin.Admin
         }
     }
 }
-

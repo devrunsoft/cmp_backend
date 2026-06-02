@@ -1,4 +1,5 @@
-﻿using CMPNatural.Application;
+﻿using CMPNatural.Api.Attribute;
+using CMPNatural.Application;
 using CMPNatural.Core.Enums;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CMPNatural.Api.Controllers.Admin.AppLog
 {
     [MenuAuthorize(MenuEnum.Logs)]
+    [GlobalSuperAdminAuthorize]
     public class AdminAppLogController : BaseAdminApiController
     {
         public AdminAppLogController(IMediator mediator) : base(mediator)

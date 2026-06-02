@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CMPNatural.Application;
 using CMPNatural.Application.Model;
+using CMPNatural.Api.Attribute;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
@@ -12,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CMPNatural.Api.Controllers.Admin.AppInformation
 {
     [Authorize(Roles = "SuperAdmin")]
+    // [GlobalSuperAdminAuthorize]
     public class AppInformationController : BaseAdminApiController
     {
         private readonly IWebHostEnvironment Environment;
@@ -45,4 +47,3 @@ namespace CMPNatural.Api.Controllers.Admin.AppInformation
 
     }
 }
-

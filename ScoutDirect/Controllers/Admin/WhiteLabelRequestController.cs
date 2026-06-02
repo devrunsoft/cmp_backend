@@ -1,4 +1,5 @@
-﻿using CMPNatural.Api.Controllers.Admin;
+﻿using CMPNatural.Api.Attribute;
+using CMPNatural.Api.Controllers.Admin;
 using CMPNatural.Application;
 using MediatR;
 using Microsoft.AspNetCore.Cors;
@@ -8,6 +9,7 @@ namespace CMPNatural.Api.Controllers
 {
     [ApiController]
     [Route("api/admin/[controller]")]
+    [GlobalSuperAdminAuthorize]
     public class WhiteLabelRequestController : BaseAdminApiController
     {
         public WhiteLabelRequestController(IMediator mediator) : base(mediator)
@@ -54,5 +56,17 @@ namespace CMPNatural.Api.Controllers
             var result = await _mediator.Send(command);
             return Ok(result);
         }
+
+        // [HttpDelete("{id}")]
+        // [ProducesResponseType(StatusCodes.Status200OK)]
+        // [EnableCors("AllowOrigin")]
+        // public async Task<ActionResult> Delete([FromRoute] long id)
+        // {
+        //     var result = await _mediator.Send(new AdminDeleteWhiteLabelRequestCommand
+        //     {
+        //         WhiteLabelRequestId = id
+        //     });
+        //     return Ok(result);
+        // }
     }
 }

@@ -7,6 +7,7 @@ namespace CMPNatural.Core.Entities
 	public partial class Product
     {
         public long Id { get; set; }
+        public long? TenantId { get; set; }
         public string Name { get; set; } = "";
         public string? Description { get; set; } = "";
         public string ProductType { get; set; } = "";
@@ -22,6 +23,8 @@ namespace CMPNatural.Core.Entities
         public string? ServiceCrmId { get; set; } = "";
         public bool Enable { get; set; }
         public int Order { get; set; }
+        [JsonIgnore]
+        public virtual Tenant? Tenant { get; set; }
 
         [JsonIgnore]
         public virtual ICollection<ProviderService> ProviderService { get; set; } = new List<ProviderService>();

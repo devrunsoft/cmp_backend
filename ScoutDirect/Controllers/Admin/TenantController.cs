@@ -1,3 +1,4 @@
+using CMPNatural.Api.Attribute;
 using CMPNatural.Api.Controllers.Admin;
 using CMPNatural.Application;
 using MediatR;
@@ -8,6 +9,7 @@ namespace CMPNatural.Api.Controllers
 {
     [ApiController]
     [Route("api/admin/[controller]")]
+    [GlobalSuperAdminAuthorize]
     public class TenantController : BaseAdminApiController
     {
         public TenantController(IMediator mediator) : base(mediator)

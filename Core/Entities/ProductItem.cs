@@ -6,6 +6,7 @@ namespace CMPNatural.Core.Entities
     public partial class ProductPrice { 
 
     public long Id { get; set; }
+    public long? TenantId { get; set; }
     public long ProductId { get; set; }
     public string Name { get; set; }
     //Recurring or Onetime
@@ -20,6 +21,8 @@ namespace CMPNatural.Core.Entities
     public bool Enable { get; set; }
     public int Order { get; set; }
 
+    [JsonIgnore]
+    public virtual Tenant? Tenant { get; set; }
     public virtual Product Product { get; set; }
     [JsonIgnore]
     public virtual ICollection<InvoiceProduct> InvoiceProduct { get; set; } = new List<InvoiceProduct>();
@@ -28,4 +31,3 @@ namespace CMPNatural.Core.Entities
 
     }
 }
-
