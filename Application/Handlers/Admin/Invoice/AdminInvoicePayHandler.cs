@@ -13,6 +13,7 @@ using CMPNatural.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using CMPNatural.Application.Mapper;
 using System.ServiceModel.Channels;
+using Stripe;
 
 namespace CMPNatural.Application.Handlers
 {
@@ -20,21 +21,26 @@ namespace CMPNatural.Application.Handlers
     {
         private readonly IinvoiceRepository _invoiceRepository;
         private readonly IManifestRepository _manifestRepository;
+        private readonly IPaymentRepository _paymentRepository;
 
         private readonly IBaseServiceAppointmentRepository _baseServiceAppointmentRepository;
         public AdminInvoicePayHandler(IinvoiceRepository invoiceRepository,IBaseServiceAppointmentRepository _baseServiceAppointmentRepository,
-             IManifestRepository _manifestRepository)
+             IManifestRepository _manifestRepository, IPaymentRepository paymentRepository)
         {
             _invoiceRepository = invoiceRepository;
             this._baseServiceAppointmentRepository = _baseServiceAppointmentRepository;
             this._manifestRepository = _manifestRepository;
+            _paymentRepository = paymentRepository;
         }
 
         public async Task<CommandResponse<InvoiceResponse>> Handle(AdminInvoicePayCommand request, CancellationToken cancellationToken)
         {
             var entity = (await _invoiceRepository.GetAsync(p => p.Id == request.InvoiceId, query =>
             query
-            .Include(x => x.BaseServiceAppointment).ThenInclude(x => x.ServiceAppointmentLocations)
+                 .Include(i => i.BaseServiceAppointment)
+                .ThenInclude(i => i.ProductPrice)
+                .Include(i => i.BaseServiceAppointment)
+                .ThenInclude(i => i.ServiceAppointmentLocations)
             )).FirstOrDefault();
 
             if(entity.Status != InvoiceStatus.Send_Payment)
@@ -65,6 +71,17 @@ namespace CMPNatural.Application.Handlers
             //await _manifestRepository.UpdateAsync(manifest);
 
             //}
+
+            await _paymentRepository.AddAsync(new Payment()
+            {
+                Amount = entity.Amount,
+                CheckoutSessionId = "",
+                CreateAt = DateTime.Now,
+                CompanyId = entity.CompanyId,
+                InvoiceId = entity.Id,
+                Status = PaymentHistoryStatus.Manual_Paid,
+                Content = ""
+            });
 
             return new Success<InvoiceResponse>() { Data = InvoiceMapper.Mapper.Map<InvoiceResponse>(entity) };
 

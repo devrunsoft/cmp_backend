@@ -3,6 +3,8 @@ namespace CMPEmail
 {
 	public class MailSettings
     {
+        public string SendGridApiKey { get; set; } = string.Empty;
+        public string SendGridApiUrl { get; set; } = "https://api.sendgrid.com/v3/mail/send";
         public string EmailId { get; set; }
         public string Name { get; set; }
         public string UserName { get; set; }
@@ -12,4 +14,3 @@ namespace CMPEmail
         public bool UseSSL { get; set; }
     }
 }
-

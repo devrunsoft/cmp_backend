@@ -1,8 +1,10 @@
 ﻿using CMPNatural.Core.Entities;
 using CMPNatural.Core.Enums;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Text.Json;
 
 namespace infrastructure.Data
@@ -893,6 +895,18 @@ namespace infrastructure.Data
                  x => x.ToString(),
                  x => (PaymentStatus)Enum.Parse(typeof(PaymentStatus), x)
                  );
+
+                entity.Property(d => d.ManifestNumbers)
+                .HasColumnType("longtext")
+                .HasConversion(
+                    v => JsonSerializer.Serialize(v ?? new List<string>(), (JsonSerializerOptions?)null),
+                    v => string.IsNullOrWhiteSpace(v)
+                        ? new List<string>()
+                        : JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions?)null) ?? new List<string>())
+                .Metadata.SetValueComparer(new ValueComparer<List<string>>(
+                    (c1, c2) => (c1 ?? new List<string>()).SequenceEqual(c2 ?? new List<string>()),
+                    c => (c ?? new List<string>()).Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                    c => c == null ? new List<string>() : c.ToList()));
             });
 
             modelBuilder.Entity<RequestEntity>(entity =>

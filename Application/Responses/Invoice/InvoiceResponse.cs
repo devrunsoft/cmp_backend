@@ -27,6 +27,7 @@ namespace CMPNatural.Application
         public virtual BillingInformation BillingInformation { get; set; } = null;
         //public string InvoiceNumber { get; set; }
         public int? ContractId { get; set; }
+        public string? ContractNumber { get; set; }
 
         public virtual ICollection<InvoiceProduct> InvoiceProduct { get; set; } = new List<InvoiceProduct>();
 

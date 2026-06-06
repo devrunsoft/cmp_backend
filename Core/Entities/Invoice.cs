@@ -34,6 +34,8 @@ namespace CMPNatural.Core.Entities
 
         public string RequestNumber { get; set; }
 
+        public List<string>? ManifestNumbers { get; set; }
+
         public long BillingInformationId { get; set; }
 
         public virtual Company Company { get; set; } = null!;
@@ -76,5 +78,6 @@ namespace CMPNatural.Core.Entities
         public virtual ICollection<BaseServiceAppointment> BaseServiceAppointment { get; set; } = new List<BaseServiceAppointment>();
 
         public virtual OperationalAddress? OperationalAddress { get; set; }
+        public virtual Contract? Contract { get; set; }
     }
 }

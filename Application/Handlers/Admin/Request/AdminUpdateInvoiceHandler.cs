@@ -30,11 +30,12 @@ namespace CMPNatural.Application
         private readonly IMediator mediator;
         private readonly AppSetting _appSetting;
         private readonly ILocationCompanyRepository locationCompanyRepository;
+        private readonly IBillingInformationRepository _billingInformationRepository;
 
         public AdminUpdateInvoiceHandler(IRequestRepository invoiceRepository, IProductPriceRepository productPriceRepository ,
              IBaseServiceAppointmentRepository baseServiceAppointmentRepository, IContractRepository _contractRepository,
              ICompanyContractRepository _companyContractRepository, IAppInformationRepository _appRepository, IRequestTerminateRepository requestTerminate, AppSetting appSetting,
-             IMediator mediator, IAmendmentCompanyContractRepository _amendmentCompanyContractRepository, ILocationCompanyRepository locationCompanyRepository)
+             IMediator mediator, IAmendmentCompanyContractRepository _amendmentCompanyContractRepository, ILocationCompanyRepository locationCompanyRepository, IBillingInformationRepository billingInformationRepository)
         {
             _invoiceRepository = invoiceRepository;
             _productPriceRepository = productPriceRepository;
@@ -47,6 +48,7 @@ namespace CMPNatural.Application
             this.mediator = mediator;
             this._amendmentCompanyContractRepository = _amendmentCompanyContractRepository;
             this.locationCompanyRepository = locationCompanyRepository;
+            this._billingInformationRepository = billingInformationRepository;
         }
 
         public async Task<CommandResponse<RequestResponse>> Handle(AdminUpdateRequestCommand requests, CancellationToken cancellationToken)
@@ -189,7 +191,7 @@ namespace CMPNatural.Application
 
             if (requests.CreateContract && invoice.ContractId == null)
             {
-                var result = await new AdminCreateCompanyContractHandler(_companyContractRepository, _contractRepository, _invoiceRepository, _appRepository, _appSetting)
+                var result = await new AdminCreateCompanyContractHandler(_companyContractRepository, _contractRepository, _invoiceRepository, _appRepository, _appSetting, _billingInformationRepository)
                     .Create(invoice, invoice.CompanyId);
 
                 if (!result.IsSucces())

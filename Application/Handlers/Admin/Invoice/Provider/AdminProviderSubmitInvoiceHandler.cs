@@ -40,6 +40,12 @@ namespace CMPNatural.Application
         {
             var invoice = (await _invoiceRepository.GetAsync(p => p.Id == requests.InvoiceId,
                 query => query.Include(x => x.Company)
+                .Include(i => i.BaseServiceAppointment)
+                .ThenInclude(i => i.ProductPrice)
+                .ThenInclude(p => p.Product)
+                .Include(i => i.BaseServiceAppointment)
+                .ThenInclude(i => i.ServiceAppointmentLocations)
+                .ThenInclude(p => p.LocationCompany)
                 )).FirstOrDefault();
 
             var entity = (await _repository.GetAsync(x => x.Id == invoice.RequestId)).FirstOrDefault();
@@ -61,7 +67,7 @@ namespace CMPNatural.Application
             }
 
             var CompanyId = invoice.CompanyId;
-            var services = (await _baseServiceAppointmentRepository.GetAsync(p => true)).ToList();
+            var services = (await _baseServiceAppointmentRepository.GetAsync(p => p.RequestId == invoice.RequestId)).ToList();
 
             foreach (var srv in services)
             {

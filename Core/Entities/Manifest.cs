@@ -48,6 +48,10 @@ namespace CMPNatural.Core.Entities
 
         public long CompanyId { get; set; }
 
+        public bool COD { get; set; } = false;
+
+        public string? AddtitionalInformation { get; set; } = "";
+
         public string ManifestNumber { get; set; } = string.Empty;
 
         [NotMapped]

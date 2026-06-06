@@ -18,16 +18,18 @@ namespace CMPNatural.Application.Handlers
         private readonly IContractRepository _contractRepository;
         private readonly ICompanyContractRepository _companyContractRepository;
         private readonly IAppInformationRepository _appRepository;
+        private readonly IBillingInformationRepository _billingInformationRepository;
         private readonly AppSetting _appSetting;
         public AdminSentInvoiceHandler(IRequestRepository invoiceRepository,
              IContractRepository contractRepository,
-             ICompanyContractRepository companyContractRepository, IAppInformationRepository _appRepository, AppSetting appSetting)
+             ICompanyContractRepository companyContractRepository, IAppInformationRepository _appRepository, AppSetting appSetting, IBillingInformationRepository billingInformationRepository)
         {
             _invoiceRepository = invoiceRepository;
             _contractRepository = contractRepository;
             _companyContractRepository = companyContractRepository;
             this._appRepository = _appRepository;
             this._appSetting = appSetting;
+            this._billingInformationRepository = billingInformationRepository;
         }
 
         public async Task<CommandResponse<RequestEntity>> Handle(AdminSentRequestCommand request, CancellationToken cancellationToken)
@@ -41,7 +43,7 @@ namespace CMPNatural.Application.Handlers
             }
             //if (requests.CreateContract)
             //{
-                var result = await new AdminCreateCompanyContractHandler(_companyContractRepository, _contractRepository , _invoiceRepository , _appRepository, _appSetting)
+                var result = await new AdminCreateCompanyContractHandler(_companyContractRepository, _contractRepository , _invoiceRepository , _appRepository, _appSetting, _billingInformationRepository)
                     .Create(entity, entity.CompanyId);
 
                 if (!result.IsSucces())

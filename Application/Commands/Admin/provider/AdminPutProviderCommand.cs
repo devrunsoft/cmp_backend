@@ -46,6 +46,7 @@ namespace CMPNatural.Application
             this.ManagerPhoneNumber = input.ManagerPhoneNumber;
             this.Logo = input.Logo;
             this.BaseVirtualPath = BaseVirtualPath;
+            this.Logo = input.Logo;
         }
 
 		public long Id { get; set; }

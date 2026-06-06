@@ -324,6 +324,7 @@
     <None Remove="Handlers\Admin\Notification\" />
     <None Remove="Handlers\Provider\WhiteLabel\" />
     <None Remove="Commands\Provider\WhiteLabel\" />
+    <None Remove="Commands\Admin\ServiceAppointment\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -657,9 +658,11 @@
     <Folder Include="Handlers\Provider\Provider\ForgotPassword\" />
     <Folder Include="Commands\Admin\Notification\" />
     <Folder Include="Handlers\Admin\Notification\" />
+    <Folder Include="Handlers\Admin\ServiceAppointment\" />
+    <Folder Include="Commands\Admin\ServiceAppointment\" />
     <Folder Include="Handlers\Provider\WhiteLabel\" />
     <Folder Include="Commands\Provider\WhiteLabel\" />
-  </ItemGroup> 
+  </ItemGroup>
 
   <ItemGroup>
     <Compile Include="Responses\Invoice\InvoiceResponse.cs" />

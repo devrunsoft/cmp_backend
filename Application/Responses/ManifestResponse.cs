@@ -9,6 +9,8 @@ namespace CMPNatural.Application.Responses
     public class ManifestResponse
     {
         public long Id { get; set; }
+        public string AddtitionalInformation { get; set; }
+        public bool COD { get; set; }
         public ManifestStatus Status { get; set; }
         public string ManifestNumber { get; set; } = "";
         public DateTime? ServiceDateTime { get; set; }
