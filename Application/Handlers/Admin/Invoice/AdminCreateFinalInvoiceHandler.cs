@@ -156,6 +156,7 @@ namespace CMPNatural.Application
                     ContractId = result.First().ContractId,
                     SendDate = DateTime.Now,
                     RequestId= result.FirstOrDefault().RequestId,
+                    ManifestNumbers = result.Select(x=>x.ManifestNumber).ToList()
                 };
 
                 inv.CalculateAmount();

@@ -33,6 +33,8 @@ namespace CMPNatural.Core.Entities
 
         public string RequestNumber { get; set; }
 
+        public List<string> ManifestNumbers { get; set; }
+
         public long BillingInformationId { get; set; }
 
         public virtual Company Company { get; set; } = null!;
