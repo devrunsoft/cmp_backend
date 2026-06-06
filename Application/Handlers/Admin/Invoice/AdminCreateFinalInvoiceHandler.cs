@@ -81,7 +81,16 @@ namespace CMPNatural.Application
                     .Distinct()
                     .ToList();
 
-                if (companyIds.Count == 0)
+            //TODO
+            //var serviceDate = result
+            //     .Select(m => m.ServiceDateTime)
+            //     .Distinct()
+            //     .ToList();
+
+            //if (serviceDate.Count == 0)
+            //    errors.Add("Manifests must be on a same date");
+
+            if (companyIds.Count == 0)
                     errors.Add("Could not resolve CompanyId from the selected manifests.");
 
                 if (companyIds.Count > 1)

@@ -15,7 +15,7 @@ namespace CMPNatural.Application
 	public class AdminContractCompanyContractHandler
 	{
 
-		public static  string Create(List<RequestEntity> invoice, AppInformation information, Contract contract,Company company, CompanyContract result, AppSetting _appSetting)
+		public static  string Create(List<RequestEntity> invoice, AppInformation information, Contract contract,Company company, CompanyContract result, AppSetting _appSetting , BillingInformation billingInformation)
 		{
             var serviceList = invoice.Select(inv =>
             {
@@ -48,6 +48,7 @@ namespace CMPNatural.Application
             var dbContent = contract.Content.ToString();
             string cleanedNumber = information.CompanyPhoneNumber.FormatPhoneNumber();
 
+            dbContent = dbContent.Replace(ContractKeysEnum.ClientBillingInformation.GetDescription(), $"{billingInformation.Address}");
             dbContent = dbContent.Replace(ContractKeysEnum.ManagmentCompanyLogo.GetDescription(), managementCompany.Logo);
             dbContent = dbContent.Replace(ContractKeysEnum.ManagmentCompanyName.GetDescription(), information.CompanyTitle);
             dbContent = dbContent.Replace(ContractKeysEnum.ManagmentCompanyEmail.GetDescription(), information.CompanyEmail);

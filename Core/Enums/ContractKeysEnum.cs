@@ -50,6 +50,9 @@ namespace CMPNatural.Core.Enums
 
         [Description("{ClientCompanyName}")]
         ClientCompanyName,
+
+        [Description("{ClientBillingInformation}")]
+        ClientBillingInformation,
         /////////////////////////////////
 
         [Description("{ServiceItems}")]

@@ -14,7 +14,9 @@ namespace CMPNatural.Application
 
 		public long ProviderId { get; set; }
 		public DateTime ServiceDateTime { get; set; }
-		public long Id { get; set; }
+		public bool COD { get; set; }
+        public string AddtitionalInformation { get; set; }
+        public long Id { get; set; }
 		public bool AssignAll { get; set; } = false;
     }
 }

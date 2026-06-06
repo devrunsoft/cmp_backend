@@ -93,7 +93,8 @@ namespace CMPNatural.Api.Controllers.Service
                         Name = $"",
                         CompanyName = "",
                         buttonText = buttonText,
-                        Link = link
+                        Link = link,
+
                     };
                     emailSender.SendEmail(model);
                 }

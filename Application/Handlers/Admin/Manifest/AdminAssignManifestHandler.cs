@@ -122,8 +122,9 @@ namespace CMPNatural.Application
                 };
             }
 
-
             entity.ServiceDateTime = request.ServiceDateTime.ToLocalTime();
+            entity.COD = request.COD;
+            entity.AddtitionalInformation = request.AddtitionalInformation;
             entity.ProviderId = provider.Id;
 
             if (entity.Status != ManifestStatus.Scaduled)

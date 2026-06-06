@@ -47,6 +47,7 @@ namespace CMPNatural.Application
             this.ManagerPhoneNumber = input.ManagerPhoneNumber;
             this.BaseVirtualPath = BaseVirtualPath;
             this.Password = input.Password;
+            this.Logo = input.Logo;
         }
 
         public string BaseVirtualPath { get; set; }

@@ -22,18 +22,20 @@ namespace CMPNatural.Application.Handlers
 	public class AdminCreateCompanyContractHandler
 	{
         private readonly ICompanyContractRepository _repository;
+        private readonly IBillingInformationRepository _billingInformationRepository;
         private readonly IContractRepository _contractrepository;
         private readonly IAppInformationRepository _apprepository;
         private readonly IRequestRepository _baseServicerepository;
         private readonly AppSetting _appSetting;
         public AdminCreateCompanyContractHandler(ICompanyContractRepository _repository, IContractRepository _contractrepository,
-            IRequestRepository baseServicerepository, IAppInformationRepository _apprepository, AppSetting appSetting)
+            IRequestRepository baseServicerepository, IAppInformationRepository _apprepository, AppSetting appSetting, IBillingInformationRepository billingInformationRepository)
 		{
             this._repository = _repository;
             this._contractrepository = _contractrepository;
             this._baseServicerepository = baseServicerepository;
             this._apprepository = _apprepository;
             this._appSetting = appSetting;
+            this._billingInformationRepository = billingInformationRepository;
         }
 
         public async Task<CommandResponse<CompanyContract>> Create(RequestEntity request, long companyId)
@@ -74,8 +76,9 @@ namespace CMPNatural.Application.Handlers
             };
 
             var result = await _repository.AddAsync(entity);
+            var billing = (await _billingInformationRepository.GetAsync(x=>x.Id == request.BillingInformationId)).FirstOrDefault();
 
-            var dbContent = AdminContractCompanyContractHandler.Create(mainInvoice, information, contract, company, result, _appSetting);
+            var dbContent = AdminContractCompanyContractHandler.Create(mainInvoice, information, contract, company, result, _appSetting, billing);
             //update
             entity.Content = dbContent.ToString();
             entity.ContractNumber = entity.Number;

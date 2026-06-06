@@ -33,6 +33,8 @@ namespace CMPNatural.Application.Mapper
             CreateMap<Manifest, ManifestResponse>()
                 // manifest basics
                 .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
+                .ForMember(d => d.AddtitionalInformation, o => o.MapFrom(s => s.AddtitionalInformation))
+                .ForMember(d => d.COD, o => o.MapFrom(s => s.COD))
                 .ForMember(d => d.Status, o => o.MapFrom(s => s.Status))
                 .ForMember(d => d.ManifestNumber, o => o.MapFrom(s => s.ManifestNumber))
                 .ForMember(d => d.ServiceDateTime, o => o.MapFrom(s => s.ServiceDateTime))

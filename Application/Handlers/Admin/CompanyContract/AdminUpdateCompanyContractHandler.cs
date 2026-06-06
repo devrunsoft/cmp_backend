@@ -20,16 +20,18 @@ namespace CMPNatural.Application
         private readonly IContractRepository _contractrepository;
         private readonly IAppInformationRepository _apprepository;
         private readonly IRequestRepository _baseServicerepository;
+        private readonly IBillingInformationRepository _billingInformationRepository;
         private readonly AppSetting _appSetting;
 
         public AdminUpdateCompanyContractHandler(ICompanyContractRepository _repository, IContractRepository _contractrepository,
-            IRequestRepository baseServicerepository, IAppInformationRepository _apprepository, AppSetting appSetting)
+            IRequestRepository baseServicerepository, IAppInformationRepository _apprepository, AppSetting appSetting, IBillingInformationRepository billingInformationRepository)
         {
             this._repository = _repository;
             this._contractrepository = _contractrepository;
             this._baseServicerepository = baseServicerepository;
             this._apprepository = _apprepository;
             this._appSetting = appSetting;
+            this._billingInformationRepository = billingInformationRepository;
         }
 
         public async Task<CommandResponse<CompanyContract>> Handle(AdminUpdateCompanyContractCommand request, CancellationToken cancellationToken)
@@ -60,9 +62,9 @@ namespace CMPNatural.Application
             .Include(x => x.Company)
             )).ToList();
             var company = invoice.FirstOrDefault().Company;
+            var billing = (await _billingInformationRepository.GetAsync(x => x.Id == invoice.FirstOrDefault().BillingInformationId)).FirstOrDefault();
 
-
-            var dbContent = AdminContractCompanyContractHandler.Create(invoice, information, contract, company, entity, _appSetting);
+            var dbContent = AdminContractCompanyContractHandler.Create(invoice, information, contract, company, entity, _appSetting, billing);
             entity.Content = dbContent.ToString();
             entity.ContractId = contract.Id;
             await _repository.UpdateAsync(entity);

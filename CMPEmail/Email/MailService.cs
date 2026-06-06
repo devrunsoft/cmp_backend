@@ -22,7 +22,7 @@ namespace CMPEmail.Email
         public void SendEmail(MailModel model)
         {
             new EmailWebHook(_highLevelSetting).send(model);
-
+            //new SendGride(_mailSettings).SendEmail(model);
 
             //SmtpClient client = new SmtpClient(_mailSettings.Host, _mailSettings.Port);
             //client.EnableSsl = _mailSettings.UseSSL;
